@@ -71,6 +71,7 @@ var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
 
+
 var isFunction = function isFunction( obj ) {
 
       // Support: Chrome <=57, Firefox <=52

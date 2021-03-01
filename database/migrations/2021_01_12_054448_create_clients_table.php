@@ -17,6 +17,8 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('domain')->unique();
+            $table->integer('agency_id')->default(1);
+            $table->integer('user_id')->default(1);
             $table->longText('settings');
             $table->integer('status')->default(1);
             $table->timestamps();

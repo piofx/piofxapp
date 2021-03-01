@@ -1,3 +1,5 @@
+@props(['appid' => 0,'title'=>'Default','action'=>'url','module'=>'mod','obj'=>'obj','id'=>'id','preview'=>'0'])
+
 <!--begin::Titlecard-->
 <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-warning">
  <div class="card-body">
@@ -9,9 +11,23 @@
    </div>
    <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
    @can('update',$obj)
-   <a href="{{ route($module.'.edit',$id) }}" class="btn btn-warning"  >
+
+   @if($preview)
+   <a href="{{ $preview }}" class="btn btn-info"  target="_blank">
+      <i class="flaticon-eye"></i> Preview
+   </a>
+   @endif
+
+   @if($appid)
+   <a href="{{ route($module.'.edit',[$appid,$id]) }}" class="btn btn-warning"  >
     	<i class="flaticon-edit"></i> Edit
 	 </a>
+   @else
+   <a href="{{ route($module.'.edit',$id) }}" class="btn btn-warning"  >
+      <i class="flaticon-edit"></i> Edit
+   </a>
+   @endif
+
    <a href="#" class="btn btn-danger"  data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" >
     	<i class="flaticon-delete"></i> Delete
 	 </a>
@@ -37,7 +53,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                @if($appid)
+                <form method="post" action="{{route($module.'.destroy',[$appid,$id])}}">
+                @else
                 <form method="post" action="{{route($module.'.destroy',$id)}}">
+                @endif
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <button type="submit" class="btn btn-danger">Delete Permanently</button>

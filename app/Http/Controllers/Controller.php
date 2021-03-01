@@ -17,7 +17,8 @@ class Controller extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function welcome(){
-        return redirect()->to('login');
+    	return app('App\Http\Controllers\Page\PageController')->public('home');
+        //return redirect()->to('login');
     }
 
     

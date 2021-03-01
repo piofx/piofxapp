@@ -16,8 +16,7 @@ class AuthenticatedSessionController extends Controller
      *
      */
     public function __construct(){
-        $theme = session()->get('theme');
-        $this->componentName = 'themes.'.$theme.'.layouts.login';
+        $this->componentName = componentName('agency','login');
     }
 
     /**

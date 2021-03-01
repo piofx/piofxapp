@@ -18,8 +18,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $theme = session()->get('theme');
-        $this->componentName = 'themes.'.$theme.'.layouts.app';
+        $this->componentName = componentName('agency');
     }
 
 
@@ -30,74 +29,58 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('apps.Core.Admin.index')
+        $request = request();
+        // get the url path excluding domain name
+        $slug = request()->path();
+
+        // get the client id & domain
+        $client_id = request()->get('client.id');
+        $theme_id = request()->get('client.theme.id');
+        $domain = request()->get('domain.name');
+
+        $agency_settings = request()->get('agency.settings');
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        //dd($agency_settings);
+
+        // load the  app mentioned in the client or agency settings
+        if(isset($client_settings->admin_controller) && $slug=='admin'){
+            $app = $client_settings->app;
+            $controller = $client_settings->admin_controller;
+            $method = $client_settings->admin_method;
+
+
+            $controller_path = 'App\Http\Controllers\\'.$app.'\\'.$controller;
+            return app($controller_path)->$method($request);
+
+        }else if(isset($agency_settings->admin_controller) && $slug=='admin'){
+            $app = $agency_settings->app;
+            $controller = $agency_settings->admin_controller;
+            $method = $agency_settings->admin_method;
+
+            $controller_path =  'App\Http\Controllers\\'.$app.'\\'.$controller;
+            return app($controller_path)->$method($request);
+
+        }else{
+
+            return view('apps.Core.Admin.index')
             ->with('title',"hello")
+            ->with('componentName',$this->componentName);
+        }
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apps()
+    {
+        return view('apps.Core.Admin.apps')
             ->with('componentName',$this->componentName);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+   
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -27,8 +27,15 @@ class ClientPolicy
      */
      public function view(User $user,Client $client)
     {
-       
-        return $user->isRole('superadmin');
+       return true;
+       if(($client->id == $user->client_id) && ($user->checkRole(['clientadmin','clientdev'])))
+            return true;
+        elseif(($client->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydev'])))
+            return true;
+        elseif($user->checkRole(['superadmin','superdev']))
+            return true;
+
+        return false;
     }
 
 
@@ -42,7 +49,15 @@ class ClientPolicy
     public function create(User $user,Client $client)
     { 
         
-        return $user->isRole('superadmin');
+        return true;
+       if(($client->id == $user->client_id) && ($user->checkRole(['clientadmin','clientdev'])))
+            return true;
+        elseif(($client->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydev'])))
+            return true;
+        elseif($user->checkRole(['superadmin','superdev']))
+            return true;
+
+        return false;
     }
 
 
@@ -55,7 +70,14 @@ class ClientPolicy
      */
     public function edit(User $user,Client $client)
     { 
-       return $user->isRole('superadmin');
+       if(($client->id == $user->client_id) && ($user->checkRole(['clientadmin','clientdev'])))
+            return true;
+        elseif(($client->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydev'])))
+            return true;
+        elseif($user->checkRole(['superadmin','superdev']))
+            return true;
+
+        return false;
     }
 
     /**
@@ -68,13 +90,21 @@ class ClientPolicy
     public function update(User $user,Client $client)
     { 
 
-        return $user->isRole('superadmin');
+        if(($client->id == $user->client_id) && ($user->checkRole(['clientadmin','clientdev'])))
+            return true;
+        elseif(($client->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydev'])))
+            return true;
+        elseif($user->checkRole(['superadmin','superdev']))
+            return true;
+
+        return false;
     }
 
 
     public function before($user, $ability)
     {
        
-        return $user->isRole('superadmin');
+        if($user->isRole('superadmin'))
+            return true;
     }
 }

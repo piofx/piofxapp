@@ -17,8 +17,7 @@ class ClientController extends Controller
         // load the app, module and component name to object params
         $this->app      =   'Core';
         $this->module   =   'Client';
-        $theme = session()->get('theme');
-        $this->componentName = 'themes.'.$theme.'.layouts.app';
+        $this->componentName = componentName('agency');
     }
 
     /**
@@ -36,7 +35,7 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
         // retrive the listing
-        $objs = $obj->getRecords($item,3);
+        $objs = $obj->getRecords($item,30);
 
         return view('apps.'.$this->app.'.'.$this->module.'.index')
                 ->with('app',$this)
@@ -54,10 +53,14 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('create', $obj);
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)
                 ->with('editor',true)
+                ->with('alert',$alert)
                 ->with('app',$this);
     }
 
@@ -71,8 +74,33 @@ class ClientController extends Controller
     {
         try{
             
+            //check if the domain name exists
+            $obj_exists = $obj->where('domain',$request->get('domain'))->first();
+            if($obj_exists)
+            {
+                $alert = 'Domain name already exists. Kindly use a different domain.';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
+
+            
+
+            //update settings json
+            if(!$request->get('dev'))
+            $obj->processSettings($request);
+
             /* create a new entry */
             $obj = $obj->create($request->all());
+
+
+
+            //create admin user
+            $obj->createAdminUser($request);
+
+            //set the template
+            $obj->setTemplate($request);
+
+            //reload cache and session data
+            $obj->refreshCache();
 
             $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
             return redirect()->route($this->module.'.index')->with('alert',$alert);
@@ -114,18 +142,32 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=null)
     {
+        //no id is given edit the current client data
+        if(!$id){
+            $view = 'settings';
+            $id = request()->get('client.id');
+        }else{
+            $view = 'createedit';
+        }
+
+        // load alerts if any
+        $alert = session()->get('alert');
+
         // load the resource
         $obj = Obj::where('id',$id)->first();
+        
         // authorize the app
-        $this->authorize('view', $obj);
+        $this->authorize('edit', $obj);
+
 
         if($obj)
-            return view('apps.'.$this->app.'.'.$this->module.'.createedit')
+            return view('apps.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('stub','Update')
                 ->with('obj',$obj)
                 ->with('editor',true)
+                ->with('alert',$alert)
                 ->with('app',$this);
         else
             abort(404);
@@ -138,19 +180,41 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=null)
     {
         try{
-            
+             //no id is given edit the current client data
+            if(!$id)
+                $id = request()->get('client.id');
+
             // load the resource
             $obj = Obj::where('id',$id)->first();
             // authorize the app
             $this->authorize('update', $obj);
+
+            //update settings json
+            if(!$request->get('dev'))
+            $obj->processSettings($request);
+            
             //update the resource
-            $obj = $obj->update($request->all()); 
-            // flash message and redirect to controller index page
-            $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
-            return redirect()->route($this->module.'.show',$id)->with('alert',$alert);
+            $obj->update($request->all()); 
+            //reload cache and session data
+            $obj->refreshCache();
+
+            
+
+
+            if($request->get('setting')=='1'){
+                // flash message and redirect to controller index page
+                $alert = 'Settings are updated!';
+                return redirect()->route('Client.settings')->with('alert',$alert);
+            }
+                 
+            else{
+                // flash message and redirect to controller index page
+                $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
+                return redirect()->route($this->module.'.show',$id)->with('alert',$alert);
+            }
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];

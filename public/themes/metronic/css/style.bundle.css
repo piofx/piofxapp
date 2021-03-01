@@ -59078,7 +59078,7 @@ body {
       -webkit-box-align: stretch;
       -ms-flex-align: stretch;
       align-items: stretch;
-      background-color: #009688; }
+      background-color: #fff; }
       .header .header-top .container,
       .header .header-top .container-fluid,
       .header .header-top .container-sm,
@@ -59895,7 +59895,7 @@ body {
     .header-menu .menu-nav > .menu-item > .menu-link .menu-bullet.menu-bullet-line > span {
       background-color: #B5B5C3; }
     .header-menu .menu-nav > .menu-item > .menu-link .menu-text {
-      color: #3F4254; }
+      color: #fff; }
     .header-menu .menu-nav > .menu-item > .menu-link .menu-arrow {
       color: #B5B5C3; }
   .header-menu .menu-nav > .menu-item.menu-item-active > .menu-link {
@@ -60972,7 +60972,7 @@ body {
         border-radius: 0.42rem;
         padding: 0.85rem 1.35rem; }
         .header-menu .menu-nav > .menu-item > .menu-link .menu-text {
-          color: #7E8299;
+          color: #3F4254;
           font-weight: 500;
           font-size: 1.05rem; }
         .header-menu .menu-nav > .menu-item > .menu-link .menu-arrow {

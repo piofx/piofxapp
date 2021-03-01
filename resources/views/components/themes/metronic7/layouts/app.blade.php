@@ -4,11 +4,11 @@
 	<!--begin::Head-->
 	<head>
 		<meta charset="utf-8" />
-		<title>Piofx Media</title>
-		<meta name="description" content="Page with empty content" />
+		<title>{{ agency('meta_title') }}</title>
+		<meta name="description" content="{{ agency('meta_description') }}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		@include('components.themes.metronic7.blocks.styles')
-		<link rel="shortcut icon" href="{{ asset('favicon_piofx.ico') }}" />
+		<link rel="shortcut icon" href="{{ agency('favicon_link') }}" />
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
