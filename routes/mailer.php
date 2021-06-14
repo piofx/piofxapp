@@ -4,7 +4,7 @@ use App\Http\Controllers\Mailer\MailSubscriberController;
 use App\Http\Controllers\Mailer\MailTemplateController;
 use App\Http\Controllers\Mailer\MailCampaignController;
 use App\Http\Controllers\Mailer\MailLogController;
-use App\Http\Controllers\Mailer\JobController;
+
 // MailSubscriber routes
 
 Route::get("/admin/mailsubscribers", [MailSubscriberController::class, "index"])->middleware('auth')->name("MailSubscriber.index");
@@ -12,11 +12,11 @@ Route::get("/admin/mailsubscriber/create", [MailSubscriberController::class, "cr
 Route::post("/admin/mailsubscriber/create", [MailSubscriberController::class, "store"])->middleware('auth')->name("MailSubscriber.store");
 Route::get("/admin/mailsubscriber/{slug}/edit", [MailSubscriberController::class, "edit"])->middleware('auth')->name("MailSubscriber.edit");
 Route::put("/admin/mailsubscriber/{id}", [MailSubscriberController::class, "update"])->middleware('auth')->name("MailSubscriber.update");
-Route::get("/admin/mailsubscriber/createcsv", [MailSubscriberController::class, "createcsv"])->middleware('auth')->name("MailSubscriber.createcsv");
+Route::get("/admin/mailsubscriber/samplecsv", [MailSubscriberController::class, "samplecsv"])->middleware('auth')->name("MailSubscriber.samplecsv");
+Route::get("/admin/mailsubscriber/download", [MailSubscriberController::class, "download"])->middleware('auth')->name("MailSubscriber.download");
 Route::delete("/admin/mailsubscriber/{id}", [MailSubscriberController::class, "destroy"])->middleware('auth')->name("MailSubscriber.destroy");
 Route::get("/admin/mailsubscriber/{slug}", [MailSubscriberController::class, "show"])->middleware('auth')->name("MailSubscriber.show");
 Route::post("/admin/mailsubscriber/upload", [MailSubscriberController::class, "upload"])->middleware('auth')->name("MailSubscriber.upload");
-
 
 // MailTemplate routes
 
@@ -33,14 +33,15 @@ Route::get("/admin/mailtemplate/{slug}", [MailTemplateController::class, "show"]
 Route::get("/admin/mailcampaigns", [MailCampaignController::class, "index"])->middleware('auth')->name("MailCampaign.index");
 Route::get("/admin/mailcampaign/create", [MailCampaignController::class, "create"])->middleware('auth')->name("MailCampaign.create");
 Route::post("/admin/mailcampaign/create", [MailCampaignController::class, "store"])->middleware('auth')->name("MailCampaign.store");
-Route::post("/admin/mailcampaign/publish", [MailCampaignController::class, "publish"])->middleware('auth')->name("MailCampaign.publish");
+Route::get("/admin/mailcampaign/resendmails/{id}", [MailCampaignController::class, "resendmails"])->middleware('auth')->name("MailCampaign.resendmails");
 Route::get("/admin/mailcampaign/{slug}/edit", [MailCampaignController::class, "edit"])->middleware('auth')->name("MailCampaign.edit");
 Route::put("/admin/mailcampaign/{id}", [MailCampaignController::class, "update"])->middleware('auth')->name("MailCampaign.update");
 Route::delete("/admin/mailcampaign/{id}", [MailCampaignController::class, "destroy"])->middleware('auth')->name("MailCampaign.destroy");
 Route::get("/admin/mailcampaign/{slug}", [MailCampaignController::class, "show"])->middleware('auth')->name("MailCampaign.show");
 
 // MailLog routes
-Route::get("/admin/maillogs", [MailLogController::class, "index"])->name("MailLog.index");
-Route::delete("/admin/maillog/{id}", [MailLogController::class, "destroy"])->name("MailLog.destroy");
+
+Route::get("/admin/maillogs", [MailLogController::class, "index"])->middleware('auth')->name("MailLog.index");
+Route::delete("/admin/maillog/{id}", [MailLogController::class, "destroy"])->middleware('auth')->name("MailLog.destroy");
 
 

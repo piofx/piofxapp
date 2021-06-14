@@ -1,7 +1,6 @@
 <x-dynamic-component :component="$app->componentName">
     @if($stub == 'create')
         <form action="{{ route($app->module.'.store') }}" method="POST" enctype="multipart/form-data">
-        <form action="{{ route($app->module.'.publish') }}" method="POST" enctype="multipart/form-data">
     @else
         <form action="{{ route($app->module.'.update',$obj->id) }}" method="POST" enctype="multipart/form-data">
     @endif

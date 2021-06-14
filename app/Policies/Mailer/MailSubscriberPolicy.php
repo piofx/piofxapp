@@ -112,7 +112,15 @@ class MailSubscriberPolicy
         return false;
     }
 
-    public function createcsv(User $user, MailSubscriber $mailsubscriber)
+    public function samplecsv(User $user, MailSubscriber $mailsubscriber)
+    {
+        if($user->checkRole(['superadmin']))
+            return true;
+
+        return false;
+    }
+
+    public function download(User $user, MailSubscriber $mailsubscriber)
     {
         if($user->checkRole(['superadmin']))
             return true;

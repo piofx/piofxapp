@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class MailSubscriberController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         // load the app, module and component name to object params
         $this->app      =   'Mailer';
         $this->module   =   'MailSubscriber';
@@ -120,7 +121,6 @@ class MailSubscriberController extends Controller
         // load alerts if any
         $alert = session()->get('alert');
 
-
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','update')
@@ -201,7 +201,12 @@ class MailSubscriberController extends Controller
     {    
         // authorize the app
         $this->authorize('upload', $obj); 
-
+        
+        $objs = $obj->all('email');
+        foreach($objs as $obj)
+        {   
+            $existing_emails[] = $obj->email;
+        }
         if($file = $request->file('file'))
         {
    
@@ -255,12 +260,14 @@ class MailSubscriberController extends Controller
                         $subscriber = $obj->where('email', '=', $importData[0])->first();
                         if ($subscriber === null)
                         {
-                        $validate_email = debounce_valid_email($importData[0]);
-                        $objs = $obj->create(['email' => $importData[0],'info' => $importData[1],'status' => 1 ,'valid_email' => $validate_email,'client_id' => $request->client_id, 'agency_id' => $request->agency_id]);
+                            $validate_email = debounce_valid_email($importData[0]);
+                            $objs = $obj->create(['email' => $importData[0],'info' => $importData[1],'status' => 1 ,'valid_email' => $validate_email,'client_id' => $request->client_id, 'agency_id' => $request->agency_id]);   
                         }
                         else
                         {
-                            continue;
+                            $subscriber->info = $importData[1];
+                            $subscriber->save();
+                            
                         }
                     }
                     $alert = '('.$this->app.'/'.$this->module.') Imported Successfully ';
@@ -284,13 +291,13 @@ class MailSubscriberController extends Controller
 
     }
     
-    public function createcsv(Obj $obj, Request $request)
+    public function samplecsv(Obj $obj, Request $request , $fileName = 'file.csv')
     {
         // authorize the app
-        $this->authorize('createcsv', $obj);
-
-        $headers = array("email","info");
-        $data = array(
+        $this->authorize('samplecsv', $obj);
+        
+        $columns = array("email","info");
+        $rows = array(
             array(
                 "email" => "sabiha@gmail.com",
                 "info"  => "2587413698,btech,tkr",
@@ -299,30 +306,42 @@ class MailSubscriberController extends Controller
                 "email" => "piofx@gmail.com",
                 "info"  => "2587413698,btech,tkr",
             ),
-            array(
-                "email" => "*************************",
-                "info"  => "***********************End Of The File****************************************",
-            ),
-            array(
-                "email" => "*************************",
-                "info"  => "***********************Ignore The Below Data**********************************",
-            ),
-
         );
-        $new_csv = fopen('report.csv', 'w');
-        fputcsv($new_csv, $headers);
-        foreach($data as $fields)
-        {
-            fputcsv($new_csv,$fields);
-        }
-        fclose($new_csv);
-
-        // output headers so that the file is downloaded rather than displayed
-        header("Content-type: text/csv");
-        header("Content-disposition: attachment; filename = report.csv");
-        header('Pragma: no-cache');
-        readfile("report.csv");
+        return getCsv($columns, $rows, 'data_'.request()->get('client.name').'_'.strtotime("now").'_form_data.csv');     
     }
+   
+    public function download(Obj $obj, Request $request , $fileName = 'file.csv')
+    {   
+        // authorize the app
+        $this->authorize('download', $obj);
+        
+        $tasks = $obj->all();
 
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
 
+        $columns = array('email', 'info');
+
+        $callback = function() use($tasks, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($tasks as $task) {
+                $row['email']  = $task->email;
+                $row['info']    = $task->info;
+                fputcsv($file, array($row['email'], $row['info']));
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+   
+    } 
+
+   
 }
+

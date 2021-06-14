@@ -104,6 +104,14 @@ class MailCampaignPolicy
         return false;
     }
 
+    public function resendmails(User $user, MailCampaign $mailcampaign)
+    {
+        if($user->checkRole(['superadmin']))
+            return true;
+
+        return false;
+    }
+
     public function before(User $user, $ability)
     {
         if($user->isRole('superadmin'))
