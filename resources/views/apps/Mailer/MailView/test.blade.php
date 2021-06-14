@@ -5,8 +5,7 @@
 </head>
 <body>
 <p>Hello! This is a test email.</p>
-{{$sample}} - {{$details}}
-	
+{{$data}}
 </body>
 </html>
 
