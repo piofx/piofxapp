@@ -25,7 +25,7 @@
                                                                 <h5 class="m-0 mb-1 mb-lg-0">'. ucwords(str_replace('_', ' ', $k)) .'</h5>
                                                             </div>
                                                             <div class="col-12 col-lg-10 p-1 px-lg-3">
-                                                                <input type="text" name="settings-array-'. $key. '-' .$t .'-key[]" class="form-control" value="'. $k .'">
+                                                                <input type="text" hidden name="settings-array-'. $key. '-' .$t .'-key[]" class="form-control" value="'. $k .'">
                                                                 <input type="text" name="settings-array-'. $key. '-' .$t .'-value[]" class="form-control" value="'. $s .'">
                                                             </div>
                                                         </div>';

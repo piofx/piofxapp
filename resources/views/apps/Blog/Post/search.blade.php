@@ -12,7 +12,7 @@
                     <div class="border-1 rounded-3 shadow d-flex align-items-center p-3">
                         <input type="text" class="form-control form-control-lg border-0 outline-0 shadow-none" name="query"
                                     placeholder="@if($settings->language == 'telugu') ఎడైనా వెతకండి @else Search Something @endif...">
-                        <button type="submit" class="btn btn-block btn-outline-primary btn-lg">@if($settings->language == 'telugu') వెతకండి @else Search @endif</button>
+                        <button type="submit" class="btn btn-outline-primary btn-lg">@if($settings->language == 'telugu') వెతకండి @else Search @endif</button>
                     </div>
                 </form>
                 <!-- End Form -->
@@ -37,7 +37,11 @@
                                             $path = explode(".", $path[1]);
                                             $path = $path[0];
                                         @endphp
-                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
+                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                        @else
+                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                        @endif
                                     </figure>
                                 @endif
                             @endif
@@ -67,7 +71,7 @@
         </div>
 
         <div class="my-3">
-            {{ $objs->links() }}
+            {{ $objs->appends(["query"=>request()->get('query'), "page"=>request()->get('page')])->links() }}
         </div>
     
     </div>

@@ -1,10 +1,9 @@
 <x-dynamic-component :component="$app->componentName">
 
     <div class="container space-top-3">
-
         <!-- Ad -->
         <div class="">
-            @if($settings->ads)
+            @if(!empty($settings->ads))
                 @foreach($settings->ads as $ad)
                     @if($ad->position == 'before-body')
                         {!! $ad->content !!}
@@ -150,7 +149,7 @@
                                                     $path = $path[0];
                                                 @endphp
                                                 @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.jpg') }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($f->image) }}">
                                                 @endif
@@ -250,7 +249,7 @@
                 <div class="col-12 col-lg-8"> 
                     <!-- Ad -->
                     <div class="mb-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'before-content')
                                     {!! $ad->content !!}
@@ -288,8 +287,8 @@
                                                         <div class="card-body p-3 p-md-4">
                                                             <h5 class=""><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h5>
                                                             <div class="mb-3">
-                                                                @if($obj->tags)
-                                                                    @foreach($obj->tags as $tag)
+                                                                @if(!empty($tags))
+                                                                    @foreach($tags as $tag)
                                                                         <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
                                                                     @endforeach
                                                                 @endif
@@ -312,8 +311,8 @@
                                                                 <p>{{ $content }}...</p>
                                                             @endif
                                                             <div class="mb-3">
-                                                                @if($obj->tags)
-                                                                    @foreach($obj->tags as $tag)
+                                                                @if(!empty($tags))
+                                                                    @foreach($tags as $tag)
                                                                         <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
                                                                     @endforeach
                                                                 @endif
@@ -332,7 +331,7 @@
                     
                     <!-- Ad -->
                     <div class="my-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'after-content')
                                     {!! $ad->content !!}
@@ -358,7 +357,7 @@
 
                     <!-- Ad -->
                     <div class="my-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'sidebar-top')
                                     {!! $ad->content !!}
@@ -427,7 +426,7 @@
 
                         <!-- Ad -->
                         <div class="my-3">
-                            @if($settings->ads)
+                            @if(!empty($settings->ads))
                                 @foreach($settings->ads as $ad)
                                     @if($ad->position == 'sidebar-bottom')
                                         {!! $ad->content !!}
@@ -444,7 +443,7 @@
             
             <!-- Ad -->
             <div class="my-3">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'after-body')
                             {!! $ad->content !!}

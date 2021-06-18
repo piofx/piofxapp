@@ -16,15 +16,27 @@ class BlogSettings extends Model
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
         if(Storage::disk("s3")->exists($settingsfilename)){
+            // Retrieve settings
+            $settings = json_decode(Storage::disk("s3")->get($settingsfilename), true);
+            // check if anything is missing in default structure
+            if(!isset($settings['home_layout']) || !isset($settings['post_layout']) || !isset($settings['comments']) || !isset($settings['language'])){
+                $settings = json_encode(array(
+                "home_layout" => "default",
+                "post_layout" => "right",
+                "comments" => 'false',
+                "language" => "english",
+                ), JSON_PRETTY_PRINT);
+                Storage::disk("s3")->put($settingsfilename, $settings);
+            }
             $settings = json_decode(Storage::disk("s3")->get($settingsfilename));
-          
         }
         else{
             // Default Settings
             $settings = json_encode(array(
                 "home_layout" => "default",
                 "post_layout" => "right",
-                "comments" => false,
+                "comments" => 'false',
+                "language" => 'english',
                 "ads" => [
                        array(
                             "content" => "<a href='#'><img src='https://imgur.com/zIAYYIL.png' class='img-fluid rounded-lg'></a>",

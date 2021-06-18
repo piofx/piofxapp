@@ -65,7 +65,7 @@
                                     <div class="media align-items-center mb-3" data-hs-slick-carousel-animation="fadeInUp">
                                         @if($author->image)
                                             <div class="avatar avatar-circle">
-                                            @php
+                                                @php
                                                     $path = explode("/", $author->image);
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
@@ -155,7 +155,7 @@
 
                 <!-- Ad -->
                 <div class="mb-3">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'before-content')
                                 {!! $ad->content !!}
@@ -191,7 +191,6 @@
                                                 </span>
                                             @endif
                                             <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h3>
-
                                             @if($obj->excerpt)
                                                 <p>{!! substr($obj->excerpt, 0, 200) !!}...</p>
                                             @else
@@ -252,7 +251,7 @@
 
                 <!-- Ad -->
                 <div class="my-3">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'after-content')
                                 {!! $ad->content !!}
@@ -272,12 +271,12 @@
                     <!-- Search Form -->
                     <form action="{{ route($app->module.'.search') }}" method="GET">
                         <div class="input-group mb-3"> 
-                        <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary btn-md" type="submit">
-                            <i class="fa fa-search"></i>
-                            </button>
-                        </div>
+                            <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary btn-md" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
                     </form>
                     <!-- End Search Form -->
@@ -285,7 +284,7 @@
 
                 <!-- Ad -->
                 <div class="my-5">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'sidebar-top')
                                 {!! $ad->content !!}
@@ -370,7 +369,7 @@
 
                 <!-- Ad -->
                 <div class="my-5">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'sidebar-bottom')
                                 {!! $ad->content !!}
@@ -385,7 +384,7 @@
 
         <!-- Ad -->
         <div class="my-3">
-            @if($settings->ads)
+            @if(!empty($settings->ads))
                 @foreach($settings->ads as $ad)
                     @if($ad->position == 'after-body')
                         {!! $ad->content !!}

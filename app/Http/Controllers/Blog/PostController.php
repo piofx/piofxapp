@@ -45,22 +45,48 @@ class PostController extends Controller
 
         //deletes cache data
         if($request->input('refresh')){
+            Cache::forget('posts_'.request()->get('client.id'));
+            Cache::forget('featured_'.request()->get('client.id'));
+            Cache::forget('popular_'.request()->get('client.id'));
             Cache::forget('categories_'.request()->get('client.id'));
+            Cache::forget('tags_'.request()->get('client.id'));
+            Cache::forget('blogSettings_'.request()->get('client.id'));
+
+            // Update View Count
+            // Retrieve all posts
+            $slugs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get('slug');
+            foreach($slugs as $slug){
+                $slug = $slug['slug'];
+                $postViews = Cache::get('postViews_'.request()->get('client.id').'_'.$slug);
+                if($postViews){
+                    $obj->where("slug", $slug)->update(["views" => $postViews]);
+                }
+            }
         }
 
-        // Cache the data
-        $objs = Cache::get('posts_'.request()->get('client.id'));
+        // Check if pagination is clicked 
+        if(!empty($request->query()['page']) && $request->query()['page'] > 1){
+            // Retrieve all posts
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('5');
+        }else{
+            $objs = Cache::get('posts_'.request()->get('client.id'));
+            if(!$objs){
+                // Retrieve all posts
+                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('5');
+                Cache::forever('posts_'.request()->get('client.id'), $objs);
+            }
+        }
+
+        // Cached data
         $featured = Cache::get('featured_'.request()->get('client.id'));
         $popular = Cache::get('popular_'.request()->get('client.id'));
         $categories = Cache::get('categories_'.request()->get('client.id'));
         $tags = Cache::get('tags_'.request()->get('client.id'));
-        $settings = Cache::get('settings_'.request()->get('client.id'));
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
 
-        if(!$objs || !$featured || !$popular || !$categories || !$tags || !$settings){
-            // Retrieve all posts
-            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('5');
+        if(!$featured || !$popular || !$categories || !$tags || !$settings){
             // Retrieve Featured Posts
-            $featured = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("user")->where('featured', 'on')->orderBy("id", 'desc')->get();
+            $featured = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('category')->with("user")->where('featured', 'on')->orderBy("id", 'desc')->get();
             // Retrieve Popular Posts
             $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
              // Retrieve all categories
@@ -70,12 +96,11 @@ class PostController extends Controller
             // Retrieve Settings
             $settings = $blogSettings->getSettings();
 
-            Cache::forever('posts_'.request()->get('client.id'), $objs);
             Cache::forever('featured_'.request()->get('client.id'), $featured);
             Cache::forever('popular_'.request()->get('client.id'), $popular);
             Cache::forever('categories_'.request()->get('client.id'), $categories);
             Cache::forever('tags_'.request()->get('client.id'), $tags);
-            Cache::forever('settings_'.request()->get('client.id'), $settings);
+            Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
         
         // Check if scheduled date is in the past. if true, change status to  1
@@ -211,34 +236,84 @@ class PostController extends Controller
      * @param  \App\Models\Blog\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Obj $obj, $slug, Category $category, Tag $tag, User $user, BlogSettings $settings, Request $request)
+    public function show(Obj $obj, $slug, Category $category, Tag $tag, User $user, BlogSettings $blogSettings, Request $request)
     {
-        // Retrieve specific Record
-        $obj = $obj->where("slug", $slug)->with('category')->with('tags')->first()                  ;
-        // change the componentname from admin to client 
-        $this->componentName = componentName('client');
-
         //deletes cache data
         if($request->input('refresh')){
+            Cache::forget('post_'.request()->get('client.id').'_'.$slug);
             Cache::forget('categories_'.request()->get('client.id'));
+            Cache::forget('tags_'.request()->get('client.id'));
+            Cache::forget('author_'.request()->get('client.id').'_'.$slug);
+            Cache::forget('blogSettings_'.request()->get('client.id'));
+            Cache::forget('popular_'.request()->get('client.id'));
+            Cache::forget('related_'.request()->get('client.id').'_'.$slug);
+            Cache::forget('postCategory_'.request()->get('client.id').'_'.$slug);
+            Cache::forget('postTags_'.request()->get('client.id').'_'.$slug);
+
+            // Update View Count
+            $postViews = Cache::get('postViews_'.request()->get('client.id').'_'.$slug);
+            $obj->where("slug", $slug)->update(["views" => $postViews]);
+            Cache::forget('postViews_'.request()->get('client.id').'_'.$slug);
         }
-
-
-        // Retrieve all categories
-        // $categories =Cache::get('categories_'.request()->get('client.id'));
-
-        // if(!$categories){
-        //     $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
-        //     Cache::forever('categories_'.request()->get('client.id'),$categories);
-        // }
         
+        // Update post Views
+        $postViews = Cache::get('postViews_'.request()->get('client.id').'_'.$slug);
+        Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews+1);
+        $postViews = Cache::get('postViews_'.request()->get('client.id').'_'.$slug);
 
+        // Cached data
+        $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
+        $categories = Cache::get('categories_'.request()->get('client.id'));
+        $tags = Cache::get('tags_'.request()->get('client.id'));
+        $author = Cache::get('author_'.request()->get('client.id').'_'.$slug);
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+        $popular = Cache::get('popular_'.request()->get('client.id'));
+        $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
+        $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
+        $postTags = Cache::get('postTags_'.request()->get('client.id').'_'.$slug);
 
-        // Retrieve all tags
-        $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+        if(!$post || !$categories || !$tags || !$author || !$settings || !$popular || !$related || !$postCategory || !$postTags){
+            // Retrieve specific record views
+            $post = $obj->where("slug", $slug)->first();
+            // Retrieving post views
+            $postViews = $post->views;
+            // Update View Count
+            $obj->where("slug", $slug)->update(["views" => $postViews+1]);
+            // Retrieve specific Record
+            $post = $obj->where("slug", $slug)->with('category')->with('tags')->first();
+            // Retrieving post views
+            $postViews = $post->views;
 
-        // Retrieve Author data
-        $author = $user->where("id", $obj->user_id)->first();
+            // Retrieve all categories
+            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            //  Retrieve all tags
+            $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Retrieve Author data
+            $author = $user->where("id", $post->user_id)->first();
+            // Retrieve Settings
+            $settings = $blogSettings->getSettings();
+            // Retrieve Popular Posts
+            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            // Retrieve related posts
+            $related = $post->category->posts->take(3);
+            // Retrieve category of the post
+            $postCategory = $post->category;
+            // Get tags related to the post
+            $postTags = $post->tags;
+
+            Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
+            Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews);
+            Cache::forever('categories_'.request()->get('client.id'), $categories);
+            Cache::forever('tags_'.request()->get('client.id'), $tags);
+            Cache::forever('author_'.request()->get('client.id').'_'.$slug, $author);
+            Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
+            Cache::forever('popular_'.request()->get('client.id'), $popular);
+            Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
+            Cache::forever('postCategory_'.request()->get('client.id').'_'.$slug, $postCategory);
+            Cache::forever('postTags_'.request()->get('client.id').'_'.$slug, $postTags);
+        }
+        // reassigning post variable
+        $obj = $post;
 
         // Check if scheduled date is in the past. if true, change status to  1
         if(!empty($obj->published_at)){
@@ -255,15 +330,8 @@ class PostController extends Controller
             }
         }
 
-        
-        $obj->where("slug", $slug)->update(["views" => $obj->views+1]);
-        $obj = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
-
-        // Retrieve Settings
-        $settings = $settings->getSettings();
-
-        // Retrieve Popular Posts
-        $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+        // change the componentname from admin to client 
+        $this->componentName = componentName('client');
 
         return view("apps.".$this->app.".".$this->module.".show")
                 ->with("app", $this)
@@ -271,6 +339,9 @@ class PostController extends Controller
                 ->with("settings", $settings)
                 ->with("author", $author)
                 ->with("popular", $popular)
+                ->with("related", $related)
+                ->with("postCategory", $postCategory)
+                ->with("postTags", $postTags)
                 ->with("obj", $obj);
     }
 
@@ -469,25 +540,37 @@ class PostController extends Controller
     }
 
     // Search for blog posts
-    public function search(Obj $obj, Request $request, BlogSettings $settings){
+    public function search(Obj $obj, Request $request, BlogSettings $blogSettings){
         // Get the search query
-        $query = $request->input("query");
+        $query = $request->query()['query'];
 
+        if(request()->get('refresh')){
+            Cache::forget('blogSettings_'.request()->get('client.id'));
+        }
+
+        // Cached Data
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+
+        if(!$settings){
+            // Retrieve Settings
+            $settings = $blogSettings->getSettings();
+
+            Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
+        }
+
+        // Retrieve ids of all posts which match title with the query string
         $title_ids = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("title", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
-
+        // Retrieve ids of all posts which match category name with the query string
         $category_ids = Category::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
         $category_ids = Obj::whereIn("category_id", $category_ids)->get("id")->pluck("id")->toArray();
-        
+        // Retrieve ids of all posts which match tag name with the query string
         $tag_ids = Tag::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
         $tag_ids = Obj::whereIn("category_id", $tag_ids)->get("id")->pluck("id")->toArray();
-
+        
+        // Remove duplicates from the ids list and create a new array
         $post_ids = array_unique(array_merge($title_ids,$category_ids, $tag_ids), SORT_REGULAR);
-
         // Retrieve posts which match the given title query
-        $objs = $obj->whereIn("id", $post_ids)->where('status', 1)->paginate(6);
-
-        // Retrieve Settings
-        $settings = $settings->getSettings();
+        $objs = $obj->whereIn("id", $post_ids)->where('status', 1)->with('category')->with('tags')->paginate(6);
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
@@ -525,15 +608,42 @@ class PostController extends Controller
     }
 
     // List out all posts by a author
-    public function author(Obj $obj, $id, User $user, BlogSettings $settings){
+    public function author(Obj $obj, $id, User $user, BlogSettings $blogSettings, Request $request){
+        // delete cache data
+        if(!empty($request->query()['refresh']) && $request->query()['refresh']){
+            Cache::forget('authorPosts_'.request()->get('client.id').'_'.$id);
+            Cache::forget('blogSettings_'.request()->get('client.id'));
+        }
 
-        // Retrieve all records
-        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("user_id", $id)->with('category')->with('tags')->orderBy("id", 'desc')->paginate('12');
+        // Check if pagination is clicked 
+        if(!empty($request->query()['page']) && $request->query()['page'] > 1){
+            // Retrieve all records
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("user_id", $id)->with('category')->with('tags')->orderBy("id", 'desc')->paginate('12');
 
-        $author = $user->where("id", $id)->first();
+            Cache::forever('authorPosts_'.request()->get('client.id').'_'.$id, $objs);
+        }else{
+            $objs = Cache::get('authorPosts_'.request()->get('client.id')."_".$id);
+            if(!$objs){
+                // Retrieve all records
+                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("user_id", $id)->with('category')->with('tags')->orderBy("id", 'desc')->paginate('12');
 
-        // Retrieve Settings
-        $settings = $settings->getSettings();
+                Cache::forever('authorPosts_'.request()->get('client.id').'_'.$id, $objs);
+            }
+        }
+
+        // Cached Data
+        $author = Cache::get('author_'.request()->get('client.id').'_'.$id);
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+
+        if(!$author || !$settings){
+            // Get author data
+            $author = $user->where("id", $id)->first();
+            // Retrieve Settings
+            $settings = $blogSettings->getSettings();
+
+            Cache::forever('author_'.request()->get('client.id').'_'.$id, $author);
+            Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
+        }
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');

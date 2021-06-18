@@ -13,7 +13,7 @@
                         <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
                     </div>
                 @else
-                    <h1 class="bg-soft-primary rounded-circle text-primary m-0 px-4 py-3">{{ strtoupper($author->name[0]) }}</h1>
+                    <h1 class="bg-soft-primary rounded-circle text-primary m-0 px-5 py-3">{{ strtoupper($author->name[0]) }}</h1>
                 @endif
             </div>
             <h3 class="m-0 mt-3">{{ $author->name }}</h3>
@@ -37,7 +37,11 @@
                                     $path = explode(".", $path[1]);
                                     $path = $path[0];
                                 @endphp
-                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
+                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                @else
+                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                @endif
                             @endif
                         @endif
                         <div class="card-body">

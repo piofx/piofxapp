@@ -4,7 +4,7 @@
 
         <!-- Ad -->
         <div class="">
-            @if($settings->ads)
+            @if(!empty($settings->ads))
                 @foreach($settings->ads as $ad)
                     @if($ad->position == 'before-body')
                         {!! $ad->content !!}
@@ -254,7 +254,7 @@
                 <div class="col-12 col-lg-8">
                     <!-- Ad -->
                     <div class="mb-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'before-content')
                                     {!! $ad->content !!}
@@ -292,8 +292,8 @@
                                                                 <div class="card-body">
                                                                     <h5><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h5>
                                                                     <div class="mb-3">
-                                                                        @if($obj->tags)
-                                                                            @foreach($obj->tags as $tag)
+                                                                        @if(!empty($tags))
+                                                                            @foreach($tags as $tag)
                                                                                 <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
                                                                             @endforeach
                                                                         @endif
@@ -308,8 +308,8 @@
                                                                     <div class="card-body">
                                                                         <h5 class="mb-0">{{ $obj->title }}</h5>
                                                                         <div class="mb-3">
-                                                                            @if($obj->tags)
-                                                                                @foreach($obj->tags as $tag)
+                                                                            @if(!empty($tags))
+                                                                                @foreach($tags as $tag)
                                                                                     <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
                                                                                 @endforeach
                                                                             @endif
@@ -341,7 +341,7 @@
                     </div>
                     <!-- Ad -->
                     <div class="my-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'after-content')
                                     {!! $ad->content !!}
@@ -367,7 +367,7 @@
 
                     <!-- Ad -->
                     <div class="my-3">
-                        @if($settings->ads)
+                        @if(!empty($settings->ads))
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'sidebar-top')
                                     {!! $ad->content !!}
@@ -436,7 +436,7 @@
 
                         <!-- Ad -->
                         <div class="my-3">
-                            @if($settings->ads)
+                            @if(!empty($settings->ads))
                                 @foreach($settings->ads as $ad)
                                     @if($ad->position == 'sidebar-bottom')
                                         {!! $ad->content !!}
@@ -452,7 +452,7 @@
 
             <!-- Ad -->
             <div class="my-3">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'after-body')
                             {!! $ad->content !!}

@@ -5,7 +5,7 @@
 
     <!-- Ad -->
     <div class="">
-        @if($settings->ads)
+        @if(!empty($settings->ads))
             @foreach($settings->ads as $ad)
                 @if($ad->position == 'before-body')
                     {!! $ad->content !!}
@@ -24,7 +24,7 @@
             <div class="col-12 col-lg-4 d-none d-lg-block">
                 <!-- Ad -->
                 <div class="mb-5">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'sidebar-top')
                                 {!! $ad->content !!}
@@ -36,11 +36,11 @@
 
                 <!-- Related Posts Left Section -->
                 <div class="my-5">
-                    @if($obj->category && count($obj->category->posts) > 1)
+                    @if(!empty($related))
                         <div class="my-3">
                             <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                         </div>
-                        @foreach($obj->category->posts->take(4) as $post)
+                        @foreach($related as $post)
                             @if($post->id != $obj->id)
                                 @if(!empty($post->image) && strlen($post->image) > 5)
                                     @if(Storage::disk('s3')->exists($post->image))
@@ -146,7 +146,7 @@
                 <!-- End Popular Posts -->
                 <!-- Ad -->
                 <div class="my-5">
-                    @if($settings->ads)
+                    @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'sidebar-bottom')
                                 {!! $ad->content !!}
@@ -189,8 +189,8 @@
 
             <div class="mb-3">
                 <h1>{{$obj->title}}</h1>
-                @if($obj->category)
-                    <a href="{{ route('Category.show', $obj->category->slug) }}" class="h5 text-decoration-none"><span class="badge badge-dark">{{ $obj->category->name }}</span></a>
+                @if(!empty($postCategory))
+                    <a href="{{ route('Category.show', $postCategory->slug) }}" class="h5 text-decoration-none"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
                 @endif
             </div>
 
@@ -199,7 +199,7 @@
                 <div class="row align-items-md-center">
                     <div class="col-7 p-0 pl-3">
                         <div class="d-flex align-items-center">
-                            @if($author)
+                            @if(!empty($author))
                                 @if($author->image)
                                     <div class="rounded-circle">
                                         @php
@@ -252,7 +252,7 @@
 
             <!-- Ad -->
             <div class="my-5">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'before-content')
                             {!! $ad->content !!}
@@ -283,8 +283,8 @@
             <!-- Tags -->
             <div class="mt-4">
                 <h4>Tags</h4>
-                @if($obj->tags)
-                    @foreach($obj->tags as $tag)
+                @if(!empty($postTags))
+                    @foreach($postTags as $tag)
                         <a class="btn btn-xs btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                     @endforeach
                 @endif
@@ -315,7 +315,7 @@
 
             <!-- Ad -->
             <div class="my-5">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'after-content')
                             {!! $ad->content !!}
@@ -325,15 +325,37 @@
             </div>
             <!-- End Ad Section -->
 
+            <!-- Newsletter -->
+            <div class="bg-soft-danger p-5 rounded-lg rounded-3">
+                <div class="row">
+                    <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
+                        <div class="mb-3">
+                            <h2 class="m-0">Liked what you have read?</h2>
+                            <h5 class="text-muted">Subscribe to our Newsletter</h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <form action="" method="POST">
+                            <input type="text" name="name" placeholder="Name" class="form-control mb-2">
+                            <input type="email" name="email" placeholder="Email" class="form-control mb-2">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-danger btn-sm">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Newsletter -->
+
             <!-- Related Posts Full Section -->
             @if($settings->post_layout == 'full')
             <div class="my-5 d-none d-lg-block">
-                @if($obj->category && count($obj->category->posts) > 1)
+                @if(!empty($related))
                     <div class="my-3">
                         <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                     </div>
                     <div class="row">
-                        @foreach($obj->category->posts->take(7) as $post)
+                        @foreach($related as $post)
                             @if($post->id != $obj->id)
                                 @if(!empty($post->image) && strlen($post->image) > 5)
                                     @if(Storage::disk('s3')->exists($post->image))
@@ -395,9 +417,9 @@
         <div class="d-lg-none px-3">
             <!-- Related Posts Right Section -->
             <div class="my-5">
-                @if($obj->category && count($obj->category->posts) > 1)
+                @if(!empty($related))
                     <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
-                    @foreach($obj->category->posts->take(4) as $post)
+                    @foreach($related as $post)
                         @if($post->id != $obj->id)
                             @if(!empty($post->image) && strlen($post->image) > 5)
                                 @if(Storage::disk('s3')->exists($post->image))
@@ -505,26 +527,25 @@
 
         @if($settings->post_layout == 'right')
         <div class="col-12 col-lg-4 d-none d-lg-block">
-
             <!-- Ad -->
-            <div class="my-5">
-                @if($settings->ads)
+            @if(!empty($settings->ads))
+                <div class="mb-5">
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'sidebar-top')
                             {!! $ad->content !!}
                         @endif
                     @endforeach
-                @endif
-            </div>
+                </div>
+            @endif
             <!-- End Ad Section -->
 
             <!-- Related Posts Right Section -->
-            <div class="my-5">
-                @if($obj->category && count($obj->category->posts) > 1)
+            <div class="mb-5">
+                @if(!empty($related))
                     <div class="my-3">
                         <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                     </div>
-                    @foreach($obj->category->posts->take(4) as $post)
+                    @foreach($related as $post)
                         @if($post->id != $obj->id)
                             @if(!empty($post->image) && strlen($post->image) > 5)
                                 @if(Storage::disk('s3')->exists($post->image))
@@ -572,7 +593,7 @@
             <!-- End Related Posts Section -->
 
             <!----- Tags section------>
-            <div class="my-5">
+            <div class="mb-5">
                 <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
                 @foreach($tags as $tag)
                 <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
@@ -581,7 +602,7 @@
             <!----- End Tags Section------>
 
             <!-- Popular Posts -->
-            <div class="my-5">
+            <div class="mb-5">
                 <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
                 @foreach($popular as $post)     
                     @if($post->status)
@@ -629,8 +650,8 @@
             </div>
             <!-- End Popular Posts -->
             <!-- Ad -->
-            <div class="my-3">
-                @if($settings->ads)
+            <div class="mb-3">
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'sidebar-bottom')
                             {!! $ad->content !!}
@@ -645,7 +666,7 @@
 
     <!-- Ad -->
     <div class="my-3">
-        @if($settings->ads)
+        @if(!empty($settings->ads))
             @foreach($settings->ads as $ad)
                 @if($ad->position == 'after-body')
                     {!! $ad->content !!}

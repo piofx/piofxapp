@@ -33,8 +33,6 @@ class BlogSettingsController extends Controller
         // Retrieve Settings
         $settings = $settings->getSettings();
 
-        //dd(json_decode($settings));
-
         return view("apps.".$this->app.".".$this->module.".index")
                 ->with("app", $this)
                 ->with("settings", $settings);

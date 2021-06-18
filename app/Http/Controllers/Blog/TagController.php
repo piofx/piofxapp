@@ -11,6 +11,7 @@ use App\Models\Blog\Post;
 use App\Models\Blog\Category;
 use App\Models\Blog\BlogSettings;
 
+use Illuminate\Support\Facades\Cache;
 
 class TagController extends Controller
 {
@@ -40,35 +41,73 @@ class TagController extends Controller
                 ->with("objs", $objs);    
     }
 
-    public function show($slug, Obj $obj, Post $post, Category $category, BlogSettings $settings)
+    public function show($slug, Obj $obj, Post $post, Category $category, BlogSettings $blogSettings, Request $request)
     {    
-        // Retrieve specific Record based on slug
-        $obj = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
-        // Retrieve that tag name
-        $tag = $obj->name;
-        // Retrieve records for that particular tag
-        $posts = $obj->posts()->paginate(5);
+        //deletes cache data
+        if($request->input('refresh')){
+          Cache::forget('tagPosts_'.request()->get('client.id')."_".$slug);
+          Cache::forget('tag_'.request()->get('client.id')."_".$slug);
+          Cache::forget('featured_'.request()->get('client.id'));
+          Cache::forget('popular_'.request()->get('client.id'));
+          Cache::forget('categories_'.request()->get('client.id'));
+          Cache::forget('tags_'.request()->get('client.id'));
+          Cache::forget('blogSettings_'.request()->get('client.id'));
+        }
 
-        // Retrieve all tags
-        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
-        // Retrieve all categories
-        $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
-        // Featured Posts
-        $featured = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('featured', 'on')->orderBy("id", 'desc')->get();
+		// Retrieve specific Record based on slug
+		$tag = Cache::get("tag_".request()->get('client.id')."_".$slug);
+		if(!$tag){
+            // Retrieve specific Record based on slug
+            $tag = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
+			Cache::forever('tag_'.request()->get('client.id')."_".$slug, $tag);
+		}
 
-        // Retrieve Popular Posts
-        $popular = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+        // Check if pagination is clicked 
+        if(!empty($request->query()['page']) && $request->query()['page'] > 1){
+            // Retrieve records for that particular tag
+            $posts = $tag->posts()->with('category')->with('tags')->paginate(5);
+        }else{
+            $posts = Cache::get('tagPosts_'.request()->get('client.id')."_".$slug);
+            if(!$posts){
+                // Retrieve all posts
+                $posts = $tag->posts()->with('category')->with('tags')->paginate(5);
+                Cache::forever('tagPosts_'.request()->get('client.id')."_".$slug, $posts);
+            }
+        }
+
+		// Cached Data
+        $objs = Cache::get('tags_'.request()->get('client.id'));
+        $featured = Cache::get('featured_'.request()->get('client.id'));
+        $popular = Cache::get('popular_'.request()->get('client.id'));
+        $categories = Cache::get('categories_'.request()->get('client.id'));
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+
+        if(!$objs || !$featured || !$popular || !$categories || !$settings){
+			// Retrieve all tags
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
+			// Featured Posts
+			$featured = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('featured', 'on')->orderBy("id", 'desc')->get();
+			// Retrieve Popular Posts
+			$popular = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            // Retrieve all categories
+            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('posts')->get();
+			// Retrieve Settings
+			$settings = $blogSettings->getSettings();
+
+            Cache::forever('tags_'.request()->get('client.id'), $objs);
+			Cache::forever('featured_'.request()->get('client.id'), $featured);
+            Cache::forever('popular_'.request()->get('client.id'), $popular);
+            Cache::forever('categories_'.request()->get('client.id'), $categories);
+            Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
+        }
                 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
 
-        // Retrieve Settings
-        $settings = $settings->getSettings();
-
         return view("apps.".$this->app.".".$this->module.".show")
                 ->with("app", $this)
                 ->with("objs", $objs)
-                ->with("tag", $tag)
+                ->with("tag", $tag->name)
                 ->with("posts", $posts)
                 ->with("categories", $categories)
                 ->with("featured", $featured)
