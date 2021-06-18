@@ -282,14 +282,14 @@ class MailCampaignController extends Controller
             $validate_email = debounce_valid_email($em);
             if($validate_email == 1)
             {
-            $details = ['email' => $log->email];
+            $details = ['email' => $log->email , 'content' => $log->message];
             $identity = $log->id;
             $data = $id;
             SendEmail::dispatch($details,$identity,$data)->delay(Carbon::now()->addMinutes(0));
             }
         }
         // flash message and redirect to controller show page
-        $alert = 'Mails Resended';
+        $alert = 'Mails Resent';
         return redirect()->route($this->module.'.show',$id)->with('alert',$alert);
     }
 }

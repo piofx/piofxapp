@@ -51,6 +51,10 @@ class ThemeController extends Controller
         // retrive the listing
         $objs = $obj->getRecords($item,30,$user);
 
+        //remove html data in request params (as its clashing with pagination)
+        $request->request->remove('app.theme.prefix');
+        $request->request->remove('app.theme.suffix');
+
         //current theme
         $this->current_theme_id = $obj->getCurrentThemeID();
 
@@ -137,60 +141,86 @@ class ThemeController extends Controller
         //refresh cache
         Cache::forget('client_'.request()->getHttpHost());
 
-        //dump the pages
-        $pages = Page::where('theme_id',$id)->get();
-        foreach($pages as $page){
-            if($page->slug=='/'){
-                $filename = 'page_root.json';
-                $codefilename = 'root.php';
+
+        if($r->get('code')){
+            //dump the pages
+            $pages = Page::where('theme_id',$id)->get();
+            foreach($pages as $page){
+
+                $page->refreshCache($id);
+                if($page->slug=='/'){
+                    $fname = $filename = 'page_root.json';
+                    $codefilename = 'root.php';
+                }else if (strpos($page->slug, '/') !== false){
+                    $filename = 'page_'.$page->slug.'.json';
+                    $fname = 'page_'.str_replace('/','@',$page->slug).'.json';
+                    $codefilename = $page->slug.'.php';
+                }
+                else{
+                    $fname = $filename = 'page_'.$page->slug.'.json';
+                    $codefilename = $page->slug.'.php';
+                }
+
+                //json data file    
+                Storage::disk('public')->put('devmode/'.$id.'/data/'.$fname, json_encode($page,JSON_PRETTY_PRINT)); 
+                //html code file
+                Storage::disk('public')->put('devmode/'.$id.'/code/pages/'.$codefilename, $page->html); 
+                //settings code file
+                Storage::disk('public')->put('devmode/'.$id.'/code/settings/'.$filename, json_encode(json_decode($page->settings),JSON_PRETTY_PRINT)); 
             }
-            else{
-                $filename = 'page_'.$page->slug.'.json';
-                $codefilename = $page->slug.'.php';
+           
+
+            //dump the modules
+            $modules = Module::where('theme_id',$id)->get();
+            foreach($modules as $module){
+                //$module->refreshCache();
+                $filename = 'module_'.$module->slug.'.json';
+
+                $codefilename = $module->slug.'.php';
+
+                //json data file    
+                Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($module,JSON_PRETTY_PRINT)); 
+                //html code file
+                Storage::disk('public')->put('devmode/'.$id.'/code/modules/'.$codefilename, $module->html); 
+                //settings code file
+                Storage::disk('public')->put('devmode/'.$id.'/code/settings/'.$filename, json_encode(json_decode($module->settings),JSON_PRETTY_PRINT)); 
+          
             }
-            //json data file    
-            Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($page,JSON_PRETTY_PRINT)); 
-            //html code file
-            Storage::disk('public')->put('devmode/'.$id.'/code/pages/'.$codefilename, $page->html); 
-            //settings code file
-            Storage::disk('public')->put('devmode/'.$id.'/code/settings/'.$filename, json_encode(json_decode($page->settings),JSON_PRETTY_PRINT)); 
         }
 
-        //dump the modules
-        $modules = Module::where('theme_id',$id)->get();
-        foreach($modules as $module){
-            $filename = 'module_'.$module->slug.'.json';
-            $codefilename = $module->slug.'.php';
-            //json data file    
-            Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($module,JSON_PRETTY_PRINT)); 
-            //html code file
-            Storage::disk('public')->put('devmode/'.$id.'/code/modules/'.$codefilename, $module->html); 
-            //settings code file
-            Storage::disk('public')->put('devmode/'.$id.'/code/settings/'.$filename, json_encode(json_decode($module->settings),JSON_PRETTY_PRINT)); 
-      
-        }
+        if($r->get('s3')){
+            //dump the assets
+            $assets = Asset::where('theme_id',$id)->get();
+            foreach($assets as $asset){
+                $filename = 'asset_'.$asset->slug.'.json';
+                Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($asset,JSON_PRETTY_PRINT)); 
 
-        //dump the assets
-        $assets = Asset::where('theme_id',$id)->get();
-        foreach($assets as $asset){
-            $filename = 'asset_'.$asset->slug.'.json';
-            Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($asset,JSON_PRETTY_PRINT)); 
+                $fname = $asset->slug;
+                //filename
+                if (strpos($fname, 'file_') !== false) {
+                }else
+                    $fname = 'file_'.$fname;
 
-            $fname = $asset->slug;
-            //filename
-            if (strpos($fname, 'file_') !== false) {
-            }else
-                $fname = 'file_'.$fname;
+                $exists = false;
+                if($r->get('update')){
+                    $exists = Storage::disk('public')->exists('devmode/'.$id.'/code/assets/'.$asset->type.'/'.$fname);
+                    if($exists){
+                        $exists = true;
+                    }
+                }
 
-            //download files also
-            if(Storage::disk('s3')->exists('themes/'.$id.'/'.$fname)){
-               $f = Storage::disk('s3')->get('themes/'.$id.'/'.$fname);
-                Storage::disk('public')->put('devmode/'.$id.'/data/'.$fname, $f);  
-                //asset file
-                Storage::disk('public')->put('devmode/'.$id.'/code/assets/'.$asset->type.'/'.$fname, $f); 
+                if(!$exists){
+                   //download files also
+                    if(Storage::disk('s3')->exists('themes/'.$id.'/'.$fname)){
+                       $f = Storage::disk('s3')->get('themes/'.$id.'/'.$fname);
+                        Storage::disk('public')->put('devmode/'.$id.'/data/'.$fname, $f);  
+                        //asset file
+                        Storage::disk('public')->put('devmode/'.$id.'/code/assets/'.$asset->type.'/'.$fname, $f); 
 
+                    } 
+                }
+                
             }
-            
         }
 
         $alert = 'Theme developer mode activated!';
@@ -205,13 +235,16 @@ class ThemeController extends Controller
      */
     public function devmodezip($id,Request $r){
 
+
+        $obj = Obj::where('id',$id)->first();
         $alert = 'Request params are required!';
         if($r->get('code')){
-            $obj = Obj::where('id',$id)->first();
+            
             //dump the theme data
             $filename = 'theme_'.$obj->slug.'.json';
             $obj->settings = Storage::disk('public')->get('devmode/'.$id.'/code/settings/'.$filename);
             Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+
             $obj->save();
             $alert = 'Theme code pushed to database!';
 
@@ -228,6 +261,7 @@ class ThemeController extends Controller
 
         //scan the directory, upload to s3 and update db tables
         if($r->get('s3')){
+
             $path = '../storage/app/public/devmode/'.$id.'/code/assets/';
             $scan = scandir($path);
             foreach($scan as $folder) {
@@ -238,8 +272,9 @@ class ThemeController extends Controller
                         if (!is_dir($path."/$file") && $file!='.' && $file!='..') {
                             //upload to s3
                             $f = Storage::disk('public')->path('devmode/'.$id.'/code/assets/'.$folder.'/'.$file);
+
+                            $p = Storage::disk('public')->putFileAs('devmode/'.$id.'/data',$f,$file);
                             $p = Storage::disk('s3')->putFileAs('themes/'.$id,$f,$file,'public');
-                            $p = Storage::disk('public')->putFileAs('devmode/'.$id.'/data/',$f,$file);
 
                             $slug = str_replace('file_','',$file);
                             $a = Asset::where('theme_id',$id)->where('slug',$slug)->first();
@@ -292,6 +327,26 @@ class ThemeController extends Controller
                 $data = file_get_contents(Storage::disk('public')->path('devmode/'.$id.'/code/settings/'.$file));
                 $settings[$pieces[0]][$settingfileslug] = json_encode(json_decode($data));  
               
+               }else if(is_dir($path."/$file") && $file!='.' && $file!='..' && $file!='.DS_Store'){
+                    $pa = '../storage/app/public/devmode/'.$id.'/code/settings/'.$file.'/';
+
+                    $sc = scandir($pa);
+                    foreach($sc as $fl) {
+                       if (!is_dir($path."/$fl") && $fl!='.' && $fl!='..') {
+                        if(strpos($fl,'_')!==false){
+                            $pieces = explode('_',$fl);
+                        }else{
+                            $pieces[0] = 'page';
+                            $pieces[1] = $fl;
+                        }
+
+                        $settingfileslug = str_replace('.json','',$pieces[1]);
+                        if($settingfileslug=='+')
+                            $settingfileslug = 'plus';
+                        $data = file_get_contents(Storage::disk('public')->path('devmode/'.$id.'/code/settings/'.$file.'/'.$fl));
+                        $settings[$pieces[0]][$settingfileslug] = json_encode(json_decode($data));  
+                        }
+                    }
                }
             }
 
@@ -299,6 +354,7 @@ class ThemeController extends Controller
             // modules
             // scan the directory of modules, update the jsonfiles and update db tables
             $path = '../storage/app/public/devmode/'.$id.'/code/modules/';
+            if(file_exists($path)){
             $scan = scandir($path);
             foreach($scan as $file) {
                if (!is_dir($path."/$file") && $file!='.' && $file!='..') {
@@ -306,7 +362,7 @@ class ThemeController extends Controller
                     $data = file_get_contents(Storage::disk('public')->path('devmode/'.$id.'/code/modules/'.$file));
                     $m = Module::where('theme_id',$id)->where('slug',$slug)->first();
 
-
+                    $m->refreshCache();
                     if($m){
                         $m->html = $data;
                         $m->html_minified = $m->minifyHtml($m->processPageModuleHtmlLocal($id,null,$data,$settings['module'][$slug],true));
@@ -342,56 +398,26 @@ class ThemeController extends Controller
                   
                }
             }
+            }
 
             // pages
             // sscan the directory of pages, update the jsonfiles and update db tables
             $path = '../storage/app/public/devmode/'.$id.'/code/pages/';
             $scan = scandir($path);
+        
             foreach($scan as $file) {
-               if (!is_dir($path."/$file") && $file!='.' && $file!='..') {
-                    $slug = str_replace('.php','',$file);
-                    $slugr = $slug;
-
-                    if($slug=='root'){
-                        $slug = '/';
+               if (!is_dir($path."/$file") && $file!='.' && $file!='..' && $file!='.DS_Store') {
+                    $this->contentUpload($id,null,$file,$settings,$r);
+               }else if(is_dir($path."/$file") && $file!='.' && $file!='..' && $file!='.DS_Store'){
+                    $pa = '../storage/app/public/devmode/'.$id.'/code/pages/'.$file.'/';
+                    $sc = scandir($pa);
+                    
+                    foreach($sc as $fl)
+                    if (!is_dir($pa."/$fl") && $fl!='.' && $fl!='..' && $fl!='.DS_Store') {
+                        $node = $file.'/';
+                       
+                        $this->contentUpload($id,$node,$fl,$settings,$r);
                     }
-                    if($slug=='+'){
-                        $slugr='plus';
-                    }
-                    $data = file_get_contents(Storage::disk('public')->path('devmode/'.$id.'/code/pages/'.$file));
-                    $p = Page::where('theme_id',$id)->where('slug',$slug)->first();
-                    if($p){
-                        $p->html = $data;
-
-                        $p->html_minified = $p->processHtmlLocal($id,$data,$settings['page'][$slugr],true);
-                        $p->settings = $settings['page'][$slugr];
-                        $p->admin = 0;
-                        $p->user_id = Auth::user()->id;
-                        $p->theme_id = $id;
-                        $p->client_id = $r->get('client.id');
-                        $p->agency_id = $r->get('agency.id');
-                        $p->status = 1;
-                        $p->save();
-
-                    }else{
-                        $p = new Page();
-                        $p->name = $slug;
-                        $p->slug = $slug;
-                        $p->html = $data;
-                        $p->html_minified = $p->processHtmlLocal($id,$data,$settings['page'][$slugr],true);
-                        $p->settings = $settings['page'][$slugr];
-                        $p->admin = 0;
-                        $p->user_id = Auth::user()->id;
-                        $p->theme_id = $id;
-                        $p->client_id = $r->get('client.id');
-                        $p->agency_id = $r->get('agency.id');
-                        $p->status = 1;
-                        $p->save();
-                    }
-
-                    //save the json file
-                    $pagefilename = 'page_'.$p->slug.'.json';
-                    Storage::disk('public')->put('devmode/'.$id.'/data/'.$pagefilename, json_encode($p,JSON_PRETTY_PRINT)); 
                }
             }
 
@@ -403,8 +429,7 @@ class ThemeController extends Controller
         //download zip 
         if($r->get('zip')){
             $zip = new ZipArchive;
-            $theme_slug= request()->get('client.theme.slug');
-            $fileName = 'app/public/theme_'.$theme_slug.'.zip';
+            $fileName = 'app/public/theme_'.$obj->slug.'_'.\Str::random(5).'.zip';
        
             if ($zip->open(storage_path($fileName), ZipArchive::CREATE) === TRUE)
             {
@@ -422,6 +447,74 @@ class ThemeController extends Controller
        
         
         return redirect()->route('Theme.show',$id)->with('alert',$alert);
+    }
+
+
+    public function contentUpload($id,$node,$file,$settings,$r){
+       
+        if($node){
+            $slugr = str_replace('.php','',$file);
+            $slug = $node.str_replace('.php','',$file);
+        }
+        else{
+            $slug = str_replace('.php','',$file);
+            $slugr = $slug;
+        }
+        
+        echo $slug;
+        $fslug = $slug;
+        if($slug=='root'){
+            $slug = '/';
+        }
+        if (strpos($slug, '/') !== false){
+
+            $fslug = str_replace('/','@',$slug);
+          
+        }
+        if($slug=='+'){
+            $slugr='plus';
+        }
+        $data = file_get_contents(Storage::disk('public')->path('devmode/'.$id.'/code/pages/'.$node.$file));
+        $p = Page::where('theme_id',$id)->where('slug',$slug)->first();
+        
+        
+        if($p){
+            $p->html = $data;
+
+            $p->html_minified = $p->processHtmlLocal($id,$data,$settings['page'][$slugr],true);
+            $p->settings = $settings['page'][$slugr];
+            $p->admin = 0;
+            $p->user_id = Auth::user()->id;
+            $p->theme_id = $id;
+            $p->client_id = $r->get('client.id');
+            $p->agency_id = $r->get('agency.id');
+            $p->status = 1;
+            $p->save();
+
+
+            $p->refreshCache($id);
+
+        }else{
+            $p = new Page();
+            $p->name = $slug;
+            $p->slug = $slug;
+            $p->html = $data;
+            $p->html_minified = $p->processHtmlLocal($id,$data,$settings['page'][$slugr],true);
+            $p->settings = $settings['page'][$slugr];
+            $p->admin = 0;
+            $p->user_id = Auth::user()->id;
+            $p->theme_id = $id;
+            $p->client_id = $r->get('client.id');
+            $p->agency_id = $r->get('agency.id');
+            $p->status = 1;
+            $p->save();
+        }
+
+
+        //save the json file
+        $pagefilename = 'page_'.$fslug.'.json';
+        Storage::disk('public')->put('devmode/'.$id.'/data/'.$pagefilename, json_encode($p,JSON_PRETTY_PRINT)); 
+
     }
 
 
@@ -444,10 +537,17 @@ class ThemeController extends Controller
         foreach($pages as $page){
             if($page->slug=='/')
                 $filename = 'page_root.json';
+            elseif (strpos($page->slug, '/') !== false){
+                $page->slug = str_replace('/','@',$page->slug);
+                $filename = 'page_'.$page->slug.'.json';
+               // dd($page->slug);
+            }   
             else
                 $filename = 'page_'.$page->slug.'.json';
             Storage::disk('private')->put('themes/'.$id.'/'.$filename, json_encode($page,JSON_PRETTY_PRINT)); 
+           
         }
+
 
         //dump the modules
         $modules = Module::where('theme_id',$id)->get();
@@ -455,6 +555,7 @@ class ThemeController extends Controller
             $filename = 'module_'.$module->slug.'.json';
             Storage::disk('private')->put('themes/'.$id.'/'.$filename, json_encode($module,JSON_PRETTY_PRINT)); 
         }
+
 
         //dump the assets
         $assets = Asset::where('theme_id',$id)->get();
@@ -502,6 +603,8 @@ class ThemeController extends Controller
             }
              
             $zip->close();
+        }else{
+
         }
     
         return response()->download(storage_path($fileName));
@@ -554,7 +657,7 @@ class ThemeController extends Controller
               if ($dh = opendir($dir)){
                 //identify  thee theme
                 while (($file = readdir($dh)) !== false){
-                    echo $file.' <br>';
+                    //echo $file.' <br>';
                     if($file !='..' && $file !='.' && $file!='__MACOSX'){
                        $filename = $file;
                        $theme = $obj->identifyTheme($obj,$dir,$filename);
@@ -566,6 +669,7 @@ class ThemeController extends Controller
 
                 closedir($dh);
               }
+
 
               if ($d = opendir($dir)){
                 //identify  thee theme
@@ -644,11 +748,16 @@ class ThemeController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
 
+
         //save settings if any
-        $obj->saveSettings();
+        $status = $obj->saveSettings();
 
         //load settings
         $settings = json_decode($obj->settings);
+
+        if($status)
+            $alert = 'Data is saved!';
+
         
 
         if($obj)

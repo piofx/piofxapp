@@ -27,6 +27,11 @@
 	@endif
 	<!--end::Alert-->
 
+<div class='row'>
+  <div class="col-12 col-md-2">
+    @include('apps.Page.snippets.menu')
+  </div>
+  <div class="col-12 col-md-10">
 	<!--begin::Titlecard-->
 	<x-snippets.cards.titlecard :title="$obj->name" :id="$obj->id" :module="$app->module" :obj="$obj" :appid="$app->id" />
 	<!--end::Titlecard-->
@@ -49,7 +54,7 @@
 		<div class="row mb-2">
 			<div class="col-md-4"><b>Path</b></div>
 			<div class="col-md-8">
-				<pre><code style="white-space: pre-wrap">{{ Storage::disk('s3')->url($obj->path)}} <a href="{{ Storage::disk('s3')->url($obj->path) }}" target="_blank" class="btn btn-sm btn-dark float-right"><i class="flaticon-db text-primary"></i> view asset</a></code></pre>
+				{{ Storage::disk('s3')->url($obj->path)}} <a href="{{ Storage::disk('s3')->url($obj->path) }}" target="_blank" class="btn btn-sm btn-dark float-right"><i class="flaticon-db text-primary"></i> view asset</a>
 			</div>
 		</div>
 		<div class="row mb-2">
@@ -74,5 +79,6 @@
 		</div>
 	</x-snippets.cards.basic>
 	<!--end::basic card-->   
-
+</div>
+</div>
 </x-dynamic-component>

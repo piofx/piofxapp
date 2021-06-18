@@ -145,19 +145,19 @@
             @if($f['type']=='input')
             <div class="js-form-message form-group mb-4">
               <label for="emailAddressExample2" class="input-label">{{$f['name']}}</label>
-              <input type="text" class="form-control" name="settings_{{ str_replace(' ','_',$f['name'])}}" value="{{ key_match($f['name'], $form_data) }}">
+              <input type="text" class="form-control" name="settings_{{ str_replace(' ','_',$f['name'])}}" value="@if(!empty($form_data)){{ key_match($f['name'], $form_data) }}@endif">
             </div>
             @elseif($f['type']=='textarea')
             <div class="js-form-message form-group mb-4">
               <label for="emailAddressExample2" class="input-label">{{$f['name']}}</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="settings_{{ str_replace(' ','_',$f['name'])}}" rows="{{$f['values']}}">{{ key_match($f['name'], $form_data) }}</textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" name="settings_{{ str_replace(' ','_',$f['name'])}}" rows="{{$f['values']}}">@if(!empty($form_data)){{ key_match($f['name'], $form_data) }}@endif</textarea>
             </div>
             @elseif($f['type']=='radio')
             <div class="js-form-message form-group mb-4">
               <label for="emailAddressExample2" class="input-label">{{$f['name']}}</label>
               <select class="form-control" name="settings_{{ str_replace(' ','_',$f['name'])}}"  id="exampleFormControlSelect1">
                 @foreach($f['values'] as $v)
-                    <option value="{{$v}}" @if(value_match($f['name'], $v, $form_data)){{ 'selected' }}@endif>{{$v}}</option>
+                    <option value="{{$v}}" @if(!empty($form_data) && value_match($f['name'], $v, $form_data)){{ 'selected' }}@endif>{{$v}}</option>
                 @endforeach
               </select>
             </div>
@@ -174,7 +174,7 @@
                         @php
                             $name = str_replace(' ','_',$f['name']);
                         @endphp
-                        <input class="" name="settings_{{ str_replace(' ','_',$f['name'])}}[]" type="checkbox" @if(value_match($f['name'], $v, $form_data)){{ "checked" }} @endif value="{{$v}}" id="defaultCheck{{$m}}">
+                        <input class="" name="settings_{{ str_replace(' ','_',$f['name'])}}[]" type="checkbox" @if(!empty($form_data) && value_match($f['name'], $v, $form_data)){{ "checked" }} @endif value="{{$v}}" id="defaultCheck{{$m}}">
                         <label class="form-check-label" for="defaultCheck{{$m}}">
                             {{$v}}
                         </label>

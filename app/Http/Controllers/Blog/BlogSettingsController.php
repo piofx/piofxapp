@@ -33,11 +33,11 @@ class BlogSettingsController extends Controller
         // Retrieve Settings
         $settings = $settings->getSettings();
 
-        // ddd($settings);
+        //dd(json_decode($settings));
 
         return view("apps.".$this->app.".".$this->module.".index")
                 ->with("app", $this)
-                ->with("settings", json_encode($settings, JSON_PRETTY_PRINT));
+                ->with("settings", $settings);
     }
 
     /**
@@ -83,6 +83,7 @@ class BlogSettingsController extends Controller
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
         $settings = Storage::disk("s3")->get($settingsfilename);
+        // ddd(json_decode($settings));
 
         return view("apps.".$this->app.".".$this->module.".createedit")
                 ->with("app", $this)
@@ -99,10 +100,55 @@ class BlogSettingsController extends Controller
      */
     public function update(Request $request)
     {
-        $settings = $request->input('settings');
+        $settings = array();
+        $names = [];
+        if($request->input('mode') == 'normal'){
+
+            foreach($request->all() as $k => $value){
+                $keys = explode('-', $k);
+                if($keys[0] == 'settings' && $keys[1] != 'array'){
+                    $settings[$keys[1]] = $value;
+                }
+                elseif($keys[0] == 'settings' && $keys[1] == 'array'){
+                    $t = $keys[2];
+                    if(!in_array($keys[2], $names)){
+                        array_push($names, $keys[2]);
+                    }
+                }
+            }
+
+            foreach($names as $name){
+                $new_keys = [];
+                $temp = [];
+                foreach($request->all() as $k => $value){
+                    $keys = explode('-', $k);
+                    if(sizeof($keys) > 2 && $keys[2] == $name && $keys[4] == 'key'){
+                        foreach($value as $v ){
+                            array_push($new_keys, $v);
+                        }
+                    }
+                    elseif(sizeof($keys) > 2 && $keys[2] == $name && $keys[4] == 'value'){
+                        $t = array();
+                        foreach($value as $k => $v){
+                            $t[$new_keys[$k]] = $v;
+                        }
+                        array_push($temp, $t);
+                    }
+                }
+                $settings[$name] = $temp;
+
+            }
+            $settings = json_encode($settings, JSON_PRETTY_PRINT);
+        }
+        else{
+            $settings = $request->input('settings');
+            $settings = str_replace("\r", "", $settings);
+            $settings = str_replace("\t", "", $settings);
+        }
 
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
+
         Storage::disk("s3")->put($settingsfilename, $settings);
         
         return redirect()->route($this->module.'.index');

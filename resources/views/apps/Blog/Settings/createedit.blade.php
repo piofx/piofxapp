@@ -15,6 +15,7 @@
         </div>
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="mode" value="dev">
     </form>
 
 </x-dynamic-component>

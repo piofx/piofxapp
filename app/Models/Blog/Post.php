@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Blog\Category;
 use App\Models\Blog\Tag;
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Support\Facades\Cache;
 
 class Post extends Model
 {
@@ -28,15 +29,6 @@ class Post extends Model
 	{
 	    return $this->belongsTo(User::class);
 	}
-
-	//  /**
-	//  * Get the client that owns the page.
-	//  *
-	//  */
-	// public function client()
-	// {
-	//     return $this->belongsTo(Client::class);
-    // }
     
     /**
 	 * Get the client that owns the page.
@@ -54,4 +46,6 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+	// Cache the data
 }

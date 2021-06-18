@@ -167,6 +167,8 @@ class UserController extends Controller
             $form_data = json_decode($obj->json, true);
         }
 
+        // ddd($form_data);
+
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','update')
@@ -418,28 +420,52 @@ class UserController extends Controller
             abort(404);
     }
 
-    public function download(Obj $obj)
+    public function download(Obj $obj , $fileName = 'file.csv')
     {
 
         // Retrieve all the records
         $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
         
-        // Initialize empty arrays
+        // Retrieve all the records
+        $cols = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get('json');
+        
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
         $columns = ['name','email','client'];
-        $content = [];
-        $data = [];
-
-        // Get all the unique columns and content from the json data 
-        foreach($objs as $obj){
-            $row = [$obj->name,$obj->email,$obj->client->name];
-            if(!empty($obj->json)){
-                $columns = array_unique(array_merge($columns, array_keys(json_decode($obj->json, true))));
-                $data = array_merge($row, array_values(json_decode($obj->json, true)));
-                array_push($content, $data);
-            }
+        $file = fopen('php://output', 'w');
+        foreach($cols as $col)
+        {
+            if(!empty($col->json)){
+            $columns = array_unique(array_merge($columns, array_keys(json_decode($col->json, true))));
+            break;  
+            }  
+            else{
+                continue;
+            } 
         }
-        // Call helper function for creating and downloading csv
-        return getCsv($columns, $content, 'data_'.request()->get('client.name').'_'.strtotime("now").'_User_data.csv');
+        fputcsv($file, $columns);
+        fclose($file);
+        $callback = function() use($objs) {
+            $file = fopen('php://output', 'w');
+                foreach($objs as $obj){
+                    $row = [$obj->name,$obj->email,$obj->client->name];
+                    if(!empty($obj->json)){
+                        $data = array_merge($row, array_values(json_decode($obj->json, true)));   
+                        fputcsv($file ,$data);
+                    }
+                    else{
+                        fputcsv($file, $row);
+                    }
+                }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+      
     }
 
     public function samplecsv(Obj $obj, Request $request , $fileName = '.csv')

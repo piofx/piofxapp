@@ -13,7 +13,7 @@
 <!--begin::Page Scripts(used by this page)-->
 <script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/widgets.js?v=7.0.5"></script>
 <!-- begin::highlight js-->
-<script src="{{  asset('js/highlight/highlight.pack.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <!-- end::highlight js-->
 

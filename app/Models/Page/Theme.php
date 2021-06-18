@@ -198,11 +198,11 @@ class Theme extends Model
              
               if(request()->get('theme_slug')){
                 $obj = Theme::where('slug',request()->get('theme_slug'))->where('client_id',request()->get('client.id'))->first();
-              }{
+              }else{
                 $obj = new Theme;
               }
 
-               
+              
 
               if($obj->slug){
 
@@ -211,10 +211,7 @@ class Theme extends Model
                 $obj->status = 1;
                 $obj->save();
               }else{
-                
-                
                 $obj->name = $json->name;
-
                 $obj->slug = Str::random();
                 $obj->settings = $json->settings;
                 $obj->client_id = request()->get('client.id');
@@ -243,6 +240,12 @@ class Theme extends Model
 
         $content = File::get($path.'/'.$filename);
         $json = json_decode($content);
+
+        //add the slashes 
+        if($json)
+        if(strpos($json->slug, '@') !== false){
+            $json->slug = str_replace('@','/',$json->slug);
+        }
         // for json file
 
         if (strpos($filename, '.json') !== false) {
@@ -260,7 +263,7 @@ class Theme extends Model
                      //upload to s3
                     $f = Storage::disk('private')->path($extractToPath.'/'.$fname);
                     $path = Storage::disk('s3')->putFileAs('themes/'.$theme->id,$f,$fname,'public');
-                    echo  $path."<br>";
+                    
                     $asset = null;
                     if(request()->get('theme_slug')){
                         $asset = Asset::where('slug',$fslug)->where('client_id',request()->get('client.id'))->first();
@@ -384,7 +387,11 @@ class Theme extends Model
           if($flag){
             $this->settings = json_encode($settings);
             $this->save();
+
+            return 1;
           }
+
+          return 0;
           
       }
 

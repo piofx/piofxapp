@@ -24,6 +24,9 @@
   <!--end::Alert-->
 
 <div class='row'>
+  <div class="col-12 col-md-2">
+    @include('apps.Page.snippets.menu')
+  </div>
   <div class="col-12 col-md-10">
   <!--begin::Indexcard-->
   <x-snippets.cards.indexcard title="Assets"  :module="$app->module" :action="route($app->module.'.index',$app->id)" :appid="$app->id"  />
@@ -31,19 +34,8 @@
 
 
   <div class="row">
-    <div class="col-12 col-md-2">
 
-      <div class="list-group">
-        <a href="{{ route('Asset.index',$app->id)}}" class="list-group-item list-group-item-action @if(!request()->get('filter')) active @endif" aria-current="true">
-          All
-        </a>
-        <a href="{{ route('Asset.index',$app->id)}}?filter=css" class="list-group-item list-group-item-action @if(request()->get('filter') =='css') active @endif">CSS</a>
-        <a href="{{ route('Asset.index',$app->id)}}?filter=js" class="list-group-item list-group-item-action @if(request()->get('filter') =='js') active @endif">JS</a>
-        <a href="{{ route('Asset.index',$app->id)}}?filter=images" class="list-group-item list-group-item-action @if(request()->get('filter') =='images') active @endif">Images</a>
-        <a href="{{ route('Asset.index',$app->id)}}?filter=fonts" class="list-group-item list-group-item-action @if(request()->get('filter') =='fonts') active @endif">fonts</a>
-      </div>
-      <a href="" class="btn btn-warning  w-100 my-3" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-cloud"></i> Upload</a>
-    </div>
+   
     <div class="col-12 col-md-10">
       <!--begin::basic card-->
       <x-snippets.cards.basic>
@@ -95,12 +87,23 @@
       <!--end::basic card-->
 
     </div>
+     <div class="col-12 col-md-2">
+
+      <div class="list-group">
+        <a href="{{ route('Asset.index',$app->id)}}" class="list-group-item list-group-item-action @if(!request()->get('filter')) active @endif" aria-current="true">
+          All
+        </a>
+        <a href="{{ route('Asset.index',$app->id)}}?filter=css" class="list-group-item list-group-item-action @if(request()->get('filter') =='css') active @endif">CSS</a>
+        <a href="{{ route('Asset.index',$app->id)}}?filter=js" class="list-group-item list-group-item-action @if(request()->get('filter') =='js') active @endif">JS</a>
+        <a href="{{ route('Asset.index',$app->id)}}?filter=images" class="list-group-item list-group-item-action @if(request()->get('filter') =='images') active @endif">Images</a>
+        <a href="{{ route('Asset.index',$app->id)}}?filter=fonts" class="list-group-item list-group-item-action @if(request()->get('filter') =='fonts') active @endif">fonts</a>
+      </div>
+      <a href="" class="btn btn-warning  w-100 my-3" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-cloud"></i> Upload</a>
+    </div>
   </div>
   
 </div>
-<div class="col-12 col-md-2">
-    @include('apps.Page.snippets.menu')
-  </div>
+
 </div>  
 
 <!-- Modal-->

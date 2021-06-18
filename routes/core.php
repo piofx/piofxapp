@@ -12,6 +12,9 @@ Route::get('/admin', [AdminController::class, 'index'])
 		->middleware(['auth'])->name('dashboard');
 Route::get('/admin/apps', [AdminController::class, 'apps'])
 		->middleware(['auth'])->name('apps');
+//sample email
+Route::get('/admin/email', [AdminController::class, 'sampletestemail'])
+		->middleware(['auth']);
 
 // Settings Routes
 Route::get('/admin/gsettings', [AdminController::class, 'gsettings'])

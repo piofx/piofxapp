@@ -24,6 +24,9 @@
   <!--end::Alert-->
 
 <div class='row'>
+  <div class="col-12 col-md-2">
+    @include('apps.Page.snippets.menu')
+  </div>
   <div class="col-12 col-md-10">
   <!--begin::Indexcard-->
   <x-snippets.cards.indexcard title="Modules"  :module="$app->module" :action="route($app->module.'.index',$app->id)" :appid="$app->id"  />
@@ -72,8 +75,6 @@
   </x-snippets.cards.basic>
   <!--end::basic card-->
 </div>
-<div class="col-12 col-md-2">
-    @include('apps.Page.snippets.menu')
-  </div>
+
 </div>  
 </x-dynamic-component>

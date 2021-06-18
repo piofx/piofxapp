@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Event;
+use App\Events\UserCreated;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Providers\EventServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 
 class RegisteredUserController extends Controller
 {   
@@ -55,6 +58,8 @@ class RegisteredUserController extends Controller
         ]));
 
         event(new Registered($user));
+        event(new UserCreated($user));
+        
 
         return redirect(RouteServiceProvider::HOME);
     }
