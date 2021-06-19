@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Core;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\EmailForQueuing;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -22,6 +24,11 @@ class AdminController extends Controller
         $this->componentName = componentName('agency');
     }
 
+    //sample test email
+    public function sampletestemail(){
+        Mail::to('packetcode@gmail.com')
+            ->send(new EmailForQueuing('heloo all'));
+    }
 
     /**
      * Display a listing of the resource.
