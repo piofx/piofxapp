@@ -40,4 +40,5 @@ Route::get("/admin/blog/{slug}/edit", [PostController::class, "edit"])->middlewa
 Route::put("/admin/blog/{id}", [PostController::class, "update"])->middleware("auth")->name("Post.update");
 Route::delete("/admin/blog/{id}/delete", [PostController::class, "destroy"])->middleware("auth")->name("Post.destroy");
 Route::get("/blog/author/{name}", [PostController::class, "author"])->name("Post.author");
+Route::post("/blog/subscribe", [PostController::class, "subscribe"])->name("Post.subscribe");
 Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");

@@ -82,9 +82,7 @@ class MailCampaignController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Obj $obj,Request $request)
-    {       
-        
-        //ddd($request->all());
+    {        
         $time = $request->input('timezone');
         $scheduled = Carbon::parse($request->input('scheduled_at'))->addMinutes($time);
         $current = Carbon::now();
@@ -109,7 +107,7 @@ class MailCampaignController extends Controller
             {
             $request->merge(['email'=> $em]);
             $log = MailLog::create($request->all());
-            $details = ['email' => $log->email];
+            $details = ['email' => $log->email , 'content' => $log->message];
             $identity = $log->id;
             $data = $obj->id;
             SendEmail::dispatch($details,$identity,$data)->delay(Carbon::now()->addMinutes($diff_in_minutes));
@@ -198,7 +196,7 @@ class MailCampaignController extends Controller
             $request->merge(['reference_id'=> $obj->id])->merge(['app'=> $this->app])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message])->merge(['status'=> '0'])->merge(['email'=> $em])->merge(['agency_id'=> $obj->agency_id])->merge(['client_id'=> $obj->client_id]);
 
             $maillog = MailLog::create($request->all());
-            $details = ['email' => $maillog->email];
+            $details = ['email' => $maillog->email , 'content' => $maillog->message];
             $identity = $maillog->id;
             $data = $obj->id;
             SendEmail::dispatch($details,$identity,$data)->delay(Carbon::now()->addMinutes($diff_in_minutes));

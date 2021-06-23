@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserCreated' => [
             'App\Listeners\SendWelcomeEmail',
         ],
+        'App\Events\NewContactCreated' => [
+            'App\Listeners\NotifyAdmin',
+        ],
     ];
 
     /**

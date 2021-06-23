@@ -53,8 +53,9 @@
                     <td class="px-3 align-middle font-weight-bolder">{{$i++}}</td>
                     <td class="px-3 align-middle">{{ $obj->email }}</td>
                     <td class="px-3 align-middle">{{ $obj->scheduled_at }}</td>
-                    <td class="px-3 align-middle">{{ $obj->mail_template->name }}</td>
-                    <td class="px-3 align-middle">{{ $obj->mail_campaign->name}}</td>
+                    <td class="px-3 align-middle">{{ ($obj->mail_template->name) ? $obj->mail_template->name : ''}}</td>
+                    <td class="px-3 align-middle">{{ ($obj->mail_campaign) ? $obj->mail_campaign->name : ''}}</td>
+                    
                     <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ ($obj->status == 1 ? 'label-light-success'  : (($obj->status == 2) ? 'label-light-danger'  : 'label-light-primary' ) ) }}">{{ ($obj->status == 1 ? "Mail Sent" : (($obj->status == 2) ? "Failed" : "Mail Queued") ) }}</span></td>
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">  

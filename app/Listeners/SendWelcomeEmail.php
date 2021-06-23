@@ -3,9 +3,10 @@
 namespace App\Listeners;
 use Mail;
 use App\Events\UserCreated;
+use App\Models\Mailer\MailLog;
+use App\Models\Mailer\MailTemplate;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\Mailer\MailTemplate;
 
 class SendWelcomeEmail
 {
@@ -14,6 +15,7 @@ class SendWelcomeEmail
      *
      * @return void
      */
+    
     public function __construct()
     {
         //
@@ -27,12 +29,19 @@ class SendWelcomeEmail
      */
     public function handle(UserCreated $event)
     {
+        $request = $event->request;
         $user = $event->user;
         $template = MailTemplate::where('name','Welcome Mail')->first();
-        $data = array('name'=>$user->name, 'email'=>$user->email , 'content'=>$template->message);
-        Mail::send('apps.Mailer.MailView.newuser' , $data, function($message) use ($user) {
-            $message->to('piofxdev3@gmail.com');
-            $message->subject('New User Registered');
-        });
+        if($template != NULL)
+        {
+            $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['status'=> 1 ])->merge(['mail_template_id' => $template->id])->merge(['mail_template_id' => $template->id])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message]);
+            $log = MailLog::create($request->all());
+
+            $data = array('name'=>$user->name, 'email'=>$user->email , 'content'=>$template->message);
+            Mail::send('apps.Mailer.MailView.newuser' , $data, function($message) use ($user) {
+                $message->to('piofxdev3@gmail.com');
+                $message->subject('New User Registered');
+            });
+       }
     }
 }

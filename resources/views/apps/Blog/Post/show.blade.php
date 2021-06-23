@@ -335,10 +335,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <form action="" method="POST">
-                            <input type="text" name="name" placeholder="Name" class="form-control mb-2">
-                            <input type="email" name="email" placeholder="Email" class="form-control mb-2">
-
+                        <form action="{{route($app->module.'.subscribe')}}" enctype="multipart/form-data" method="POST">
+                            <input type="text" name="name" placeholder="Name" class="form-control mb-2 @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->name}} @endif">
+                            <input type="email" name="email" placeholder="Email" class="form-control mb-2  @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->email}} @endif">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <button class="btn btn-danger btn-sm">Subscribe</button>
                         </form>
