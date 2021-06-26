@@ -15,7 +15,7 @@
         <div class="col-lg-8">
             <!-- Ad -->
             <div class="mb-3">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'before-content')
                             {!! $ad->content !!}
@@ -116,7 +116,7 @@
 
             <!-- Ad -->
             <div class="my-3">
-                @if($settings->ads)
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'after-content')
                             {!! $ad->content !!}
@@ -125,9 +125,12 @@
                 @endif
             </div>
             <!-- End Ad Section -->
+
+            <!-- Pagination -->
             <div class="my-3">
                 {{ $posts->links() ?? "" }}
             </div>
+            <!-- End Pagination -->
         </div>
         <!-- End Blog -->
 
@@ -145,8 +148,8 @@
             </div>
 
             <!-- Ad -->
-            <div class="my-5">
-                @if($settings->ads)
+            <div class="mb-5">
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'sidebar-top')
                             {!! $ad->content !!}
@@ -157,7 +160,7 @@
             <!-- End Ad Section -->
 
             <!---------Categories section-----> 
-            <div class="my-5 @if($settings->home_layout == 'news1' || $settings->home_layout == 'news2') d-none @endif">
+            <div class="mb-5 @if($settings->home_layout == 'news1' || $settings->home_layout == 'news2') d-none @endif">
             <h5 class="font-weight-bold mb-3">Categories</h5>
             <div class="list-group">
                 @foreach($categories as $category)
@@ -172,7 +175,7 @@
             <!--------- End categories section----->
 
             <!----- Tags section------>
-            <div class="my-5">
+            <div class="mb-5">
             <h5 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h5>
             @foreach($objs as $obj)
                 <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $obj->slug) }}">{{ $obj->name }}</a>
@@ -180,7 +183,7 @@
             </div>
             <!----- End Tags Section------>
 
-            <div class="my-5">
+            <div class="mb-5">
                 <h3 class="mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3> 
                 <!-- Popular Posts -->
                 @foreach($popular as $post)     
@@ -230,8 +233,8 @@
             </div>
 
             <!-- Ad -->
-            <div class="my-3">
-                @if($settings->ads)
+            <div class="mb-3">
+                @if(!empty($settings->ads))
                     @foreach($settings->ads as $ad)
                         @if($ad->position == 'sidebar-bottom')
                             {!! $ad->content !!}
@@ -246,7 +249,7 @@
 
         <!-- Ad -->
         <div class="my-3">
-            @if($settings->ads)
+            @if(!empty($settings->ads))
                 @foreach($settings->ads as $ad)
                     @if($ad->position == 'after-body')
                         {!! $ad->content !!}

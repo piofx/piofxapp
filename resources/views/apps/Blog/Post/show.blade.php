@@ -159,7 +159,6 @@
         @endif
        
         <div  @if($settings->post_layout != 'full') class="col-12 col-lg-8" @endif>
-        
             <!-- Featured Image -->
             @if(!empty($obj->image) && strlen($obj->image) > 5)
                 @if(Storage::disk('s3')->exists($obj->image))
@@ -263,13 +262,20 @@
             <!-- End Ad Section -->
 
             @if($obj->visibility == "private")
-                @php
-                    $user_group = explode(",", auth()->user()->group);
-                    $post_group = explode(",", $obj->group);
-                    $group = array_intersect($user_group, $post_group);
-                @endphp
-                @if(sizeOf($group) > 0)
-                    {!! $obj->content !!}
+                @if(auth()->user())
+                    @php
+                        $user_group = explode(",", auth()->user()->group);
+                        $post_group = explode(",", $obj->group);
+                        $group = array_intersect($user_group, $post_group);
+                    @endphp
+                    @if(sizeOf($group) > 0)
+                        {!! $obj->content !!}
+                    @else
+                        <div class="text-center bg-soft-danger p-3 rounded-lg">
+                            <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
+                            <img src="{{ asset('img/locked.png') }}" class="img-fluid w-50">
+                        </div>
+                    @endif
                 @else
                     <div class="text-center bg-soft-danger p-3 rounded-lg">
                         <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>

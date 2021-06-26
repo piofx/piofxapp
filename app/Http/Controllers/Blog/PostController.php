@@ -77,29 +77,48 @@ class PostController extends Controller
             }
         }
 
-        // Cached data
+        // Cached Featured data
         $featured = Cache::get('featured_'.request()->get('client.id'));
-        $popular = Cache::get('popular_'.request()->get('client.id'));
-        $categories = Cache::get('categories_'.request()->get('client.id'));
-        $tags = Cache::get('tags_'.request()->get('client.id'));
-        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
-
-        if(!$featured || !$popular || !$categories || !$tags || !$settings){
+        if(!$featured){
             // Retrieve Featured Posts
             $featured = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('category')->with("user")->where('featured', 'on')->orderBy("id", 'desc')->get();
+            // add to cache
+            Cache::forever('featured_'.request()->get('client.id'), $featured);
+        }
+
+        // cached popular data
+        $popular = Cache::get('popular_'.request()->get('client.id'));
+        if(!$popular){
             // Retrieve Popular Posts
             $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
-             // Retrieve all categories
-            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("posts")->orderBy("name", "asc")->get();
-            // Retrieve all tags
+            // add to cache
+            Cache::forever('popular_'.request()->get('client.id'), $popular);
+        }
+
+        // Cached categories data
+        $categories = Cache::get('categories_'.request()->get('client.id'));
+        if(!$categories){
+            // Retrieve all categories
+            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Add to cache 
+            Cache::forever('categories_'.request()->get('client.id'), $categories);
+        }
+
+        // Cached tags data
+        $tags = Cache::get('tags_'.request()->get('client.id'));
+        if(!$tags){
+            //  Retrieve all tags
             $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Add to cache
+            Cache::forever('tags_'.request()->get('client.id'), $tags);
+        }
+
+        // cached settings data
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+        if(!$settings){
             // Retrieve Settings
             $settings = $blogSettings->getSettings();
-
-            Cache::forever('featured_'.request()->get('client.id'), $featured);
-            Cache::forever('popular_'.request()->get('client.id'), $popular);
-            Cache::forever('categories_'.request()->get('client.id'), $categories);
-            Cache::forever('tags_'.request()->get('client.id'), $tags);
+            // add to cache
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
         
@@ -261,18 +280,9 @@ class PostController extends Controller
         Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews+1);
         $postViews = Cache::get('postViews_'.request()->get('client.id').'_'.$slug);
 
-        // Cached data
+        // Cached Post Data
         $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
-        $categories = Cache::get('categories_'.request()->get('client.id'));
-        $tags = Cache::get('tags_'.request()->get('client.id'));
-        $author = Cache::get('author_'.request()->get('client.id').'_'.$slug);
-        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
-        $popular = Cache::get('popular_'.request()->get('client.id'));
-        $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
-        $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
-        $postTags = Cache::get('postTags_'.request()->get('client.id').'_'.$slug);
-
-        if(!$post || !$categories || !$tags || !$author || !$settings || !$popular || !$related || !$postCategory || !$postTags){
+        if(!$post){
             // Retrieve specific record views
             $post = $obj->where("slug", $slug)->first();
             // Retrieving post views
@@ -284,38 +294,89 @@ class PostController extends Controller
             // Retrieving post views
             $postViews = $post->views;
 
-            // Retrieve all categories
-            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
-            //  Retrieve all tags
-            $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
-            // Retrieve Author data
-            $author = $user->where("id", $post->user_id)->first();
-            // Retrieve Settings
-            $settings = $blogSettings->getSettings();
-            // Retrieve Popular Posts
-            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
-            // Retrieve related posts
-            $related = $post->category->posts->take(3);
-            // Retrieve category of the post
-            $postCategory = $post->category;
-            // Get tags related to the post
-            $postTags = $post->tags;
-
+            // Add tp cache
             Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
             Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews);
+        }
+
+        // Cached categories data
+        $categories = Cache::get('categories_'.request()->get('client.id'));
+        if(!$categories){
+            // Retrieve all categories
+            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Add to cache 
             Cache::forever('categories_'.request()->get('client.id'), $categories);
+        }
+
+        // Cached tags data
+        $tags = Cache::get('tags_'.request()->get('client.id'));
+        if(!$tags){
+            //  Retrieve all tags
+            $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Add to cache
             Cache::forever('tags_'.request()->get('client.id'), $tags);
+        }
+
+        // Cached author data
+        $author = Cache::get('author_'.request()->get('client.id').'_'.$slug);
+        if(!$author){
+            // Retrieve Author data
+            $author = $user->where("id", $post->user_id)->first();
+            // add to cache
             Cache::forever('author_'.request()->get('client.id').'_'.$slug, $author);
+        }
+
+        // cached settings data
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+        if(!$settings){
+            // Retrieve Settings
+            $settings = $blogSettings->getSettings();
+            // add to cache
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
+        }
+
+        // cached popular data
+        $popular = Cache::get('popular_'.request()->get('client.id'));
+        if(!$popular){
+            // Retrieve Popular Posts
+            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
+        }
+
+        // cached related data
+        $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
+        if(!$related){
+            // Retrieve related posts
+            if(!empty($post->category) && $post->category->posts->count() > 0){
+                $related = $post->category->posts->take(3);
+            }
+            // add to cache
             Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
+        }
+
+        // cached postCategory data
+        $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
+        if(!$postCategory){
+            // Retrieve category of the post
+            $postCategory = $post->category;
+            // add to cache
             Cache::forever('postCategory_'.request()->get('client.id').'_'.$slug, $postCategory);
+        }
+
+        // cached postTags data
+        $postTags = Cache::get('postTags_'.request()->get('client.id').'_'.$slug);
+        if(!$postTags){
+            // Get tags related to the post
+            $postTags = $post->tags;
+            // add to cache
             Cache::forever('postTags_'.request()->get('client.id').'_'.$slug, $postTags);
         }
+
         // reassigning post variable
         $obj = $post;
 
-        // Check if scheduled date is in the past. if true, change status to  1
+        // Check if scheduled date is in the past. if true, change status to 1
         if(!empty($obj->published_at)){
             $published_at = Carbon::parse($obj->published_at);
             if($published_at->isPast()){
@@ -324,6 +385,8 @@ class PostController extends Controller
             }
         }
     
+        // Check if post status is inactive and user is not authenticated ot if role is user then redirect to homepage
+        // Useful if post is accessed through link
         if($obj->status == 0){
             if(!(auth()->user()) || auth()->user()->role == "user"){
                 return redirect()->route($this->module.'.index');
@@ -631,17 +694,21 @@ class PostController extends Controller
             }
         }
 
-        // Cached Data
+        // Cached Author Data
         $author = Cache::get('author_'.request()->get('client.id').'_'.$id);
-        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
-
-        if(!$author || !$settings){
+        if(!$author){
             // Get author data
             $author = $user->where("id", $id)->first();
+            // add to cache
+            Cache::forever('author_'.request()->get('client.id').'_'.$id, $author);
+        }
+
+        // cached settings data
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+        if(!$settings){
             // Retrieve Settings
             $settings = $blogSettings->getSettings();
-
-            Cache::forever('author_'.request()->get('client.id').'_'.$id, $author);
+            // add to cache
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
 
@@ -656,6 +723,23 @@ class PostController extends Controller
     }
 
 
+    // Api to retrieve popular post
+    public function popularPost(Request $request){
+        // Initialize Object
+        $obj = new Obj();
+
+        // Retrieve the post
+        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", "desc")->limit('1')->where('status', '1')->get();
+
+        if(!empty($post)){
+            return response()->json($post, "200");
+        }
+        else{
+            return response()->json(["Error" => "No post found"], 404);
+        }
+    }
+
+    // Miscellenious
     // public function addContent(Obj $obj){
     //     $objs = $obj->get();
     //     foreach($objs as $obj){
@@ -677,4 +761,3 @@ class PostController extends Controller
     // }
 
 }
-

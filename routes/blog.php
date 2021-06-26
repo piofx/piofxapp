@@ -41,3 +41,6 @@ Route::put("/admin/blog/{id}", [PostController::class, "update"])->middleware("a
 Route::delete("/admin/blog/{id}/delete", [PostController::class, "destroy"])->middleware("auth")->name("Post.destroy");
 Route::get("/blog/author/{name}", [PostController::class, "author"])->name("Post.author");
 Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");
+
+// Retrieve popular post
+Route::get("/popularPost", [PostController::class, "popularPost"])->name("Post.popular");
