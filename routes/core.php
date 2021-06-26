@@ -88,6 +88,7 @@ Route::get('/admin/contact/{contact}', [ContactController::class, 'show'])
 
 
 /* User routes */
+
 Route::get('/admin/user', [UserController::class, 'index'])
 		->middleware(['auth'])->name('User.index');
 Route::get('admin/users/search',[UserController::class, 'search'])
@@ -104,6 +105,10 @@ Route::post('/admin/user', [UserController::class, 'store'])
 		->middleware(['auth'])->name('User.store');
 Route::get('/admin/user/download', [UserController::class, 'download'])
 		->middleware(['auth'])->name('User.download');
+Route::get('/admin/user/samplecsv', [UserController::class, 'samplecsv'])
+		->middleware(['auth'])->name('User.samplecsv');
+Route::post('/admin/user/upload', [UserController::class, 'upload'])
+		->middleware(['auth'])->name('User.upload');
 Route::put('/admin/user/{user}', [UserController::class, 'update'])
 		->middleware(['auth'])->name('User.update');
 Route::get('/admin/user/{id}/resetpassword', [UserController::class, 'resetpassword'])
@@ -112,6 +117,8 @@ Route::delete('/admin/user/{user}', [UserController::class, 'destroy'])
 		->middleware(['auth'])->name('User.destroy');
 Route::get('/admin/user/{id}', [UserController::class, 'show'])
 		->middleware(['auth'])->name('User.show');
+
+
 
 
 /* User Profile Routes*/ 

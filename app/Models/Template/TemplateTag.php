@@ -9,6 +9,7 @@ class TemplateTag extends Model
 {
     use HasFactory;
     protected $fillable = ["id", "name" , "slug"];
+    
     public function templates()
     {   
         return $this->belongsToMany(Template::class);

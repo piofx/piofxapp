@@ -21,10 +21,25 @@
 	@endif
 	<!--end::Alert-->
 
-	<!--begin::Titlecard-->
-	<x-snippets.cards.titlecard :title="$obj->name" :id="$obj->id" :module="$app->module" :obj="$obj" />
-	<!--end::Titlecard-->
-
+	<div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-primary">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
+                <div class="d-flex align-items-center">
+                    <a href="#" class="h2 text-dark text-hover-primary mb-0">
+					{{ $obj->name}}
+                    </a> 
+                </div>
+                <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
+                    <!--begin::Form-->
+					<a href="{{ route($app->module.'.resetpassword',$obj->id)}}" class="text-muted"><button class="btn btn-info mt-4"><i class="flaticon-rotate"></i> Reset Password</button></a>
+					<a href="{{ route($app->module.'.edit',$obj->id)}}" class="text-muted"><button class="btn btn-warning mt-4"><i class="flaticon-edit"></i> Edit</button></a>
+					<a href="#" data-toggle="modal" class="text-muted" data-target="#staticBackdrop-{{$obj->id}}"><button class="btn btn-danger mt-4"><i class="flaticon-delete"></i> Delete</button></a>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Indexcard-->
 
 	<!--begin::basic card-->
 	<x-snippets.cards.basic>
@@ -63,9 +78,7 @@
 			<div class="col-md-4"><b>Created At</b></div>
 			<div class="col-md-4">{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</div>
 		</div>
-		
-		<a href="{{route($app->module.'.resetpassword',$obj->id)}}"><button type="button" class="btn btn-primary">Reset Password</button></a>
-		
+			
 	</x-snippets.cards.basic>
 	<!--end::basic card-->   
 

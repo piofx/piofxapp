@@ -36,7 +36,6 @@
 			<div class="col-md-4"><b>Subject</b></div>
 			<div class="col-md-8">{{ $obj->subject }} </div>
 		</div>
-		
 		<div class="row mb-2">
 			<div class="col-md-4"><b>Status</b></div>
 			<div class="col-md-8">@if($obj->status==0)
@@ -50,7 +49,7 @@
 			<div class="col-md-4">{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</div>
 		</div>
 		<div class="row mb-2">
-			<div class="col-md-4"><b>Preview</b></div>
+			<div class="col-md-4"><b>Html Template</b></div>
 			<div class="col-md-8">{{ $obj->message }} </div>
 		</div>
 		

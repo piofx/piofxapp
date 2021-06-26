@@ -22,7 +22,7 @@
     <!-- Actions -->
     <div class="d-flex justify-content-between align-items-center bg-white p-5 rounded shadow-sm mb-3">
         <div>
-            <h1 class="">Templates</h1>
+            <h1 class="">{{ ucfirst($app->module) }}</h1>
             <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->count() }}</span> Records</h6>
         </div>
         <div class="d-flex align-items-center">
@@ -43,6 +43,7 @@
                 <th scope="col" class="p-3">Description</th>
                 <th scope="col" class="p-3">Emails</th>
                 <th scope="col" class="p-3">Scheduled_At</th>
+                <th scope="col" class="p-3">Template</th>
                 <th scope="col" class="p-3">Status</th>
                 <th scope="col" class="p-3">Created At</th>
                 <th scope="col" class="p-3 text-secondary font-weight-bolder text-center">Actions</th>
@@ -55,6 +56,7 @@
                     <td class="px-3 align-middle">@if($obj->description) {{ $obj->description }}  @endif</td> 
                     <td class="px-3 align-middle">{{ $obj->emails }}</td>
                     <td class="px-3 align-middle">{{ $obj->scheduled_at }}</td>
+                    <td class="px-3 align-middle">{{ $obj->mail_template->name}}</td>
                     <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ $obj->status == 1 ? 'label-light-success' : 'label-light-danger' }}">{{ $obj->status == 1 ? "Active" : "Inactive" }}</span></td>
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">  

@@ -4,6 +4,8 @@ namespace App\Models\Mailer;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mailer\MailCampaign;
+use App\Models\Mailer\MailTemplate;
 
 class MailLog extends Model
 {
@@ -20,5 +22,16 @@ class MailLog extends Model
         'message',
         'status', 
     ];
+
+    public function mail_template()
+    {
+        return $this->belongsTo(MailTemplate::class);
+    }
+
+    public function mail_campaign()
+    {
+        return $this->belongsTo(MailCampaign::class,'reference_id');
+    }
     
+
 }

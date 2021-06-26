@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Mailer\MailSubscriber;
 use App\Models\Blog\Post as Obj;
 use App\Models\Blog\Category;
 use App\Models\Blog\Tag;
 use App\Models\Blog\BlogSettings;
 use App\Models\User;
-
+use App\Providers\EventServiceProvider;
+use App\Events\UserCreated;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 use Browser;
 
 class PostController extends Controller
@@ -760,4 +762,16 @@ class PostController extends Controller
     //     }
     // }
 
+    public function subscribe(Obj $obj, Request $request){
+        $validate_email = debounce_valid_email($request->email);
+        $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
+        
+        $obj = MailSubscriber::create($request->all());
+
+        event(new UserCreated($obj,$request));
+
+        return redirect()->route($this->module.'.index');
+    }
+
 }
+

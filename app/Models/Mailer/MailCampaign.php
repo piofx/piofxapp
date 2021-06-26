@@ -4,6 +4,8 @@ namespace App\Models\Mailer;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mailer\MailLog;
+use App\Models\Mailer\MailTemplate;
 
 class MailCampaign extends Model
 {
@@ -20,4 +22,15 @@ class MailCampaign extends Model
         'status', 
         'timezone',
     ];
+    public function mail_log()
+    {
+        return $this->belongsTo(MailLog::class);
+        
+    }
+
+    public function mail_template()
+    {
+        return $this->belongsTo(MailTemplate::class);
+    }
+    
 }

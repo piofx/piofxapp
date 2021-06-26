@@ -20,6 +20,7 @@ class CreateMailSubscribersTable extends Migration
             $table->string('email');
             $table->longText('info')->nullable();
             $table->integer('valid_email')->nullable();
+            $table->string('app')->nullable();
             $table->integer('status');
             $table->timestamps();
 

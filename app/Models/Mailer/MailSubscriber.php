@@ -13,6 +13,7 @@ class MailSubscriber extends Model
         'client_id',
         'email',
         'info', 
+        'app',
         'valid_email',  
         'status',    
     ];

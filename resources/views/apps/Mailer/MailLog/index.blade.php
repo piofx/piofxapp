@@ -41,29 +41,24 @@
                 <th scope="col" class="p-3">#</th>
                 <th scope="col" class="p-3">Email</th>
                 <th scope="col" class="p-3">Scheduled_At</th>
+                <th scope="col" class="p-3">Template</th>
+                <th scope="col" class="p-3">Campaign</th>
                 <th scope="col" class="p-3">Status</th>
                 <th scope="col" class="p-3">Created At</th>
                 <th scope="col" class="p-3 text-secondary font-weight-bolder text-center">Actions</th>
             </tr>
             <?php $i = 1; ?>
-            @foreach($objs as $obj)
+            @foreach($objs as $k => $obj)
                 <tr class="border-bottom">
                     <td class="px-3 align-middle font-weight-bolder">{{$i++}}</td>
                     <td class="px-3 align-middle">{{ $obj->email }}</td>
                     <td class="px-3 align-middle">{{ $obj->scheduled_at }}</td>
-                    <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ $obj->status == 1 ? 'label-light-success' : 'label-light-danger' }}">{{ $obj->status == 1 ? "Mail Sent" : "Mail Queued" }}</span></td>
+                    <td class="px-3 align-middle">{{ ($obj->mail_template->name) ? $obj->mail_template->name : ''}}</td>
+                    <td class="px-3 align-middle">{{ ($obj->mail_campaign) ? $obj->mail_campaign->name : ''}}</td>
+                    
+                    <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ ($obj->status == 1 ? 'label-light-success'  : (($obj->status == 2) ? 'label-light-danger'  : 'label-light-primary' ) ) }}">{{ ($obj->status == 1 ? "Mail Sent" : (($obj->status == 2) ? "Failed" : "Mail Queued") ) }}</span></td>
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">  
-                    
-                    <!-- View Button-->
-                    <a href="" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-eye m-0"></i></a>
-                    <!-- End View Button -->
-                    <!-- Edit Button -->
-                    <form action="">
-                        <button class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" type="submit"><i class="fas fa-edit m-0"></i></button> 
-                    </form>
-                    <!-- End Edit Button -->
-
                     <!-- Confirm Delete Modal Trigger -->
                     <a href="#" data-toggle="modal" class="btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon mr-2" data-target="#staticBackdrop-{{$obj->id}}"><i class="fas fa-trash-alt m-0"></i></a>
                     <!-- End Confirm Delete Modal Trigger -->
@@ -98,5 +93,4 @@
             @endforeach
         </table>   
     </div>
-
 </x-dynamic-component>

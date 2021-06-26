@@ -18,7 +18,7 @@
   <!--end::Alert-->
 
   <!--begin::Indexcard-->
-  <x-snippets.cards.indexcard title="Users"  :module="$app->module" :action="route($app->module.'.index')"  />
+  <x-snippets.cards.indexcard title="Mail Subscribers"  :module="$app->module" :action="route($app->module.'.index')"  />
   <!--end::Indexcard-->
         <!--begin::upload element-->
         <div class="card card-custom bgi-no-repeat  gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{ asset('/themes/metronic/media/svg/patterns/abstract-4.svg') }}">
@@ -26,7 +26,10 @@
         <div class="col-5  ml-10">
           <div class="card-body">
             <a href="#" class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">Add Subscribers Records</a>
-            <div class="font-weight-bold text-success mt-2 mb-5">Upload CSV file In The Sample Format Only</div>
+            <div class="font-weight-bold text-success mt-2 mb-2">Upload CSV file In The Sample Format Only</div>
+            <div class="font-weight-bold text-primary mt-2 mb-2">Download The Sample Format Of CSV File
+            <a href="{{ route($app->module.'.samplecsv') }}" class="btn btn-info btn-sm ml-2"><i class="fa fa-download p-0"></i></a>
+            </div>
             <form method="post" action="{{route($app->module.'.upload')}}" enctype="multipart/form-data">
               <input type="file" class="form-control-file" name="file" id="exampleFormControlFile1" multiple>
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -39,9 +42,8 @@
           </div>
           <div class="col-6">
           <div class="mt-8">
-          <a href="#" class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">Download The Sample Format Of CSV File</a><br>
-          <div class="font-weight-bold text-success mt-2 ">Download Now</div>
-          <a href="{{ route($app->module.'.createcsv')}}" class="text-muted"><button class="btn btn-danger mt-4"><i class="la la-download"></i> Download</button></a>
+          <a href="#" class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">Download Subscribers Data</a><br>
+          <a href="{{ route($app->module.'.download')}}" class="text-muted"><button class="btn btn-danger mt-4"><i class="la la-download"></i>Download</button></a>
           </div>
           </div>
         </div>
@@ -59,6 +61,7 @@
                 <th scope="col" class="p-3 text-decoration-none">Email</th>
                 <th scope="col" class="p-3">Information</th>
                 <th scope="col" class="p-3">Status</th>
+                <th scope="col" class="p-3">Valid Email</th>
                 <th scope="col" class="p-3">Created At</th>
                 <th scope="col" class="p-3 text-secondary font-weight-bolder text-center">Actions</th>
               </tr>
@@ -75,6 +78,7 @@
                     </td>
                     <td>{{$obj->info}}</td>
                     <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ $obj->status == 1 ? 'label-light-success' : 'label-light-danger' }}">{{ $obj->status == 1 ? "Active" : "Inactive" }}</span></td>
+                    <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ $obj->status == 1 ? 'label-light-info' : 'label-light-warning' }}">{{ $obj->valid_email == 1 ? "True" : "False" }}</span></td>
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">  
                     

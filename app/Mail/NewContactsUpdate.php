@@ -7,20 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEmail extends Mailable
+class NewContactsUpdate extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $data;
+    public $details;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($details)
     {
-        $this->data = $data;
+        $this->details = $details;
     }
 
     /**
@@ -29,8 +28,11 @@ class TestEmail extends Mailable
      * @return $this
      */
     public function build()
-    {
-        return  $this->from('example@example.com')
-                ->view('apps.Mailer.MailView.test');
+    {   
+        
+        return $this->from('mail@example.com', 'Mailtrap')
+            ->subject('Contacts Update')
+            ->view('apps.Mailer.MailView.newcontact');
+        
     }
 }

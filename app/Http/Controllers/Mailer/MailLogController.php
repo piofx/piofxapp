@@ -34,7 +34,7 @@ class MailLogController extends Controller
         $alert = session()->get('alert');
 
         // authorize the app
-        //$this->authorize('view', $obj);
+        $this->authorize('view', $obj);
         
         return view('apps.'.$this->app.'.'.$this->module.'.index')
                 ->with('app',$this)

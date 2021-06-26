@@ -362,16 +362,17 @@ class UserController extends Controller
     public function resetpassword(Obj $obj, Request $request ,$id){
 
         // load the resource
-        $objs = $obj->where('id',$id)->first();
+        $obj = $obj->where('id',$id)->first();
 
         // authorize the app
         $this->authorize('update', $obj);
 
-        $phone = $objs->phone? $objs->phone : '8989898989';
+        $phone = $obj->phone? $obj->phone : '8989898989';
         
         //Hashing the phone number
-        $objs->password = Hash::make($phone);
+        $obj->password = Hash::make($phone);
        
+        $obj->save();
         
         // flash message and redirect to controller index page
         $alert = ' ('.$this->app.'/'.$this->module.'/'.$id.') Password  is updated!';
@@ -419,29 +420,174 @@ class UserController extends Controller
             abort(404);
     }
 
-    public function download(Obj $obj){
+    public function download(Obj $obj , $fileName = 'file.csv')
+    {
 
         // Retrieve all the records
-        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get('json');
-
-        // ddd($objs);
-
-        // Initialize empty arrays
-        $columns = [];
-        $content = [];
-        $data = [];
-
-        // Get all the unique columns and content from the json data 
-        foreach($objs as $obj){
-            if(!empty($obj->json)){
-                $columns = array_unique(array_merge($columns, array_keys(json_decode($obj->json, true))));
-                $data = array_merge($content, array_values(json_decode($obj->json, true)));
-                array_push($content, $data);
-            }
-        }
+        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
         
-        // Call helper function for creating and downloading csv
-        return getCsv($columns, $content, 'data_'.request()->get('client.name').'_'.strtotime("now").'_form_data.csv');
+        // Retrieve all the records
+        $cols = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get('json');
+        
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $columns = ['name','email','client'];
+        $file = fopen('php://output', 'w');
+        foreach($cols as $col)
+        {
+            if(!empty($col->json)){
+            $columns = array_unique(array_merge($columns, array_keys(json_decode($col->json, true))));
+            break;  
+            }  
+            else{
+                continue;
+            } 
+        }
+        fputcsv($file, $columns);
+        fclose($file);
+        $callback = function() use($objs) {
+            $file = fopen('php://output', 'w');
+                foreach($objs as $obj){
+                    $row = [$obj->name,$obj->email,$obj->client->name];
+                    if(!empty($obj->json)){
+                        $data = array_merge($row, array_values(json_decode($obj->json, true)));   
+                        fputcsv($file ,$data);
+                    }
+                    else{
+                        fputcsv($file, $row);
+                    }
+                }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+      
+    }
+
+    public function samplecsv(Obj $obj, Request $request , $fileName = '.csv')
+    {   
+        // authorize the app
+        //$this->authorize('view', $obj);
+        
+        $columns = array("email","name","phoneNo","group","subgroup");
+        $rows = array(
+            array(
+                "email" => "peterwilson@gmail.com",
+                "name"  => "Peter Wilson",
+                "phoneNo" => "36985214789",
+                "group" => "Science",
+                "subgroup" => "Biology,Physics",
+            ),
+            array(
+                "email" => "helen@gmail.com",
+                "name"  => "helen",
+                "phoneNo" => "36985214789",
+                "group" => "Web Technologies",
+                "subgroup" => "HTML,CSS,JavaScript.",
+            ),
+        );
+        return getCsv($columns, $rows, 'data_'.request()->get('client.name').'_'.strtotime("now").'_sample.csv');     
+    }
+
+
+
+
+    public function upload(Obj $obj, Request $request)
+    {    
+        // authorize the app
+        //$this->authorize('upload', $obj); 
+        
+        $objs = $obj->all('email');
+        foreach($objs as $obj)
+        {   
+            $existing_emails[] = $obj->email;
+        }
+        if($file = $request->file('file'))
+        {
+   
+            // File Details 
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $tempPath = $file->getRealPath();
+            $fileSize = $file->getSize();
+            $mimeType = $file->getMimeType();
+
+            // Valid File Extensions
+            $valid_extension = array("csv");
+
+            // 2MB in Bytes
+            $maxFileSize = 2097152; 
+
+            // Check file extension
+            if(in_array(strtolower($extension),$valid_extension))
+            {
+
+                    // Check file size
+                if($fileSize <= $maxFileSize)
+                {
+                    // File upload location
+                    $location = 'uploads';
+                    // Upload file
+                    $file->move($location,$filename);
+                    // Import CSV to Database
+                    $filepath = public_path($location."/".$filename);
+                    // Reading file
+                    $file = fopen($filepath,"r");
+                    $importData_arr = array();
+                    $i = 0;
+                    while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE)
+                    {
+                        $num = count($filedata );
+                        // Skip first row
+                        if($i == 0){
+                            $i++;
+                            continue; 
+                        }
+                        for ($c=0; $c < $num; $c++) {
+                            $importData_arr[$i][] = $filedata [$c];
+                        }
+                        $i++;
+                    }
+                    fclose($file);
+                    //unset($importData_arr[0]);
+                    foreach($importData_arr as $importData)
+                    {   
+                        //ddd($importData[0]);
+                        $subscriber = $obj->where('email', '=', $importData[0])->first();
+                        if ($subscriber === null)
+                        {
+                            $objs = $obj->create(['email' => $importData[0],'name' => $importData[1],'phone' => $importData[2] ,'group' => $importData[3] ,'subgroup' => $importData[4],'client_id' => $request->client_id, 'agency_id' => $request->agency_id , 'status' => 1 , 'role' => 'user', 'password' => Hash::make($importData[2])]);   
+                        }
+                        else
+                        {
+                            $subscriber->name = $importData[1];
+                            $subscriber->phone = $importData[2];
+                            $subscriber->group = $importData[3];
+                            $subscriber->subgroup = $importData[4];
+                            $subscriber->save();
+                        }
+                    }
+                    $alert = '('.$this->app.'/'.$this->module.') Imported Successfully ';
+                }
+                else
+                {
+                $alert = '('.$this->app.'/'.$this->module.') File too large. File must be less than 2MB. ';
+                }
+
+            }
+
+        }
+        else
+        {
+            $alert = '('.$this->app.'/'.$this->module.') Select a File ';
+        }
+
+        return redirect()->route($this->module.'.index')->with('alert',$alert);
+
     }
 
 }
