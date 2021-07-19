@@ -15,24 +15,26 @@
     <!--end::Breadcrumb-->
 
     <!-- Actions -->
-    <div class="d-flex justify-content-between align-items-center bg-white p-5 rounded shadow-sm mb-3">
+    <div class="d-block d-lg-flex justify-content-between align-items-center bg-white p-5 rounded shadow-sm mb-3">
         <div>
             <h1 class="text-dark">Tags</h1>
             <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->total() }}</span> Records</h6>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-block d-lg-flex align-items-center mt-5 mt-lg-0">
             <form action="{{ route($app->module.'.index') }}" method="GET">
                 <input type="text" name="query" class="form-control" placeholder="Search..">
             </form>
-            <a href="{{ route('Category.index') }}" class="btn btn-light-info font-weight-bold mx-2">Categories</a>
-            <a href="{{ route('Post.list') }}" class="btn btn-light-danger font-weight-bold mx-2">Posts</a>
-            <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+            <div class="d-flex align-items-center justify-content-between justify-content-md-start mt-3 mt-lg-0">
+                <a href="{{ route('Category.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Categories</a>
+                <a href="{{ route('Post.list') }}" class="btn btn-light-danger font-weight-bold ml-md-2">Posts</a>
+                <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-md-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+            </div>
         </div>
     </div>
     <!-- End Actions -->
 
     <!-- Table -->
-    <div class="bg-white p-3 rounded-lg shadow">
+    <div class="bg-white p-3 rounded-lg shadow table-responsive">
         <table class="table table-borderless bg-white">
             <tr class="border-bottom">
                 <th scope="col" class="p-3">#</th>
