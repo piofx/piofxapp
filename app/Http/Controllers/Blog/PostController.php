@@ -741,6 +741,17 @@ class PostController extends Controller
         }
     }
 
+    public function subscribe(Obj $obj, Request $request){
+        $validate_email = debounce_valid_email($request->email);
+        $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
+        
+        $obj = MailSubscriber::create($request->all());
+
+        event(new UserCreated($obj,$request));
+
+        return redirect()->route($this->module.'.index');
+    }
+
     // Miscellenious
     // public function addContent(Obj $obj){
     //     $objs = $obj->get();
@@ -761,17 +772,6 @@ class PostController extends Controller
     //         $obj->update(["content" => $content]);
     //     }
     // }
-
-    public function subscribe(Obj $obj, Request $request){
-        $validate_email = debounce_valid_email($request->email);
-        $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
-        
-        $obj = MailSubscriber::create($request->all());
-
-        event(new UserCreated($obj,$request));
-
-        return redirect()->route($this->module.'.index');
-    }
 
 }
 

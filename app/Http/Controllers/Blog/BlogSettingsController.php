@@ -100,11 +100,17 @@ class BlogSettingsController extends Controller
     {
         $settings = array();
         $names = [];
+        // Check if data is sent from normal mode or dev mode
         if($request->input('mode') == 'normal'){
 
+            // Add the key and vales to settins array by checking if there is a nested array
             foreach($request->all() as $k => $value){
                 $keys = explode('-', $k);
                 if($keys[0] == 'settings' && $keys[1] != 'array'){
+                    $template = explode("_", $keys[1]);
+                    if(sizeof($template) > 1  && $template[0] == 'template'){
+                        $value = addslashes($value);
+                    }
                     $settings[$keys[1]] = $value;
                 }
                 elseif($keys[0] == 'settings' && $keys[1] == 'array'){
@@ -134,8 +140,9 @@ class BlogSettingsController extends Controller
                     }
                 }
                 $settings[$name] = $temp;
-
             }
+
+            // ddd($settings);
             $settings = json_encode($settings, JSON_PRETTY_PRINT);
         }
         else{
@@ -144,6 +151,7 @@ class BlogSettingsController extends Controller
             $settings = str_replace("\t", "", $settings);
         }
 
+        // Retrieve the settings data and redirect to settings index page
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
 

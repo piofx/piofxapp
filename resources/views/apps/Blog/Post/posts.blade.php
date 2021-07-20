@@ -19,7 +19,7 @@
         <div>
             <div class="d-flex align-items-center mb-1 mb-lg-3">
                 <h1 class="m-0 text-dark d-inline">Blog</h1>
-                <a href="{{ route('Settings.index') }}" class="btn btn-warning btn-sm ml-2"><i class="fas fa-cog p-0"></i></a>
+                <a href="{{ route('Settings.index') }}" class="btn btn-transparent-primary btn-sm ml-2"><i class="fas fa-cog p-0"></i> Settings</a>
             </div>
             <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->total() }}</span> Records</h6>
         </div>
@@ -31,6 +31,15 @@
                 <a href="{{ route('Category.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Categories</a>
                 <a href="{{ route('Tag.index') }}" class="btn btn-light-danger font-weight-bold ml-md-2">Tags</a>
                 <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-plus fa-sm"></i> Add Record
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                        <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

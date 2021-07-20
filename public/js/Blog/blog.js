@@ -11,6 +11,7 @@ function deleteImage() {
 $("#post_editor").summernote({
     minHeight: 750,
     focus: true,
+    fontNames:['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Eczar'],
     codemirror: {
         // codemirror options
         theme: "monokai",
