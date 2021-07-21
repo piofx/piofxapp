@@ -10,7 +10,6 @@
                         <a href="{{ route($app->module.'.edit') }}" class="btn btn-light-dark">Developer Mode</a>
                     </div>
                 </div>
-                <!-- <pre class="bg-light p-7 mt-5 rounded-lg border"><code json class="bg-light text-dark h4"></code></pre> -->
 
                 @if(!empty($settings))
                     <div class="bg-light p-7 mt-5 rounded-lg border">
@@ -52,7 +51,7 @@
                                             <h5 class="m-0 mb-3 mb-lg-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
                                         </div>
                                         <div class="col-12 col-lg-10 p-0 px-lg-3">
-                                            <textarea type="text" name="{{ 'settings-' . $k }}" class="form-control">{{ stripslashes($setting) }}</textarea>
+                                            <textarea type="text" rows="20" name="{{ 'settings-' . $k }}" class="form-control">{{ stripslashes(json_decode($setting)) }}</textarea>
                                         </div>
                                     </div>
                                 @else

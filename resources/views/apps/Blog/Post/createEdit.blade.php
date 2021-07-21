@@ -72,7 +72,16 @@
                 <!-- Content -->
                 <textarea name="content" hidden id="post_content" rows=5></textarea>
 
-                <textarea id="post_editor">{!! $obj->content !!}</textarea>
+
+                @if(!empty($obj->content))
+                    <textarea id="post_editor">{!! $obj->content !!}</textarea>
+                @else
+                    @if(!empty($template))
+                        <textarea id="post_editor">{!! $template !!}</textarea>
+                    @else
+                        <textarea id="post_editor"></textarea>
+                    @endif
+                @endif
 
             </div>
 

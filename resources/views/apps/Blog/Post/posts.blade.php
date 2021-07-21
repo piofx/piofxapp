@@ -30,16 +30,21 @@
             <div class="d-flex align-items-center justify-content-between justify-content-md-start mt-3 mt-lg-0">
                 <a href="{{ route('Category.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Categories</a>
                 <a href="{{ route('Tag.index') }}" class="btn btn-light-danger font-weight-bold ml-md-2">Tags</a>
-                <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-plus fa-sm"></i> Add Record
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                        <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                    </ul>
-                </div>
+                @if(!empty($templates))
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-plus fa-sm"></i> Add Record
+                        </button>
+                        @foreach($templates as $template)
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a href="{{ route($app->module.'.create', 'template=none') }}" class="dropdown-item">No Template</a></li>
+                                <li><a class="dropdown-item" href="{{ route($app->module.'.create', 'template='.$template) }}">{{ ucwords(str_replace('_', ' ', $template)) }}</a></li>
+                            </ul>
+                        @endforeach
+                    </div>
+                @else
+                    <a href="{{ route($app->module.'.create', 'template=none') }}" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+                @endif
             </div>
         </div>
     </div>

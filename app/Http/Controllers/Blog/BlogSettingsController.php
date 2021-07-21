@@ -81,7 +81,6 @@ class BlogSettingsController extends Controller
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
         $settings = Storage::disk("s3")->get($settingsfilename);
-        // ddd(json_decode($settings));
 
         return view("apps.".$this->app.".".$this->module.".createedit")
                 ->with("app", $this)
@@ -109,7 +108,7 @@ class BlogSettingsController extends Controller
                 if($keys[0] == 'settings' && $keys[1] != 'array'){
                     $template = explode("_", $keys[1]);
                     if(sizeof($template) > 1  && $template[0] == 'template'){
-                        $value = addslashes($value);
+                        $value = json_encode(addslashes($value));
                     }
                     $settings[$keys[1]] = $value;
                 }
@@ -143,7 +142,7 @@ class BlogSettingsController extends Controller
             }
 
             // ddd($settings);
-            $settings = json_encode($settings, JSON_PRETTY_PRINT);
+            $settings = json_encode($settings, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES);
         }
         else{
             $settings = $request->input('settings');

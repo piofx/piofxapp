@@ -92,7 +92,7 @@ class PostController extends Controller
         $popular = Cache::get('popular_'.request()->get('client.id'));
         if(!$popular){
             // Retrieve Popular Posts
-            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', '1')->orderBy("views", 'desc')->limit(3)->get();
             // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
         }
@@ -153,7 +153,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Obj $obj, Category $category, Tag $tag)
+    public function create(Obj $obj, Category $category, Tag $tag, Request $request, blogSettings $blogSettings)
     {
         // Authorize the request
         $this->authorize('create', $obj);
@@ -162,12 +162,20 @@ class PostController extends Controller
         // Retrieve all tags
         $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
 
+        // Retrieve Settings
+        $settings = $blogSettings->getSettings();
+
+        $template_name = $request->input("template");
+
+        $template = stripslashes(json_decode($settings->$template_name));
+
         return view("apps.".$this->app.".".$this->module.".createEdit")
                 ->with("stub", "create")
                 ->with("app", $this)
                 ->with("obj", $obj)
                 ->with("categories", $categories)
-                ->with("tags", $tags);
+                ->with("tags", $tags)
+                ->with("template", $template);
     }
 
     /**
@@ -341,7 +349,7 @@ class PostController extends Controller
         $popular = Cache::get('popular_'.request()->get('client.id'));
         if(!$popular){
             // Retrieve Popular Posts
-            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            $popular = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', '1')->orderBy("views", 'desc')->limit(3)->get();
             // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
         }
@@ -351,7 +359,7 @@ class PostController extends Controller
         if(!$related){
             // Retrieve related posts
             if(!empty($post->category) && $post->category->posts->count() > 0){
-                $related = $post->category->posts->take(3);
+                $related = $post->category->posts->where('status', '1')->take(3);
             }
             // add to cache
             Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
@@ -647,7 +655,7 @@ class PostController extends Controller
     }
 
     // List all Posts
-    public function list(Request $request){
+    public function list(Request $request, blogSettings $blogSettings){
         //default obj
         $obj = new Obj();
         // If search query exists
@@ -667,9 +675,22 @@ class PostController extends Controller
             }
         }
 
+        // Retrieve Settings
+        $settings = $blogSettings->getSettings();
+
+        $templates = array();
+
+        foreach($settings as $key=>$setting){
+            $template = explode("_", $key);
+            if($template[0] == 'template'){
+                array_push($templates, $key);
+            }
+        }
+
         return view("apps.".$this->app.".".$this->module.".posts")
                 ->with("app", $this)
-                ->with("objs", $objs);    
+                ->with("objs", $objs)
+                ->with("templates", $templates);    
     }
 
     // List out all posts by a author

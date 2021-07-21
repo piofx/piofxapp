@@ -36,7 +36,7 @@
 
                 <!-- Related Posts Left Section -->
                 <div class="my-5">
-                    @if(!empty($related))
+                    @if(!empty($related) && sizeof($related) > 1)
                         <div class="my-3">
                             <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                         </div>
@@ -97,52 +97,54 @@
                 <!----- End Tags Section------>
 
                 <!-- Popular Posts -->
-                <div class="my-5">
-                    <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
-                    @foreach($popular as $post)     
-                        @if($post->status)
-                            @if(!empty($post->image) && strlen($post->image) > 5)
-                                @if(Storage::disk('s3')->exists($post->image))
-                                    <!-- Related Post -->
-                                    <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                        <div class="row justify-content-between align-items-center">
-                                            <div class="col-4">
-                                                @php
-                                                    $path = explode("/", $post->image);
-                                                    $path = explode(".", $path[1]);
-                                                    $path = $path[0];
-                                                @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
-                                                @else
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
-                                                @endif
-                                            </div>
-                                            <div class="col-8 pl-0">
-                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                                <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                @if(!empty($popular) && sizeof($popular) > 0)
+                    <div class="my-5">
+                        <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
+                        @foreach($popular as $post)     
+                            @if($post->status)
+                                @if(!empty($post->image) && strlen($post->image) > 5)
+                                    @if(Storage::disk('s3')->exists($post->image))
+                                        <!-- Related Post -->
+                                        <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-4">
+                                                    @php
+                                                        $path = explode("/", $post->image);
+                                                        $path = explode(".", $path[1]);
+                                                        $path = $path[0];
+                                                    @endphp
+                                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                    @else
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                    @endif
+                                                </div>
+                                                <div class="col-8 pl-0">
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- End Related Post -->
-                                @endif
-                            @else
-                                <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                    @if($post->excerpt)
-                                        <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
-                                    @else
-                                        @php
-                                            $content = strip_tags($post->content);
-                                            $content = substr($content, 0 , 50);
-                                        @endphp
-                                        <p class="text-muted">{{ $content }}...</p>
+                                        <!-- End Related Post -->
                                     @endif
-                                </div>
+                                @else
+                                    <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                        @if($post->excerpt)
+                                            <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                        @else
+                                            @php
+                                                $content = strip_tags($post->content);
+                                                $content = substr($content, 0 , 50);
+                                            @endphp
+                                            <p class="text-muted">{{ $content }}...</p>
+                                        @endif
+                                    </div>
+                                @endif
                             @endif
-                        @endif
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @endif
                 <!-- End Popular Posts -->
                 <!-- Ad -->
                 <div class="my-5">
@@ -332,30 +334,46 @@
             <!-- End Ad Section -->
 
             <!-- Newsletter -->
-            <div class="bg-soft-danger p-5 rounded-lg rounded-3">
-                <div class="row">
-                    <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
-                        <div class="mb-3">
-                            <h2 class="m-0">Liked what you have read?</h2>
-                            <h5 class="text-muted">Subscribe to our Newsletter</h5>
+            @if(Auth::user())
+                <div class="bg-soft-danger p-5 rounded-lg rounded-3">
+                    <div class="mb-3">
+                        <h2 class="m-0">Liked what you have read?</h2>
+                        <h5 class="text-muted">Subscribe to our Newsletter</h5>
+                    </div>
+                    <form action="{{route($app->module.'.subscribe')}}" enctype="multipart/form-data" method="POST">
+                        <button class="btn btn-danger btn-sm">Subscribe</button>
+                        
+                        <input type="text" name="name" placeholder="Name" class="form-control mb-2 @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->name}} @endif">
+                        <input type="email" name="email" placeholder="Email" class="form-control mb-2  @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->email}} @endif">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    </form>
+                </div>
+            @else
+                <div class="bg-soft-danger p-5 rounded-lg rounded-3">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
+                            <div class="mb-3">
+                                <h2 class="m-0">Liked what you have read?</h2>
+                                <h5 class="text-muted">Subscribe to our Newsletter</h5>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
+                            <form action="{{route($app->module.'.subscribe')}}" enctype="multipart/form-data" method="POST">                                
+                                <input type="text" name="name" placeholder="Name" class="form-control mb-2 @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->name}} @endif">
+                                <input type="email" name="email" placeholder="Email" class="form-control mb-2  @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->email}} @endif">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-danger btn-sm">Subscribe</button>
+                            </form>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <form action="{{route($app->module.'.subscribe')}}" enctype="multipart/form-data" method="POST">
-                            <input type="text" name="name" placeholder="Name" class="form-control mb-2 @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->name}} @endif">
-                            <input type="email" name="email" placeholder="Email" class="form-control mb-2  @if(Auth::user()) d-none @endif" value="@if(Auth::user()) {{Auth::user()->email}} @endif">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <button class="btn btn-danger btn-sm">Subscribe</button>
-                        </form>
-                    </div>
                 </div>
-            </div>
+            @endif
             <!-- End Newsletter -->
 
             <!-- Related Posts Full Section -->
             @if($settings->post_layout == 'full')
             <div class="my-5 d-none d-lg-block">
-                @if(!empty($related))
+                @if(!empty($related)  && sizeof($related) > 1)
                     <div class="my-3">
                         <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                     </div>
@@ -422,7 +440,7 @@
         <div class="d-lg-none px-3">
             <!-- Related Posts Right Section -->
             <div class="my-5">
-                @if(!empty($related))
+                @if(!empty($related) && sizeof($related) > 1)
                     <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                     @foreach($related as $post)
                         @if($post->id != $obj->id)
@@ -481,52 +499,54 @@
             <!----- End Tags Section------>
 
             <!-- Popular Posts -->
-            <div class="mb-5">
-                <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
-                @foreach($popular as $post)     
-                    @if($post->status)
-                        @if(!empty($post->image) && strlen($post->image) > 5)
-                            @if(Storage::disk('s3')->exists($post->image))
-                                <!-- Related Post -->
-                                <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-4">
-                                            @php
-                                                $path = explode("/", $post->image);
-                                                $path = explode(".", $path[1]);
-                                                $path = $path[0];
-                                            @endphp
-                                            @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
-                                            @else
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
-                                            @endif
-                                        </div>
-                                        <div class="col-8 pl-0">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                            <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+            @if(!empty($popular) && sizeof($popular) > 0)
+                <div class="mb-5">
+                    <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
+                    @foreach($popular as $post)     
+                        @if($post->status)
+                            @if(!empty($post->image) && strlen($post->image) > 5)
+                                @if(Storage::disk('s3')->exists($post->image))
+                                    <!-- Related Post -->
+                                    <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-4">
+                                                @php
+                                                    $path = explode("/", $post->image);
+                                                    $path = explode(".", $path[1]);
+                                                    $path = $path[0];
+                                                @endphp
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @else
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                @endif
+                                            </div>
+                                            <div class="col-8 pl-0">
+                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End Related Post -->
-                            @endif
-                        @else
-                            <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                @if($post->excerpt)
-                                    <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
-                                @else
-                                    @php
-                                        $content = strip_tags($post->content);
-                                        $content = substr($content, 0 , 50);
-                                    @endphp
-                                    <p class="text-muted">{{ $content }}...</p>
+                                    <!-- End Related Post -->
                                 @endif
-                            </div>
+                            @else
+                                <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                    @if($post->excerpt)
+                                        <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                    @else
+                                        @php
+                                            $content = strip_tags($post->content);
+                                            $content = substr($content, 0 , 50);
+                                        @endphp
+                                        <p class="text-muted">{{ $content }}...</p>
+                                    @endif
+                                </div>
+                            @endif
                         @endif
-                    @endif
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
             <!-- End Popular Posts --> 
         </div>
 
@@ -546,7 +566,7 @@
 
             <!-- Related Posts Right Section -->
             <div class="mb-5">
-                @if(!empty($related))
+                @if(!empty($related) && sizeof($related) > 1)
                     <div class="my-3">
                         <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                     </div>
@@ -607,52 +627,54 @@
             <!----- End Tags Section------>
 
             <!-- Popular Posts -->
-            <div class="mb-5">
-                <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
-                @foreach($popular as $post)     
-                    @if($post->status)
-                        @if(!empty($post->image) && strlen($post->image) > 5)
-                            @if(Storage::disk('s3')->exists($post->image))
-                                <!-- Related Post -->
-                                <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-4">
-                                            @php
-                                                $path = explode("/", $post->image);
-                                                $path = explode(".", $path[1]);
-                                                $path = $path[0];
-                                            @endphp
-                                            @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
-                                            @else
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
-                                            @endif
-                                        </div>
-                                        <div class="col-8 pl-0">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                            <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+            @if(!empty($popular) && sizeof($popular) > 0)
+                <div class="mb-5">
+                    <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
+                    @foreach($popular as $post)     
+                        @if($post->status)
+                            @if(!empty($post->image) && strlen($post->image) > 5)
+                                @if(Storage::disk('s3')->exists($post->image))
+                                    <!-- Related Post -->
+                                    <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-4">
+                                                @php
+                                                    $path = explode("/", $post->image);
+                                                    $path = explode(".", $path[1]);
+                                                    $path = $path[0];
+                                                @endphp
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @else
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                @endif
+                                            </div>
+                                            <div class="col-8 pl-0">
+                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End Related Post -->
-                            @endif
-                        @else
-                            <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                @if($post->excerpt)
-                                    <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
-                                @else
-                                    @php
-                                        $content = strip_tags($post->content);
-                                        $content = substr($content, 0 , 50);
-                                    @endphp
-                                    <p class="text-muted">{{ $content }}...</p>
+                                    <!-- End Related Post -->
                                 @endif
-                            </div>
+                            @else
+                                <div class="bg-soft-danger p-3 rounded-lg mb-3">
+                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                    @if($post->excerpt)
+                                        <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                    @else
+                                        @php
+                                            $content = strip_tags($post->content);
+                                            $content = substr($content, 0 , 50);
+                                        @endphp
+                                        <p class="text-muted">{{ $content }}...</p>
+                                    @endif
+                                </div>
+                            @endif
                         @endif
-                    @endif
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
             <!-- End Popular Posts -->
             <!-- Ad -->
             <div class="mb-3">
