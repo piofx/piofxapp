@@ -167,7 +167,10 @@ class PostController extends Controller
 
         $template_name = $request->input("template");
 
-        $template = stripslashes(json_decode($settings->$template_name));
+        $template = '';
+        if($template_name != 'none'){
+            $template = stripslashes(json_decode($settings->$template_name));
+        }
 
         return view("apps.".$this->app.".".$this->module.".createEdit")
                 ->with("stub", "create")

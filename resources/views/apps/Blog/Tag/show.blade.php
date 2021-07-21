@@ -12,7 +12,7 @@
     <!-- Blogs Section -->
     <div class="container mt-5">
         <div class="row justify-content-lg-between">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             <!-- Ad -->
             <div class="mb-3">
                 @if(!empty($settings->ads))
@@ -50,7 +50,7 @@
                                             <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
                                             </span>
                                         @endif
-                                        <h3><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{$post->title}}</a></h3>
+                                        <h3 class="mt-3"><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{$post->title}}</a></h3>
                                         @if($post->excerpt)
                                             <p>{{ substr($post->excerpt, 0, 200) }}...</p>
                                         @else
@@ -82,7 +82,7 @@
                                     <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
                                     </span>
                                 @endif
-                                <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{$post->title}}</a></h3>
+                                <h3 class="mt-3"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{$post->title}}</a></h3>
                                 @if($post->excerpt)
                                     <p>{{ substr($post->excerpt, 0, 200) }}...</p>
                                 @else
@@ -135,13 +135,17 @@
         <!-- End Blog -->
 
         <!-- Right Section -->
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="mb-5">
                 <!-- Search Form -->
                 <form action="{{ route('Post.search') }}" method="GET">
-                    <div class="form-floating">
-                        <input type="text" class="form-control form-control-lg input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
-                        <label for="floatingInput">@if($settings->language == 'telugu') వెతకండి @else Search @endif...</label>
+                    <div class="input-group mb-3"> 
+                        <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary btn-md" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
                 <!-- End Search Form -->
