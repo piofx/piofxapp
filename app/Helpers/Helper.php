@@ -105,8 +105,8 @@ if (! function_exists('s3_upload')) {
 }
  
 
-if (! function_exists('quill_imageupload')) {
-    function quill_imageupload($user,$editor_data)
+if (! function_exists('blog_image_upload')) {
+    function blog_image_upload($user,$editor_data)
     {
     	$detail=$editor_data;
         if($detail){
@@ -128,7 +128,11 @@ if (! function_exists('quill_imageupload')) {
  
                     $base_folder = '/app/public/';
                     $image_name=  'post_' . time() . "_" . $user->username . '_' . rand() . '.png';
-					
+
+					// Check if temp path exists else create it
+					if(!Storage::exists(storage_path() . $base_folder . 'images/')) {
+						Storage::makeDirectory(storage_path() . $base_folder . 'images/'); //creates directory
+					}
                     $temp_path = storage_path() . $base_folder . 'images/' . $image_name;
                     // $web_path = env('APP_URL').'storage/images/'. $image_name;
 					// Storage::disk('s3')->put('', file_get_contents($path),'public'); 
@@ -192,23 +196,33 @@ if (! function_exists('quill_imageupload')) {
 		function image_resize($image, $size, $filename)
 		{
 			$tag = 'resized';
+			if($size <= 400){
+				$tag = "mobile";
+			} 
 
 			// Getting filename without extension
 			$filename = explode(".", $filename);
 			$filename = $filename[0];
 
-			$imgr = Image::make($image)->encode('jpg', 100);
-			$imgr->resize($size, null, function ($constraint) {
+			// WebP version of the image
+			$webpImgr = Image::make($image)->encode('webp');
+			$webpImgr->resize($size, null, function ($constraint) {
+				$constraint->aspectRatio();
+				$constraint->upsize();
+			});
+			$webpImgr->save();
+			Storage::disk('s3')->put('resized_images/webp/'.$filename.'_'.$tag.'.webp', (string)$webpImgr,'public');
+
+			// JPG Version of the image
+			$jpgImgr = Image::make($image)->encode('jpg', 100);			
+			$jpgImgr->resize($size, null, function ($constraint) {
 							$constraint->aspectRatio();
 							$constraint->upsize();
 			});
-			if($size <= 400){
-				$tag = "mobile";
-			}  
+			$jpgImgr->save();
+			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.jpg', (string)$jpgImgr,'public');
 
-			$imgr->save();
-		
-			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.jpg', (string)$imgr,'public');
+			// Retrieve path of the resized image
 			$path = Storage::disk('s3')->path('resized_images/'.$filename.'_'.$tag.'.jpg');
 			
 			return $path;

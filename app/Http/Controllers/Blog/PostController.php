@@ -233,7 +233,7 @@ class PostController extends Controller
         }
 
         // Change the images from base 64 to jpg and add to request
-        $content = quill_imageupload(auth()->user(), $request->content);
+        $content = blog_image_upload(auth()->user(), $request->content);
         $request->merge(["content" => $content]);
 
         // Store the records
@@ -502,7 +502,7 @@ class PostController extends Controller
         }
 
         // Change the images from base 64 to jpg and add to request
-        $content = quill_imageupload(auth()->user(), $request->content);
+        $content = blog_image_upload(auth()->user(), $request->content);
         $request->merge(["content" => $content]);
 
         // Delete Images from inside of the post if they are not in the update

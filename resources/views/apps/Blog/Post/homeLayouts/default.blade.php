@@ -1,5 +1,15 @@
 <x-dynamic-component :component="$app->componentName">
 
+    <!-- Check if browser supports webP format for images -->
+    @php
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $webp = false;
+        }
+    @endphp
+        
     <!-- Hero Section -->
     <div class="position-relative">
         <!-- Main Slider -->
@@ -70,8 +80,8 @@
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}">
                                                 @endif
@@ -177,8 +187,8 @@
                                             $path = explode(".", $path[1]);
                                             $path = $path[0];
                                         @endphp
-                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                         @else
                                             <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                         @endif
@@ -334,8 +344,8 @@
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
                                                 @endif

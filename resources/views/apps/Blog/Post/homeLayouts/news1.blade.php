@@ -1,5 +1,15 @@
 <x-dynamic-component :component="$app->componentName">
 
+    <!-- Check if browser supports webP format for images -->
+    @php
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $webp = false;
+        }
+    @endphp
+
     <div class="container space-top-3">
         <!-- Ad -->
         <div class="">
@@ -32,8 +42,8 @@
                                                                 $path = explode(".", $path[1]);
                                                                 $path = $path[0];
                                                             @endphp
-                                                            @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.jpg'))
-                                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.jpg') }}">
+                                                            @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.'.$ext))
+                                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
                                                             @else
                                                                 <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($f->image) }}">
                                                             @endif
@@ -116,8 +126,8 @@
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($f->image) }}">
                                                 @endif
@@ -148,8 +158,8 @@
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.jpg') }}">
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($f->image) }}">
                                                 @endif
@@ -217,8 +227,8 @@
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                 @else
                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($f->image) }}">
                                                 @endif
@@ -278,8 +288,8 @@
                                                             $path = explode(".", $path[1]);
                                                             $path = $path[0];
                                                         @endphp
-                                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                         @else
                                                             <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                                         @endif
@@ -392,8 +402,8 @@
                                                         $path = explode(".", $path[1]);
                                                         $path = $path[0];
                                                     @endphp
-                                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                                     @else
                                                         <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
                                                     @endif
