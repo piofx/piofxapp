@@ -31,6 +31,7 @@ Route::get("/blog/tag/{slug}", [TagController::class, "show"])->name("Tag.show")
 
 // Post Routes
 // Route::get("/admin/blog/content", [PostController::class, "addContent"]);
+Route::get("/admin/blog/testSearch", [PostController::class, "testSearch"]);
 Route::get("/blog", [PostController::class, "index"])->name("Post.index");
 Route::get("/admin/blog", [PostController::class, "list"])->middleware("auth")->name("Post.list");
 Route::get("/admin/blog/create", [PostController::class, "create"])->middleware("auth")->name("Post.create");

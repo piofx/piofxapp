@@ -16,7 +16,11 @@ use App\Events\UserCreated;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+
 use Browser;
+use Google_Client;
+use Google_Service_Webmasters;
+use Google_Service_Webmasters_SearchAnalyticsQueryRequest;
 
 class PostController extends Controller
 {
@@ -796,6 +800,47 @@ class PostController extends Controller
     //         $obj->update(["content" => $content]);
     //     }
     // }
+    
+    public function testSearch(){
+        $fromDate = date('Y-m-d', strtotime('-3 months'));
+        $toDate = date('Y-m-d', strtotime('-1 day'));
 
+        $clientId = "611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com";
+        $clientSecret = "4pJ9Si64HP-4wEF5CIqAFpxy";
+
+        $path = Storage::disk('public')->url('service_key.json');
+        // putenv("GOOGLE_APPLICATION_CREDENTIALS=.$path.");
+        // $path = Storage::disk('public')->get('client_secret.json'));
+        
+        $client = new \Google_Client();
+        // $client->setAuthConfig($path);
+        // $client->useApplicationDefaultCredentials();
+        $client->setClientId($clientId);
+        $client->setClientSecret($clientSecret);
+        $client->addScope(Google_Service_Webmasters::WEBMASTERS_READONLY);
+        // $webmaster = new Google_Service_Webmasters($client);
+        $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+        $client->setRedirectUri($redirect_uri);
+        
+        $search = new Google_Service_Webmasters_SearchAnalyticsQueryRequest;
+        $search->setStartDate( $fromDate );
+        $search->setEndDate( $toDate );
+        $search->setDimensions( ['date'] );
+        $search->setAggregationType( 'auto' );
+        
+        $accessTokenJson = $client->getAccessToken();
+
+        // ddd($accessTokenJson);
+        // ddd($search);
+        
+        // returns a Guzzle HTTP Client
+        // $httpClient = $client->authorize();
+
+        // make an HTTP request
+        // $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
+        $webmastersService = new Google_Service_Webmasters($client);
+        $response = $webmastersService->query("https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Ftech.packetprep.com.com%2F/searchAnalytics/query");
+        ddd($response);
+    }
 }
 
