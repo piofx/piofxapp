@@ -66,6 +66,20 @@ class UserController extends Controller
         	$clients = Client::all();
         else
         	$clients = Client::where('id',request()->get('client.id'))->get();
+
+        //load client id
+        $client_id = request()->get('client.id');
+
+        //load the form elements if its defined in the settings i.e. stored in aws
+        $form = null;
+        if(Storage::disk('s3')->exists('settings/user/'.$client_id.'.json' )){
+            //open the client specific settings
+            $data = json_decode(json_decode(Storage::disk('s3')->get('settings/user/'.$client_id.'.json' ),true));
+            if(isset($data->form))
+                $form = $obj->processForm($data->form);
+        }
+        else
+            $data = '';
             
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','create')

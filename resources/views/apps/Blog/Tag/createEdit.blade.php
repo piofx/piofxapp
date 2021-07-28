@@ -6,7 +6,7 @@
     <form method="POST" action="{{ route($app->module.'.update', $obj->id) }}">
     @endif
       @csrf
-      <h3 class="text-center font-weight-bold py-2">Create a Tag</h3>
+      <h2 class="text-center font-weight-bolder text-primary py-2">Create a Tag</h3>
       <div class="my-3">
         <h5>Name:</h5>
         <input class="form-control" name="name" id="title" onkeyup="createSlug()" type="text" value="@if($stub == 'update'){{ $obj ? $obj->name : '' }}@endif">

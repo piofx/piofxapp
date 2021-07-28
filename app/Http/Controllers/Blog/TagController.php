@@ -75,32 +75,51 @@ class TagController extends Controller
             }
         }
 
-		// Cached Data
+		// Cached Tags Data
         $objs = Cache::get('tags_'.request()->get('client.id'));
-        $featured = Cache::get('featured_'.request()->get('client.id'));
-        $popular = Cache::get('popular_'.request()->get('client.id'));
-        $categories = Cache::get('categories_'.request()->get('client.id'));
-        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
-
-        if(!$objs || !$featured || !$popular || !$categories || !$settings){
-			// Retrieve all tags
+        if(!$objs){
+            // Retrieve all tags
             $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
-			// Featured Posts
-			$featured = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('featured', 'on')->orderBy("id", 'desc')->get();
-			// Retrieve Popular Posts
-			$popular = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
-            // Retrieve all categories
-            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('posts')->get();
-			// Retrieve Settings
-			$settings = $blogSettings->getSettings();
-
+            // add to cache
             Cache::forever('tags_'.request()->get('client.id'), $objs);
-			Cache::forever('featured_'.request()->get('client.id'), $featured);
+        }
+
+        // Cached Featured data
+        $featured = Cache::get('featured_'.request()->get('client.id'));
+        if(!$featured){
+            // Retrieve Featured Posts
+            $featured = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('category')->with("user")->where('featured', 'on')->orderBy("id", 'desc')->get();
+            // add to cache
+            Cache::forever('featured_'.request()->get('client.id'), $featured);
+        }
+
+        // cached popular data
+        $popular = Cache::get('popular_'.request()->get('client.id'));
+        if(!$popular){
+            // Retrieve Popular Posts
+            $popular = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", 'desc')->limit(3)->get();
+            // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
+        }
+
+        // Cached categories data
+        $categories = Cache::get('categories_'.request()->get('client.id'));
+        if(!$categories){
+            // Retrieve all categories
+            $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+            // Add to cache 
             Cache::forever('categories_'.request()->get('client.id'), $categories);
+        }
+
+        // cached settings data
+        $settings = Cache::get('blogSettings_'.request()->get('client.id'));
+        if(!$settings){
+            // Retrieve Settings
+            $settings = $blogSettings->getSettings();
+            // add to cache
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
-                
+                        
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
 

@@ -19,17 +19,19 @@
     <form action="{{ route($app->module.'.update', $obj->id) }}" id="post_form" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); addTextarea();">
 @endif
     <!-----begin second header------->
-    <div class="col-lg-12 pt-3 d-flex justify-content-end">
-        <div class="col-8">
-            <div class="d-flex justify-content-around align-items-center bg-white rounded-lg shadow-sm p-3">
-                <label class="checkbox">
-                    <input type="checkbox" name="status" @if($stub == 'update'){{$obj->status == '1' ? 'checked' : ''}}@endif/>
-                    <span class="mr-2"></span>
-                        Active
-                </label>
-                <button type="submit" name="publish" value="save_as_draft" class="btn">Save As Draft</button>
-                <button type="submit" name="publish" value="preview" class="btn btn-outline-primary">Preview</button>
-                <div class="ml-3">
+    <div class="row pt-3 d-flex justify-content-end">
+        <div class="col-12 col-lg-8">
+            <div class="d-block d-md-flex justify-content-between align-items-center bg-white rounded-lg shadow-sm p-5">
+                <div class="d-flex align-items-center justify-content-between">
+                    <label class="checkbox">
+                        <input type="checkbox" name="status" @if($stub == 'update'){{$obj->status == '1' ? 'checked' : ''}}@endif/>
+                        <span class="mr-2"></span>
+                            Active
+                    </label>
+                    <button type="submit" name="publish" value="save_as_draft" class="btn btn-transparent-info ml-md-5">Save As Draft</button>
+                    <button type="submit" name="publish" value="preview" class="btn btn-outline-primary ml-md-5">Preview</button>
+                </div>
+                <div class="my-3 my-lg-0 ml-lg-3">
                     <div class="input-group date">
                         <input type="text" class="form-control bg-white" readonly="readonly" name="published_at" value="@if($stub == 'update'){{$obj ? $obj->published_at : ''}}@endif" placeholder="Schedule" id="kt_datetimepicker_2" onclick="this.value=''"/>
                         <div class="input-group-append">
@@ -44,7 +46,7 @@
                     <input type="hidden" name="id" value="{{ $obj->id }}">
                 @endif
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-primary ml-3" name="publish" value="now">{{ $stub == 'update' ? 'Update' : 'Publish Now'}}</button>
+                    <button type="submit" class="btn btn-primary ml-lg-3" name="publish" value="now">{{ $stub == 'update' ? 'Update' : 'Publish Now'}}</button>
             </div>
         </div>
     </div>
@@ -53,7 +55,7 @@
     <!------------begin::Content------------->
     <div class="mt-5">
         <div class="row container m-0 p-0 my-5">
-            <div class="col-xl-9 bg-white p-5 rounded-lg">
+            <div class="col-12 col-lg-9 bg-white p-5 rounded-lg">
                 <input type="text" id="title" onkeyup="createSlug()"
                     class="form-control p-0 display-3" style="border: none; background: transparent;"
                     name="title" value="@if($stub == 'update'){{$obj ? $obj->title : 'Title'}}@else{{ 'Type your title here' }}@endif"/>
@@ -70,14 +72,22 @@
                 <!-- Content -->
                 <textarea name="content" hidden id="post_content" rows=5></textarea>
 
-                <textarea id="post_editor">{!! $obj->content !!}</textarea>
+
+                @if(!empty($obj->content))
+                    <textarea id="post_editor">{!! $obj->content !!}</textarea>
+                @else
+                    @if(!empty($template))
+                        <textarea id="post_editor">{!! $template !!}</textarea>
+                    @else
+                        <textarea id="post_editor"></textarea>
+                    @endif
+                @endif
 
             </div>
 
             <!-- Right Column -->
-            <div class="col-xl-3 mt-3 mt-lg-0">
+            <div class="col-12 col-lg-3 mt-5 mt-lg-0 px-0 pl-lg-5">
                 <div class="bg-white p-5 rounded-lg">
-
                     <!-- Featured -->
                     <div class="p-3 bg-white my-3 rounded-lg shadow-sm">
                         <label class="checkbox">

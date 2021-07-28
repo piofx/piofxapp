@@ -31,6 +31,7 @@ Route::get("/blog/tag/{slug}", [TagController::class, "show"])->name("Tag.show")
 
 // Post Routes
 // Route::get("/admin/blog/content", [PostController::class, "addContent"]);
+Route::get("/admin/blog/testSearch", [PostController::class, "testSearch"]);
 Route::get("/blog", [PostController::class, "index"])->name("Post.index");
 Route::get("/admin/blog", [PostController::class, "list"])->middleware("auth")->name("Post.list");
 Route::get("/admin/blog/create", [PostController::class, "create"])->middleware("auth")->name("Post.create");
@@ -40,5 +41,9 @@ Route::get("/admin/blog/{slug}/edit", [PostController::class, "edit"])->middlewa
 Route::put("/admin/blog/{id}", [PostController::class, "update"])->middleware("auth")->name("Post.update");
 Route::delete("/admin/blog/{id}/delete", [PostController::class, "destroy"])->middleware("auth")->name("Post.destroy");
 Route::get("/blog/author/{name}", [PostController::class, "author"])->name("Post.author");
+Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");
+
+// Retrieve popular post
+Route::get("/popularPost", [PostController::class, "popularPost"])->name("Post.popular");
 Route::post("/blog/subscribe", [PostController::class, "subscribe"])->name("Post.subscribe");
 Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");
