@@ -176,9 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\VaporUiServiceProvider::class,
         
-
         Intervention\Image\ImageServiceProvider::class,
-        
+        Laravel\Socialite\SocialiteServiceProvider::class,          
 
     ],
 
@@ -233,6 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Image' => Intervention\Image\Facades\Image::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,  
+        
     ],
 
 ];
