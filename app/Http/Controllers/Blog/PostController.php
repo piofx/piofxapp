@@ -681,12 +681,20 @@ class PostController extends Controller
     public function subscribe(Obj $obj, Request $request){
         $validate_email = debounce_valid_email($request->email);
         $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
-        
+        $subscriber = MailSubscriber::where('email', '=', $request->email)->first();
+        if ($subscriber === null)
+        { 
         $obj = MailSubscriber::create($request->all());
-
         event(new UserCreated($obj,$request));
-
-        return redirect()->route($this->module.'.index');
+        //flash message and redirect to controller index page
+        $alert = 'You are Successfully Subscribed';
+        return redirect()->back()->with('alert',$alert);
+        }
+        else{
+             //flash message and redirect to controller index page
+            $alert = 'You are already Subscribed';
+            return redirect()->back()->with('alert',$alert);
+        }
     }
 
 }

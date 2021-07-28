@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use DateTime;
+use Carbon\Carbon;
 use App\Exports\ContactsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -144,7 +146,7 @@ class ContactController extends Controller
      */
     public function store(Obj $obj,Request $request)
     {   
-            
+        
         try{
 
             /* check for closest duplicates */
@@ -215,21 +217,22 @@ class ContactController extends Controller
             
             $client_id = request()->get('client.id');
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
-            {
+            {   
+                //Fletching the template 
+                $template = MailTemplate::where('name','Admin Notification Mail')->first();
+                //open the client specific settings
                 $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
-                $columns = [];
-                $columns = array_unique(array_merge($columns, array_values(json_decode($data, true))));
-                if (in_array("rightaway", $columns))
+                $data = json_decode($data);
+                if($template != NULL)
                 {
-                    //event(new NewContactCreated($obj));
-                    $template = MailTemplate::where('name','Admin Notification Mail')->first();
-                    if($template != NULL)
-                    { 
-                        $details = array('name' => $obj->name ,'email' => $obj->email , 'message' => $obj->message , 'content'=>$template->message);
-                        NotifyAdmin::dispatch($details);
-                    }
+                    if ($data->digest == 'rightaway')
+                        {
+                            $details = array('name' => $obj->name ,'email' => $obj->email , 'message' => $obj->message , 'content'=>$template->message);
+                            $counter = 1;
+                            //dispatching the job
+                            NotifyAdmin::dispatch($details,$counter);
+                        }
                 }
-                
             }
 
             return redirect()->back()->with('alert',$alert);
@@ -413,3 +416,7 @@ class ContactController extends Controller
         return redirect()->route($this->module.'.index')->with('alert',$alert);
     }
 }
+
+
+
+

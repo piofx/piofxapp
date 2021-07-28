@@ -16,15 +16,17 @@ class NotifyAdmin implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $details;
+    public $counter;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($details,$counter)
     {
         $this->details = $details;
+        $this->counter = $counter;
     }
 
     /**
@@ -34,7 +36,7 @@ class NotifyAdmin implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to('superadmin@gmail.com')->send(new NewContactsUpdate($this->details));
+        Mail::to('superadmin@gmail.com')->send(new NewContactsUpdate($this->details,$this->counter));
         
     }
 }
