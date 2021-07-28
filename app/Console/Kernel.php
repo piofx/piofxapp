@@ -51,6 +51,7 @@ class Kernel extends ConsoleKernel
                 $schedule->command('ContactInfo',[$counter])->monthly();   
             }
         }
+        // Just a comment
 
             
     }
