@@ -106,16 +106,25 @@ if (! function_exists('s3_upload')) {
  
 
 if (! function_exists('blog_image_upload')) {
-    function blog_image_upload($user,$editor_data)
+    function blog_image_upload($userId, $editor_data)
     {
-    	$detail=$editor_data;
+		// Check if temp path exists else create it
+		if(!Storage::disk('public')->exists('images')) {
+			Storage::disk('public')->makeDirectory('images'); //creates directory
+		}
+
+		// Get Editor data
+    	$detail = $editor_data;
+		// If data is present
         if($detail){
+			// Get img data from html using dom
             $dom = new \DomDocument();
             libxml_use_internal_errors(true);
             $dom->loadHtml(mb_convert_encoding($detail, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
             $images = $dom->getElementsByTagName('img');
             $data = null;
  
+			// For every image resize and upload images to s3
             foreach($images as $k => $img){
  
                 $data = $img->getAttribute('src');
@@ -124,38 +133,37 @@ if (! function_exists('blog_image_upload')) {
                 {
                     list($type, $data) = explode(';', $data);
                     list(, $data)      = explode(',', $data);
+					// Image data in base 64 format
                     $data = base64_decode($data);
  
                     $base_folder = '/app/public/';
-                    $image_name=  'post_' . time() . "_" . $user->username . '_' . rand() . '.png';
+                    $image_name=  'post_' . time() . "_" . $userId . '_' . rand() . '.jpg';
 
-					// Check if temp path exists else create it
-					if(!Storage::exists(storage_path() . $base_folder . 'images/')) {
-						Storage::makeDirectory(storage_path() . $base_folder . 'images/'); //creates directory
-					}
+					// Temporary folder for image
                     $temp_path = storage_path() . $base_folder . 'images/' . $image_name;
-                    // $web_path = env('APP_URL').'storage/images/'. $image_name;
-					// Storage::disk('s3')->put('', file_get_contents($path),'public'); 
+                
+					// Save image at temp path
                     file_put_contents($temp_path, $data);
-                    // resize
-                    $imgr = Image::make($temp_path);
-                    $imgr->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    });
-                    $imgr->save($temp_path);
+
+					// Retrieve Image
+					$retrieved_image = Storage::disk('public')->get('images/' . $image_name);
  
-                    $url = s3_upload($image_name,$temp_path);
+					// Resize and upload Image
+					image_resize($retrieved_image, 800, $image_name);
+					image_resize($retrieved_image, 400, $image_name);
+
+					// Upload Original Image
+                    $url = s3_upload($image_name, $temp_path);
                     unlink(trim($temp_path));
  
                     $img->removeAttribute('src');
                     $img->setAttribute('src', $url);
 					if($img->hasAttribute("class")){
 						$img->removeAttribute('class');
-						$img->setAttribute('class', 'img-fluid rounded-lg');
+						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3');
 					}
 					else{
-						$img->setAttribute('class', 'img-fluid rounded-lg');
+						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3');
 					}
                 }
 			}
@@ -165,6 +173,10 @@ if (! function_exists('blog_image_upload')) {
             else
                 $detail = $editor_data;
         }
+
+		// Delete Directory
+		Storage::disk('public')->deleteDirectory('images');
+
         return $detail;
     }
 
@@ -210,22 +222,17 @@ if (! function_exists('blog_image_upload')) {
 				$constraint->aspectRatio();
 				$constraint->upsize();
 			});
-			$webpImgr->save();
-			Storage::disk('s3')->put('resized_images/webp/'.$filename.'_'.$tag.'.webp', (string)$webpImgr,'public');
+			$webpImgr = $webpImgr->stream();
+			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.webp', $webpImgr->__toString(),'public');
 
 			// JPG Version of the image
-			$jpgImgr = Image::make($image)->encode('jpg', 100);			
+			$jpgImgr = Image::make($image)->encode('jpg', 75);			
 			$jpgImgr->resize($size, null, function ($constraint) {
 							$constraint->aspectRatio();
 							$constraint->upsize();
 			});
-			$jpgImgr->save();
-			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.jpg', (string)$jpgImgr,'public');
-
-			// Retrieve path of the resized image
-			$path = Storage::disk('s3')->path('resized_images/'.$filename.'_'.$tag.'.jpg');
-			
-			return $path;
+			$jpgImgr = $jpgImgr->stream();
+			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.jpg', $jpgImgr->__toString(),'public');
 		}
 	}
 if (! function_exists('debounce_valid_email'))

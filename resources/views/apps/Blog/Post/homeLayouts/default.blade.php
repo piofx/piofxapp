@@ -6,7 +6,7 @@
             $ext = 'webp';
         }
         else{
-            $webp = false;
+            $ext = 'jpg';
         }
     @endphp
         
@@ -37,7 +37,7 @@
                 @foreach($featured as $f)
                     @if($f->status != 0)
                         @if(!empty($f->image) && strlen($f->image) > 5 && Storage::disk('s3')->exists($f->image))
-                            <div style="background-image: url({{ Storage::disk('s3')->url($f->image) }}); background-size: cover; backround-position: center; background-repeat: no-repeat;">
+                            <div style="background-image: url({{ Storage::disk('s3')->url($f->image) }}); background-size: cover; background-position: center; background-repeat: no-repeat;">
                                 <div class="js-slide d-flex bg-img-hero min-h-620rem">
                                 <!-- News Block -->
                                     <div class="container d-flex align-items-center min-h-620rem">
