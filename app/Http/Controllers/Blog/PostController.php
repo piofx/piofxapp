@@ -16,13 +16,14 @@ use App\Events\UserCreated;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+// use Laravel\Socialite\Facades\Socialite;
 
 use Browser;
 use Google_Client;
 use Google_Service_Webmasters;
 use Google_Service_Webmasters_SearchAnalyticsQueryRequest;
 use SearchConsole;
+use Google_Service_Analytics;
 
 class PostController extends Controller
 {
@@ -803,55 +804,13 @@ class PostController extends Controller
     //     }
     // }
     
-    public function testSearch(){
+    public function testSearch(Request $request){
         $fromDate = date('Y-m-d', strtotime('-3 months'));
         $toDate = date('Y-m-d', strtotime('-1 day'));
 
-        // $clientId = "611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com";
-        // $clientSecret = "4pJ9Si64HP-4wEF5CIqAFpxy";
-
-        // $path = Storage::disk('public')->url('service_key.json');
-        // // putenv("GOOGLE_APPLICATION_CREDENTIALS=.$path.");
-        // // $path = Storage::disk('public')->get('client_secret.json'));
-        
-        // $client = new \Google_Client();
-        // // $client->setAuthConfig($path);
-        // // $client->useApplicationDefaultCredentials();
-        // $client->setClientId($clientId);
-        // $client->setClientSecret($clientSecret);
-        // $client->addScope(Google_Service_Webmasters::WEBMASTERS_READONLY);
-        // // $webmaster = new Google_Service_Webmasters($client);
-        // $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        // $client->setRedirectUri($redirect_uri);
-        
-        // $search = new Google_Service_Webmasters_SearchAnalyticsQueryRequest;
-        // $search->setStartDate( $fromDate );
-        // $search->setEndDate( $toDate );
-        // $search->setDimensions( ['date'] );
-        // $search->setAggregationType( 'auto' );
-        
-        // $accessTokenJson = $client->getAccessToken();
-
-        // // ddd($accessTokenJson);
-        // // ddd($search);
-        
-        // // returns a Guzzle HTTP Client
-        // // $httpClient = $client->authorize();
-
-        // // make an HTTP request
-        // // $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
-        // $webmastersService = new Google_Service_Webmasters($client);
-        // $response = $webmastersService->query("https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Ftech.packetprep.com.com%2F/searchAnalytics/query");
-        // ddd($response);
-        // $user = Socialite::driver('google')->stateless()->user();  
-        // ddd($user);
-        // $sites = SearchConsole::setAccessToken($token)->listSites();
-        // ddd($sites);
-
-
         $client_id = '611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com';
         $client_secret = '4pJ9Si64HP-4wEF5CIqAFpxy';
-        $redirect_uri = 'http://localhost:8000/admin/blog';
+        $redirect_uri = 'http://localhost:8000/admin/blog/testSearch';
 
         $client = new Google_Client();
         $client->setClientId($client_id);
@@ -860,22 +819,52 @@ class PostController extends Controller
         $client->addScope("https://www.googleapis.com/auth/webmasters");
 
         $client->setAccessType('offline');
-        // $client->setApprovalPrompt("consent");
-        $client->setIncludeGrantedScopes(true);     
+        $client->setIncludeGrantedScopes(true);   
 
-        $auth_url = $client->createAuthUrl();
-        // ddd($auth_url);
-        header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
+        // If there is no previous token or it's expired.
+        if ($client->isAccessTokenExpired()) {
+            // Refresh the token if possible, else fetch a new one.
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            } else {
+                // Request authorization from the user.
+                $authUrl = $client->createAuthUrl();
+                printf("Open the following link in your browser:\n%s\n", $authUrl);
+                print 'Enter verification code: ';
+                $authCode = trim(file_get_contents("php://input"));
 
-        // if (isset($_REQUEST['logout'])) {
-        // unset($_SESSION['access_token']);
-        // }
+                // Exchange authorization code for an access token.
+                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                $client->setAccessToken($accessToken);
+
+                // Check to see if there was an error.
+                if (array_key_exists('error', $accessToken)) {
+                    throw new Exception(join(', ', $accessToken));
+                }
+            }
+            // Save the token to a file.
+            if (!file_exists(dirname($tokenPath))) {
+                mkdir(dirname($tokenPath), 0700, true);
+            }
+            file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+        }
+
 
         if (isset($_GET['code'])) {
+            // $token = $client->fetchAccessTokenWithCode($_GET['code']);
+            // $client->setAccessToken($token);
             $client->authenticate($_GET['code']);
             $_SESSION['access_token'] = $client->getAccessToken();
             $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+            $test = false;
+            header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+
+            ddd('hi');
+            $auth_url = $client->createAuthUrl();
+            // ddd($auth_url);
+            $test = false;
+            header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
+            ddd("h");
         }
 
         if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
@@ -883,8 +872,30 @@ class PostController extends Controller
         } else {
             $authUrl = $client->createAuthUrl();
         }
+        
+        // if (isset($_GET['code'])) {
+        //     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+        //     ddd($token);
+        //     $client->setAccessToken($token);
+          
+        //     // store in the session also
+        //     $_SESSION['upload_token'] = $token;
+          
+        //     // redirect back to the example
+        //     header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+        //   }
+          
+        //   // set the access token as part of the client
+        //   if (!empty($_SESSION['upload_token'])) {
+        //     $client->setAccessToken($_SESSION['upload_token']);
+        //     if ($client->isAccessTokenExpired()) {
+        //       unset($_SESSION['upload_token']);
+        //     }
+        //   } else {
+        //     $authUrl = $client->createAuthUrl();
+        // }
 
-        ddd($client->getAccessToken());
+        ddd($client);
 
         if ($client->getAccessToken()) {
             $_SESSION['access_token'] = $client->getAccessToken();
@@ -917,6 +928,10 @@ class PostController extends Controller
                 echo '</table>';
             
         }
+    }
+
+    public function testResult(){
+        ddd("here");
     }
     
 }
