@@ -810,7 +810,7 @@ class PostController extends Controller
 
         $client_id = '611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com';
         $client_secret = '4pJ9Si64HP-4wEF5CIqAFpxy';
-        $redirect_uri = 'http://localhost:8000/admin/blog/testSearch';
+        $redirect_uri = 'http://localhost:8000/admin/blog/searchConsole';
 
         $client = new Google_Client();
         $client->setClientId($client_id);
@@ -821,117 +821,67 @@ class PostController extends Controller
         $client->setAccessType('offline');
         $client->setIncludeGrantedScopes(true);   
 
-        // If there is no previous token or it's expired.
-        if ($client->isAccessTokenExpired()) {
-            if(!$request->input("accessCode")){
-                // Refresh the token if possible, else fetch a new one.
-                if ($client->getRefreshToken()) {
-                    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                } else {
-                    // Request authorization from the user.
-                    $authUrl = $client->createAuthUrl();
-                    
-                    return view("apps.".$this->app.".".$this->module.".searchConsole")
-                            ->with("app", $this)
-                            ->with("authUrl", $authUrl);
-                }
-                // Save the token to a file.
-                // if (!file_exists(dirname($tokenPath))) {
-                //     mkdir(dirname($tokenPath), 0700, true);
-                // }
-                // file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+        if($request->input("code")){
+            $authCode = $request->input('code');
+            // Exchange authorization code for an access token.
+            $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+
+            // Check to see if there was an error.
+            if (array_key_exists('error', $accessToken)) {
+                throw new Exception(join(', ', $accessToken));
             }
-            else{
-                ddd("inside else");
-                // Exchange authorization code for an access token.
-                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                $client->setAccessToken($accessToken);
+
+            $request->session()->put('searchConsoleToken', $accessToken);
+        }
+        
+        if ($request->session()->has('searchConsoleToken')) {
+            $accessToken = $request->session()->get('searchConsoleToken');
+            $client->setAccessToken($accessToken);
+        }
+        else{
+            // Refresh the token if possible, else fetch a new one.
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            } else {
+                // Request authorization from the user.
+                $authUrl = $client->createAuthUrl();
                 
-                // Check to see if there was an error.
-                if (array_key_exists('error', $accessToken)) {
-                    throw new Exception(join(', ', $accessToken));
-                }
+                header("Location: ". $authUrl);
             }
         }
 
-        // if (isset($_GET['code'])) {
-        //     // $token = $client->fetchAccessTokenWithCode($_GET['code']);
-        //     // $client->setAccessToken($token);
-        //     $client->authenticate($_GET['code']);
-        //     $_SESSION['access_token'] = $client->getAccessToken();
-        //     $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        //     $test = false;
-        //     header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+        if ($client->getAccessToken()) {
 
-        //     ddd('hi');
-        //     $auth_url = $client->createAuthUrl();
-        //     // ddd($auth_url);
-        //     $test = false;
-        //     header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
-        //     ddd("h");
-        // }
+            $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
 
-        // if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-        //     $client->setAccessToken($_SESSION['access_token']);
-        // } else {
-        //     $authUrl = $client->createAuthUrl();
-        // }
-        
-        // if (isset($_GET['code'])) {
-        //     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-        //     ddd($token);
-        //     $client->setAccessToken($token);
-          
-        //     // store in the session also
-        //     $_SESSION['upload_token'] = $token;
-          
-        //     // redirect back to the example
-        //     header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-        //   }
-          
-        //   // set the access token as part of the client
-        //   if (!empty($_SESSION['upload_token'])) {
-        //     $client->setAccessToken($_SESSION['upload_token']);
-        //     if ($client->isAccessTokenExpired()) {
-        //       unset($_SESSION['upload_token']);
-        //     }
-        //   } else {
-        //     $authUrl = $client->createAuthUrl();
-        // }
+            $obj->setStartDate($fromDate);
+            $obj->setEndDate($toDate);
 
-        // ddd($client);
+            $obj->setDimensions(['query']);
+            // $obj->setSearchType('web');
+            try {
+                $service = new Google_Service_Webmasters($client);
+                $queryData = $service->searchanalytics->query('https://packetprep.com', $obj);
+            } 
+            catch(\Exception $e ) {
+                echo $e->getMessage();
+            }  
 
-        // if ($client->getAccessToken()) {
-        //     $_SESSION['access_token'] = $client->getAccessToken();
+            $obj->setDimensions(['page']);
+            // $obj->setSearchType('web');
+            try {
+                $service = new Google_Service_Webmasters($client);
+                $pageData = $service->searchanalytics->query('https://packetprep.com', $obj);
+            } 
+            catch(\Exception $e ) {
+                echo $e->getMessage();
+            }  
 
-        //     $q = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
-
-        //     $q->setStartDate($fromDate);
-        //     $q->setEndDate($toDate);
-        //     $q->setDimensions(['page']);
-        //     $q->setSearchType('web');
-        //     $service = new Google_Service_Webmasters($client);
-        //     $u = $service->searchanalytics->query('https://tech.packetprep.com', $q);
-        //     ddd($u);
-        //     echo '<table border=1>';
-        //     echo '<tr>
-        //         <th>#</th><th>Clicks</th><th>CTR</th><th>Imp</th><th>Page</th><th>Avg. pos</th>';
-        //         for ($i = 0; $i < count($u->rows); $i++) {
-        //             echo "<tr><td>$i</td>";
-        //             echo "<td>{$u->rows[$i]->clicks}</td>";
-        //             echo "<td>{$u->rows[$i]->ctr}</td>";
-        //             echo "<td>{$u->rows[$i]->impressions}</td>";
-        //             echo "<td>{$u->rows[$i]->keys[0]}</td>";
-        //             echo "<td>{$u->rows[$i]->position}</td>";
-
-        //             /* foreach ($u->rows[$i] as $k => $value) {
-        //                 //this loop does not work (?)
-        //             } */
-        //             echo "</tr>";
-        //         }             
-        //         echo '</table>';
-            
-        // }
+            return view("apps.".$this->app.".".$this->module.".searchConsole")
+                        ->with("app", $this)
+                        ->with("queryData", $queryData)
+                        ->with("pageData", $pageData);
+        }
     }
 
     public function testResult(){
