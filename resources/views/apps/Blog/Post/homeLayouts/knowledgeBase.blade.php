@@ -160,11 +160,24 @@
     
     <!-- Blogs Section -->
     <div class="container space-1 @if(!($featured->count() > 0)) {{ 'space-top-3' }} @endif">
-        <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-5' }} @endif">
-            <div class="col-12 col-lg-9">
-
+        <div class="container mt-5">
+            <!-- Search Form -->
+            <form action="{{ route($app->module.'.search') }}" method="GET">
+                <div class="input-group mb-3"> 
+                    <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary btn-md" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- End Search Form -->
+        </div>
+        <div class="row @if($featured->count() > 0) {{ '' }} @else {{ 'mt-5' }} @endif">
+            <div class="col-8">
                 <!-- Ad -->
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'before-content')
@@ -172,95 +185,30 @@
                             @endif
                         @endforeach
                     @endif
-                </div>
+                </div> -->
                 <!-- End Ad Section -->  
 
-                @foreach($objs as $obj)
-                    @if($obj->status != 0)
-                        <!-- Blog -->
-                        @if(!empty($obj->image) && strlen($obj->image) > 5 && Storage::disk('s3')->exists($obj->image))
-                            <div class="mb-5 p-3 bg-light rounded-lg">
-                                <div class="row">
-                                    <div class="col-md-5 d-flex align-items-center">
-                                        @php
-                                            $path = explode("/", $obj->image);
-                                            $path = explode(".", $path[1]);
-                                            $path = $path[0];
-                                        @endphp
-                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
-                                        @else
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
-                                        @endif
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="card-body d-flex flex-column h-100 p-0">
-                                            @if($obj->category)
-                                                <span class="d-block mb-2 mt-3 mt-lg-0">
-                                                    <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
-                                                </span>
-                                            @endif
-                                            <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h3>
-                                            @if($obj->excerpt)
-                                                <p>{!! substr($obj->excerpt, 0, 200) !!}...</p>
-                                            @else
-                                                @php
-                                                    $content = strip_tags($obj->content);
-                                                    $content = substr($content, 0 , 200);
-                                                @endphp
-                                                <p>{{ $content }}...</p>
-                                            @endif
-                                            <div class="mb-3">
-                                                @if($obj->tags)
-                                                @foreach($obj->tags as $tag)
-                                                    <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
-                                                @endforeach
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
-                                            </div>
-                                        </div>
+                    <!---------Categories section-----> 
+                    <h3 class="font-weight-bold mb-3">Categories</h3>
+                    <div class="row mt-5">
+                            @foreach($categories as $category)
+                            @if($category->posts->count() > 0)
+                            <div class="col-4 m-5">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a type="button" href="{{ route('Category.show', $category->slug) }}" aria-current="true">{{ $category->name }}</a>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ $category->meta_description }}</h6>
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            <div class="mb-5 p-3 bg-light rounded-lg">
-                                <div class="card-body d-flex flex-column h-100 p-0">
-                                    @if($obj->category)
-                                        <span class="d-block mb-2">
-                                        <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
-                                        </span>
-                                    @endif
-                                    <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h3>
-                                    @if($obj->excerpt)
-                                        <p>{!! $obj->excerpt !!}...</p>
-                                    @else
-                                        @php
-                                            $content = strip_tags($obj->content);
-                                            $content = substr($content, 0 , 200);
-                                        @endphp
-                                        <p>{{ $content }}...</p>
-                                    @endif
-                                    <div class="mb-3">
-                                        @if($obj->tags)
-                                        @foreach($obj->tags as $tag)
-                                            <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
-                                        @endforeach
-                                        @endif
-                                    </div>
-                                    <div>
-                                        <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                        <!-- End Blog -->
-                    @endif
-                @endforeach
+                            @endif
+                            @endforeach
+                    </div>
+                </div>
+                <!--------- End categories section----->
 
                 <!-- Ad -->
-                <div class="my-3">
+                <!-- <div class="my-3">
                     @if(!empty($settings->ads))
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'after-content')
@@ -268,29 +216,16 @@
                             @endif
                         @endforeach
                     @endif
-                </div>
+                </div> -->
                 <!-- End Ad Section -->
-                <div class="my-3">
+                <!-- <div class="my-3">
                     {{$objs->links() ?? ""}}
-                </div>
-            </div>
-
+                </div> -->
+            
+ 
             <!-- Right Section -->
-            <div class="col-12 col-lg-3">
-                <div class="mb-5">
-                    <!-- Search Form -->
-                    <form action="{{ route($app->module.'.search') }}" method="GET">
-                        <div class="input-group mb-3"> 
-                            <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-primary btn-md" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- End Search Form -->
-                </div>
+            <div class="col-4 col-lg-3">
+               
 
                 <!-- Ad -->
                 <div class="my-5">
@@ -304,31 +239,18 @@
                 </div>
                 <!-- End Ad Section -->
 
-                <!---------Categories section-----> 
-                <div class="my-5">
-                    <h3 class="font-weight-bold mb-3">Categories</h3>
-                    <div class="list-group">
-                        @foreach($categories as $category)
-                            @if($category->posts->count() > 0)
-                                <a type="button" href="{{ route('Category.show', $category->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
-                                {{ $category->name }}<span class="badge bg-primary text-white rounded-pill">{{ $category->posts->count() }}</span>
-                                </a>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                <!--------- End categories section----->
+                
 
                 <!----- Tags section------>
-                <div class="my-5">
+                <!-- <div class="my-5">
                     <h3 class="font-weight-bold mb-3">Tags</h3>
                     @foreach($tags as $tag)
                         <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                     @endforeach
-                </div>
+                </div> -->
                 <!----- End Tags Section------>
 
-                <div class="my-5">
+                <!-- <div class="my-5"> -->
                     <h3 class="mb-3">Popular Posts</h3>
                     <!-- Popular Posts -->
                     @foreach($popular as $post)     
@@ -375,7 +297,7 @@
                         @endif
                     @endforeach
                     <!-- End Popular Posts -->
-                </div>
+                <!-- </div> -->
 
                 <!-- Ad -->
                 <div class="my-5">
@@ -390,6 +312,7 @@
                 <!-- End Ad Section -->
             </div>
         </div>
+                </div>
         <!-- End of Row -->
 
         <!-- Ad -->
