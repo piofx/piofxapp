@@ -18,10 +18,16 @@
             </form>
         </div>
     @else
-     
-        @if(!empty($queryData))
-            @foreach($queryData as $k=>$v)
-                <p class="d-block">{{print_r($v)}}</p>
+        @if(!empty($searchConsoleData))
+            @foreach($searchConsoleData as $key=>$value)
+                @if($key == '1Month')
+                    @foreach($value as $data)
+                        @foreach($data as $d)
+                            {{ print_r($d['keys'][0]) }}
+                            <br>
+                        @endforeach
+                    @endforeach
+                @endif
             @endforeach
         @endif
 

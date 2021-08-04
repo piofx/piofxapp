@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Auth;
 // use Laravel\Socialite\Facades\Socialite;
 
 use Browser;
-use Google_Client;
-use Google_Service_Webmasters;
-use Google_Service_Webmasters_SearchAnalyticsQueryRequest;
-use SearchConsole;
-use Google_Service_Analytics;
+// use Google_Client;
+// use Google_Service_Webmasters;
+// use Google_Service_Webmasters_SearchAnalyticsQueryRequest;
+// use SearchConsole;
+// use Google_Service_Analytics;
 
 class PostController extends Controller
 {
@@ -179,13 +179,20 @@ class PostController extends Controller
             $template = stripslashes(json_decode($settings->$template_name));
         }
 
+        // Get users search console data
+        $searchConsoleData = '';
+        if(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+        }
+
         return view("apps.".$this->app.".".$this->module.".createEdit")
                 ->with("stub", "create")
                 ->with("app", $this)
                 ->with("obj", $obj)
                 ->with("categories", $categories)
                 ->with("tags", $tags)
-                ->with("template", $template);
+                ->with("template", $template)
+                ->with("searchConsoleData", $searchConsoleData);
     }
 
     /**
@@ -445,14 +452,19 @@ class PostController extends Controller
         // Retrieve all tags
         $tags = $tag->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
 
-        // ddd($obj);
+        // Get users search console data
+        $searchConsoleData = '';
+        if(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+        }
 
         return view("apps.".$this->app.".".$this->module.".createEdit")
                 ->with("stub", "update")
                 ->with("app", $this)
                 ->with("obj", $obj)
                 ->with("categories", $categories)
-                ->with("tags", $tags);
+                ->with("tags", $tags)
+                ->with("searchConsoleData", $searchConsoleData);
     }
 
     /**
@@ -804,90 +816,86 @@ class PostController extends Controller
     //     }
     // }
     
-    public function searchConsole(Request $request){
-        $fromDate = date('Y-m-d', strtotime('-3 months'));
-        $toDate = date('Y-m-d', strtotime('-1 day'));
+    // public function searchConsole(Request $request){
+    //     $fromDate = date('Y-m-d', strtotime('-3 months'));
+    //     $toDate = date('Y-m-d', strtotime('-1 day'));
 
-        $client_id = '611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com';
-        $client_secret = '4pJ9Si64HP-4wEF5CIqAFpxy';
-        $redirect_uri = 'http://localhost:8000/admin/blog/searchConsole';
+    //     $client_id = '611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com';
+    //     $client_secret = '4pJ9Si64HP-4wEF5CIqAFpxy';
+    //     $redirect_uri = 'http://localhost:8000/admin/blog/searchConsole';
 
-        $client = new Google_Client();
-        $client->setClientId($client_id);
-        $client->setClientSecret($client_secret);
-        $client->setRedirectUri($redirect_uri);
-        $client->addScope("https://www.googleapis.com/auth/webmasters");
+    //     $client = new Google_Client();
+    //     $client->setClientId($client_id);
+    //     $client->setClientSecret($client_secret);
+    //     $client->setRedirectUri($redirect_uri);
+    //     $client->addScope("https://www.googleapis.com/auth/webmasters");
 
-        $client->setAccessType('offline');
-        $client->setIncludeGrantedScopes(true);   
+    //     $client->setAccessType('offline');
+    //     $client->setIncludeGrantedScopes(true);   
 
-        if($request->input("code")){
-            $authCode = $request->input('code');
-            // Exchange authorization code for an access token.
-            $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+    //     if($request->input("code")){
+    //         $authCode = $request->input('code');
+    //         // Exchange authorization code for an access token.
+    //         $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
 
-            // Check to see if there was an error.
-            if (array_key_exists('error', $accessToken)) {
-                throw new Exception(join(', ', $accessToken));
-            }
+    //         // Check to see if there was an error.
+    //         if (array_key_exists('error', $accessToken)) {
+    //             throw new Exception(join(', ', $accessToken));
+    //         }
 
-            $request->session()->put('searchConsoleToken', $accessToken);
-        }
+    //         $request->session()->put('searchConsoleToken', $accessToken);
+    //     }
         
-        if ($request->session()->has('searchConsoleToken')) {
-            $accessToken = $request->session()->get('searchConsoleToken');
-            $client->setAccessToken($accessToken);
-        }
-        else{
-            // Refresh the token if possible, else fetch a new one.
-            if ($client->getRefreshToken()) {
-                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            } else {
-                // Request authorization from the user.
-                $authUrl = $client->createAuthUrl();
+    //     if ($request->session()->has('searchConsoleToken')) {
+    //         $accessToken = $request->session()->get('searchConsoleToken');
+    //         $client->setAccessToken($accessToken);
+    //     }
+    //     else{
+    //         // Refresh the token if possible, else fetch a new one.
+    //         if ($client->getRefreshToken()) {
+    //             $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+    //         } else {
+    //             // Request authorization from the user.
+    //             $authUrl = $client->createAuthUrl();
                 
-                header("Location: ". $authUrl);
-            }
-        }
+    //             header("Location: ". $authUrl);
+    //         }
+    //     }
 
-        if ($client->getAccessToken()) {
+    //     if ($client->getAccessToken()) {
 
-            $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
+    //         $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
 
-            $obj->setStartDate($fromDate);
-            $obj->setEndDate($toDate);
+    //         $obj->setStartDate($fromDate);
+    //         $obj->setEndDate($toDate);
 
-            $obj->setDimensions(['query']);
-            // $obj->setSearchType('web');
-            try {
-                $service = new Google_Service_Webmasters($client);
-                $queryData = $service->searchanalytics->query('https://packetprep.com', $obj);
-            } 
-            catch(\Exception $e ) {
-                echo $e->getMessage();
-            }  
+    //         $obj->setDimensions(['query']);
+    //         // $obj->setSearchType('web');
+    //         try {
+    //             $service = new Google_Service_Webmasters($client);
+    //             $queryData = $service->searchanalytics->query('https://packetprep.com', $obj);
+    //         } 
+    //         catch(\Exception $e ) {
+    //             echo $e->getMessage();
+    //         }  
 
-            $obj->setDimensions(['page']);
-            // $obj->setSearchType('web');
-            try {
-                $service = new Google_Service_Webmasters($client);
-                $pageData = $service->searchanalytics->query('https://packetprep.com', $obj);
-            } 
-            catch(\Exception $e ) {
-                echo $e->getMessage();
-            }  
+    //         $obj->setDimensions(['page']);
+    //         // $obj->setSearchType('web');
+    //         try {
+    //             $service = new Google_Service_Webmasters($client);
+    //             $pageData = $service->searchanalytics->query('https://packetprep.com', $obj);
+    //         } 
+    //         catch(\Exception $e ) {
+    //             echo $e->getMessage();
+    //         }  
 
-            return view("apps.".$this->app.".".$this->module.".searchConsole")
-                        ->with("app", $this)
-                        ->with("queryData", $queryData)
-                        ->with("pageData", $pageData);
-        }
-    }
+    //         return view("apps.".$this->app.".".$this->module.".searchConsole")
+    //                     ->with("app", $this)
+    //                     ->with("queryData", $queryData)
+    //                     ->with("pageData", $pageData);
+    //     }
+    // }
 
-    public function testResult(){
-        ddd("here");
-    }
     
 }
 
-                                                                                                                                                     

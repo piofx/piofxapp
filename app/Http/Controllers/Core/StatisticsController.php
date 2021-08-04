@@ -35,19 +35,15 @@ class StatisticsController extends Controller
      */
     public function index(Obj $obj, Request $request)
     {
-        // set search console data filename
-        $filename = "queryData_".request()->get('client.id')."_.json";
 
-
-        if(!Storage::disk('s3')->exists('searchConsole/'.request()->get('client.id')."/".$filename)){
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client and set the client id and secret
             $client = new Google_Client();
 
             // Flag to check if authentication is done
             $authentication = False;
 
-            $from_date = date('Y-m-d', strtotime('-3 months'));
-            $to_date = date('Y-m-d', strtotime('-1 day'));
+            // get website url from session
             if($request->session()->get("clientWebsiteUrl")){
                 $website_url = $request->session()->get('clientWebsiteUrl');
             }
@@ -125,30 +121,72 @@ class StatisticsController extends Controller
             if ($client->getAccessToken()) {
                 // Create a new object for search console
                 $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
-
-                $obj->setStartDate($from_date);
-                $obj->setEndDate($to_date);
-
-                // Set the dimensions of what to retrieve
-                $obj->setDimensions($dimensions);
                 $obj->setSearchType('web');
 
-                // Retrieve the data
-                try {
-                    $service = new Google_Service_Webmasters($client);
-                    $queryData = $service->searchanalytics->query($website_url, $obj);
-                    Storage::disk('s3')->put('searchConsole/'.request()->get('client.id')."/".$filename, json_encode($queryData), "public");
-                } 
-                catch(\Exception $e ) {
-                    echo $e->getMessage();
-                }  
+                $consoleData = array();
 
-                $authentication = True;
+                for($i=0; $i<3; $i++){
+                    $retrievedData = array();
+                    if($i == 0){
+                        $date = '1M';
+                        $from_date = date('Y-m-d', strtotime('-1 month'));
+                        $to_date = date('Y-m-d', strtotime('-1 day'));
+                    }
+                    elseif($i == 1){
+                        $date = '3M';
+                        $from_date = date('Y-m-d', strtotime('-3 months'));
+                        $to_date = date('Y-m-d', strtotime('-1 day'));
+                    }
+                    elseif($i == 2){
+                        $date = '1Y';
+                        $from_date = date('Y-m-d', strtotime('-1 years'));
+                        $to_date = date('Y-m-d', strtotime('-1 day'));
+                    }
 
-                return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-                    ->with('app',$this)
-                    ->with("authentication", $authentication)
-                    ->with("queryData", $queryData);
+                    $obj->setStartDate($from_date);
+                    $obj->setEndDate($to_date);
+
+                    // Set the dimensions of what to retrieve
+                    $obj->setDimensions(['query']);
+
+                    // Retrieve the data
+                    try {
+                        $service = new Google_Service_Webmasters($client);
+                        $queryData = $service->searchanalytics->query($website_url, $obj);
+                    } 
+                    catch(\Exception $e) {
+                        echo $e->getMessage();
+                    }  
+
+                    // Set the dimensions of what to retrieve
+                    $obj->setDimensions(['page']);
+
+                    // Retrieve the data
+                    try {
+                        $service = new Google_Service_Webmasters($client);
+                        $pagesData = $service->searchanalytics->query($website_url, $obj);
+                    } 
+                    catch(\Exception $e ) {
+                        echo $e->getMessage();
+                    }  
+
+                    $retrievedData['queryData'] = $queryData['rows'];
+                    $retrievedData['pagesData'] = $pagesData['rows'];
+                    
+                    if($date == '1M'){
+                        $consoleData['1Month'] = $retrievedData;
+                    }
+                    elseif($date == '3M'){
+                        $consoleData['3Months'] = $retrievedData;
+                    }
+                    elseif($date == '1Y'){
+                        $consoleData['1Year'] = $retrievedData;
+                    }
+                }
+
+                Storage::disk('s3')->put("searchConsole/consoleData_".request()->get('client.id').".json", json_encode($consoleData), "public");
+
+                return redirect()->route($this->module.'.index');
             }
 
             return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
@@ -156,8 +194,13 @@ class StatisticsController extends Controller
                     ->with('authentication', $authentication);
         }
         else{
-            $searchConsoleData = Storage::disk('s3')->get('searchConsole/'.$filename);
-            ddd(json_decode($searchConsoleData));
+            $authentication = True;
+            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+
+            return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
+                    ->with('app',$this)
+                    ->with('authentication', $authentication)
+                    ->with('searchConsoleData', $searchConsoleData);
         }
     }
 

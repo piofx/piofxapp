@@ -1,5 +1,27 @@
 <x-dynamic-component :component="$app->componentName">
 
+
+@php
+    $tag_ids = [];
+    foreach($obj->tags as $tag){
+        array_push($tag_ids, $tag->id);
+    }
+    $focus_set = False;
+    $focus_keyword = '';
+    if(!$focus_set){
+        foreach($tags as $tag){
+            if(in_array($tag->id, $tag_ids)){
+                $focus_keyword = $tag->name;
+                $focus_set = True;
+            }
+        }
+    }
+
+    if(!empty($obj)){
+        $content_words = str_word_count(strip_tags($obj->content));
+    }
+@endphp
+
 @if ($errors->any())
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul>
@@ -52,6 +74,86 @@
     </div>
     <!-----end second header--------->
 
+    <!-- SEO -->
+    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+        <div class="card border rounded-lg mt-5">
+            <div class="card-header" id="headingOne6">
+                <div class="card-title collapsed bg-white" data-toggle="collapse" data-target="#seo">
+                    <i class="fas fa-tasks"></i> Search Engine Optimization (SEO)
+                </div>
+            </div>
+            <div id="seo" class="collapse show" data-parent="#accordionExample6">
+                <div class="card-body">
+                    <!-- Most searched keywords -->
+                    @if(!empty($searchConsoleData))
+                        @php
+                            $count = 0;
+                        @endphp
+                        <div class="bg-light rounded rounded-3 p-5">
+                            <h2 class="text-primary">Most Searched Keywords</h2>
+                            @foreach($searchConsoleData as $key=>$value)
+                                @if($key == '3Months')
+                                    @foreach($value as $data)
+                                        @foreach($data as $d)
+                                                @if ($count < 10)
+                                                    <span class="badge bg-white text-dark m-1 shadow">{{ $d['keys'][0] }}</span>
+                                                    @php
+                                                        $count += 1;
+                                                    @endphp
+                                                @endif
+                                        @endforeach
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                    <!-- End Most searched keywords -->
+
+                    <h5 class="mt-5 mb-1 bg-secondary text-danger p-3 rounded">*Please save the post for the changes to reflect in the SEO</h5>
+                    <div class="table-reponsive mt-3">
+                        <table class="table table-striped table-bordered table-hover rounded">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" class="text-center">Expected</th>
+                                    <th scope="col" class="text-center">Found</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Blog Word Count</th>
+                                    <td class="text-center">Min 1,000 Words</td>
+                                    <td class="text-center">
+                                        @if(!empty($content_words))
+                                            {{ $content_words }} Words
+                                            @if($content_words > 1000)
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            @else 
+                                                <i class="fas fa-times-circle text-danger"></i>
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Meta Description Character count</th>
+                                    <td class="text-center">70-155 Characters</td>
+                                    <td class="text-center">100 Characters <i class="fas fa-times-circle text-danger"></i></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Focus keyword in Title</th>
+                                    <th class="text-center">{{ $focus_keyword }}</th>
+                                    <td class="text-center">Found <i class="fas fa-check-circle text-success"></i></td>
+                                    <!-- <td class="text-center">Not Found <i class="fas fa-times-circle text-danger"></i></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End SEO -->
+
     <!------------begin::Content------------->
     <div class="mt-5">
         <div class="row container m-0 p-0 my-5">
@@ -70,8 +172,7 @@
                     name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : ''}}@endif</textarea>
 
                 <!-- Content -->
-                <textarea name="content" hidden id="post_content" rows=5></textarea>
-
+                <textarea name="content" hidden id="post_content"></textarea>
 
                 @if(!empty($obj->content))
                     <textarea id="post_editor">{!! $obj->content !!}</textarea>
@@ -201,14 +302,8 @@
                             <div id="collapseOne3" class="collapse show" data-parent="#accordionExample6">
                                 <div class="card-body">
                                     <!------begin Tags------>
-                                    <select class="form-control select2" style="min-height: 2.5rem;" id="kt_select2_11" name="tag_ids[]" multiple="multiple" placeholder="Add a Tag">
+                                    <select class="form-control select2" style="min-height: 2.5rem;" id="kt_select2_11" name="tag_ids[]" multiple="multiple" placeholder="Add a Tag" onkeyup="myFunction()">
 
-                                        @php
-                                            $tag_ids = [];
-                                            foreach($obj->tags as $tag){
-                                                array_push($tag_ids, $tag->id);
-                                            }
-                                        @endphp
 
                                         @foreach($tags as $tag)
                                                 <option value="{{ $tag->id }}" @if($stub == "update") @if(in_array($tag->id, $tag_ids)) {{ "selected" }} @endif @endif>{{ $tag->name }}</option>
