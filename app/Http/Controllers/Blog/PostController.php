@@ -16,14 +16,8 @@ use App\Events\UserCreated;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-// use Laravel\Socialite\Facades\Socialite;
 
 use Browser;
-// use Google_Client;
-// use Google_Service_Webmasters;
-// use Google_Service_Webmasters_SearchAnalyticsQueryRequest;
-// use SearchConsole;
-// use Google_Service_Analytics;
 
 class PostController extends Controller
 {
@@ -206,7 +200,7 @@ class PostController extends Controller
         // Authorize the request
         $this->authorize('create', $obj);
 
-        // ddd($request->all());
+        ddd($request->all());
 
         $validated = $request->validate([
             'title' => 'required|unique:posts',
@@ -272,6 +266,10 @@ class PostController extends Controller
             return redirect()->route($this->module.'.show', ['slug' =>  $request->input('slug')]);
         }
         
+        // Redirect if SEO is refreshed
+        if($request->input('publish') == "seoRefresh"){
+            return redirect()->route($this->module.'.edit', ['slug' =>  $request->input('slug')]);
+        } 
 
         return redirect()->route($this->module.'.list');
     }
@@ -485,8 +483,6 @@ class PostController extends Controller
             $request->request->add(['featured' => null]);
         }
 
-        // ddd($request->all());
-
         // Check status and change it to boolean
         if($request->input("status")){
             if($request->input("status") == "on"){
@@ -506,6 +502,7 @@ class PostController extends Controller
         }
         else{
             if($request->input('publish') == "save_as_draft"){
+                ddd('here');
                 $request->merge(["status" => 0]);
             } 
             else if($request->input('publish') == "preview"){
@@ -591,6 +588,11 @@ class PostController extends Controller
         if($request->input('publish') == "preview"){
             return redirect()->route($this->module.'.show', ['slug' =>  $request->input('slug')]);
         }
+
+        // Redirect if SEO is refreshed
+        if($request->input('publish') == "seoRefresh"){
+            return redirect()->route($this->module.'.edit', ['slug' =>  $request->input('slug')]);
+        } 
         
         return redirect()->route($this->module.'.list');
     }

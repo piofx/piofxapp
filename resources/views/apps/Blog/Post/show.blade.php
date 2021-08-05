@@ -756,6 +756,4 @@
         @endif
         <!-- End Ad Section -->
     </div>
-    <!-- End Article Description Section -->
-
-</x-dynamic-component>
+    <!-- End Article Description

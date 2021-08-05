@@ -73,7 +73,6 @@ class CategoryController extends Controller
                 // Retrieve all posts
                 
                 $posts = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->where("category_id", $category->id)->orderBy("id", 'desc')->paginate(5);
-                ddd($posts);
                 Cache::forever('categoryPosts_'.request()->get('client.id')."_".$slug, $posts);
             }
         }

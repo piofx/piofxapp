@@ -174,7 +174,7 @@
 					<div class="list-group">
 						@foreach($objs as $obj)
 								@if($obj->posts->count() > 0)
-										<a type="button" href="{{ route('Category.show', $category->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
+										<a type="button" href="{{ route('Category.show', $obj->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
 										{{ $obj->name }}<span class="badge bg-primary text-white rounded-pill">{{ $obj->posts->count() }}</span>
 										</a>
 								@endif
