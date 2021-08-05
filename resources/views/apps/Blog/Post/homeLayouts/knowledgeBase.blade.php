@@ -195,7 +195,7 @@
                             @if($category->posts->count() > 0)
                             <div class="col-4 m-5">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body rounded" style="background-color:#eaf7fc;">
                                         <a type="button" href="{{ route('Category.show', $category->slug) }}" aria-current="true">{{ $category->name }}</a>
                                         <h6 class="card-subtitle mb-2 text-muted">{{ $category->meta_description }}</h6>
                                     </div>

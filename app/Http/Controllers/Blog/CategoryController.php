@@ -59,21 +59,25 @@ class CategoryController extends Controller
 		$category = Cache::get("category_".request()->get('client.id')."_".$slug);
         //ddd($category);
 		if(!$category){
+            //$category = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
 			$category = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
+            //ddd($category);
 			Cache::forever('category_'.request()->get('client.id')."_".$slug, $category);
+            //ddd($category);
 		}
 
         // Check if pagination is clicked 
         if(!empty($request->query()['page']) && $request->query()['page'] > 1){
             // Retrieve all posts
             $posts = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->where("category_id", $category->id)->orderBy("id", 'desc')->paginate(5);
+            
         }else{
             $posts = Cache::get('categoryPosts_'.request()->get('client.id')."_".$slug);
             if(!$posts){
                 // Retrieve all posts
                 
                 $posts = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->where("category_id", $category->id)->orderBy("id", 'desc')->paginate(5);
-                ddd($posts);
+               
                 Cache::forever('categoryPosts_'.request()->get('client.id')."_".$slug, $posts);
             }
         }

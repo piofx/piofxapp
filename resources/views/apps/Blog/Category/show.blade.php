@@ -87,7 +87,7 @@
 														<a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
 														</span>
 												@endif
-												<h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{$post->title}}</a></h3>
+												<h3><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{$post->title}}</a></h3>
 												@if($post->excerpt)
 														<p>{{ substr($post->excerpt, 0, 200) }}...</p>
 												@else
@@ -105,7 +105,7 @@
 														@endif
 												</div>
 												<div>
-														<a href="{{ route($app->module.'.show', $post->slug) }}" class="btn btn-sm btn-primary">Continue Reading</a>
+														<a href="{{ route('Post.show', $post->slug) }}" class="btn btn-sm btn-primary">Continue Reading</a>
 												</div>
 										</div>
 								</div>

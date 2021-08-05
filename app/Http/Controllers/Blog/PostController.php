@@ -311,17 +311,19 @@ class PostController extends Controller
             // Retrieving post views
             $postViews = $post->views;
 
-            // Add tp cache
+            // Add to cache
             Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
             Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews);
         }
 
         // Cached categories data
         $categories = Cache::get('categories_'.request()->get('client.id'));
+        
         if(!$categories){
             // Retrieve all categories
             $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
             // Add to cache 
+            
             Cache::forever('categories_'.request()->get('client.id'), $categories);
         }
 
@@ -360,18 +362,24 @@ class PostController extends Controller
             // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
         }
-
-        // cached related data
-        $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
-        if(!$related){
-            // Retrieve related posts
-            if(!empty($post->category) && $post->category->posts->count() > 0){
-                $related = $post->category->posts->where('status', '1')->take(3);
+        if($settings->home_layout != 'knowledgeBase' )
+        {
+            // cached related data
+            $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
+            if(!$related){
+                // Retrieve related posts
+                if(!empty($post->category) && $post->category->posts->count() > 0){
+                    $related = $post->category->posts->where('status', '1')->take(3);
+                }
+                // add to cache
+                Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
             }
-            // add to cache
-            Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
         }
-
+        else{
+            if(!empty($post->category) && $post->category->posts->count() > 0){
+                $related = $post->category->posts->where('status', '1')->all();
+            }
+        }
         // cached postCategory data
         $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
         if(!$postCategory){
@@ -412,7 +420,7 @@ class PostController extends Controller
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
-
+        $alert = "";
         return view("apps.".$this->app.".".$this->module.".show")
                 ->with("app", $this)
                 ->with("tags", $tags)
@@ -422,7 +430,8 @@ class PostController extends Controller
                 ->with("related", $related)
                 ->with("postCategory", $postCategory)
                 ->with("postTags", $postTags)
-                ->with("obj", $obj);
+                ->with("obj", $obj)
+                ->with("alert", $alert);
     }
 
     /**
@@ -776,8 +785,10 @@ class PostController extends Controller
         $obj = MailSubscriber::create($request->all());
 
         event(new UserCreated($obj,$request));
-
-        return redirect()->route($this->module.'.index');
+        $alert = "Your Successfully subscribed!";
+        //withErrors(['message'=>'Record does not exist'])
+        return back()->with("alert", $alert);
+        //return redirect()->route($this->module.'.index')->with("alert", $alert);
     }
 
     // Miscellenious
