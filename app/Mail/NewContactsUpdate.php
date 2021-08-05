@@ -11,15 +11,16 @@ class NewContactsUpdate extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
-
+    public $counter;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($details,$counter)
     {
         $this->details = $details;
+        $this->counter = $counter;
     }
 
     /**

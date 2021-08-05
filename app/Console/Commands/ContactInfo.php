@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Console\Commands;
+
 use Illuminate\Console\Command;
 use Mail;
-use App\Models\Core\Contact;
-class ContactUpdate extends Command
+class ContactInfo extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ContactUpdate:contact {contacts}';
+    protected $signature = 'ContactInfo {counter}';
 
     /**
      * The console command description.
@@ -36,15 +36,11 @@ class ContactUpdate extends Command
      * @return int
      */
     public function handle()
-    {
-        $details = $this->argument('contacts');
-        //$data = array('name'=>$details);
-        //$contacts = Contact::all();
-        $data = array('name'=> $details);
-            Mail::send('apps.Mailer.MailView.newcontact' , $data, function($message) {
-                $message->to('superadmin@gmail.com');
-                $message->subject('New Contacts');
-            });
-       
+    {   
+        \Log::info("working fine!");
+        Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter')] , function($message) {
+            $message->to('superadmin@gmail.com');
+            $message->subject('New Contacts');
+        });
     }
 }

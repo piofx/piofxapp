@@ -57,6 +57,7 @@ class CategoryController extends Controller
 
 		// Retrieve specific Record based on slug
 		$category = Cache::get("category_".request()->get('client.id')."_".$slug);
+        //ddd($category);
 		if(!$category){
 			$category = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
 			Cache::forever('category_'.request()->get('client.id')."_".$slug, $category);
@@ -70,7 +71,9 @@ class CategoryController extends Controller
             $posts = Cache::get('categoryPosts_'.request()->get('client.id')."_".$slug);
             if(!$posts){
                 // Retrieve all posts
+                
                 $posts = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->where("category_id", $category->id)->orderBy("id", 'desc')->paginate(5);
+                ddd($posts);
                 Cache::forever('categoryPosts_'.request()->get('client.id')."_".$slug, $posts);
             }
         }
