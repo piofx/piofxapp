@@ -74,8 +74,7 @@ class CategoryController extends Controller
         }else{
             $posts = Cache::get('categoryPosts_'.request()->get('client.id')."_".$slug);
             if(!$posts){
-                // Retrieve all posts
-                
+                // Retrieve all posts 
                 $posts = $post->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->where("category_id", $category->id)->orderBy("id", 'desc')->paginate(5);
                
                 Cache::forever('categoryPosts_'.request()->get('client.id')."_".$slug, $posts);

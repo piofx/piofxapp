@@ -376,9 +376,15 @@ class PostController extends Controller
             }
         }
         else{
+            // cached related data
+            $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
             if(!empty($post->category) && $post->category->posts->count() > 0){
+                // Retrieving all related posts   
                 $related = $post->category->posts->where('status', '1')->all();
             }
+            // add to cache
+            Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
+
         }
         // cached postCategory data
         $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
@@ -779,6 +785,7 @@ class PostController extends Controller
     }
 
     public function subscribe(Obj $obj, Request $request){
+
         $validate_email = debounce_valid_email($request->email);
         $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
         
@@ -787,7 +794,7 @@ class PostController extends Controller
         event(new UserCreated($obj,$request));
         $alert = "Your Successfully subscribed!";
         //withErrors(['message'=>'Record does not exist'])
-        return back()->with("alert", $alert);
+        return redirect()->back()->with("alert", $alert);
         //return redirect()->route($this->module.'.index')->with("alert", $alert);
     }
 

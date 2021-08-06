@@ -62,7 +62,7 @@
 					</div>
 					<!--end::Tiles Widget 11-->
 				</div>
-				@endif
+				
 				
 				<div class='col-6 col-md-4'>
 					<!--begin::Tiles Widget 11-->
@@ -85,6 +85,7 @@
 					</div>
 					<!--end::Tiles Widget 11-->
 				</div>
+				@endif
 
 				<div class='col-6 col-md-4'>
 					<!--begin::Tiles Widget 11-->
@@ -108,7 +109,7 @@
 				</div>
 
 				
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-4 d-none'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#4b9c77">
 						<div class="card-body">
