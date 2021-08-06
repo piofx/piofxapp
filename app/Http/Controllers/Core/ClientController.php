@@ -145,12 +145,8 @@ class ClientController extends Controller
     public function edit($id=null)
     {
         //no id is given edit the current client data
-        if(!$id){
-            $view = 'settings';
+        if(!$id)
             $id = request()->get('client.id');
-        }else{
-            $view = 'createedit';
-        }
 
         // load alerts if any
         $alert = session()->get('alert');
@@ -161,9 +157,8 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('edit', $obj);
 
-
         if($obj)
-            return view('apps.'.$this->app.'.'.$this->module.'.'.$view)
+            return view('apps.'.$this->app.'.'.$this->module.'.settings')
                 ->with('stub','Update')
                 ->with('obj',$obj)
                 ->with('editor',true)
