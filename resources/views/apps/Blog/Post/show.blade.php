@@ -332,7 +332,6 @@
                 @else
                     @if(!empty($altContent))
                         {!! $altContent !!}
-                        <h1>Hi</h1>
                     @else
                         {!! $obj->content !!}
                     @endif
@@ -756,4 +755,6 @@
         @endif
         <!-- End Ad Section -->
     </div>
-    <!-- End Article Description
+    <!-- End Article Description Section -->
+
+</x-dynamic-component>

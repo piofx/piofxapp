@@ -200,10 +200,9 @@ class PostController extends Controller
         // Authorize the request
         $this->authorize('create', $obj);
 
-        ddd($request->all());
-
         $validated = $request->validate([
             'title' => 'required|unique:posts',
+            'slug' => 'required|unique:posts',
             'content' => 'required|min:50',
         ]);
 
@@ -621,7 +620,9 @@ class PostController extends Controller
             $path = parse_url($data, PHP_URL_PATH);
 
             $path = explode("/storage/", $path);
-            Storage::disk("s3")->delete($path[1]);            
+            if(Storage::disk("s3")->exists($path[0])){
+                Storage::disk("s3")->delete($path[0]);            
+            }
         }
         
         // Check and delete image from storage

@@ -40,7 +40,7 @@
     }
 
     if(!empty($obj->content)){
-        $content_words = str_word_count(strip_tags($obj->content));
+        $content_words = str_word_count(strip_tags(str_replace('<', ' <', $obj->content)));
     }
     if(!empty($obj->title)){
         $title_characters = strlen($obj->title);
@@ -77,7 +77,7 @@
             <div class="d-block d-md-flex justify-content-between align-items-center bg-white rounded-lg shadow-sm p-5">
                 <div class="d-flex align-items-center justify-content-between">
                     <label class="checkbox">
-                        <input type="checkbox" name="status" @if($stub == 'update'){{$obj->status == '1' ? 'checked' : ''}}@endif/>
+                        <input type="checkbox" name="status" @if($stub == 'update'){{$obj->status == '1' ? 'checked' : null }}@endif/>
                         <span class="mr-2"></span>
                             Active
                     </label>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="my-3 my-lg-0 ml-lg-3">
                     <div class="input-group date">
-                        <input type="text" class="form-control bg-white" readonly="readonly" name="published_at" value="@if($stub == 'update'){{$obj ? $obj->published_at : ''}}@endif" placeholder="Schedule" id="kt_datetimepicker_2"/>
+                        <input type="text" class="form-control bg-white" readonly="readonly" name="published_at" value="@if($stub == 'update'){{$obj ? $obj->published_at : null }}@endif" placeholder="Schedule" id="kt_datetimepicker_2"/>
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="far fa-calendar-check"></i>
@@ -116,7 +116,7 @@
                     <i class="fas fa-tasks"></i> Search Engine Optimization (SEO)
                 </div>
             </div>
-            <div id="seo" class="collapse show" data-parent="#accordionExample6">
+            <div id="seo" class="collapse" data-parent="#accordionExample6">
                 <div class="card-body">
                     <div class="mb-3 bg-secondary text-dark p-3 rounded d-lg-flex align-items-center justify-content-between">
                         <h5 class="m-0">*Please click on refresh for the changes to reflect in the SEO</h5>
@@ -307,18 +307,19 @@
     <div class="mt-5">
         <div class="row container m-0 p-0 my-5">
             <div class="col-12 col-lg-9 bg-white p-5 rounded-lg">
-                <textarea type="text" id="title" onkeyup="createSlug()"
+                <textarea type="text" id="title" onkeyup="createSlugAndMetaTitle()"
                     class="form-control p-0 display-3 text-wrap" style="border: none; background: transparent;height:auto;"
-                    name="title">@if($stub == 'update'){{$obj ? $obj->title : 'Title'}}@else{{ 'This is just a dummy title, kept here to add some content.' }}@endif</textarea>
+                    placeholder="Type your title here"
+                    name="title">@if($stub == 'update'){{$obj ? $obj->title : 'Title'}}@else{{ Request::old('title') ? Request::old('title') : null }}@endif</textarea>
                 <div class="d-flex align-items-center justify-content-left">
                     <label class="m-0 text-muted">Slug:</label>
                     <input type="text" id="slug" style="border: none; background: transparent;"
-                        class="form-control p-0 d-inline ml-3"
-                        name="slug" value="@if($stub == 'update'){{$obj ? $obj->slug : ''}}@else{{ 'type-your-title-here' }}@endif"/>
+                        class="form-control p-0 d-inline ml-3" placeholder="start-typing-the-title"
+                        name="slug" value="@if($stub == 'update'){{$obj ? $obj->slug : null }}@else{{ Request::old('slug') ? Request::old('slug') : null }}@endif"/>
                 </div>
                 <textarea type="text"
                     class="form-control border h-auto px-3 py-3 mb-3 font-size-h6"
-                    name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : ''}}@endif</textarea>
+                    name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : null }}@else{{ Request::old('excerpt') ? Request::old('excerpt') : null }}@endif</textarea>
 
                 <!-- Content -->
                 <textarea name="content" hidden id="post_content"></textarea>
@@ -329,7 +330,7 @@
                     @if(!empty($template))
                         <textarea id="post_editor">{!! $template !!}</textarea>
                     @else
-                        <textarea id="post_editor"></textarea>
+                        <textarea id="post_editor">{{ Request::old('content') ? Request::old('content') : null }}</textarea>
                     @endif
                 @endif
 
@@ -341,7 +342,7 @@
                     <!-- Featured -->
                     <div class="p-3 bg-white my-3 rounded-lg shadow-sm">
                         <label class="checkbox">
-                            <input type="checkbox" name="featured" @if($stub == 'update'){{$obj->featured == 'on' ? 'checked' : ''}}@endif/>
+                            <input type="checkbox" name="featured" @if($stub == 'update'){{$obj->featured == 'on' ? 'checked' : null }}@endif/>
                             <span class="mr-2"></span>
                                 Featured Post
                         </label>
@@ -361,16 +362,16 @@
                                     <!--begin::Form Group-->
                                      <div class="">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="visibility" id="public" value="public" onclick="showGroup()" @if($stub == 'update'){{$obj->visibility == 'public' ? 'checked' : ''}}@else {{ 'checked' }}@endif>
+                                            <input class="form-check-input" type="radio" name="visibility" id="public" value="public" onclick="showGroup()" @if($stub == 'update'){{$obj->visibility == 'public' ? 'checked' : null }}@else {{ 'checked' }}@endif>
                                             <label class="form-check-label" for="inlineRadio1">Public</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="visibility" id="private" value="private" onclick="showGroup()" @if($stub == 'update'){{$obj->visibility == 'private' ? 'checked' : ''}}@endif>
+                                            <input class="form-check-input" type="radio" name="visibility" id="private" value="private" onclick="showGroup()" @if($stub == 'update'){{$obj->visibility == 'private' ? 'checked' : null }}@endif>
                                             <label class="form-check-label" for="inlineRadio2">Private</label>
                                         </div>
                                      </div>
                                     <!--end::Form Group-->
-                                    <textarea name="group" id="group" class="form-control bg-light mt-3" cols="30" rows="3" style="resize: none; display:@if($stub == 'update'){{$obj->visibility == 'private' ? 'block' : 'none'}}@else {{ 'none' }}@endif;" placeholder="Type in Comma Separated Group Names">@if($stub == 'update'){{$obj->group ? $obj->group : ''}}@endif</textarea>
+                                    <textarea name="group" id="group" class="form-control bg-light mt-3" cols="30" rows="3" style="resize: none; display:@if($stub == 'update'){{$obj->visibility == 'private' ? 'block' : 'none'}}@else {{ 'none' }}@endif;" placeholder="Type in Comma Separated Group Names">@if($stub == 'update'){{$obj->group ? $obj->group : null }}@endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -401,7 +402,7 @@
                             </div>
                         </div>
                         
-                        <input type="hidden" id="image_url" name="image" value="@if($stub == 'update'){{$obj ? $obj->image : ''}}@endif">
+                        <input type="hidden" id="image_url" name="image" value="@if($stub == 'update'){{$obj ? $obj->image : null }}@endif">
                     </div>
 
                     <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
@@ -415,12 +416,12 @@
                                 <div class="card-body">
                                     <!--begin::Form Group-->
                                     <div class="form-group m-0">
-                                        <input type="text"
+                                        <textarea type="text" id="meta_title" rows="3"
                                             class="form-control h-auto bg-light border mb-2 p-3 rounded-md font-size-h6"
-                                            name="meta_title" placeholder="Title" value="@if($stub == 'update'){{$obj ? $obj->meta_title : ''}}@endif"/>
+                                            name="meta_title" placeholder="Title">@if($stub == 'update'){{$obj ? $obj->meta_title : null }}@else{{ Request::old('meta_title') ? Request::old('meta_title') : null }}@endif</textarea>
                                         <textarea type="text" rows="8"
                                             class="form-control h-auto border bg-light p-3 rounded-md font-size-h6"
-                                            name="meta_description" placeholder="Description">@if($stub == 'update'){{$obj ? $obj->meta_description : ''}}@endif</textarea>
+                                            name="meta_description" placeholder="Description">@if($stub == 'update'){{$obj ? $obj->meta_description : null }}@else{{ Request::old('meta_description') ? Request::old('meta_description') : null }}@endif</textarea>
                                     </div>
                                     <!--end::Form Group-->
                                 </div>
