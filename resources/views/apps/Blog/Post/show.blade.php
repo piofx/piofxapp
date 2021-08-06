@@ -46,8 +46,8 @@
 
                     <!-- Related Posts Left Section -->
                     @if(!empty($related) && sizeof($related) > 1)
-                        <div class="my-5">
-                            <div class="my-3">
+                        <div class="mb-5">
+                            <div class="mb-3">
                                 <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                             </div>
                             @foreach($related as $post)
@@ -99,7 +99,7 @@
 
                     <!----- Tags section------>
                     @if(!empty($tags) && sizeof($tags) > 0)
-                        <div class="my-5">
+                        <div class="mb-5">
                             <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
                             @foreach($tags as $tag)
                             <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
@@ -110,8 +110,8 @@
 
                     <!-- Popular Posts -->
                     @if(!empty($popular) && sizeof($popular) > 0)
-                        <div class="my-5">
-                            <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
+                        <div class="mb-5">
+                            <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
                             @foreach($popular as $post)     
                                 @if($post->status)
                                     @if(!empty($post->image) && strlen($post->image) > 5)
@@ -160,7 +160,7 @@
                     <!-- End Popular Posts -->
                     <!-- Ad -->
                     @if(!empty($settings->ads))
-                        <div class="my-5">
+                        <div class="mb-5">
                             @foreach($settings->ads as $ad)
                                 @if($ad->position == 'sidebar-bottom')
                                     {!! $ad->content !!}
@@ -265,7 +265,7 @@
 
                 <!-- Ad -->
                 @if(!empty($settings->ads))
-                    <div class="my-5">
+                    <div class="mb-5">
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'before-content')
                                 {!! $ad->content !!}
@@ -349,7 +349,7 @@
                 <!-- End Tags -->
 
                 <!-- Share -->
-                <div class="d-flex justify-content-sm-between align-items-sm-center my-5">
+                <div class="d-flex justify-content-sm-between align-items-sm-center mb-5">
                     <div class="d-flex align-items-center">
                         <small class="text-muted font-weight-bold">SHARE:</small>
 
@@ -371,7 +371,7 @@
 
                 <!-- Ad -->
                 @if(!empty($settings->ads))
-                    <div class="my-5">
+                    <div class="mb-5">
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'after-content')
                                 {!! $ad->content !!}
@@ -422,7 +422,7 @@
                 @if($settings->post_layout == 'full')
                     @if(!empty($related)  && sizeof($related) > 1)
                         <div class="my-5 d-none d-lg-block">
-                            <div class="my-3">
+                            <div class="mb-3">
                                 <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                             </div>
                             <div class="row">
@@ -488,8 +488,8 @@
             <div class="d-lg-none px-3">
                 <!-- Related Posts Right Section -->
                 @if(!empty($related) && sizeof($related) > 1)
-                    <div class="my-5">
-                        <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
+                    <div class="mb-5">
+                        <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                         @foreach($related as $post)
                             @if($post->id != $obj->id)
                                 @if(!empty($post->image) && strlen($post->image) > 5)
@@ -551,7 +551,7 @@
                 <!-- Popular Posts -->
                 @if(!empty($popular) && sizeof($popular) > 0)
                     <div class="mb-5">
-                        <h3 class="font-weight-bold my-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
+                        <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') ముఖ్య విశేషాలు @else Popular Posts @endif</h3>
                         @foreach($popular as $post)     
                             @if($post->status)
                                 @if(!empty($post->image) && strlen($post->image) > 5)
@@ -617,7 +617,7 @@
                 <!-- Related Posts Right Section -->
                 @if(!empty($related) && sizeof($related) > 1)
                     <div class="mb-5">
-                        <div class="my-3">
+                        <div class="mb-3">
                             <h3 class="font-weight-bold">@if($settings->language == 'telugu') సంబంధిత వార్తలు @else Related Posts @endif</h3>
                         </div>
                         @foreach($related as $post)
