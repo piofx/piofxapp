@@ -235,28 +235,50 @@ if (! function_exists('blog_image_upload')) {
 			Storage::disk('s3')->put('resized_images/'.$filename.'_'.$tag.'.jpg', $jpgImgr->__toString(),'public');
 		}
 	}
-if (! function_exists('debounce_valid_email'))
-{
-	function debounce_valid_email($email) {
-        $api = '6075b8772c316';
-        $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_URL, 'https://api.debounce.io/v1/?api='.$api.'&email='.strtolower($email));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);       
+	if (! function_exists('debounce_valid_email')){
+		function debounce_valid_email($email) {
+			$api = '6075b8772c316';
+			$ch = curl_init();
 
-        $data = curl_exec($ch);
-        curl_close($ch);
+			curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_URL, 'https://api.debounce.io/v1/?api='.$api.'&email='.strtolower($email));
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);       
 
-        $json = json_decode($data, true);
+			$data = curl_exec($ch);
+			curl_close($ch);
 
-        if($json['debounce']['code']==5)
-            return 1;
-        else
-            return 0;
-    }
-}
+			$json = json_decode($data, true);
+
+			if($json['debounce']['code']==5)
+				return 1;
+			else
+				return 0;
+		}
+	}
+
+	// Function to change 1000 to 1k and so on
+	if(!function_exists('format_number')){
+		function format_number($input){
+			$suffixes = array('', 'k', 'm', 'g', 't');
+			$suffixIndex = 0;
+
+			while(abs($input) >= 1000 && $suffixIndex < sizeof($suffixes))
+			{
+				$suffixIndex++;
+				$input /= 1000;
+			}
+
+			return (
+				$input > 0
+					// precision of 3 decimal places
+					? floor($input * 1000) / 1000
+					: ceil($input * 1000) / 1000
+				)
+				. $suffixes[$suffixIndex];
+		}
+	}
 
 }

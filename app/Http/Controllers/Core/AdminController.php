@@ -55,14 +55,30 @@ class AdminController extends Controller
         $agency_settings = request()->get('agency.settings');
         $client_settings = json_decode(request()->get('client.settings'));
 
-        //dd($agency_settings);
+        // Get user search console data
+        $total_clicks = '';
+        $total_impressions = '';
+        $average_ctr = '';
+        $average_position = '';
+        $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+        foreach($searchConsoleData as $key => $values){
+            if($key == '3Months'){
+                foreach($values as $k => $v){
+                    if($k == 'fullData'){
+                        $total_clicks = format_number($v[0]['clicks']);
+                        $total_impressions = format_number($v[0]['impressions']);
+                        $average_ctr = round($v[0]['ctr'] * 100);
+                        $average_position = round($v[0]['position']);
+                    }
+                }
+            }
+        }
 
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->admin_controller) && $slug=='admin'){
             $app = $client_settings->app;
             $controller = $client_settings->admin_controller;
             $method = $client_settings->admin_method;
-
 
             $controller_path = 'App\Http\Controllers\\'.$app.'\\'.$controller;
             return app($controller_path)->$method($request);
@@ -78,8 +94,12 @@ class AdminController extends Controller
         }else{
 
             return view('apps.Core.Admin.index')
-            ->with('title',"hello")
-            ->with('componentName',$this->componentName);
+                    ->with('title',"hello")
+                    ->with('componentName',$this->componentName)
+                    ->with('total_clicks', $total_clicks)
+                    ->with('total_impressions', $total_impressions)
+                    ->with('average_ctr', $average_ctr)
+                    ->with('average_position', $average_position);
         }
     }
 

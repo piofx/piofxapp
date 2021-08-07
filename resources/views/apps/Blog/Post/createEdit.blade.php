@@ -132,15 +132,17 @@
                             <h2 class="text-primary">Most Searched Keywords</h2>
                             @foreach($searchConsoleData as $key=>$value)
                                 @if($key == '3Months')
-                                    @foreach($value as $data)
-                                        @foreach($data as $d)
+                                    @foreach($value as $k => $v)
+                                        @if($k == 'queryData')
+                                            @foreach($v as $data)
                                                 @if ($count < 10)
-                                                    <span class="badge bg-white text-dark m-1 shadow text-wrap text-left">{{ $d['keys'][0] }}</span>
+                                                    <span class="badge bg-white text-dark m-1 shadow text-wrap text-left">{{ $data['keys'][0] }}</span>
                                                     @php
                                                         $count += 1;
                                                     @endphp
                                                 @endif
-                                        @endforeach
+                                            @endforeach
+                                        @endif
                                     @endforeach
                                 @endif
                             @endforeach

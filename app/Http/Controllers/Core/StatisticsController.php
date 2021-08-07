@@ -119,14 +119,15 @@ class StatisticsController extends Controller
 
             // If access token was set to the client then retrieve the seach console data
             if ($client->getAccessToken()) {
-                // Create a new object for search console
-                $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
-                $obj->setSearchType('web');
-
                 $consoleData = array();
 
                 for($i=0; $i<3; $i++){
+                    // Create a new object for search console
+                    $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
+                    $obj->setSearchType('web');
+                    $obj->setRowLimit('25000');
                     $retrievedData = array();
+
                     if($i == 0){
                         $date = '1M';
                         $from_date = date('Y-m-d', strtotime('-1 month'));
@@ -145,31 +146,28 @@ class StatisticsController extends Controller
 
                     $obj->setStartDate($from_date);
                     $obj->setEndDate($to_date);
-
-                    // Set the dimensions of what to retrieve
-                    $obj->setDimensions(['query']);
-
-                    // Retrieve the data
+                
+                    // Retrieve search console data
                     try {
+                        // Initialize the service
                         $service = new Google_Service_Webmasters($client);
+
+                        // Retrieve overall data
+                        $fullData = $service->searchanalytics->query($website_url, $obj);
+
+                        // Set dimension as query, for retrieving query data
+                        $obj->setDimensions(['query']);
                         $queryData = $service->searchanalytics->query($website_url, $obj);
-                    } 
-                    catch(\Exception $e) {
-                        echo $e->getMessage();
-                    }  
 
-                    // Set the dimensions of what to retrieve
-                    $obj->setDimensions(['page']);
-
-                    // Retrieve the data
-                    try {
-                        $service = new Google_Service_Webmasters($client);
+                        // Set dimension as page, for retrieving page data
+                        $obj->setDimensions(['page']);
                         $pagesData = $service->searchanalytics->query($website_url, $obj);
                     } 
-                    catch(\Exception $e ) {
-                        echo $e->getMessage();
+                    catch(\Exception $e) {
+                        ddd($e->getMessage());
                     }  
 
+                    $retrievedData['fullData'] = $fullData['rows'];
                     $retrievedData['queryData'] = $queryData['rows'];
                     $retrievedData['pagesData'] = $pagesData['rows'];
                     
