@@ -60,15 +60,17 @@ class AdminController extends Controller
         $total_impressions = '';
         $average_ctr = '';
         $average_position = '';
-        $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
-        foreach($searchConsoleData as $key => $values){
-            if($key == '3Months'){
-                foreach($values as $k => $v){
-                    if($k == 'fullData'){
-                        $total_clicks = format_number($v[0]['clicks']);
-                        $total_impressions = format_number($v[0]['impressions']);
-                        $average_ctr = round($v[0]['ctr'] * 100);
-                        $average_position = round($v[0]['position']);
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+            foreach($searchConsoleData as $key => $values){
+                if($key == '3Months'){
+                    foreach($values as $k => $v){
+                        if($k == 'fullData'){
+                            $total_clicks = format_number($v[0]['clicks']);
+                            $total_impressions = format_number($v[0]['impressions']);
+                            $average_ctr = round($v[0]['ctr'] * 100);
+                            $average_position = round($v[0]['position']);
+                        }
                     }
                 }
             }

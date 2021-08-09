@@ -316,7 +316,11 @@
 							<div class="d-flex p-0">
 								<div class="flex-grow-1 p-8 card-rounded bgi-no-repeat" style="background-color: #663259;background-position: calc(100% + 0.5rem) bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-3.svg') }})">
 									<h3 class="text-inverse-danger mt-2 font-weight-bolder" style="cursor:pointer;"><a href="" class="text-inverse-danger">Average CTR</a> <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average CTR is the percentage of impressions that resulted in a click"></i></h3>
-									<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr ? $average_ctr : null }}%</h1>
+									@if(!empty($average_ctr))
+										<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr }}</h1>
+									@else
+										<h6 class="text-white"><span class="text-danger">!!</span> Please add your search console details in statistics page</h6>
+									@endif
 								</div>
 							</div>
 							<!--end::Engage Widget 2-->
@@ -324,7 +328,11 @@
 							<div class="d-flex p-0 mt-4">
 								<div class="flex-grow-1 p-8 bg-danger card-rounded flex-grow-1 bgi-no-repeat" style="background-position: 100% bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-4.svg') }})">
 									<h3 class="text-inverse-danger mt-2 font-weight-bolder"><a href="" class="text-inverse-danger">Average Position <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average Position is the position of your site in the search results"></i></a></h3>
-									<h1 class="text-white" style="font-size: 3rem;">{{ $average_position ? $average_position : null }}</h1>
+									@if(!empty($average_position))
+										<h1 class="text-white" style="font-size: 3rem;">{{ $average_position }}</h1>
+									@else
+										<h6 class="text-white"><span class="text-dark">!!</span> Please add your search console details in statistics page</h6>
+									@endif
 								</div>
 							</div>
 						<!--end::Engage Widget 3-->

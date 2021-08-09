@@ -72,14 +72,18 @@ class ClientController extends Controller
     public function store(Obj $obj,Request $request)
     {
         try{
-
+            
             //check if the domain name exists
-            $obj_exists = $obj->where('domain',$request->input('domain'))->first();
+            $obj_exists = $obj->where('domain',$request->get('domain'))->first();
             if($obj_exists)
             {
                 $alert = 'Domain name already exists. Kindly use a different domain.';
                 return redirect()->back()->withInput()->with('alert',$alert);
             }
+
+            //update settings json
+            if(!$request->get('dev'))
+            $obj->processSettings($request);
 
             /* create a new entry */
             $obj = $obj->create($request->all());

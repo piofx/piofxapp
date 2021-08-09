@@ -137,7 +137,7 @@
 
        
 
-     <div class=" rounded p-5 mb-4 bg-light-warning">
+     <div class="rounded p-5 mb-4 bg-light-warning">
           <h4>App Settings</h4>
           <div class="row">
             <div class="col-12 col-md-4">
