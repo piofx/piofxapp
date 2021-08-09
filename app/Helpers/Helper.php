@@ -281,22 +281,16 @@ if (! function_exists('blog_image_upload')) {
 		}
 	}
 
-	if(!function_exists('dev_mode')){
-		function dev_mode($data){
-			ddd($data);
+	if(!function_exists('dev_normal_mode')){
+		function dev_normal_mode($data){
 			$settings = array();
 			$names = [];
 			// Check if data is sent from normal mode or dev mode
-			if($request->input('mode') == 'normal'){
-
+			if($data['mode'] == 'normal'){
 				// Add the key and vales to settins array by checking if there is a nested array
-				foreach($request->all() as $k => $value){
+				foreach($data as $k => $value){
 					$keys = explode('-', $k);
 					if($keys[0] == 'settings' && $keys[1] != 'array'){
-						$template = explode("_", $keys[1]);
-						if(sizeof($template) > 1  && $template[0] == 'template'){
-							$value = json_encode(addslashes($value));
-						}
 						$settings[$keys[1]] = $value;
 					}
 					elseif($keys[0] == 'settings' && $keys[1] == 'array'){
@@ -308,40 +302,44 @@ if (! function_exists('blog_image_upload')) {
 				}
 
 				foreach($names as $name){
-					$new_keys = [];
-					$temp = [];
-					foreach($request->all() as $k => $value){
+					$new_keys = array();
+					$temp = array();
+					foreach($data as $k => $value){
 						$keys = explode('-', $k);
-						if(sizeof($keys) > 2 && $keys[2] == $name && $keys[4] == 'key'){
+						if(sizeof($keys) > 2 && $keys[1] == 'array' && $keys[2] == $name && $keys[4] == 'key'){
 							foreach($value as $v ){
 								array_push($new_keys, $v);
 							}
 						}
-						elseif(sizeof($keys) > 2 && $keys[2] == $name && $keys[4] == 'value'){
-							$t = array();
-							foreach($value as $k => $v){
-								$t[$new_keys[$k]] = $v;
+						elseif(sizeof($keys) > 2 && $keys[1] == 'array' && $keys[2] == $name && $keys[4] == 'value'){
+							if(array_keys($value) !== range(0, count($value) - 1)){
+								$t = array();
+								foreach($value as $k => $v){
+									$t[$new_keys[$k]] = $v;
+								}
+								array_push($temp, $t);
 							}
-							array_push($temp, $t);
+							else{
+								foreach($value as $k => $v){
+									$temp[$keys[3]] = $v;
+								}
+							}
+							
 						}
 					}
 					$settings[$name] = $temp;
 				}
 
-				// ddd($settings);
 				$settings = json_encode($settings, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES);
 			}
-			else{
-				$settings = $request->input('settings');
+			else if($data['mode'] == 'dev'){
+				$settings = json_encode(json_decode($data['settings']), JSON_PRETTY_PRINT);
 				$settings = str_replace("\r", "", $settings);
 				$settings = str_replace("\t", "", $settings);
 			}
 
-			// Retrieve the settings data and redirect to settings index page
-			$client_id = request()->get('client.id');
-			$settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
+			return $settings;
 
-			Storage::disk("s3")->put($settingsfilename, $settings);
 		}
 	}
 

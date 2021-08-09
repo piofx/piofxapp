@@ -1,3 +1,4 @@
+
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
 
 	<!--begin::Breadcrumb-->
@@ -21,7 +22,7 @@
   @if($alert)
     <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
   @endif
-<!--end::Alert-->
+  <!--end::Alert-->
 
 
 	<!--begin::basic card-->

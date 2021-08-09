@@ -97,6 +97,7 @@ class BlogSettingsController extends Controller
      */
     public function update(Request $request)
     {
+        ddd($request->all());
         $settings = array();
         $names = [];
         // Check if data is sent from normal mode or dev mode

@@ -48,7 +48,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Obj $obj)
+    public function create(Obj $obj, Request $request)
     {
         // authorize the app
         $this->authorize('create', $obj);
@@ -59,7 +59,6 @@ class ClientController extends Controller
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)
-                ->with('editor',true)
                 ->with('alert',$alert)
                 ->with('app',$this);
     }
@@ -73,25 +72,17 @@ class ClientController extends Controller
     public function store(Obj $obj,Request $request)
     {
         try{
-            
+
             //check if the domain name exists
-            $obj_exists = $obj->where('domain',$request->get('domain'))->first();
+            $obj_exists = $obj->where('domain',$request->input('domain'))->first();
             if($obj_exists)
             {
                 $alert = 'Domain name already exists. Kindly use a different domain.';
                 return redirect()->back()->withInput()->with('alert',$alert);
             }
 
-            
-
-            //update settings json
-            if(!$request->get('dev'))
-            $obj->processSettings($request);
-
             /* create a new entry */
             $obj = $obj->create($request->all());
-
-
 
             //create admin user
             $obj->createAdminUser($request);
@@ -104,6 +95,7 @@ class ClientController extends Controller
 
             $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
             return redirect()->route($this->module.'.index')->with('alert',$alert);
+
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -175,7 +167,8 @@ class ClientController extends Controller
                 ->with('obj',$obj)
                 ->with('editor', $editor)
                 ->with('alert',$alert)
-                ->with('app',$this);
+                ->with('app',$this)
+                ->with('settings', json_decode($obj->settings));
         else
             abort(404);
     }
@@ -198,30 +191,15 @@ class ClientController extends Controller
             $obj = Obj::where('id',$id)->first();
             // authorize the app
             $this->authorize('update', $obj);
-
             
-            //update settings json
-            if(!$request->get('dev'))
-            $obj->processSettings($request);
-             
-            //update the resource
-            $obj->update($request->all()); 
+            // Send data to helper and update client settings
+            $settings = dev_normal_mode($request->all()); 
+            $obj->update(['settings' => $settings]);
 
-         
             //reload cache and session data
             $obj->refreshCache();
 
-            if($request->get('setting')=='1'){
-                // flash message and redirect to controller index page
-                $alert = 'Settings are updated!';
-                return redirect()->route('Client.settings')->with('alert',$alert);
-            }
-                 
-            else{
-                // flash message and redirect to controller index page
-                $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
-                return redirect()->route($this->module.'.show',$id)->with('alert',$alert);
-            }
+            return redirect()->route($this->module.'.settings');
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
