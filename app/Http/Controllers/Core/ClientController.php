@@ -142,11 +142,22 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id=null)
+    public function edit($id=null, Request $request)
     {
-        //no id is given edit the current client data
-        if(!$id)
+         //no id is given edit the current client data
+        if(!$id){
+            $view = 'settings';
             $id = request()->get('client.id');
+        }else{
+            $view = 'createedit';
+        }
+        
+        $editor = false;
+        if($request->input('mode')){
+            if($request->input('mode') == 'dev'){
+                $editor = true;
+            }
+        }
 
         // load alerts if any
         $alert = session()->get('alert');
@@ -157,11 +168,12 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('edit', $obj);
 
+
         if($obj)
-            return view('apps.'.$this->app.'.'.$this->module.'.settings')
+            return view('apps.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('stub','Update')
                 ->with('obj',$obj)
-                ->with('editor',true)
+                ->with('editor', $editor)
                 ->with('alert',$alert)
                 ->with('app',$this);
         else
@@ -198,9 +210,6 @@ class ClientController extends Controller
          
             //reload cache and session data
             $obj->refreshCache();
-
-            
-
 
             if($request->get('setting')=='1'){
                 // flash message and redirect to controller index page
