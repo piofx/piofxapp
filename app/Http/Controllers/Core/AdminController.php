@@ -60,7 +60,7 @@ class AdminController extends Controller
         $total_impressions = '';
         $average_ctr = '';
         $average_position = '';
-        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+        if(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
             foreach($searchConsoleData as $key => $values){
                 if($key == '3Months'){
