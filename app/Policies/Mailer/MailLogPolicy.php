@@ -37,7 +37,7 @@ class MailLogPolicy
      * @param  \App\Models\Template  $template
      * @return mixed
      */
-    public function view(User $user, MailSubscriber $mailsubscriber)
+    public function view(User $user)
     {
         if($user->checkRole(['superadmin']))
             return true;
@@ -52,7 +52,7 @@ class MailLogPolicy
      * @param  \App\Models\Template  $template
      * @return mixed
      */
-    public function delete(User $user, MailSubscriber $mailsubscriber)
+    public function delete(User $user)
     {
         if($user->checkRole(['superadmin']))
             return true;
