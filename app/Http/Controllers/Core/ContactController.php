@@ -288,24 +288,29 @@ class ContactController extends Controller
 
         $editor = false;
         $settings = null;
-        if($request->input('mode') && $request->input('mode') == 'normal'){
-            //load the settings
-            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
-                $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
-        }
 
         if(request()->get('store')){
-            //save the settings files in aws
-            $settings = str_replace(array("\n", "\r"), '', request()->get('settings'));
-            Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,json_encode($settings,JSON_PRETTY_PRINT),'public');
+            if($request->input('mode') == 'normal'){
+                $settings = dev_normal_mode($request->all());
+            }
+            else if($request->input('mode') == 'dev'){
+                $settings = json_encode(json_decode(str_replace(array("\n", "\r"), '', request()->get('settings'))), JSON_PRETTY_PRINT);
+            }
+            // Save settings in s3
+            Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,$settings,'public');
             $alert = 'Successfully saved the settings file';
+        }
 
-        }else{
+        if($request->input('mode') == 'dev'){
+            $editor = true;
             //load the settings
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
-            $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
-            else
-                $settings = '';
+                $settings = Storage::disk('s3')->get('settings/contact/'.$client_id.'.json');
+        }
+        else{
+            //load the settings
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
+                $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ), true);
         }
 
         if($client_id)
@@ -313,7 +318,7 @@ class ContactController extends Controller
                 ->with('stub','Update')
                 ->with('settings',$settings)
                 ->with('alert',$alert)
-                ->with('editor',true)
+                ->with('editor',$editor)
                 ->with('app',$this);
         else
             abort(404);

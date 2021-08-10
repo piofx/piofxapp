@@ -10,6 +10,8 @@ use App\Models\Page\Theme;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\Blog\PostController;
+
 class PageController extends Controller
 {
     /**
@@ -180,7 +182,16 @@ class PageController extends Controller
            
             return app($controller_path)->$method($request);
 
-        }else{
+        } 
+        else if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            return app()->call(
+                ('App\Http\Controllers\Blog\PostController@show'), ['slug' => $slug, 'blog_url' => 'direct']
+            );
+        }
+        // else if(isset($client_settings->redirect)){
+        //     ddd($client_settings->redirect[0]);
+        // }
+        else{
 
             
             if(request()->get('refresh')){
