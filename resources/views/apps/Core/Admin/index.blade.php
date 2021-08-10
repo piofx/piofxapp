@@ -336,7 +336,7 @@
 								<div class="flex-grow-1 p-8 card-rounded bgi-no-repeat" style="background-color: #663259;background-position: calc(100% + 0.5rem) bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-3.svg') }})">
 									<h3 class="text-inverse-danger mt-2 font-weight-bolder" style="cursor:pointer;"><a href="" class="text-inverse-danger">Average CTR</a> <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average CTR is the percentage of impressions that resulted in a click"></i></h3>
 									@if(!empty($average_ctr))
-										<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr }}</h1>
+										<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr }}%</h1>
 									@else
 										<h6 class="text-white w-75"><span class="text-danger">!!</span> Please add your search console details in statistics page</h6>
 									@endif

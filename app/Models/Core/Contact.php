@@ -451,8 +451,7 @@ class Contact extends Model
     }
 
     public function load_tag_data($settings,$user_array,$client_id,$date_range,$status_array,$category_array){
-        $settings = json_decode($settings);
-
+        $settings = $settings;
 
         $data = [];
         if(isset($settings->tags)){
