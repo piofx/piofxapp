@@ -6,6 +6,7 @@ use App\Http\Controllers\Core\AgencyController;
 use App\Http\Controllers\Core\ClientController;
 use App\Http\Controllers\Core\ContactController;
 use App\Http\Controllers\Core\UserController;
+use App\Http\Controllers\Core\StatisticsController;
 
 /* Admin routes */
 Route::get('/admin', [AdminController::class, 'index'])
@@ -118,9 +119,6 @@ Route::delete('/admin/user/{user}', [UserController::class, 'destroy'])
 Route::get('/admin/user/{id}', [UserController::class, 'show'])
 		->middleware(['auth'])->name('User.show');
 
-
-
-
 /* User Profile Routes*/ 
 Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
 Route::get('/profile/{user}/edit', [UserController::class, 'profile_edit'])->name('profile.edit');
@@ -128,7 +126,9 @@ Route::put('/profile/{user}/', [UserController::class, 'profile_update'])->name(
 Route::get('/profile/{user}/', [UserController::class, 'profile_show'])->name('profile.show');
 
 
-
+// Statistic Routes
+Route::get('/admin/statistics', [StatisticsController::class, 'index'])
+		->middleware(['auth'])->name('Statistics.index');
 
 
 

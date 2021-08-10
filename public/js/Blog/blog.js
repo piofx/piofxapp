@@ -1,3 +1,47 @@
+$(document).ready(function () {
+    let content = $("#post_editor").summernote("code");
+    var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    let urls = content.match(urlRegex);
+
+    let internalLinks = {};
+    let externalLinks = {};
+
+    let baseUrl = window.location.origin;
+    urls.forEach((url) => {
+        url = url.replace(/['"]+/g, "");
+        let u = new URL(url);
+        if (u.origin == baseUrl) {
+            if (u.href in internalLinks) {
+                internalLinks[u.href] += 1;
+            } else {
+                internalLinks[u.href] = 1;
+            }
+        } else {
+            if (u.href in externalLinks) {
+                externalLinks[u.href] += 1;
+            } else {
+                externalLinks[u.href] = 1;
+            }
+        }
+    });
+
+    for (let link in internalLinks) {
+        document.getElementById("internalLinks").innerHTML +=
+            "<p class='d-block m-0 mb-1'>" + link + "</p>";
+
+        document.getElementById("internalLinksCount").innerHTML +=
+            "<p class='d-block m-0 mb-1'>" + internalLinks[link] + "</p>";
+    }
+
+    for (let link in externalLinks) {
+        document.getElementById("externalLinks").innerHTML +=
+            "<p class='d-block m-0 mb-1'>" + link + "</p>";
+
+        document.getElementById("externalLinksCount").innerHTML +=
+            "<p class='d-block m-0 mb-1'>" + externalLinks[link] + "</p>";
+    }
+});
+
 // Delete Image
 function deleteImage() {
     // document.getElementById("featured_image").style.display = "none";
@@ -11,7 +55,14 @@ function deleteImage() {
 $("#post_editor").summernote({
     minHeight: 750,
     focus: true,
-    fontNames:['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Eczar'],
+    fontNames: [
+        "Arial",
+        "Arial Black",
+        "Comic Sans MS",
+        "Courier New",
+        "Merriweather",
+        "Eczar",
+    ],
     codemirror: {
         // codemirror options
         theme: "monokai",
@@ -22,64 +73,45 @@ $("#post_editor").summernote({
     },
 });
 
-function addTextarea() {
-    document.getElementById("post_content").innerHTML =
-        $("#post_editor").summernote("code");
-
-    document.getElementById("post_form").submit();
-}
-
 function showGroup() {
     var private = document.getElementById("private");
     var group = document.getElementById("group");
     group.style.display = private.checked ? "block" : "none";
 }
 
-// Marquee
-// function marquee(a, b) {
-//     console.log("here");
-//     var width = b.width();
-//     var start_pos = a.width();
-//     var end_pos = -width;
+function blogPostSubmit(form, event) {
+    event.preventDefault();
 
-//     function scroll() {
-//         if (b.position().left <= -width) {
-//             b.css("left", start_pos);
-//             scroll();
-//         } else {
-//             time =
-//                 (parseInt(b.position().left, 10) - end_pos) *
-//                 (10000 / (start_pos - end_pos)); // Increase or decrease speed by changing value 10000
-//             b.animate(
-//                 {
-//                     left: -width,
-//                 },
-//                 time,
-//                 "linear",
-//                 function () {
-//                     scroll();
-//                 }
-//             );
-//         }
-//     }
+    // Set the value of the published button
+    document.getElementById("publishName").value = form.submitted;
 
-//     b.css({
-//         width: width,
-//         left: start_pos,
-//     });
-//     scroll(a, b);
+    // Set the content from the text area
+    document.getElementById("post_content").innerHTML =
+        $("#post_editor").summernote("code");
 
-//     b.mouseenter(function () {
-//         // Remove these lines
-//         b.stop(); //
-//         b.clearQueue(); // if you don't want
-//     }); //
-//     b.mouseleave(function () {
-//         // marquee to pause
-//         scroll(a, b); //
-//     }); // on mouse over
-// }
+    form.submit();
+}
 
-// $(document).ready(function () {
-//     marquee($("#marquee-parent"), $("#marquee-child"));
-// });
+// Create Slug from text
+function slugify(text) {
+    return text
+        .toString() // Cast to string
+        .toLowerCase() // Convert the string to lowercase letters
+        .normalize("NFD") // The normalize() method returns the Unicode Normalization Form of a given string.
+        .trim() // Remove whitespace from both sides of a string
+        .replace(/\s+/g, "-") // Replace spaces with -
+        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+        .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+}
+
+// Create slug and meta title on keyup in title field
+function createSlugAndMetaTitle() {
+    let title = document.getElementById("title").value;
+    let slug = slugify(title);
+
+    document.getElementById("slug").value = slug;
+
+    if (document.getElementById("meta_title")) {
+        document.getElementById("meta_title").innerHTML = title;
+    }
+}

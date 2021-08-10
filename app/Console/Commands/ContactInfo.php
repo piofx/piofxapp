@@ -11,7 +11,7 @@ class ContactInfo extends Command
      *
      * @var string
      */
-    protected $signature = 'ContactInfo {counter}';
+    protected $signature = 'ContactInfo {counter} {email}';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class ContactInfo extends Command
     {   
         \Log::info("working fine!");
         Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter')] , function($message) {
-            $message->to('superadmin@gmail.com');
+            $message->to($email);
             $message->subject('New Contacts');
         });
     }

@@ -30,13 +30,16 @@ class Kernel extends ConsoleKernel
         //flecting the records of all contacts
         $contacts = Contact::all()->groupBy('client_id');
         foreach($contacts as $k=>$v){
+            //print_r($k);
             $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$k.'.json' ));
             $data = json_decode($data);
             if ($data->digest == 'daily')
             {   
+                
                 $contacts = Contact::whereDate('created_at', Carbon::today())->get()->where('client_id',$k);
                 $counter = count($contacts);
-                $schedule->command('ContactInfo',[$counter])->daily();
+                $email = $data->secondarymail;
+                $schedule->command('ContactInfo',[$counter,$email])->daily();
             }
             else if ($data->digest == 'weekly')
             {

@@ -124,26 +124,6 @@
 </script>
 
 
-<script>
-    // Create Slug from text
-    function slugify(text) {
-        return text
-            .toString() // Cast to string
-            .toLowerCase() // Convert the string to lowercase letters
-            .normalize("NFD") // The normalize() method returns the Unicode Normalization Form of a given string.
-            .trim() // Remove whitespace from both sides of a string
-            .replace(/\s+/g, "-") // Replace spaces with -
-            .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-            .replace(/\-\-+/g, "-"); // Replace multiple - with single -
-    }
-
-    // Create slug on keyup in title field
-    function createSlug() {
-        title = document.getElementById("title").value;
-        slug = slugify(title);
-        document.getElementById("slug").value = slug;
-    }
-</script>
 
 
 <!-- Summernote Js -->

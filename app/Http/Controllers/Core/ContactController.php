@@ -279,32 +279,39 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function settings()
+    public function settings(Request $request)
     {
         // load client id
         $client_id = request()->get('client.id');
          // load alerts if any
         $alert = session()->get('alert');
 
-        $data = null;
+        $editor = false;
+        $settings = null;
+        if($request->input('mode') && $request->input('mode') == 'normal'){
+            //load the settings
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
+                $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+        }
+
         if(request()->get('store')){
             //save the settings files in aws
-            $data = str_replace(array("\n", "\r"), '', request()->get('settings'));
-            Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,json_encode($data,JSON_PRETTY_PRINT),'public');
+            $settings = str_replace(array("\n", "\r"), '', request()->get('settings'));
+            Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,json_encode($settings,JSON_PRETTY_PRINT),'public');
             $alert = 'Successfully saved the settings file';
 
         }else{
             //load the settings
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
-            $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+            $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
             else
-                $data = '';
+                $settings = '';
         }
 
         if($client_id)
             return view('apps.'.$this->app.'.'.$this->module.'.settings')
                 ->with('stub','Update')
-                ->with('data',$data)
+                ->with('settings',$settings)
                 ->with('alert',$alert)
                 ->with('editor',true)
                 ->with('app',$this);

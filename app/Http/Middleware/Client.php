@@ -33,7 +33,6 @@ class Client
             session()->flush();
         }
 
-
         // load client from cache
         $client = Cache::remember('client_'.$domain, '3600', function () use($domain){
             return Obj::where('domain',$domain)->first();
@@ -47,14 +46,11 @@ class Client
 
         $client_id = $client->id;
 
-
-
         // load client from cache
         $agency= Cache::remember('agency_'.$domain, '3600', function () use($client){
             return Agency::where('id',$client->agency_id)->first();
         });
 
-        
         // convert settings to object
         $settings = json_decode($client->settings);
         $themename = $settings->theme;

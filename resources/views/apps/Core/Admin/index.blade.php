@@ -1,5 +1,4 @@
 <x-dynamic-component :component="$componentName" class="mt-4" >
-	
 
 	<div class="row">
 		<div class="col-12 col-md-8">
@@ -12,11 +11,7 @@
 				</g>
 			</svg><!--end::Svg Icon--></span> Core Modules</h4>
 			<div class="row">
-
-
-
-
-				@if(Auth::user()->role=='superadmin')
+				@if(Auth::user()->role == 'superadmin')
 				<div class='col-6 col-md-4'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom gutter-b" style="max-height: 150px;background:#ec65c8;">
@@ -62,8 +57,13 @@
 					</div>
 					<!--end::Tiles Widget 11-->
 				</div>
+				@endif
+
+				@php
+					$blocked_roles = ['clientadmin', 'clientdeveloper', 'clientmanager', 'clientmoderator'];					
+				@endphp
 				
-				
+				@if(!in_array(Auth::user()->role, $blocked_roles))
 				<div class='col-6 col-md-4'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom bg-primary gutter-b" style="max-height: 150px;">
@@ -108,7 +108,6 @@
 					<!--end::Tiles Widget 11-->
 				</div>
 
-				
 				<div class='col-6 col-md-4 d-none'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#4b9c77">
@@ -278,9 +277,25 @@
 						</div>
 						<!--end::Tiles Widget 11-->
 					</div>
-				
 
-
+					<div class='col-6 col-md-4'>
+						<!--begin::Tiles Widget 11-->
+						<div class="card card-custom bg-dark gutter-b" style="max-height: 150px;">
+							<div class="card-body">
+								<span class="svg-icon svg-icon-white svg-icon-3x svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Communication/Mail-opened.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<rect x="0" y="0" width="24" height="24"/>
+										<path d="M6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,12 C19,12.5522847 18.5522847,13 18,13 L6,13 C5.44771525,13 5,12.5522847 5,12 L5,3 C5,2.44771525 5.44771525,2 6,2 Z M7.5,5 C7.22385763,5 7,5.22385763 7,5.5 C7,5.77614237 7.22385763,6 7.5,6 L13.5,6 C13.7761424,6 14,5.77614237 14,5.5 C14,5.22385763 13.7761424,5 13.5,5 L7.5,5 Z M7.5,7 C7.22385763,7 7,7.22385763 7,7.5 C7,7.77614237 7.22385763,8 7.5,8 L10.5,8 C10.7761424,8 11,7.77614237 11,7.5 C11,7.22385763 10.7761424,7 10.5,7 L7.5,7 Z" fill="#000000" opacity="0.3"/>
+										<path d="M3.79274528,6.57253826 L12,12.5 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 Z" fill="#000000"/>
+									</g>
+								</svg><!--end::Svg Icon--></span>
+								<div>
+									<a href="{{ url('admin/contact') }}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Mailer</a>
+								</div>
+							</div>
+						</div>
+						<!--end::Tiles Widget 11-->
+					</div>
 				</div>
 
 			</div>
@@ -295,9 +310,6 @@
 					</g>
 				</svg><!--end::Svg Icon--></span> Statistics</h4>
 				<div class="row">
-
-
-
 					<div class="col-12">
 						<!--begin::Tiles Widget 5-->
 						<div class="card card-custom bg-info gutter-b" style="height: 150px">
@@ -318,36 +330,31 @@
 						<!--end::Tiles Widget 5-->
 					</div>	
 
-
-
 					<div class="col-12">
-						<h4 class="mb-6"><span class="svg-icon svg-icon-dark svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Shopping/Wallet.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-								<rect x="0" y="0" width="24" height="24"/>
-								<circle fill="#000000" opacity="0.3" cx="20.5" cy="12.5" r="1.5"/>
-								<rect fill="#000000" opacity="0.3" transform="translate(12.000000, 6.500000) rotate(-15.000000) translate(-12.000000, -6.500000) " x="3" y="3" width="18" height="7" rx="1"/>
-								<path d="M22,9.33681558 C21.5453723,9.12084552 21.0367986,9 20.5,9 C18.5670034,9 17,10.5670034 17,12.5 C17,14.4329966 18.5670034,16 20.5,16 C21.0367986,16 21.5453723,15.8791545 22,15.6631844 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,9.33681558 Z" fill="#000000"/>
-							</g>
-						</svg><!--end::Svg Icon--></span>  Transactions</h4>
-						<!--begin::Tiles Widget 4-->
-						<div class="card card-custom gutter-b" style="height: 130px">
-							<!--begin::Body-->
-							<div class="card-body d-flex flex-column">
-								<!--begin::Stats-->
-								<div class="flex-grow-1">
-									<div class="text-dark-50 font-weight-bold">Credit Balance </div>
-									<div class="font-weight-bolder font-size-h3"><i class="fas fa fa-rupee-sign"></i>4,900</div>
+						<!--begin::Engage Widget 2-->
+							<div class="d-flex p-0">
+								<div class="flex-grow-1 p-8 card-rounded bgi-no-repeat" style="background-color: #663259;background-position: calc(100% + 0.5rem) bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-3.svg') }})">
+									<h3 class="text-inverse-danger mt-2 font-weight-bolder" style="cursor:pointer;"><a href="" class="text-inverse-danger">Average CTR</a> <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average CTR is the percentage of impressions that resulted in a click"></i></h3>
+									@if(!empty($average_ctr))
+										<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr }}</h1>
+									@else
+										<h6 class="text-white w-75"><span class="text-danger">!!</span> Please add your search console details in statistics page</h6>
+									@endif
 								</div>
-								<!--end::Stats-->
-								<!--begin::Progress-->
-								<div class="progress progress-xs">
-									<div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<!--end::Progress-->
 							</div>
-							<!--end::Body-->
-						</div>
-						<!--end::Tiles Widget 4-->
+							<!--end::Engage Widget 2-->
+							<!--begin::Engage Widget 3-->
+							<div class="d-flex p-0 mt-4">
+								<div class="flex-grow-1 p-8 bg-danger card-rounded flex-grow-1 bgi-no-repeat" style="background-position: 100% bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-4.svg') }})">
+									<h3 class="text-inverse-danger mt-2 font-weight-bolder"><a href="" class="text-inverse-danger">Average Position <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average Position is the position of your site in the search results"></i></a></h3>
+									@if(!empty($average_position))
+										<h1 class="text-white" style="font-size: 3rem;">{{ $average_position }}</h1>
+									@else
+										<h6 class="text-white w-75"><span class="text-dark">!!</span> Please add your search console details in statistics page</h6>
+									@endif
+								</div>
+							</div>
+						<!--end::Engage Widget 3-->
 					</div>
 				</div>
 
