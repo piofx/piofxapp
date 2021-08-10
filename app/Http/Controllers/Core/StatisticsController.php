@@ -36,7 +36,7 @@ class StatisticsController extends Controller
     public function index(Obj $obj, Request $request)
     {
 
-        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+        // if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client and set the client id and secret
             $client = new Google_Client();
 
@@ -181,6 +181,7 @@ class StatisticsController extends Controller
                         $consoleData['1Year'] = $retrievedData;
                     }
                 }
+                ddd($consoleData);
 
                 Storage::disk('s3')->put("searchConsole/consoleData_".request()->get('client.id').".json", json_encode($consoleData), "public");
 
@@ -190,16 +191,16 @@ class StatisticsController extends Controller
             return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
                     ->with('app',$this)
                     ->with('authentication', $authentication);
-        }
-        else{
-            $authentication = True;
-            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+        // }
+        // else{
+        //     $authentication = True;
+        //     $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
 
-            return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-                    ->with('app',$this)
-                    ->with('authentication', $authentication)
-                    ->with('searchConsoleData', $searchConsoleData);
-        }
+        //     return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
+        //             ->with('app',$this)
+        //             ->with('authentication', $authentication)
+        //             ->with('searchConsoleData', $searchConsoleData);
+        // }
     }
 
     /**

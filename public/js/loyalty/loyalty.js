@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 // Change visible sections in settings page based on mode
 function visible_sections() {
-    if(document.getElementById("mode")){
+    if (document.getElementById("mode")) {
         let mode = document.getElementById("mode").value;
 
         if (mode == "generic") {
@@ -57,6 +57,7 @@ function customer_chart() {
         let customer_chart_data = JSON.parse(json_data);
 
         // customers_chart_data = sortObject(customer_chart_data);
+        console.log(customer_chart_data);
 
         const apexChart = "#customers_chart";
         var options = {
@@ -93,8 +94,6 @@ function customer_chart() {
 // Chart for revenue
 function revenue_chart() {
     let json_data = document.getElementById("revenue_chart_data");
-
-    console.log(json_data);
 
     if (json_data) {
         json_data = json_data.getAttribute("data-value");

@@ -279,8 +279,21 @@ class PostController extends Controller
      * @param  \App\Models\Blog\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Obj $obj, $slug, Category $category, Tag $tag, User $user, BlogSettings $blogSettings, Request $request)
+    public function show($slug, $blog_url=null)
     {
+        if($blog_url != 'direct'){
+            $client_settings = json_decode(request()->get('client.settings'));
+            if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+                abort(404,'Page not found');
+            }
+        }
+
+        $obj = new Obj();
+        $category = new Category();
+        $tag = new Tag();
+        $user = new User();
+        $blogSettings = new BlogSettings();
+        $request = new Request();
         //deletes cache data
         if($request->input('refresh')){
             Cache::forget('post_'.request()->get('client.id').'_'.$slug);
@@ -799,25 +812,25 @@ class PostController extends Controller
     }
 
     // Miscellenious
-    // public function addContent(Obj $obj){
-    //     $objs = $obj->get();
-    //     foreach($objs as $obj){
-    //         $body = $obj->body;
-    //         $conclusion = $obj->conclusion;
+    public function addContent(Obj $obj){
+        $objs = $obj->get();
+        foreach($objs as $obj){
+            $body = $obj->body;
+            $conclusion = $obj->conclusion;
 
-    //         if(!empty($obj->test)){
-    //             $test = '<div class=“my-4”>
-    //                         <div class="test-container ' . $obj->test . '" data-container="' . $obj->test . '" ></div>
-    //                     </div>';
-    //             $content = $body . " " .$test . " " . $conclusion;
-    //         }
-    //         else{
-    //             $content = $body . " " . $conclusion;
-    //         }            
+            if(!empty($obj->test)){
+                $test = '<div class=“my-4”>
+                            <div class="test-container ' . $obj->test . '" data-container="' . $obj->test . '" ></div>
+                        </div>';
+                $content = $body . " " .$test . " " . $conclusion;
+            }
+            else{
+                $content = $body . " " . $conclusion;
+            }            
 
-    //         $obj->update(["content" => $content]);
-    //     }
-    // }
+            $obj->update(["content" => $content]);
+        }
+    }
     
     // public function searchConsole(Request $request){
     //     $fromDate = date('Y-m-d', strtotime('-3 months'));

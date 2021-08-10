@@ -25,7 +25,8 @@
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/features/charts/apexcharts.js?v=7.0.5"></script>
-<script src="{{ asset('js/loyalty/loyalty.js') }}"></script>
+<!-- <script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/widgets.js"></script> -->
+
 
 <script src="{{  asset('js/codemirror/lib/codemirror.js') }}"></script>
 <script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
@@ -139,10 +140,14 @@
 <!-- Lightbox Plugin -->
 <script src="{{ asset('plugins/lightbox2/dist/js/lightbox.min.js/lightbox.js') }}"></script>
 
+<!-- Loyalty Js -->
+<script src="{{ asset('js/loyalty/loyalty.js') }}"></script>
+
 <!-- Blog Js -->
 <script src="{{ asset('js/Blog/blog.js') }}"></script> 
 
-
+<!-- Statistics Js -->
+<script src="{{ asset('js/statistics/statistics.js') }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>

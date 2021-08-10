@@ -1,5 +1,6 @@
 <x-dynamic-component :component="$componentName" class="mt-4" >
 
+
 	<div class="row">
 		<div class="col-12 col-md-8">
 
@@ -322,7 +323,7 @@
 								</div>
 								<!--end::Stats-->
 								<!--begin::Chart-->
-								<div id="kt_tiles_widget_5_chart" class="card-rounded-bottom" style="height: 50px"></div>
+								<div id="admin_page_chart" class="card-rounded-bottom" style="height: 50px"></div>
 								<!--end::Chart-->
 							</div>
 							<!--end::Body-->

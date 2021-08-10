@@ -18,12 +18,7 @@
             </form>
         </div>
     @else
-        @if(!empty($searchConsoleData))
-            @foreach($searchConsoleData as $key=>$value)
-                {{ ddd($searchConsoleData) }}
-            @endforeach
-        @endif
-
+        <div id=""></div>
     @endif
 
     <!-- Script to copy to clipboard -->
