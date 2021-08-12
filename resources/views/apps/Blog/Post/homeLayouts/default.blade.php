@@ -9,6 +9,11 @@
             $ext = 'jpg';
         }
     @endphp
+
+    <!-- Blog URL Mapping - Direct/Indirect -->
+    @if(request()->get('client.blog_url'))
+        <input type="hidden" id="blogUrl" value="{{ request()->get('client.blog_url') }}">
+    @endif
         
     <!-- Hero Section -->
     <div class="position-relative">
