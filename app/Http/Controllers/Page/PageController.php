@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Blog\PostController;
+use App\Models\Blog\Post;
 
 class PageController extends Controller
 {
@@ -151,6 +152,13 @@ class PageController extends Controller
     	// get the url path excluding domain name
     	$slug = request()->path();
 
+         // Cached Post Data
+        $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
+        if(!$post){
+            // Retrieve specific record views
+            $post = Post::where("slug", $slug)->first();
+        }
+
 
     	// get the client id & domain
     	$client_id = request()->get('client.id');
@@ -183,7 +191,7 @@ class PageController extends Controller
             return app($controller_path)->$method($request);
 
         } 
-        else if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+        else if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct' && !empty($post)){
             return app()->call(
                 ('App\Http\Controllers\Blog\PostController@show'), ['slug' => $slug, 'blog_url' => 'direct']
             );
@@ -192,8 +200,6 @@ class PageController extends Controller
         //     ddd($client_settings->redirect[0]);
         // }
         else{
-
-            
             if(request()->get('refresh')){
                 Cache::forget('page_'.$domain.'_'.$theme_id.'_'.$slug);
             }

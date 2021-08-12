@@ -1,47 +1,6 @@
 $(document).ready(function () {
-    let content = $("#post_editor").summernote("code");
-    if (content) {
-        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-        let urls = content.match(urlRegex);
-
-        let internalLinks = {};
-        let externalLinks = {};
-
-        let baseUrl = window.location.origin;
-        urls.forEach((url) => {
-            url = url.replace(/['"]+/g, "");
-            let u = new URL(url);
-            if (u.origin == baseUrl) {
-                if (u.href in internalLinks) {
-                    internalLinks[u.href] += 1;
-                } else {
-                    internalLinks[u.href] = 1;
-                }
-            } else {
-                if (u.href in externalLinks) {
-                    externalLinks[u.href] += 1;
-                } else {
-                    externalLinks[u.href] = 1;
-                }
-            }
-        });
-
-        for (let link in internalLinks) {
-            document.getElementById("internalLinks").innerHTML +=
-                "<p class='d-block m-0 mb-1'>" + link + "</p>";
-
-            document.getElementById("internalLinksCount").innerHTML +=
-                "<p class='d-block m-0 mb-1'>" + internalLinks[link] + "</p>";
-        }
-
-        for (let link in externalLinks) {
-            document.getElementById("externalLinks").innerHTML +=
-                "<p class='d-block m-0 mb-1'>" + link + "</p>";
-
-            document.getElementById("externalLinksCount").innerHTML +=
-                "<p class='d-block m-0 mb-1'>" + externalLinks[link] + "</p>";
-        }
-    }
+    // Get internal and external links
+    blogLinks();    
 });
 
 // Delete Image
@@ -115,5 +74,51 @@ function createSlugAndMetaTitle() {
 
     if (document.getElementById("meta_title")) {
         document.getElementById("meta_title").innerHTML = title;
+    }
+}
+
+function blogLinks(){
+    let content = $("#post_editor").summernote("code");
+    if (content) {
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        let urls = content.match(urlRegex);
+
+        let internalLinks = {};
+        let externalLinks = {};
+
+        let baseUrl = window.location.origin;
+        urls.forEach((url) => {
+            url = url.replace(/['"]+/g, "");
+            let u = new URL(url);
+            if (u.origin == baseUrl) {
+                if (u.href in internalLinks) {
+                    internalLinks[u.href] += 1;
+                } else {
+                    internalLinks[u.href] = 1;
+                }
+            } else {
+                if (u.href in externalLinks) {
+                    externalLinks[u.href] += 1;
+                } else {
+                    externalLinks[u.href] = 1;
+                }
+            }
+        });
+
+        for (let link in internalLinks) {
+            document.getElementById("internalLinks").innerHTML +=
+                "<p class='d-block m-0 mb-1'>" + link + "</p>";
+
+            document.getElementById("internalLinksCount").innerHTML +=
+                "<p class='d-block m-0 mb-1'>" + internalLinks[link] + "</p>";
+        }
+
+        for (let link in externalLinks) {
+            document.getElementById("externalLinks").innerHTML +=
+                "<p class='d-block m-0 mb-1'>" + link + "</p>";
+
+            document.getElementById("externalLinksCount").innerHTML +=
+                "<p class='d-block m-0 mb-1'>" + externalLinks[link] + "</p>";
+        }
     }
 }
