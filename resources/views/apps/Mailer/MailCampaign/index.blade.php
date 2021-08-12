@@ -18,21 +18,31 @@
 	  <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
 	@endif
 	<!--end::Alert-->
-
     <!-- Actions -->
-    <div class="d-flex justify-content-between align-items-center bg-white p-5 rounded shadow-sm mb-3">
-        <div>
+    <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-success">
+        <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
+            <div class="d-flex flex-column mr-2">
+            <a href="#" class="h2 text-dark text-hover-primary mb-0">
             <h1 class="">{{ ucfirst($app->module) }}</h1>
             <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->count() }}</span> Records</h6>
-        </div>
-        <div class="d-flex align-items-center">
+            </a> 
+            </div>
+            <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
+            <div class="d-flex align-items-center">
+            <a href="{{ route('MailLog.index') }}" class="btn btn-light-danger font-weight-bold ml-lg-2">Mail Logs</a>
+            <a href="{{ route('MailSubscriber.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Subscribers</a>
+            <a href="{{ route('MailTemplate.index') }}" class="btn btn-light-warning font-weight-bold ml-lg-2">Templates</a>
             <form action="{{ route($app->module.'.index') }}" method="GET">
-                <input type="text" name="query" class="form-control" placeholder="Search..">
+                <input type="text" name="query" class="form-control ml-1" placeholder="Search..">
             </form>
             <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
-    <!-- End Actions -->
+  <!-- End Actions -->
 
     <div class="bg-white p-3 rounded-lg shadow">
         <!-- Table -->
@@ -103,6 +113,7 @@
                         <!-- End Confirm Delete Modal -->
             @endforeach
         </table>   
+        {{ $objs->links() }}
     </div>
 
 </x-dynamic-component>

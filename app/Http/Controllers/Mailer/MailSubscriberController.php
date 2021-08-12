@@ -27,16 +27,16 @@ class MailSubscriberController extends Controller
     {   
         
 
-        if($request->input('item'))
+        if($request->input('query'))
         {
             // check for search string
-            $query = $request->input('item');
+            $query = $request->input('query');
             //ddd($query);
-            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->get(); 
+            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->all();
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');

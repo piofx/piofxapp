@@ -49,6 +49,7 @@ class SendEmail implements ShouldQueue
         else
         {
             $obj->status = 2;
+            $obj->save();
         }
     }
 }

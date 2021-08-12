@@ -29,11 +29,11 @@ class MailTemplateController extends Controller
             // check for search string
             $query = $request->input('query');
             //ddd($query);
-            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->get(); 
+            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->all();
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');

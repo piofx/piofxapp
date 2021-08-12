@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Mailer\MailCampaign;
 use App\Models\Mailer\MailTemplate;
-
+use App\Models\Core\Client;
 class MailLog extends Model
 {
     use HasFactory;
@@ -31,6 +31,11 @@ class MailLog extends Model
     public function mail_campaign()
     {
         return $this->belongsTo(MailCampaign::class,'reference_id');
+    }
+
+    public function mail_client()
+    {
+        return $this->belongsTo(Client::class);
     }
     
 
