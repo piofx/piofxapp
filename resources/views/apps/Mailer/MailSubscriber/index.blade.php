@@ -23,7 +23,7 @@
       <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
         <div class="d-flex flex-column mr-2">
           <a href="#" class="h2 text-dark text-hover-primary mb-0">
-          <h1 class="">Subscribers</h1>
+          <h1 class="">Mail Subscribers</h1>
           <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->count() }}</span> Records</h6>
           </a> 
         </div>
