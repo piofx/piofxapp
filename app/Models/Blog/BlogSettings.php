@@ -28,7 +28,7 @@ class BlogSettings extends Model
                 ), JSON_PRETTY_PRINT);
                 Storage::disk("s3")->put($settingsfilename, $settings);
             }
-            $settings = json_decode(Storage::disk("s3")->get($settingsfilename));
+            $settings = json_decode(Storage::disk("s3")->get($settingsfilename), true);
         }
         else{
             // Default Settings
@@ -65,7 +65,7 @@ class BlogSettings extends Model
                     ],
             ), JSON_PRETTY_PRINT);
             Storage::disk("s3")->put($settingsfilename, $settings);
-            $settings = json_decode($settings);
+            $settings = json_decode($settings, true);
         }
       
         return $settings;

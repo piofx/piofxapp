@@ -1,4 +1,9 @@
 <x-dynamic-component :component="$app->componentName">
+    <!--begin::Alert-->
+    @if($alert)
+        <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
+    @endif
+    <!--end::Alert-->
 
     <form action="{{ route($app->module.'.update') }}" method="POST">
         <div class="card rounded">

@@ -84,7 +84,6 @@
 											@endforeach
 										</div>
 									</div>
-						
 								@else
 									<div class="col-12 my-3">
 										<h2 class="font-weight-bold mb-3">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
