@@ -40,14 +40,15 @@ class ContactInfo extends Command
      */
     public function handle(Request $request)
     {   
-        \Log::info("working fine!");
+        $template = MailTemplate::where('name','contacts_update')->first();
         
-        //$request->merge(['reference_id'=> $obj->id])->merge(['app'=> $this->app])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message])->merge(['status'=> '0'])->merge(['email'=> $em])->merge(['agency_id'=> $obj->agency_id])->merge(['client_id'=> $obj->client_id]);
-        $template = MailTemplate::where('name','Admin Notification Mail')->first();
-        //\Log::info($template);
-         $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
-         
-        Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter')] , function($message) {
+        $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+        
+        $counter = $this->argument('counter');
+        if (str_contains($template->message, '{{$count}}')) { 
+           $template->message = str_replace('{{$count}}',$counter,$template->message);
+        }
+        Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
             $message->to($this->argument('email'));
             $message->subject('New Contacts');
         });

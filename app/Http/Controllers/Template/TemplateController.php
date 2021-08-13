@@ -73,7 +73,12 @@ class TemplateController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Obj $obj,Request $request,TemplateTag $tag)
-    {    
+    {   
+        //Validating the fields
+        $request->validate([
+        'name' => 'required|max:255',
+        'slug' => 'required',   
+         ]);
 
         $obj = $obj->create($request->all());
 

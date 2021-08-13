@@ -76,10 +76,14 @@ class MailTemplateController extends Controller
      */
     public function store(Obj $obj,Request $request)
     {       
-        //ddd($request);
+        $request->validate([
+            'name' => 'required|max:255',
+            'message' => 'required',
+            'slug' => 'required',       
+        ]); 
         $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['user_id'=> auth()->user()->id]);   
         $obj = $obj->create($request->all());
-        $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
+        $alert = 'A new Mail Template is created!';
         return redirect()->route($this->module.'.index')
                          ->with('alert',$alert);        
         
@@ -129,7 +133,7 @@ class MailTemplateController extends Controller
         $obj->update($request->all());
 
         // flash message and redirect to controller index page
-        $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$slug.') item is updated!';
+        $alert = 'Template updated!';
        
         //ddd($obj->template_category_id);
         return redirect()->route($this->module.'.index')->with('alert',$alert);
@@ -172,7 +176,7 @@ class MailTemplateController extends Controller
         $obj->delete();
 
         // flash message and redirect to controller index page
-        $alert = '('.$this->app.'/'.$this->module.'/'.$slug.') item  Successfully deleted!';
+        $alert = 'Template Successfully deleted!';
         return redirect()->route($this->module.'.index')->with('alert',$alert);
     }
 

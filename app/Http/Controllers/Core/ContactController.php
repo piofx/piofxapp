@@ -97,7 +97,7 @@ class ContactController extends Controller
         $form = $prefix = $suffix = null;
         if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' )){
             //open the client specific settings
-            $data = json_decode(json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ),true));
+            $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ),true);
 
             //get form fields based on category
             if(request()->get('category')){
@@ -219,10 +219,10 @@ class ContactController extends Controller
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
             {   
                 //Fletching the template 
-                $template = MailTemplate::where('name','Admin Notification Mail')->first();
+                $template = MailTemplate::where('name','contacts_update')->first();
                 //open the client specific settings
                 $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
-                $data = json_decode($data);
+                //$data = json_decode($data);
                 if($template != NULL)
                 {
                     if ($data->digest == 'rightaway')
@@ -230,6 +230,7 @@ class ContactController extends Controller
                             $details = array('name' => $obj->name ,'email' => $obj->email , 'message' => $obj->message , 'content'=>$template->message);
                             $counter = 1;
                             //dispatching the job
+                            ddd($details);
                             NotifyAdmin::dispatch($details,$counter);
                         }
                 }

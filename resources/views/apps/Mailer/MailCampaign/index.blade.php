@@ -1,5 +1,4 @@
 <x-dynamic-component :component="$app->componentName">
-
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
         <li class="breadcrumb-item">
@@ -46,6 +45,11 @@
 
     <div class="bg-white p-3 rounded-lg shadow">
         <!-- Table -->
+        @if($objs->count() == 0)
+                <div class="card card-body bg-white">
+                    <h4 class="bg-light p-5 border broder-rounded text-center text-danger">No items found</h4>
+                </div>
+        @else
         <table class="table table-borderless bg-white">
             <tr class="border-bottom">
                 <th scope="col" class="p-3">#</th>
@@ -58,15 +62,15 @@
                 <th scope="col" class="p-3">Created At</th>
                 <th scope="col" class="p-3 text-secondary font-weight-bolder text-center">Actions</th>
             </tr>
-            <?php $i = 1; ?>
-            @foreach($objs as $obj)
+            
+            @foreach($objs as $key => $obj)
                 <tr class="border-bottom">
-                    <td class="px-3 align-middle font-weight-bolder">{{$i++}}</td>
+                    <td class="px-3 align-middle font-weight-bolder">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</td>
                     <td class="px-3 align-middle">{{ $obj->name }}</td>
                     <td class="px-3 align-middle">@if($obj->description) {{ $obj->description }}  @endif</td> 
                     <td class="px-3 align-middle">{{ $obj->emails }}</td>
                     <td class="px-3 align-middle">{{ $obj->scheduled_at }}</td>
-                    <td class="px-3 align-middle">{{ $obj->mail_template->name}}</td>
+                    <td class="px-3 align-middle">@if($obj->mail_template){{ $obj->mail_template->name}} @endif</td>
                     <td class="px-3 align-middle"><span class="label label-lg font-weight-bold label-inline {{ $obj->status == 1 ? 'label-light-success' : 'label-light-danger' }}">{{ $obj->status == 1 ? "Active" : "Inactive" }}</span></td>
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">  
@@ -112,6 +116,7 @@
                         </div>
                         <!-- End Confirm Delete Modal -->
             @endforeach
+        @endif
         </table>   
         {{ $objs->links() }}
     </div>

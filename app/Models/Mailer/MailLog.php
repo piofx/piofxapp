@@ -33,10 +33,6 @@ class MailLog extends Model
         return $this->belongsTo(MailCampaign::class,'reference_id');
     }
 
-    public function mail_client()
-    {
-        return $this->belongsTo(Client::class);
-    }
     
 
 }

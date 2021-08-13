@@ -31,17 +31,18 @@ class SendWelcomeEmail
     {
         $request = $event->request;
         $user = $event->user;
-        $template = MailTemplate::where('name','Welcome Mail')->first();
+        //ddd($user);
+        $template = MailTemplate::where('name','subscriber_update')->first();
         if($template != NULL)
         {
             $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['status'=> 1 ])->merge(['mail_template_id' => $template->id])->merge(['mail_template_id' => $template->id])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message]);
             $log = MailLog::create($request->all());
-
-            $data = array('name'=>$user->name, 'email'=>$user->email , 'content'=>$template->message);
-            Mail::send('apps.Mailer.MailView.newuser' , $data, function($message) use ($user) {
+            
+            $data = array('name'=>$user->info, 'email'=>$user->email , 'content'=>$template->message);
+            Mail::send('apps.Mailer.MailView.newSubscriber' , $data, function($message) use ($user) {
                 $message->to('piofxdev3@gmail.com');
                 $message->subject('New User Registered');
             });
-       }
+        }
     }
 }

@@ -1,5 +1,6 @@
-
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
+  <!-- Validation Errors -->
+  <x-auth-validation-errors class="mb-4" :errors="$errors" />
   <!--begin::Alert-->
   @if($alert)
     <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
@@ -33,7 +34,7 @@
       <div class="col-12 col-md-6">
         <div class="js-form-message form-group mb-4">
             <label for="emailAddressExample2" class="input-label">Email address</label>
-            <input type="email" class="form-control" name="email" id="emailAddressExample2" placeholder="alexhecker@pixeel.com" aria-label="alexhecker@pixeel.com" required
+            <input type="email" class="form-control" name="email" id="emailAddressExample2" placeholder="alexhecker@pixeel.com" aria-label="alexhecker@pixeel.com"
                    data-msg="Please enter a valid email address." value="@if(isset($obj->email)) {{$obj->email}} @endif">
           </div>
 

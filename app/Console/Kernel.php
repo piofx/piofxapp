@@ -49,6 +49,13 @@ class Kernel extends ConsoleKernel
             {   
                 if ($data->digest == 'daily')
                 {   
+                    $contact = Contact::whereDate('created_at', '>', Carbon::now()->subMinutes(1)->toDateTimeString())->get()->where('client_id',$k);
+                    print_r($contact);
+                    $counter = count($contacts);  
+                    $schedule->command('ContactInfo',[$counter,$email,$client_id,$agency_id])->everyMinute();
+                }
+                else if ($data->digest == 'rightaway')
+                {   
                     $contacts = Contact::whereDate('created_at', Carbon::today())->get()->where('client_id',$k);
                     $counter = count($contacts);  
                     $schedule->command('ContactInfo',[$counter,$email,$client_id,$agency_id])->daily();

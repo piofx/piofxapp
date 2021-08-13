@@ -1,4 +1,6 @@
 <x-dynamic-component :component="$app->componentName">
+  <!-- Validation Errors -->
+  <x-auth-validation-errors class="mb-4" :errors="$errors" />
   <div class="container my-5 p-5 rounded-lg bg-white shadow-sm">
     @if($stub == "create")
     <form method="POST" action="{{ route($app->module.'.store') }}">

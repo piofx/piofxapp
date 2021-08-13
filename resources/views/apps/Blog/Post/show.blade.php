@@ -741,7 +741,7 @@
                 @endif
                 <!-- End Ad Section -->
             </div>
-            @endif
+            
         </div>
 
         <!-- Ad -->
