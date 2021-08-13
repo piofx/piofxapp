@@ -333,13 +333,29 @@ if (! function_exists('blog_image_upload')) {
 				$settings = json_encode($settings, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES);
 			}
 			else if($data['mode'] == 'dev'){
-				$settings = json_encode(json_decode($data['settings']), JSON_PRETTY_PRINT);
-				$settings = str_replace("\r", "", $settings);
-				$settings = str_replace("\t", "", $settings);
+				if(validJson($data['settings'])){
+					$settings = json_encode(json_decode($data['settings']), JSON_PRETTY_PRINT);
+					$settings = str_replace("\r", "", $settings);
+					$settings = str_replace("\t", "", $settings);
+				}
+				else{
+					return 0;
+				}
 			}
 
 			return $settings;
+		}
+	}
 
+	if(!function_exists("validJson")){
+		function validJson($encodedData){
+			// Decode the data and if it is null, then Json in invalid
+			$data = json_decode($encodedData);
+			if(is_null($data)){
+				return 0;
+			}else{
+				return 1;
+			}
 		}
 	}
 

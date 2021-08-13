@@ -164,7 +164,6 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('edit', $obj);
 
-
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('stub','Update')
@@ -172,7 +171,7 @@ class ClientController extends Controller
                 ->with('editor', $editor)
                 ->with('alert',$alert)
                 ->with('app',$this)
-                ->with('settings', json_decode($obj->settings));
+                ->with('settings', json_decode($obj->settings, true));
         else
             abort(404);
     }
@@ -198,7 +197,13 @@ class ClientController extends Controller
             
             // Send data to helper and update client settings
             $settings = dev_normal_mode($request->all()); 
-            $obj->update(['settings' => $settings]);
+            if($settings){
+                $obj->update(['settings' => $settings]);
+            }
+            else{
+                $alert = 'JSON is invalid, Please try again';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
 
             //reload cache and session data
             $obj->refreshCache();
@@ -208,8 +213,8 @@ class ClientController extends Controller
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
             if($error_code == 1062){
-                 $alert = 'Some error in updating the record';
-                 return redirect()->back()->withInput()->with('alert',$alert);
+                $alert = 'Some error in updating the record';
+                return redirect()->back()->withInput()->with('alert',$alert);
             }
         }
     }
