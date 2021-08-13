@@ -70,7 +70,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
-                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                         <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                     </div>
                                                 </div>
@@ -79,7 +79,7 @@
                                         @endif
                                     @else
                                         <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                             @if($post->excerpt)
                                                 <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
                                             @else
@@ -132,7 +132,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
-                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                         <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                     </div>
                                                 </div>
@@ -141,7 +141,7 @@
                                         @endif
                                     @else
                                         <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                             @if($post->excerpt)
                                                 <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                             @else
@@ -447,7 +447,7 @@
                                                                 @endif
                                                             </div>
                                                             <div class="col-8 pl-0">
-                                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                                 <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                             </div>
                                                         </div>
@@ -510,7 +510,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
@@ -519,7 +519,7 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                         @if($post->excerpt)
                                             <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
                                         @else
@@ -572,7 +572,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
@@ -581,7 +581,7 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                         @if($post->excerpt)
                                             <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                         @else
@@ -640,7 +640,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
@@ -649,7 +649,7 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                         @if($post->excerpt)
                                             <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
                                         @else
@@ -702,7 +702,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
@@ -711,7 +711,7 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                         @if($post->excerpt)
                                             <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                         @else

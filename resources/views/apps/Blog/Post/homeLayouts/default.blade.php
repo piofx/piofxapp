@@ -1,19 +1,4 @@
 <x-dynamic-component :component="$app->componentName">
-
-    <!-- Check if browser supports webP format for images -->
-    @php
-        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
-            $ext = 'webp';
-        }
-        else{
-            $ext = 'jpg';
-        }
-    @endphp
-
-    <!-- Blog URL Mapping - Direct/Indirect -->
-    @if(request()->get('client.blog_url'))
-        <input type="hidden" id="blogUrl" value="{{ request()->get('client.blog_url') }}">
-    @endif
         
     <!-- Hero Section -->
     <div class="position-relative">
@@ -63,7 +48,7 @@
                                                 data-hs-slick-carousel-animation-delay="150" class="text-light">{{ $content }}...</p>
                                                 @endif                  
                                             </div>
-                                            <a class="btn btn-primary btn-sm transition-3d-hover" href="{{ route($app->module.'.show', $f->slug) }}"
+                                            <a class="btn btn-primary btn-sm transition-3d-hover" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif"
                                             data-hs-slick-carousel-animation="fadeInUp" data-hs-slick-carousel-animation-delay="300">Read Article<i
                                             class="fas fa-angle-right fa-sm ml-1"></i></a>
                                         </div>
@@ -117,7 +102,7 @@
                                             <p data-hs-slick-carousel-animation="fadeInUp"
                                         data-hs-slick-carousel-animation-delay="150" class="text-light">{{ $content }}...</p>
                                         @endif                  </div>
-                                    <a class="btn btn-primary btn-sm transition-3d-hover" href="{{ route($app->module.'.show', $f->slug) }}"
+                                    <a class="btn btn-primary btn-sm transition-3d-hover" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif"
                                         data-hs-slick-carousel-animation="fadeInUp" data-hs-slick-carousel-animation-delay="300">Read Article<i
                                         class="fas fa-angle-right fa-sm ml-1"></i></a>
                                     </div>
@@ -205,7 +190,7 @@
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                                 </span>
                                             @endif
-                                            <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h3>
+                                            <h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$obj->slug}}@else{{ route($app->module.'.show', $obj->slug) }}@endif">{{$obj->title}}</a></h3>
                                             @if($obj->excerpt)
                                                 <p>{!! substr($obj->excerpt, 0, 200) !!}...</p>
                                             @else
@@ -223,7 +208,7 @@
                                                 @endif
                                             </div>
                                             <div>
-                                                <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                                <a href="@if(!empty($route)){{ $route.'/'.$obj->slug}}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +222,7 @@
                                         <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                         </span>
                                     @endif
-                                    <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h3>
+                                    <h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$obj->slug}}@else{{ route($app->module.'.show', $obj->slug) }}@endif">{{$obj->title}}</a></h3>
                                     @if($obj->excerpt)
                                         <p>{!! $obj->excerpt !!}...</p>
                                     @else
@@ -255,7 +240,7 @@
                                         @endif
                                     </div>
                                     <div>
-                                        <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                        <a href="@if(!empty($route)){{ $route.'/'.$obj->slug}}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                     </div>
                                 </div>
                             </div>
@@ -356,7 +341,7 @@
                                                 @endif
                                             </div>
                                             <div class="col-8 pl-0">
-                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                 <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                             </div>
                                         </div>
@@ -365,7 +350,7 @@
                                 @endif
                             @else
                                 <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h5>
+                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                     @if($post->excerpt)
                                         <p>{!! substr($post->excerpt, 0, 50) !!}...</p>
                                     @else

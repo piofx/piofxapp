@@ -18,17 +18,17 @@
 	<div class="container space-1 space-lg-2">
 		<div class="row justify-content-lg-between">
 			<div class="col-lg-8">
-			<!-- Ad -->
-			<div class="mb-3">
-								@if(!empty($settings->ads))
-										@foreach($settings->ads as $ad)
-												@if($ad->position == 'before-content')
-														{!! $ad->content !!}
-												@endif
-										@endforeach
-								@endif
-						</div>
-						<!-- End Ad Section -->  
+				<!-- Ad -->
+				<div class="mb-3">
+						@if(!empty($settings->ads))
+								@foreach($settings->ads as $ad)
+										@if($ad->position == 'before-content')
+												{!! $ad->content !!}
+										@endif
+								@endforeach
+						@endif
+				</div>
+				<!-- End Ad Section -->  
 				@if($posts->count() > 0)
 					@foreach($posts as $post)
 						@if($post->status != 0)
@@ -42,8 +42,8 @@
 																$path = explode(".", $path[1]);
 																$path = $path[0];
 														@endphp
-														@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-																<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+														@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+																<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
 														@else
 																<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
 														@endif                        
@@ -55,7 +55,7 @@
 																		<a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
 																		</span>
 																@endif
-																<h3><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{$post->title}}</a></h3>
+																<h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">{{$post->title}}</a></h3>
 																@if($post->excerpt)
 																		<p>{{ substr($post->excerpt, 0, 200) }}...</p>
 																@else
@@ -73,7 +73,7 @@
 																		@endif
 																</div>
 																<div>
-																		<a href="{{ route('Post.show', $post->slug) }}" class="btn btn-sm btn-primary">Continue Reading</a>
+																		<a href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif" class="btn btn-sm btn-primary">Continue Reading</a>
 																</div>
 														</div>
 												</div>
@@ -87,7 +87,7 @@
 														<a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
 														</span>
 												@endif
-												<h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{$post->title}}</a></h3>
+												<h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">{{$post->title}}</a></h3>
 												@if($post->excerpt)
 														<p>{{ substr($post->excerpt, 0, 200) }}...</p>
 												@else
@@ -105,7 +105,7 @@
 														@endif
 												</div>
 												<div>
-														<a href="{{ route($app->module.'.show', $post->slug) }}" class="btn btn-sm btn-primary">Continue Reading</a>
+														<a href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif" class="btn btn-sm btn-primary">Continue Reading</a>
 												</div>
 										</div>
 								</div>
@@ -211,14 +211,14 @@
 																				$path = explode(".", $path[1]);
 																				$path = $path[0];
 																		@endphp
-																		@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-																				<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+																		@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+																				<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
 																		@else
 																				<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
 																		@endif
 																</div>
 																<div class="col-8 pl-0">
-																		<h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{ $post->title }}</a></h6>
+																		<h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
 																		<p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
 																</div>
 														</div>
@@ -227,7 +227,7 @@
 										@endif
 								@else
 										<div class="bg-soft-danger p-3 rounded-lg mb-3">
-												<h5 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route('Post.show', $post->slug) }}">{{ $post->title }}</a></h5>
+												<h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
 												@if($post->excerpt)
 														<p>{{ substr($post->excerpt, 0, 50) }}...</p>
 												@else

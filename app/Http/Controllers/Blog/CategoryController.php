@@ -122,18 +122,36 @@ class CategoryController extends Controller
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
 
-      // change the componentname from admin to client 
-      $this->componentName = componentName('client');
-              
-      return view("apps.".$this->app.".".$this->module.".show")
-              ->with("app", $this)
-              ->with("objs", $objs)
-              ->with("category", $category)
-              ->with("posts", $posts)
-              ->with("tags", $tags)
-              ->with("featured", $featured)
-              ->with("popular", $popular)
-              ->with("settings", $settings);
+        // Check if blog url is given as direct in client settings and modify urls accrdingly
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $route = url('/');
+        }
+
+        // Check if browser supports WebP format for images
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $ext = 'jpg';
+        }
+
+        // change the componentname from admin to client 
+        $this->componentName = componentName('client');
+                
+        return view("apps.".$this->app.".".$this->module.".show")
+                ->with("app", $this)
+                ->with("objs", $objs)
+                ->with("category", $category)
+                ->with("posts", $posts)
+                ->with("tags", $tags)
+                ->with("featured", $featured)
+                ->with("popular", $popular)
+                ->with("settings", $settings)
+                ->with("ext", $ext)
+                ->with("route", $route);
     }
 
     public function create(Obj $obj)

@@ -1,15 +1,5 @@
 <x-dynamic-component :component="$app->componentName">
 
-    <!-- Check if browser supports webP format for images -->
-    @php
-        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
-            $ext = 'webp';
-        }
-        else{
-            $webp = false;
-        }
-    @endphp
-
     <div class="container space-top-3">
 
         <!-- Ad -->
@@ -23,15 +13,6 @@
             @endif
         </div>
         <!-- End Ad Section -->
-
-       <!-- <div class="border d-flex justify-content-start">
-            <h5 class="bg-danger text-white m-0 px-3 py-2">Breaking</h5>
-            <div id="marquee-parent" class="pl-2" style="position:relative; overflow:hidden;">
-                <div id="marquee-child">
-                    Hover on me to stop
-                </div>
-            </div>
-       </div> -->
 
         <!-- Hero Section -->
         @if(!empty($featured))
@@ -64,7 +45,7 @@
                                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                                 </span>
                                                             @endif
-                                                            <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $f->slug) }}">{{$f->title}}</a></h3>
+                                                            <h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif">{{$f->title}}</a></h3>
 
                                                             @if($f->excerpt)
                                                                 <p>{!! substr($f->excerpt, 0, 200) !!}...</p>
@@ -76,7 +57,7 @@
                                                                 <p>{{ $content }}...</p>
                                                             @endif
                                                             <div>
-                                                                <a href="{{ route($app->module.'.show', $f->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                                                <a href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                                             </div>
                                                         </div>
                                                     </article>
@@ -103,7 +84,7 @@
                                                                 @endforeach
                                                                 @endif
                                                             </div>
-                                                            <a href="{{ route($app->module.'.show', $f->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                                            <a href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                                         </div>
                                                     </article>
                                                 @endif
@@ -144,7 +125,7 @@
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                 </span>
                                             @endif
-                                            <h5><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $f->slug) }}">{{$f->title}}</a></h5>
+                                            <h5><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif">{{$f->title}}</a></h5>
                                         </div>
                                     </article>
                                 @endif 
@@ -174,7 +155,7 @@
                                                         <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                     </span>
                                                 @endif
-                                                <h3><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $f->slug) }}">{{$f->title}}</a></h3>
+                                                <h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif">{{$f->title}}</a></h3>
 
                                                 @if($f->excerpt)
                                                     <p>{!! substr($f->excerpt, 0, 200) !!}...</p>
@@ -186,7 +167,7 @@
                                                     <p>{{ $content }}...</p>
                                                 @endif
                                                 <div>
-                                                    <a href="{{ route($app->module.'.show', $f->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                                    <a href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                                 </div>
                                             </div>
                                         </article>
@@ -213,7 +194,7 @@
                                                     @endforeach
                                                     @endif
                                                 </div>
-                                                <a href="{{ route($app->module.'.show', $f->slug) }}" class="btn@ btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                                <a href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif" class="btn@ btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                                             </div>
                                         </article>
                                     @endif
@@ -245,7 +226,7 @@
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                 </span>
                                             @endif
-                                            <h5><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $f->slug) }}">{{$f->title}}</a></h5>
+                                            <h5><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$f->slug }}@else{{ route($app->module.'.show', $f->slug) }}@endif">{{$f->title}}</a></h5>
                                         </div>
                                     </article>
                                 @endif 
@@ -300,7 +281,7 @@
                                                                     <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                                                 @endif
                                                                 <div class="card-body">
-                                                                    <h5><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $obj->slug) }}">{{$obj->title}}</a></h5>
+                                                                    <h5><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif">{{$obj->title}}</a></h5>
                                                                     <div class="mb-3">
                                                                         @if(!empty($tags))
                                                                             @foreach($tags as $tag)
@@ -338,7 +319,7 @@
                                                 @foreach($category->posts->take(5) as $k => $obj)
                                                     @if($obj->status != 0)
                                                         @if($k != 0)
-                                                            <li class="my-3 h5 text-dark"><a href="{{ route($app->module.'.show', $obj->slug) }}" class="text-muted" >{{ $obj->title }}</a></li>
+                                                            <li class="my-3 h5 text-dark"><a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="text-muted" >{{ $obj->title }}</a></li>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -419,7 +400,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
+                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
@@ -428,7 +409,7 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg rounded-3 mb-3">
-                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h5>
+                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                         @if($post->excerpt)
                                             <p>{!! substr($post->excerpt, 0, 50) !!}...</p>
                                         @else
