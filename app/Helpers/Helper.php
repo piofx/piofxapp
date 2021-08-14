@@ -334,7 +334,7 @@ if (! function_exists('blog_image_upload')) {
 			}
 			else if($data['mode'] == 'dev'){
 				if(validJson($data['settings'])){
-					$settings = json_encode(json_decode($data['settings']), JSON_PRETTY_PRINT);
+					$settings = json_encode(json_decode($data['settings']), JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES);
 					$settings = str_replace("\r", "", $settings);
 					$settings = str_replace("\t", "", $settings);
 				}

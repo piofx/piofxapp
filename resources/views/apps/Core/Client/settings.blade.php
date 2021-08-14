@@ -13,7 +13,6 @@
 	</ul>
 	<!--end::Breadcrumb-->
 
-
 	<!--begin::Alert-->
 	@if(isset($alert))
 		<x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
@@ -78,13 +77,14 @@
 											<div class="col-12 my-3">
 												<h2 class="font-weight-bold">{{ $k }}</h2>
 												<div class="bg-white p-5 rounded-lg">
-													@foreach($setting as $k => $v)
+													@foreach($setting as $key => $v)
 														<div class="row">
 															<div class="col-12 col-lg-2 d-flex align-items-center mt-2 mb-0 mb-lg-2">
-																<h5 class="m-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
+																<h5 class="m-0">{{ ucwords(str_replace('_', ' ', $key)) }}</h5>
 															</div>
 															<div class="col-12 col-lg-10 my-2">
-																<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $v }}">
+																<input type="text" hidden name="settings-array-{{$key}}-0-key[]" class="form-control" value="{{ $key }}">
+																<input type="text" name="settings-array-{{$key}}-0-value[]" class="form-control" value="{{ $v }}">
 															</div>
 														</div>
 													@endforeach
@@ -121,7 +121,7 @@
 			@else
 				<div class="mt-5">
 					<div id="content" style="min-height: 800px"></div>
-					<textarea id="content_editor" class="form-control border d-none" name="settings" rows="5">@if($stub=='Create'){{ (old('settings')) ? old('settings') : '' }}@else{{ json_encode(json_decode($obj->settings),JSON_PRETTY_PRINT) }}@endif</textarea>
+					<textarea id="content_editor" class="form-control border d-none" name="settings" rows="5">@if($stub=='Create'){{ (old('settings')) ? old('settings') : '' }}@else{{ json_encode(json_decode($obj->settings),JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES) }}@endif</textarea>
 				</div>
 
 				<input type="hidden" name="mode" value="dev">
