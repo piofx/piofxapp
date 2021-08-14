@@ -244,6 +244,8 @@ class ContactController extends Controller
                             // $content = $template->message;
                             //dispatching the job
                             //ddd($details);
+                            $template = MailTemplate::where('name','contacts_update')->first();
+                            
                             $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
 
                             $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email_To' => $email_to ,'log_id' => $maillog->id );

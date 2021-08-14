@@ -19,7 +19,7 @@ class MailTemplateSeeder extends Seeder
             'agency_id' => '1',
             'client_id' => '1',
             'user_id' => '1',
-            'name' => 'template1',
+            'name' => 'contacts_update',
             'slug' => 'slug1',
             'subject' => 'some sample subject',
             'message' => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -330,8 +330,8 @@ class MailTemplateSeeder extends Seeder
                                             <div class="contentEditable" align="left">
                                               <p>
                                                 Hi ,
-                                                {{ $count }}
-                                                people subscribed!!
+                                                {{$count}}
+                                                Contact Responses have been submitted!!
                                                 <br />
                                                 <br />
                                                 Click on the link below to update your
@@ -585,7 +585,7 @@ class MailTemplateSeeder extends Seeder
             'agency_id' => '1',
             'client_id' => '1',
             'user_id' => '1',
-            'name' => 'template2',
+            'name' => 'subscriber_update',
             'slug' => 'slug2',
             'subject' => 'some sample subject',
             'message' => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -1075,8 +1075,7 @@ class MailTemplateSeeder extends Seeder
                                             class="contentEditable"
                                           >
                                             <p>
-                                              Happy Holidays<br />
-                                              from everyone at [CLIENTS.COMPANY_NAME]!
+                                              Hii {{$name}} Subscribed!!<br />
                                             </p>
                                           </div>
                                         </div>
