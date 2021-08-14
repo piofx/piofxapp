@@ -46,6 +46,10 @@
 					@if(!empty($settings))
 						<div class="">
 							@php
+								function isAssoc(array $array) {
+									return count(array_filter(array_keys($array), 'is_string')) > 0;
+								}
+
 								function print_data($setting_array, $key){
 									$id = 0;
 									foreach($setting_array as $t => $data){
@@ -70,18 +74,38 @@
 							<div class="row mb-3">
 								@foreach($settings as $k => $setting)
 									@if(is_array($setting))
-										<div class="col-12 bg-white p-5 rounded-lg my-3">
-											<h2 class="font-weight-bold mb-3 pl-2">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
-											{{ print_data($setting, $k) }}
-										</div>
+										@if(isAssoc($setting))
+											<div class="col-12 my-3">
+												<h2 class="font-weight-bold">{{ $k }}</h2>
+												<div class="bg-white p-5 rounded-lg">
+													@foreach($setting as $k => $v)
+														<div class="row">
+															<div class="col-12 col-lg-2 d-flex align-items-center mt-2 mb-0 mb-lg-2">
+																<h5 class="m-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
+															</div>
+															<div class="col-12 col-lg-10 my-2">
+																<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $v }}">
+															</div>
+														</div>
+													@endforeach
+												</div>
+											</div>
+										@else
+											<div class="col-12 my-3">
+												<h2 class="font-weight-bold mb-3">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
+												<div class="p-5 rounded-lg bg-white">
+													{{ print_data($setting, $k) }}
+												</div>
+											</div>
+										@endif
 									@else
 										@if($k != 'name')
-										<div class="col-12 col-lg-4">
-											<div class="form-group">
-												<label>{{ ucwords(str_replace('_', ' ', $k)) }}</label>
-												<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
+											<div class="col-12 col-lg-4">
+												<div class="form-group">
+													<label>{{ ucwords(str_replace('_', ' ', $k)) }}</label>
+													<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
+												</div>
 											</div>
-										</div>
 										@else
 											<input type="hidden" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
 										@endif

@@ -41,7 +41,7 @@ class SendWelcomeEmail
             $data = array('name'=>$user->info, 'email'=>$user->email , 'content'=>$template->message);
             Mail::send('apps.Mailer.MailView.newSubscriber' , $data, function($message) use ($user) {
                 $message->to('piofxdev3@gmail.com');
-                $message->subject('New User Registered');
+                $message->subject('New Subscriber');
             });
         }
     }

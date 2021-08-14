@@ -152,7 +152,7 @@ class PageController extends Controller
     	// get the url path excluding domain name
     	$slug = request()->path();
 
-         // Cached Post Data
+        // Cached Post Data
         $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
         if(!$post){
             // Retrieve specific record views
@@ -168,8 +168,6 @@ class PageController extends Controller
 
         $agency_settings = request()->get('agency.settings');
         $client_settings = json_decode(request()->get('client.settings'));
-
-        //dd($agency_settings);
 
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
@@ -196,14 +194,13 @@ class PageController extends Controller
                 ('App\Http\Controllers\Blog\PostController@show'), ['slug' => $slug, 'blog_url' => 'direct']
             );
         }
-        // else if(isset($client_settings->redirect)){
-        //     ddd($client_settings->redirect[0]);
-        // }
+        else if(isset($client_settings->redirect)){
+            ddd($client_settings->redirect);
+        }
         else{
             if(request()->get('refresh')){
                 Cache::forget('page_'.$domain.'_'.$theme_id.'_'.$slug);
             }
-
 
             $obj = null;
             // load the resource either from cache or storage for devmode

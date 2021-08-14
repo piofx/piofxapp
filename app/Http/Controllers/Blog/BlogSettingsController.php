@@ -33,9 +33,13 @@ class BlogSettingsController extends Controller
         // Retrieve Settings
         $settings = $settings->getSettings();
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
         return view("apps.".$this->app.".".$this->module.".index")
                 ->with("app", $this)
-                ->with("settings", $settings);
+                ->with("settings", $settings)
+                ->with("alert", $alert);
     }
 
     /**
@@ -82,9 +86,13 @@ class BlogSettingsController extends Controller
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
         $settings = Storage::disk("s3")->get($settingsfilename);
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
         return view("apps.".$this->app.".".$this->module.".createedit")
                 ->with("app", $this)
                 ->with("settings", $settings)
+                ->with("alert", $alert)
                 ->with("stub", "update");
     }
 
@@ -97,12 +105,10 @@ class BlogSettingsController extends Controller
      */
     public function update(Request $request)
     {
-        //ddd($request->all());
         $settings = array();
         $names = [];
         // Check if data is sent from normal mode or dev mode
         if($request->input('mode') == 'normal'){
-
             // Add the key and vales to settins array by checking if there is a nested array
             foreach($request->all() as $k => $value){
                 $keys = explode('-', $k);
@@ -142,13 +148,18 @@ class BlogSettingsController extends Controller
                 $settings[$name] = $temp;
             }
 
-            // ddd($settings);
             $settings = json_encode($settings, JSON_PRETTY_PRINT, JSON_UNESCAPED_SLASHES);
         }
         else{
-            $settings = $request->input('settings');
-            $settings = str_replace("\r", "", $settings);
-            $settings = str_replace("\t", "", $settings);
+            if(validJson($request->input('settings'))){
+                $settings = json_encode(json_decode($request->input('settings')), JSON_PRETTY_PRINT);
+                $settings = str_replace("\r", "", $settings);
+                $settings = str_replace("\t", "", $settings);
+            }
+            else{
+                $alert = 'JSON is invalid, Please try again';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
         }
 
         // Retrieve the settings data and redirect to settings index page

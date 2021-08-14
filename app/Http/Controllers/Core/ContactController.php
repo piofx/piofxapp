@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Core;
 use App\Models\Mailer\MailTemplate;
+use App\Models\Mailer\MailLog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Jobs\NotifyAdmin;
@@ -226,12 +227,29 @@ class ContactController extends Controller
                 if($template != NULL)
                 {
                     if ($data->digest == 'rightaway')
-                        {
-                            $details = array('name' => $obj->name ,'email' => $obj->email , 'message' => $obj->message , 'content'=>$template->message);
-                            $counter = 1;
+                        {   
+                            if($data->primary_email && $data->secondary_email)
+                            {
+                                $email_to = $data->secondary_email; 
+                            }
+                            elseif($data->primary_email)
+                            {
+                                $email_to = $data->primary_email;
+                            }
+                            elseif($data->secondary_email)
+                            {
+                                $email_to = $data->secondary_email;
+                            }
+                            // $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email_To' => $email_to);
+                            // $content = $template->message;
                             //dispatching the job
-                            ddd($details);
-                            NotifyAdmin::dispatch($details,$counter);
+                            //ddd($details);
+                            $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+
+                            $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email_To' => $email_to ,'log_id' => $maillog->id );
+                            $content = $template->message;
+
+                            NotifyAdmin::dispatch($details,$content);
                         }
                 }
             }
@@ -295,7 +313,13 @@ class ContactController extends Controller
                 $settings = dev_normal_mode($request->all());
             }
             else if($request->input('mode') == 'dev'){
-                $settings = json_encode(json_decode(str_replace(array("\n", "\r"), '', request()->get('settings'))), JSON_PRETTY_PRINT);
+                if(validJson(request()->get('settings'))){
+                    $settings = json_encode(json_decode(str_replace(array("\n", "\r"), '', request()->get('settings'))), JSON_PRETTY_PRINT);
+                }
+                else{
+                    $alert = 'JSON is invalid, Please try again';
+                    return redirect()->back()->withInput()->with('alert',$alert);
+                }
             }
             // Save settings in s3
             Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,$settings,'public');

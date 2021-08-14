@@ -37,8 +37,8 @@
                                             $path = explode(".", $path[1]);
                                             $path = $path[0];
                                         @endphp
-                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.jpg'))
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.jpg') }}">
+                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                         @else
                                             <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                         @endif
@@ -56,7 +56,7 @@
                                         <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
                                     @endforeach
                                 </div>
-                                <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
+                                <a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                             </div>
                         </div>
                     </div>

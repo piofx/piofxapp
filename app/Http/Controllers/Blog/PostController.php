@@ -136,6 +136,22 @@ class PostController extends Controller
             }
         }
         
+        // Check if blog url is given as direct in client settings and modify urls accrdingly
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $route = url('/');
+        }
+
+        // Check if browser supports WebP format for images
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $ext = 'jpg';
+        }
+
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
 
@@ -146,7 +162,9 @@ class PostController extends Controller
                 ->with("tags", $tags)
                 ->with("featured", $featured)
                 ->with("popular", $popular)
-                ->with("settings", $settings);
+                ->with("settings", $settings)
+                ->with("ext", $ext)
+                ->with("route", $route);
     }
 
     /**
@@ -281,11 +299,15 @@ class PostController extends Controller
      */
     public function show($slug, $blog_url=null)
     {
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
         if($blog_url != 'direct'){
-            $client_settings = json_decode(request()->get('client.settings'));
             if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
                 abort(404,'Page not found');
             }
+        }
+        else{
+            $route = url('/');
         }
 
         $obj = new Obj();
@@ -431,6 +453,14 @@ class PostController extends Controller
             }
         }
 
+        // Check if browser supports WebP format for images
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $ext = 'jpg';
+        }
+
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
         $alert = "";
@@ -443,8 +473,9 @@ class PostController extends Controller
                 ->with("related", $related)
                 ->with("postCategory", $postCategory)
                 ->with("postTags", $postTags)
-                ->with("obj", $obj)
-                ->with("alert", $alert);
+                ->with("route", $route)
+                ->with("ext", $ext)
+                ->with("obj", $obj);
     }
 
     /**
@@ -685,13 +716,31 @@ class PostController extends Controller
         // Retrieve posts which match the given title query
         $objs = $obj->whereIn("id", $post_ids)->where('status', 1)->with('category')->with('tags')->paginate(6);
 
+        // Check if blog url is given as direct in client settings and modify urls accrdingly
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $route = url('/');
+        }
+
+        // Check if browser supports WebP format for images
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $ext = 'jpg';
+        }
+
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
 
         return view("apps.".$this->app.".".$this->module.".search")
                 ->with("app", $this)
                 ->with("objs", $objs)
-                ->with("settings", $settings);
+                ->with("settings", $settings)
+                ->with("ext", $ext)
+                ->with("route", $route);
     }
 
     // List all Posts
@@ -775,6 +824,22 @@ class PostController extends Controller
             Cache::forever('blogSettings_'.request()->get('client.id'), $settings);
         }
 
+        // Check if blog url is given as direct in client settings and modify urls accrdingly
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $route = url('/');
+        }
+
+        // Check if browser supports WebP format for images
+        if( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ) {
+            $ext = 'webp';
+        }
+        else{
+            $ext = 'jpg';
+        }
+
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
 
@@ -782,7 +847,9 @@ class PostController extends Controller
                 ->with("app", $this)
                 ->with("author", $author)
                 ->with("objs", $objs)
-                ->with("settings", $settings);    
+                ->with("settings", $settings)
+                ->with("ext", $ext)
+                ->with("route", $route);    
     }
 
 
@@ -817,25 +884,25 @@ class PostController extends Controller
     }
 
     // Miscellenious
-    public function addContent(Obj $obj){
-        $objs = $obj->get();
-        foreach($objs as $obj){
-            $body = $obj->body;
-            $conclusion = $obj->conclusion;
+    // public function addContent(Obj $obj){
+    //     $objs = $obj->get();
+    //     foreach($objs as $obj){
+    //         $body = $obj->body;
+    //         $conclusion = $obj->conclusion;
 
-            if(!empty($obj->test)){
-                $test = '<div class=“my-4”>
-                            <div class="test-container ' . $obj->test . '" data-container="' . $obj->test . '" ></div>
-                        </div>';
-                $content = $body . " " .$test . " " . $conclusion;
-            }
-            else{
-                $content = $body . " " . $conclusion;
-            }            
+    //         if(!empty($obj->test)){
+    //             $test = '<div class=“my-4”>
+    //                         <div class="test-container ' . $obj->test . '" data-container="' . $obj->test . '" ></div>
+    //                     </div>';
+    //             $content = $body . " " .$test . " " . $conclusion;
+    //         }
+    //         else{
+    //             $content = $body . " " . $conclusion;
+    //         }            
 
-            $obj->update(["content" => $content]);
-        }
-    }
+    //         $obj->update(["content" => $content]);
+    //     }
+    // }
     
     // public function searchConsole(Request $request){
     //     $fromDate = date('Y-m-d', strtotime('-3 months'));
