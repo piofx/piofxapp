@@ -14,6 +14,10 @@
                 @if(!empty($settings))
                     <div class="bg-light p-7 mt-5 rounded-lg border">
                         @php
+                            function isAssoc(array $array) {
+                                return count(array_filter(array_keys($array), 'is_string')) > 0;
+                            }
+                            
                             function print_data($setting_array, $key){
                                 $id = 0;
                                 foreach($setting_array as $t => $data){
@@ -37,16 +41,36 @@
                         @endphp
                         @foreach($settings as $k => $setting)
                             @if(is_array($setting))
-                                <div class="bg-white p-5 rounded-lg my-3">
-                                    <h2 class="font-weight-bold mb-3 pl-2">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
-                                    {{ print_data($setting, $k) }}
-                                </div>
+                                @if (isAssoc($setting))
+									<div class="my-5">
+										<h2 class="font-weight-bold">{{ $k }}</h2>
+										<div class="bg-white p-5 rounded-lg">
+											@foreach($setting as $k => $v)
+												<div class="row">
+													<div class="col-12 col-lg-2 d-flex align-items-center mt-2 mb-0 mb-lg-2">
+														<h5 class="m-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
+													</div>
+													<div class="col-12 col-lg-10 my-2">
+														<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $v }}">
+													</div>
+												</div>
+											@endforeach
+										</div>
+									</div>
+								@else
+                                    <div class="my-5">
+										<h2 class="font-weight-bold mb-3">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
+										<div class="bg-white p-5 rounded-lg">
+											{{ print_data($setting, $k) }}
+										</div>
+									</div>
+                                @endif
                             @else
                                 @php
                                     $template = explode("_", $k);
                                 @endphp
                                 @if(strtolower($template[0]) == 'template')
-                                    <div class="row mb-3">
+                                    <div class="row my-5">
                                         <div class="col-12 p-0 px-lg-3 col-lg-2 d-flex align-items-center">
                                             <h5 class="m-0 mb-3 mb-lg-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
                                         </div>
@@ -55,7 +79,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <div class="row mb-3">
+                                    <div class="row my-5">
                                         <div class="col-12 p-0 px-lg-3 col-lg-2 d-flex align-items-center">
                                             <h5 class="m-0 mb-3 mb-lg-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
                                         </div>

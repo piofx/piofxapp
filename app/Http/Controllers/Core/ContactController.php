@@ -294,7 +294,13 @@ class ContactController extends Controller
                 $settings = dev_normal_mode($request->all());
             }
             else if($request->input('mode') == 'dev'){
-                $settings = json_encode(json_decode(str_replace(array("\n", "\r"), '', request()->get('settings'))), JSON_PRETTY_PRINT);
+                if(validJson(request()->get('settings'))){
+                    $settings = json_encode(json_decode(str_replace(array("\n", "\r"), '', request()->get('settings'))), JSON_PRETTY_PRINT);
+                }
+                else{
+                    $alert = 'JSON is invalid, Please try again';
+                    return redirect()->back()->withInput()->with('alert',$alert);
+                }
             }
             // Save settings in s3
             Storage::disk('s3')->put('settings/contact/'.$client_id.'.json' ,$settings,'public');
