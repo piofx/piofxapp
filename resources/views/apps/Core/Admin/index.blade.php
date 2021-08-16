@@ -1,6 +1,5 @@
 <x-dynamic-component :component="$componentName" class="mt-4" >
 
-
 	<div class="row">
 		<div class="col-12 col-md-8">
 
@@ -318,12 +317,12 @@
 							<div class="card-body d-flex flex-column p-0">
 								<!--begin::Stats-->
 								<div class="flex-grow-1 card-spacer-x pt-6">
-									<div class="text-inverse-info font-weight-bold">Visitors <small class='text-light-info'>this week</small></div>
-									<div class="text-inverse-info font-weight-bolder font-size-h3">2,005</div>
+									<div class="text-inverse-info font-weight-bold">Total Clicks <small class='text-light-info'>this month</small></div>
+									<div class="text-inverse-info font-weight-bolder font-size-h3">{{ $total_clicks }}</div>
 								</div>
 								<!--end::Stats-->
 								<!--begin::Chart-->
-								<div id="admin_page_chart" class="card-rounded-bottom" style="height: 50px"></div>
+								<div id="admin_page_chart" data-value="{{ $oneMonthDateData }}" class="card-rounded-bottom" style="height: 50px"></div>
 								<!--end::Chart-->
 							</div>
 							<!--end::Body-->

@@ -56,24 +56,39 @@ class AdminController extends Controller
         $client_settings = json_decode(request()->get('client.settings'));
 
         // Get user search console data
-        $total_clicks = '';
-        $total_impressions = '';
-        $average_ctr = '';
-        $average_position = '';
+        $total_clicks = null;
+        $total_impressions = null;
+        $average_ctr = null;
+        $average_position = null;
+        $oneMonthDateData = null;
         if(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
-            foreach($searchConsoleData as $key => $values){
-                if($key == '3Months'){
-                    foreach($values as $k => $v){
-                        if($k == 'fullData'){
-                            $total_clicks = format_number($v[0]['clicks']);
-                            $total_impressions = format_number($v[0]['impressions']);
-                            $average_ctr = round($v[0]['ctr'] * 100);
-                            $average_position = round($v[0]['position']);
-                        }
-                    }
+            
+            $fullData = $searchConsoleData['3Months']['fullData'];
+            if(!empty($fullData)){
+                foreach($fullData as $data){
+                    $total_clicks = format_number($data['clicks']);
+                    $total_impressions = format_number($data['impressions']);
+                    $average_ctr = round($data['ctr'] * 100, 1);
+                    $average_position = round($data['position'], 1);
                 }
             }
+
+            $oneMonthDateData = $searchConsoleData['1Month']['dateData'];
+            if(!empty($oneMonthDateData)){
+                $dates = array();
+                $clicks = array();
+                $impressions = array();
+                for($i=count($oneMonthDateData)-1; $i>count($oneMonthDateData)-5; $i--){
+                    array_push($dates, $oneMonthDateData[$i]['keys'][0]);
+                    array_push($clicks, $oneMonthDateData[$i]['clicks']);
+                    array_push($impressions, $oneMonthDateData[$i]['impressions']);
+                }
+                $oneMonthDateData = array();
+                $oneMonthDateData['dates'] = array_reverse($dates);
+                $oneMonthDateData['clicks'] = array_reverse($clicks);
+                $oneMonthDateData['impressions'] = array_reverse($impressions);
+            }      
         }
 
         // load the  app mentioned in the client or agency settings
@@ -101,7 +116,8 @@ class AdminController extends Controller
                     ->with('total_clicks', $total_clicks)
                     ->with('total_impressions', $total_impressions)
                     ->with('average_ctr', $average_ctr)
-                    ->with('average_position', $average_position);
+                    ->with('average_position', $average_position)
+                    ->with('oneMonthDateData', json_encode($oneMonthDateData));
         }
     }
 

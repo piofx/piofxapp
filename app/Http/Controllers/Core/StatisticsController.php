@@ -35,8 +35,18 @@ class StatisticsController extends Controller
      */
     public function index(Obj $obj, Request $request)
     {
+        $searchConsoleData = null;
+        $dateData = null;
+        $fullData = null;
+        $queryData = null;
+        $pageData = null;
+        $selector = "3Months";
 
-        // if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
+        if($request->input('selector')){
+            $selector = $request->input('selector');
+        }
+
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client and set the client id and secret
             $client = new Google_Client();
 
@@ -156,6 +166,10 @@ class StatisticsController extends Controller
                         $fullData = $service->searchanalytics->query($website_url, $obj);
 
                         // Set dimension as query, for retrieving query data
+                        $obj->setDimensions(['date']);
+                        $dateData = $service->searchanalytics->query($website_url, $obj);
+
+                        // Set dimension as query, for retrieving query data
                         $obj->setDimensions(['query']);
                         $queryData = $service->searchanalytics->query($website_url, $obj);
 
@@ -168,6 +182,7 @@ class StatisticsController extends Controller
                     }  
 
                     $retrievedData['fullData'] = $fullData['rows'];
+                    $retrievedData['dateData'] = $dateData['rows'];
                     $retrievedData['queryData'] = $queryData['rows'];
                     $retrievedData['pagesData'] = $pagesData['rows'];
                     
@@ -181,26 +196,81 @@ class StatisticsController extends Controller
                         $consoleData['1Year'] = $retrievedData;
                     }
                 }
-                ddd($consoleData);
 
                 Storage::disk('s3')->put("searchConsole/consoleData_".request()->get('client.id').".json", json_encode($consoleData), "public");
+                $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
 
-                return redirect()->route($this->module.'.index');
+                // return redirect()->route($this->module.'.index');
             }
 
-            return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-                    ->with('app',$this)
-                    ->with('authentication', $authentication);
-        // }
-        // else{
-        //     $authentication = True;
-        //     $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), 'true');
+            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
+            //         ->with('app',$this)
+            //         ->with('authentication', $authentication);
+        }
+        else{
+            $authentication = True;
+            $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
 
-        //     return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-        //             ->with('app',$this)
-        //             ->with('authentication', $authentication)
-        //             ->with('searchConsoleData', $searchConsoleData);
-        // }
+            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
+            //         ->with('app',$this)
+            //         ->with('authentication', $authentication)
+            //         ->with('searchConsoleData', $searchConsoleData);
+        }
+
+        if(!empty($searchConsoleData)){
+            $dateData = $searchConsoleData[$selector]['dateData'];
+            if(!empty($dateData)){
+                $dates = array();
+                $clicks = array();
+                $impressions = array();
+                $ctr = array();
+                $position = array();
+
+                foreach($dateData as $data){
+                    array_push($dates, $data['keys'][0]);
+                    array_push($clicks, $data['clicks']);
+                    array_push($impressions, $data['impressions']);
+                    array_push($ctr, round($data['ctr'] * 100, 2));
+                    array_push($position, round($data['position'], 2));
+                }
+
+                $dateData = array();
+                $dateData['dates'] = array_reverse($dates);
+                $dateData['clicks'] = array_reverse($clicks);
+                $dateData['impressions'] = array_reverse($impressions);
+                $dateData['ctr'] = array_reverse($ctr);
+                $dateData['position'] = array_reverse($position);
+            }
+
+            $fullData = $searchConsoleData[$selector]['fullData'];
+            if(!empty($fullData)){
+                foreach($fullData as $data){
+                    $total_clicks = format_number($data['clicks']);
+                    $total_impressions = format_number($data['impressions']);
+                    $average_ctr = round($data['ctr'] * 100, 2);
+                    $average_position = round($data['position'], 1);
+                }
+
+                $fullData = array();
+                $fullData['total_clicks'] = $total_clicks;
+                $fullData['total_impressions'] = $total_impressions;
+                $fullData['average_ctr'] = $average_ctr;
+                $fullData['average_position'] = $average_position;
+            }
+
+            $queryData = $searchConsoleData[$selector]['queryData'];
+            $pagesData = $searchConsoleData[$selector]['pagesData'];
+            
+        }
+
+        return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
+                    ->with('app',$this)
+                    ->with('authentication', $authentication)
+                    ->with('selector', $selector)
+                    ->with('dateData', json_encode($dateData))
+                    ->with("fullData", $fullData)
+                    ->with("queryData", $queryData)
+                    ->with("pagesData", $pagesData);
     }
 
     /**

@@ -56,9 +56,6 @@ function customer_chart() {
 
         let customer_chart_data = JSON.parse(json_data);
 
-        // customers_chart_data = sortObject(customer_chart_data);
-        console.log(customer_chart_data);
-
         const apexChart = "#customers_chart";
         var options = {
             series: [
