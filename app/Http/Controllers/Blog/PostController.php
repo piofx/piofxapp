@@ -858,7 +858,12 @@ class PostController extends Controller
         $obj = new Obj();
 
         // Retrieve the post
-        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", "desc")->limit('1')->where('status', '1')->get();
+        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", "desc")->limit('1')->where('status', '1')->first();
+
+        $client_settings = json_decode(request()->get('client.settings'));
+        if(isset($client_settings->blog_url) && $client_settings->blog_url != 'direct'){
+            $post->slug = 'blog/'.$post->slug;
+        }
 
         if(!empty($post)){
             return response()->json($post, "200");
