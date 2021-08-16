@@ -70,15 +70,16 @@
 							@if(is_array($setting))
 								@if (isAssoc($setting))
 									<div class="col-12 my-3">
-										<h2 class="font-weight-bold">{{ $k }}</h2>
+										<h2 class="font-weight-bold">{{ ucwords(str_replace('_', ' ', $k)) }}</h2>
 										<div class="bg-white p-5 rounded-lg">
-											@foreach($setting as $k => $v)
+											@foreach($setting as $key => $v)
 												<div class="row">
 													<div class="col-12 col-lg-2 d-flex align-items-center mt-2 mb-0 mb-lg-2">
-														<h5 class="m-0">{{ ucwords(str_replace('_', ' ', $k)) }}</h5>
+														<h5 class="m-0">{{ $key }}</h5>
 													</div>
 													<div class="col-12 col-lg-10 my-2">
-														<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $v }}">
+														<input type="text" hidden name="settings-sArray-{{$k}}-{{$key}}-key[]" class="form-control" value="{{ $key }}">
+														<input type="text" name="settings-sArray-{{$k}}-{{$key}}-value[]" class="form-control" value="{{ $v }}">
 													</div>
 												</div>
 											@endforeach

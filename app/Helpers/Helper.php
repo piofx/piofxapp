@@ -290,15 +290,20 @@ if (! function_exists('blog_image_upload')) {
 				// Add the key and vales to settins array by checking if there is a nested array
 				foreach($data as $k => $value){
 					$keys = explode('-', $k);
-					if($keys[0] == 'settings' && $keys[1] != 'array'){
-						$settings[$keys[1]] = $value;
-					}
-					elseif($keys[0] == 'settings' && $keys[1] == 'array'){
-						$t = $keys[2];
+					if($keys[0] == 'settings' && $keys[1] == 'array'){
 						if(!in_array($keys[2], $names)){
 							array_push($names, $keys[2]);
 						}
 					}
+					else if($keys[0] == 'settings' && $keys[1] == 'sArray'){
+						if(!in_array($keys[2], $names)){
+							array_push($names, $keys[2]);
+						}
+					}
+					else if($keys[0] == 'settings' && $keys[1] != 'array'){
+						$settings[$keys[1]] = $value;
+					}
+					
 				}
 
 				foreach($names as $name){
@@ -312,19 +317,16 @@ if (! function_exists('blog_image_upload')) {
 							}
 						}
 						elseif(sizeof($keys) > 2 && $keys[1] == 'array' && $keys[2] == $name && $keys[4] == 'value'){
-							if(array_keys($value) !== range(0, count($value) - 1)){
-								$t = array();
-								foreach($value as $k => $v){
-									$t[$new_keys[$k]] = $v;
-								}
-								array_push($temp, $t);
+							$t = array();
+							foreach($value as $k => $v){
+								$t[$new_keys[$k]] = $v;
 							}
-							else{
-								foreach($value as $k => $v){
-									$temp[$keys[3]] = $v;
-								}
+							array_push($temp, $t);
+						}
+						else if(sizeof($keys) > 2 && $keys[1] == 'sArray' && $keys[2] == $name && $keys[4] == 'value'){
+							foreach($value as $k => $v){
+								$temp[$keys[3]] = $v;
 							}
-							
 						}
 					}
 					$settings[$name] = $temp;
