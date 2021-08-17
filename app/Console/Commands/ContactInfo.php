@@ -14,7 +14,7 @@ class ContactInfo extends Command
      *
      * @var string
      */
-    protected $signature = 'ContactInfo {counter} {email} {client_id} {agency_id}';
+    protected $signature = 'ContactInfo {counter}  {email1} {email2} {client_id} {agency_id}';
 
     /**
      * The console command description.
@@ -42,16 +42,29 @@ class ContactInfo extends Command
     {   
         $template = MailTemplate::where('name','contacts_update')->first();
         
-        $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
-        
+        $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email1') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+        if($this->argument('email2') != NULL)
+        {
+            $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email2') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+        }
+
         $counter = $this->argument('counter');
         if (str_contains($template->message, '{{$count}}')) { 
            $template->message = str_replace('{{$count}}',$counter,$template->message);
         }
+        
         Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
-            $message->to($this->argument('email'));
+            $message->to($this->argument('email1'));
             $message->subject('New Contacts');
         });
+
+        if($this->argument('email2') != NULL)
+        {
+            Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
+                $message->to($this->argument('email2'));
+                $message->subject('New Contacts');
+            });
+        }
         
         $obj = MailLog::where('id',$maillog->id)->first();
         if( count(Mail::failures()) == 0 ) {
