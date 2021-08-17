@@ -139,7 +139,6 @@ class PageController extends Controller
             abort(404);
     }
 
-
     /**
      * Display the specified resource.
      *

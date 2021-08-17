@@ -5,161 +5,177 @@ $(document).ready(function () {
 });
 
 function adminPageChart(KTAppSettings) {
-    var element = document.getElementById("admin_page_chart");
-
-    if (!element) {
+    var chart = document.getElementById("admin_page_chart");
+    if (!chart) {
         return;
-    }
+    } else {
+        let chart_data = JSON.parse(chart.getAttribute("data-value"));
 
-    var options = {
-        series: [
-            {
-                name: "Net Profit",
-                data: [10, 15, 18, 14],
-            },
-            {
-                name: "Revenue",
-                data: [8, 13, 16, 12],
-            },
-        ],
-        chart: {
-            type: "bar",
-            height: 75,
-            zoom: {
-                enabled: false,
-            },
-            sparkline: {
-                enabled: true,
-            },
-            padding: {
-                left: 20,
-                right: 20,
-            },
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: ["25%"],
-                endingShape: "rounded",
-            },
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        fill: {
-            type: ["solid", "gradient"],
-            opacity: 0.25,
-        },
-        xaxis: {
-            categories: ["Feb", "Mar", "Apr", "May"],
-        },
-        yaxis: {
-            min: 0,
-            max: 20,
-        },
-        states: {
-            normal: {
-                filter: {
-                    type: "none",
-                    value: 0,
-                },
-            },
-            hover: {
-                filter: {
-                    type: "none",
-                    value: 0,
-                },
-            },
-            active: {
-                allowMultipleDataPointsSelection: false,
-                filter: {
-                    type: "none",
-                    value: 0,
-                },
-            },
-        },
-        tooltip: {
-            style: {
-                fontSize: "12px",
-                fontFamily: KTAppSettings["font-family"],
-            },
-            fixed: {
-                enabled: false,
-            },
-            x: {
-                show: false,
-            },
-            y: {
-                title: {
-                    formatter: function (val) {
-                        return val + "";
+        if (chart_data) {
+            let clicks_max = Math.max.apply(Math, chart_data["clicks"]);
+            let impressions_max = Math.max.apply(
+                Math,
+                chart_data["impressions"]
+            );
+            let max_value = Math.max(clicks_max, impressions_max);
+
+            var options = {
+                series: [
+                    {
+                        name: "Clicks",
+                        data: Object.values(chart_data["clicks"]),
+                    },
+                    {
+                        name: "Impressions",
+                        data: Object.values(chart_data["impressions"]),
+                    },
+                ],
+                chart: {
+                    type: "bar",
+                    height: 75,
+                    zoom: {
+                        enabled: false,
+                    },
+                    sparkline: {
+                        enabled: true,
+                    },
+                    padding: {
+                        left: 20,
+                        right: 20,
                     },
                 },
-            },
-            marker: {
-                show: false,
-            },
-        },
-        colors: ["#ffffff", "#ffffff"],
-    };
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: ["25%"],
+                        endingShape: "rounded",
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                fill: {
+                    type: ["solid", "gradient"],
+                    opacity: 0.25,
+                },
+                xaxis: {
+                    categories: Object.values(chart_data["dates"]),
+                },
+                yaxis: {
+                    min: 0,
+                    max: max_value,
+                },
+                states: {
+                    normal: {
+                        filter: {
+                            type: "none",
+                            value: 0,
+                        },
+                    },
+                    hover: {
+                        filter: {
+                            type: "none",
+                            value: 0,
+                        },
+                    },
+                    active: {
+                        allowMultipleDataPointsSelection: false,
+                        filter: {
+                            type: "none",
+                            value: 0,
+                        },
+                    },
+                },
+                tooltip: {
+                    style: {
+                        fontSize: "12px",
+                        fontFamily: KTAppSettings["font-family"],
+                    },
+                    fixed: {
+                        enabled: false,
+                    },
+                    x: {
+                        show: false,
+                    },
+                    y: {
+                        title: {
+                            formatter: function (val) {
+                                return val + "";
+                            },
+                        },
+                    },
+                    marker: {
+                        show: false,
+                    },
+                },
+                colors: ["#ffffff", "#ffffff"],
+            };
 
-    var chart = new ApexCharts(element, options);
-    chart.render();
+            var chart = new ApexCharts(chart, options);
+            chart.render();
+        }
+    }
 }
 
 function mainStatistics() {
-    const apexChart = "#statistics";
-    var options = {
-        series: [
-            {
-                name: "Total Clicks",
-                data: [50, 40, 28, 51, 42, 109, 100],
-            },
-            {
-                name: "Total Impressions",
-                data: [11, 32, 45, 32, 34, 52, 41],
-            },
-            {
-                name: "Avg CTR",
-                data: [11, 32, 45, 32, 34, 52, 41],
-            },
-            {
-                name: "Avg Position",
-                data: [11, 32, 45, 32, 34, 52, 41],
-            },
-        ],
-        chart: {
-            height: 350,
-            type: "area",
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            curve: "smooth",
-        },
-        xaxis: {
-            type: "datetime",
-            categories: [
-                "2018-09-19T00:00:00.000Z",
-                "2018-09-19T01:30:00.000Z",
-                "2018-09-19T02:30:00.000Z",
-                "2018-09-19T03:30:00.000Z",
-                "2018-09-19T04:30:00.000Z",
-                "2018-09-19T05:30:00.000Z",
-                "2018-09-19T06:30:00.000Z",
-            ],
-        },
-        tooltip: {
-            x: {
-                format: "dd/MM/yy HH:mm",
-            },
-        },
-        colors: [primary, success],
-    };
+    var chart = document.getElementById("statistics_chart");
+    if (!chart) {
+        return;
+    } else {
+        let chart_data = JSON.parse(chart.getAttribute("data-value"));
 
-    var chart = new ApexCharts(document.querySelector(apexChart), options);
-    chart.render();
+        console.log(chart_data);
+
+        if (chart_data) {
+            const apexChart = "#statistics_chart";
+            var options = {
+                series: [
+                    {
+                        name: "Total Clicks",
+                        data: Object.values(chart_data["clicks"]),
+                    },
+                    {
+                        name: "Total Impressions",
+                        data: Object.values(chart_data["impressions"]),
+                    },
+                    {
+                        name: "Avg CTR",
+                        data: Object.values(chart_data["ctr"]),
+                    },
+                    {
+                        name: "Avg Position",
+                        data: Object.values(chart_data["position"]),
+                    },
+                ],
+                chart: {
+                    height: 350,
+                    type: "area",
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    curve: "smooth",
+                },
+                xaxis: {
+                    type: "datetime",
+                    categories: Object.values(chart_data["dates"]),
+                },
+                tooltip: {
+                    x: {
+                        format: "dd/MM/yy",
+                    },
+                },
+                colors: [primary, success],
+            };
+
+            var chart = new ApexCharts(
+                document.querySelector(apexChart),
+                options
+            );
+            chart.render();
+        }
+    }
 }
 
 function initSettings() {
