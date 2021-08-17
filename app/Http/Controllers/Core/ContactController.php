@@ -230,25 +230,25 @@ class ContactController extends Controller
                         {   
                             if($data->primary_email && $data->secondary_email)
                             {
-                                $email_to = $data->secondary_email; 
+                                $email1_to = $data->primary_email; 
+                                $email2_to = $data->secondary_email;
                             }
                             elseif($data->primary_email)
                             {
-                                $email_to = $data->primary_email;
+                                $email1_to = $data->primary_email;
+                                $email2_to = '';
                             }
                             elseif($data->secondary_email)
                             {
-                                $email_to = $data->secondary_email;
+                                $email1_to = $data->secondary_email;
+                                $email2_to = '';
                             }
-                            // $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email_To' => $email_to);
-                            // $content = $template->message;
-                            //dispatching the job
-                            //ddd($details);
+                            
                             $template = MailTemplate::where('name','contacts_update')->first();
                             
                             $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
 
-                            $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email_To' => $email_to ,'log_id' => $maillog->id );
+                            $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id );
                             $content = $template->message;
 
                             NotifyAdmin::dispatch($details,$content);

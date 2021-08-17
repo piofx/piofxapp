@@ -43,7 +43,7 @@ class NewContactsUpdate extends Mailable
         }
         if (str_contains($this->content, '{{$message}}')) { 
             $this->content = str_replace('{{$message}}',$this->details['message'],$this->content);
-         }
+        }
     
         return $this->from('mail@example.com', 'Mailtrap')
             ->subject('Contacts Update')

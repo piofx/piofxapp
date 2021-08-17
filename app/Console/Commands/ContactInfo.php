@@ -41,40 +41,63 @@ class ContactInfo extends Command
     public function handle(Request $request)
     {   
         $template = MailTemplate::where('name','contacts_update')->first();
-        
-        $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email1') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
-        if($this->argument('email2') != NULL)
-        {
-            $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email2') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
-        }
 
         $counter = $this->argument('counter');
         if (str_contains($template->message, '{{$count}}')) { 
            $template->message = str_replace('{{$count}}',$counter,$template->message);
         }
-        
-        Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
-            $message->to($this->argument('email1'));
-            $message->subject('New Contacts');
-        });
+        if (str_contains($template->message, '{{$name}}')) {
+            $template->message = str_replace('{{$name}}','',$template->message);
+        }
+        if (str_contains($template->message, '{{$email}}')) { 
+           $template->message = str_replace('{{$email}}','',$template->message);
+        }
+        if (str_contains($template->message, '{{$message}}')) { 
+            $template->message = str_replace('{{$message}}','',$template->message);
+        }
+
+        if($this->argument('email1') != NULL)
+        {
+            $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email1') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+
+            Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
+                $message->to($this->argument('email1'));
+                $message->subject('New Contacts');
+            });
+
+            $obj = MailLog::where('id',$maillog->id)->first();
+            if( count(Mail::failures()) == 0 ) {
+                $obj->status = 1;
+                $obj->save();
+            }
+            else
+            {
+                $obj->status = 2;
+                    $obj->save();
+            }
+        }
 
         if($this->argument('email2') != NULL)
         {
+            $maillog = MailLog::create(['agency_id' => $this->argument('agency_id'),'client_id' => $this->argument('client_id') ,'email' => $this->argument('email2') , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
+
             Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
                 $message->to($this->argument('email2'));
                 $message->subject('New Contacts');
             });
+
+            $obj = MailLog::where('id',$maillog->id)->first();
+
+            if( count(Mail::failures()) == 0 ) {
+                $obj->status = 1;
+                $obj->save();
+            }
+            else
+            {
+                $obj->status = 2;
+                    $obj->save();
+            }
         }
-        
-        $obj = MailLog::where('id',$maillog->id)->first();
-        if( count(Mail::failures()) == 0 ) {
-            $obj->status = 1;
-            $obj->save();
-        }
-        else
-        {
-            $obj->status = 2;
-             $obj->save();
-        }
+
     }
 }
