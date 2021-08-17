@@ -17,9 +17,31 @@
   @endif
   <!--end::Alert-->
 
-  <!--begin::Indexcard-->
-  <x-snippets.cards.indexcard title="Mail Subscribers"  :module="$app->module" :action="route($app->module.'.index')"  />
-  <!--end::Indexcard-->
+  <!-- Actions -->
+  <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-success">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
+        <div class="d-flex flex-column mr-2">
+          <a href="#" class="h2 text-dark text-hover-primary mb-0">
+          <h1 class="">Subscribers</h1>
+          <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->count() }}</span> Records</h6>
+          </a> 
+        </div>
+        <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
+           <div class="d-flex align-items-center">
+              <a href="{{ route('MailCampaign.index') }}" class="btn btn-light-danger font-weight-bold ml-lg-2">Campaigns</a>
+              <a href="{{ route('MailLog.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Mail Logs</a>
+              <a href="{{ route('MailTemplate.index') }}" class="btn btn-light-warning font-weight-bold ml-lg-2">Templates</a>
+              <form action="{{ route($app->module.'.index') }}" method="GET">
+                  <input type="text" name="query" class="form-control ml-1" placeholder="Search..">
+              </form>
+              <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Actions -->
         <!--begin::upload element-->
         <div class="card card-custom bgi-no-repeat  gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{ asset('/themes/metronic/media/svg/patterns/abstract-4.svg') }}">
         <div class="row pl-5">
@@ -49,12 +71,15 @@
         </div>
       </div>
       <!--end::upload element-->
-  <!--begin::basic card-->
-  <x-snippets.cards.basic>
-  <div class="row">  
-    @if($objs != '')
-       <div class="table-responsive">
-          <table class="table table-bordered mb-0">
+   
+    <div class="bg-white p-3 rounded-lg shadow">
+        <!-- Table -->
+        @if($objs->count() == 0)
+                <div class="card card-body bg-white">
+                    <h4 class="bg-light p-5 border broder-rounded text-center text-danger">No items found</h4>
+                </div>
+        @else
+        <table class="table table-borderless bg-white">    
             <thead>
               <tr>
                 <th scope="col" class="p-3">#</th>
@@ -67,10 +92,9 @@
               </tr>
             </thead>
             <tbody>
-              <?php $i = 1; ?>
                @foreach($objs as $key=>$obj)  
                   <tr>
-                    <th scope="row">{{$i++}}</th>
+                    <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                     <td>
                       <a href=" {{ route($app->module.'.show',$obj->id) }} ">
                       {{ $obj->email }}
@@ -124,16 +148,11 @@
                   </div>
                 <!-- End Confirm Delete Modal -->
              @endforeach
+            @endif
           </table>
-          
-        </div>
-      @else
-      <div class="card card-body bg-light">
-        No items found
-      </div>
-      @endif
+          {{ $objs->links() }}
+    </div>
+      
 
-  </div>
-</x-snippets.cards.basic>
-  <!--end::basic card-->
+  <!--end::Table-->
 </x-dynamic-component>

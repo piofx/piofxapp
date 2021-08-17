@@ -34,11 +34,11 @@ class MailCampaignController extends Controller
             // check for search string
             $query = $request->input('query');
             //ddd($query);
-            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->get(); 
+            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->all();
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');
@@ -61,15 +61,11 @@ class MailCampaignController extends Controller
         // authorize the app
         $this->authorize('create', $obj);
 
-        // load alerts if any
-        $alert = session()->get('alert');
-
         $templates = MailTemplate::all();
         
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','create')
                 ->with('obj',$obj)
-                ->with('alert',$alert)
                 ->with('app',$this)
                 ->with('templates',$templates);
 
@@ -82,7 +78,13 @@ class MailCampaignController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Obj $obj,Request $request)
-    {        
+    {   
+        $request->validate([
+            'name' => 'required|max:255',
+            'mail_template_id' => 'required',
+            'scheduled_at' => 'required',       
+        ]);     
+
         $time = $request->input('timezone');
         $scheduled = Carbon::parse($request->input('scheduled_at'))->addMinutes($time);
         $current = Carbon::now();
@@ -115,7 +117,7 @@ class MailCampaignController extends Controller
             }
         }
         
-        $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
+        $alert = 'A new Campaign is created!';
         return redirect()->route($this->module.'.index')
                          ->with('alert',$alert);        
         
@@ -204,7 +206,7 @@ class MailCampaignController extends Controller
         }
 
         // flash message and redirect to controller index page
-        $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
+        $alert = 'Campaign is updated!';
        
         //ddd($obj->template_category_id);
         return redirect()->route($this->module.'.index')->with('alert',$alert);
@@ -262,7 +264,7 @@ class MailCampaignController extends Controller
         $obj->delete();
 
         // flash message and redirect to controller index page
-        $alert = '('.$this->app.'/'.$this->module.'/'.$id.') item  Successfully deleted!';
+        $alert = 'Campaign  Successfully deleted!';
         return redirect()->route($this->module.'.index')->with('alert',$alert);
     }
 

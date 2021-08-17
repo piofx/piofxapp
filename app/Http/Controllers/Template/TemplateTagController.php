@@ -53,7 +53,12 @@ class TemplateTagController extends Controller
   }
 
   public function store(Request $request, Obj $obj)
-  {
+  { 
+    //Validating the fields
+    $request->validate([
+      'name' => 'required|max:255',
+      'slug' => 'required',   
+    ]);
     // Authorize the request
     $this->authorize('create', $obj);
 

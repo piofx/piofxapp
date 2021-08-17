@@ -24,11 +24,11 @@ class MailLogController extends Controller
             // check for search string
             $query = $request->input('query');
             //ddd($query);
-            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->get(); 
+            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->all();
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');
@@ -52,7 +52,8 @@ class MailLogController extends Controller
         $obj->delete();
 
         // flash message and redirect to controller index page
-        $alert = '('.$this->app.'/'.$this->module.'/'.$id.') item  Successfully deleted!';
+        $alert = 'Log Successfully deleted!';
         return redirect()->route($this->module.'.index')->with('alert',$alert);
+        //ddd(here);
     }
 }

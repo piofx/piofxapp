@@ -30,25 +30,47 @@ class Kernel extends ConsoleKernel
         //flecting the records of all contacts
         $contacts = Contact::all()->groupBy('client_id');
         foreach($contacts as $k=>$v){
+            $client_id = $v[0]['client_id'];
+            $agency_id = $v[0]['agency_id'];
             $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$k.'.json' ));
-            $data = json_decode($data);
-            if ($data->digest == 'daily')
+            if($data->primary_email && $data->secondary_email)
+            {
+                $email1 = $data->primary_email;
+                $email2 = $data->secondary_email;
+            }
+            elseif($data->primary_email)
+            {
+                $email1 = $data->primary_email;
+                $email2 = '';
+            }
+            elseif($data->secondary_email)
+            {
+                $email = $data->secondary_email;
+                $email = '';
+            }
+            
+            if($email1)
             {   
-                $contacts = Contact::whereDate('created_at', Carbon::today())->get()->where('client_id',$k);
-                $counter = count($contacts);
-                $schedule->command('ContactInfo',[$counter])->daily();
-            }
-            else if ($data->digest == 'weekly')
-            {
-                $contacts = Contact::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get()->where('client_id',$k);
-                $counter = count($contacts);
-                $schedule->command('ContactInfo',[$counter])->weekly();   
-            }
-            else
-            {
-                $contacts = Contact::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get()->where('client_id',$k);
-                $counter = count($contacts);
-                $schedule->command('ContactInfo',[$counter])->monthly();   
+                if ($data->digest == 'daily')
+                {   
+                    $contacts = Contact::whereDate('created_at', Carbon::today())->get()->where('client_id',$k);
+                    $counter = count($contacts);  
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->everyMinute();
+                }
+                else if ($data->digest == 'weekly')
+                {
+                    $contacts = Contact::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get()->where('client_id',$k);
+                    $counter = count($contacts);
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->weekly();   
+                }
+                else
+                {
+                    $contacts = Contact::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get()->where('client_id',$k);
+                    $counter = count($contacts);
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->monthly();   
+                }
+
+                
             }
         }
             

@@ -1,4 +1,6 @@
 <x-dynamic-component :component="$app->componentName">
+  <!-- Validation Errors -->
+  <x-auth-validation-errors class="mb-4" :errors="$errors" />
     @if($stub == 'create')
         <form action="{{ route($app->module.'.store') }}" method="POST" enctype="multipart/form-data">
     @else

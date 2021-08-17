@@ -18,24 +18,39 @@
 	  <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
 	@endif
 	<!--end::Alert-->
-
     <!-- Actions -->
-    <div class="d-flex justify-content-between align-items-center bg-white p-5 rounded shadow-sm mb-3">
-        <div>
+    <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-success">
+        <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
+            <div class="d-flex flex-column mr-2">
+            <a href="#" class="h2 text-dark text-hover-primary mb-0">
             <h1 class="">Templates</h1>
             <h6 class="m-0 text-muted">Showing <span class="text-primary">{{ $objs->count() }}</span> Records</h6>
+            </a> 
+            </div>
+            <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
+            <div class="d-flex align-items-center">
+                <a href="{{ route('MailCampaign.index') }}" class="btn btn-light-danger font-weight-bold ml-lg-2">Campaigns</a>
+                <a href="{{ route('MailLog.index') }}" class="btn btn-light-info font-weight-bold ml-lg-2">Mail Logs</a>
+                <a href="{{ route('MailSubscriber.index') }}" class="btn btn-light-warning font-weight-bold ml-lg-2">Subscribers</a>
+                <form action="{{ route($app->module.'.index') }}" method="GET">
+                    <input type="text" name="query" class="form-control ml-1" placeholder="Search..">
+                </form>
+                <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
+                </div>
+            </div>
         </div>
-        <div class="d-flex align-items-center">
-            <form action="{{ route($app->module.'.index') }}" method="GET">
-                <input type="text" name="query" class="form-control" placeholder="Search..">
-            </form>
-            <a href="{{ route($app->module.'.create') }}" class="btn btn-light-primary font-weight-bold mx-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
         </div>
     </div>
     <!-- End Actions -->
 
     <div class="bg-white p-3 rounded-lg shadow">
         <!-- Table -->
+        @if($objs->count() == 0)
+                <div class="card card-body bg-white">
+                    <h4 class="bg-light p-5 border broder-rounded text-center text-danger">No items found</h4>
+                </div>
+        @else
         <table class="table table-borderless bg-white">
             <tr class="border-bottom">
                 <th scope="col" class="p-3">#</th>
@@ -46,10 +61,9 @@
                 <th scope="col" class="p-3">Created At</th>
                 <th scope="col" class="p-3 text-secondary font-weight-bolder text-center">Actions</th>
             </tr>
-            <?php $i = 1; ?>
-            @foreach($objs as $obj)
+            @foreach($objs as $key => $obj)
                 <tr class="border-bottom">
-                    <td class="px-3 align-middle font-weight-bolder">{{$i++}}</td>
+                    <td class="px-3 align-middle font-weight-bolder">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</td>
                     <td class="px-3 align-middle">{{ $obj->name }}</td>
                     <td class="px-3 align-middle">@if($obj->slug) {{ $obj->slug }}  @endif</td> 
                     <td class="px-3 align-middle">{{ $obj->subject }}</td>
@@ -98,7 +112,8 @@
                         </div>
                         <!-- End Confirm Delete Modal -->
             @endforeach
+        @endif
         </table>   
+        {{ $objs->links() }}
     </div>
-
 </x-dynamic-component>

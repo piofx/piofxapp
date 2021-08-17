@@ -31,8 +31,11 @@ class EmailForQueuing extends Mailable
     {
         
         return $this->from('mail@example.com', 'Mailtrap')
+            ->to($this->details['email'])
             ->subject('Test Queued Email 1')
-            ->view('apps.Mailer.MailView.test');
+            ->view('apps.Mailer.Mailview.campaignMail');
     }
+
+    
 
 }

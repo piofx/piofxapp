@@ -26,7 +26,7 @@ class UserCreated
     {
         $this->user = $user;
         $this->request = $request;
-        //ddd($this->request);
+        
     }
 
     /**

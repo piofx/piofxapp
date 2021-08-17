@@ -18,7 +18,7 @@ class CreateMailCampaignsTable extends Migration
             $table->bigInteger('agency_id')->nullable();
             $table->bigInteger('client_id')->nullable();
             $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('mail_template_id')->nullable();
+            $table->bigInteger('mail_template_id');
             $table->string('name');
             $table->longText('description')->nullable();
             $table->longText('emails')->nullable();

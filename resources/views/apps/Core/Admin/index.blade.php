@@ -290,7 +290,7 @@
 									</g>
 								</svg><!--end::Svg Icon--></span>
 								<div>
-									<a href="{{ url('admin/contact') }}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Mailer</a>
+									<a href="{{ url('admin/mailcampaigns') }}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Mailer</a>
 								</div>
 							</div>
 						</div>

@@ -27,16 +27,16 @@ class MailSubscriberController extends Controller
     {   
         
 
-        if($request->input('item'))
+        if($request->input('query'))
         {
             // check for search string
-            $query = $request->input('item');
+            $query = $request->input('query');
             //ddd($query);
-            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->get(); 
+            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->all();
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');
@@ -79,6 +79,9 @@ class MailSubscriberController extends Controller
      */
     public function store(Obj $obj,Request $request)
     {    
+        $request->validate([
+            'email' => 'required|max:255'       
+        ]); 
         $subscriber = $obj->where('email', '=', $request->email)->first();
         if ($subscriber === null)
         {   
@@ -86,7 +89,7 @@ class MailSubscriberController extends Controller
             $validate_email = debounce_valid_email($request->email);
             $request->merge(['agency_id'=>$request->agency_id])->merge(['client_id'=>$request->client_id])->merge(['valid_email'=>$validate_email]);
             $obj = $obj->create($request->all());
-            $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
+            $alert = 'A new subscriber record is created!';
             return redirect()->route($this->module.'.index')
                              ->with('alert',$alert);
         }
@@ -151,7 +154,7 @@ class MailSubscriberController extends Controller
         $obj->update($request->all());
 
         // flash message and redirect to controller index page
-        $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
+        $alert = 'Subscriber Details updated!';
        
         //ddd($obj->template_category_id);
         return redirect()->route($this->module.'.index')->with('alert',$alert);
@@ -193,7 +196,7 @@ class MailSubscriberController extends Controller
         $obj->delete();
 
         // flash message and redirect to controller index page
-        $alert = '('.$this->app.'/'.$this->module.'/'.$id.') item  Successfully deleted!';
+        $alert = 'Subscriber Successfully deleted!';
         return redirect()->route($this->module.'.index')->with('alert',$alert);
     }
 
@@ -270,7 +273,7 @@ class MailSubscriberController extends Controller
                             
                         }
                     }
-                    $alert = '('.$this->app.'/'.$this->module.') Imported Successfully ';
+                    $alert = 'File Imported Successfully ';
                 }
                 else
                 {
@@ -299,12 +302,12 @@ class MailSubscriberController extends Controller
         $columns = array("email","info");
         $rows = array(
             array(
-                "email" => "sabiha@gmail.com",
-                "info"  => "2587413698,btech,tkr",
+                "email" => "packerprep@gmail.com",
+                "info"  => "2587413698,btech,ABC college",
             ),
             array(
                 "email" => "piofx@gmail.com",
-                "info"  => "2587413698,btech,tkr",
+                "info"  => "2587413698,btech,ABC college",
             ),
         );
         return getCsv($columns, $rows, 'data_'.request()->get('client.name').'_'.strtotime("now").'_form_data.csv');     
