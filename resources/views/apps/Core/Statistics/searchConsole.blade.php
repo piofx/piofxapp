@@ -18,7 +18,21 @@
             </form>
         </div>
     @else
-        <h1 class="bg-white rounded p-5 my-5">Statistics</h1>
+        <div class="bg-white rounded p-5 my-5 d-flex aling-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-start">
+                <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Media/Equalizer.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect x="0" y="0" width="24" height="24"/>
+                        <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"/>
+                        <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"/>
+                        <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"/>
+                        <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"/>
+                    </g>
+                </svg><!--end::Svg Icon--></span>
+                <h1 class="m-0 ml-1">Statistics</h1>
+            </div>
+            <a href="{{ route('Statistics.index', 'statisticsRefresh=true') }}" class="btn btn-dark"><i class="fas fa-sync-alt"></i> Refresh</a>
+        </div>
         <div class="bg-white rounded" style="padding: 2rem;">
             <h3 class="text-primary mb-5">Overview</h3>
             

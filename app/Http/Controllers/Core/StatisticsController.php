@@ -39,15 +39,20 @@ class StatisticsController extends Controller
         $dateData = null;
         $fullData = null;
         $queryData = null;
-        $pageData = null;
+        $pagesData = null;
         $selector = "3Months";
+        $refresh = false;
 
         if($request->input('selector')){
             $selector = $request->input('selector');
         }
 
-        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
-            // Initialize a new google client and set the client id and secret
+        if($request->input('statisticsRefresh')){
+            $refresh = true;
+        }
+
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json") || $refresh){
+            // Initialize a new google client
             $client = new Google_Client();
 
             // Flag to check if authentication is done
