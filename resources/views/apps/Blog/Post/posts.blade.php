@@ -66,7 +66,7 @@
             @foreach($objs as $key=>$obj)
                 <tr class="border-bottom">
                     <th scope="row" class="px-3 align-middle">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
-                    <td class="px-3 align-middle font-weight-bolder"><a href="{{ route($app->module.'.show', $obj->slug) }}" class="text-dark">{{ $obj->title }}</a></td>
+                    <td class="px-3 align-middle font-weight-bolder"><a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif"" class="text-dark">{{ $obj->title }}</a></td>
                     <td class="px-3 align-middle">{{ $obj->slug }}</td>
                     
                     <td class="px-3 align-middle">@if($obj->category) {{ $obj->category->name }}  @endif</td>
