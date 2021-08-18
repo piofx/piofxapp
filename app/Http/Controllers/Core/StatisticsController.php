@@ -205,6 +205,8 @@ class StatisticsController extends Controller
                 Storage::disk('s3')->put("searchConsole/consoleData_".request()->get('client.id').".json", json_encode($consoleData), "public");
                 $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
 
+                $authentication = True;
+
                 // return redirect()->route($this->module.'.index');
             }
 

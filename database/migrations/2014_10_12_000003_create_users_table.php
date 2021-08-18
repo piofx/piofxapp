@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
-            $table->integer('client_id')->default(1);
-            $table->integer('agency_id')->default(1);
+            $table->unsignedBigInteger('client_id')->default(1);
+            $table->unsignedBigInteger('agency_id')->default(1);
             $table->text('group')->nullable();
             $table->text('subgroup')->nullable();
             $table->longText('data')->nullable();
@@ -31,8 +31,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('agency_id')->references('id')->on('agencies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('cascade');
         });
     }
 
