@@ -576,21 +576,8 @@
                                                     <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
-                                            <!-- End Related Post -->
-                                        @endif
-                                    @else
-                                        <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="{{ route($app->module.'.show', $post->slug) }}">{{ $post->title }}</a></h6>
-                                            @if($post->excerpt)
-                                                <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
-                                            @else
-                                                @php
-                                                    $content = strip_tags($post->content);
-                                                    $content = substr($content, 0 , 50);
-                                                @endphp
-                                                <p class="text-muted">{{ $content }}...</p>
-                                            @endif
                                         </div>
+                                        <!-- End Related Post -->
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
@@ -606,10 +593,9 @@
                                         @endif
                                     </div>
                                 @endif
-                            @endforeach
-                        </div>
-                    @endif
-                    <!-- End Popular Posts -->
+                            @endif
+                        @endforeach
+                    </div>
                 @endif
                 <!-- End Popular Posts --> 
             </div>

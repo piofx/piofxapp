@@ -74,6 +74,11 @@
    
     <div class="bg-white p-3 rounded-lg shadow">
         <!-- Table -->
+        @if($objs->count() == 0)
+                <div class="card card-body bg-white">
+                    <h4 class="bg-light p-5 border broder-rounded text-center text-danger">No items found</h4>
+                </div>
+        @else
         <table class="table table-borderless bg-white">    
             <thead>
               <tr>
@@ -87,10 +92,9 @@
               </tr>
             </thead>
             <tbody>
-              <?php $i = 1; ?>
                @foreach($objs as $key=>$obj)  
                   <tr>
-                    <th scope="row">{{$i++}}</th>
+                    <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                     <td>
                       <a href=" {{ route($app->module.'.show',$obj->id) }} ">
                       {{ $obj->email }}
@@ -144,6 +148,7 @@
                   </div>
                 <!-- End Confirm Delete Modal -->
              @endforeach
+            @endif
           </table>
           {{ $objs->links() }}
     </div>

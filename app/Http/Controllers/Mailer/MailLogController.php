@@ -52,7 +52,7 @@ class MailLogController extends Controller
         $obj->delete();
 
         // flash message and redirect to controller index page
-        $alert = '('.$this->app.'/'.$this->module.'/'.$id.') item  Successfully deleted!';
+        $alert = 'Log Successfully deleted!';
         return redirect()->route($this->module.'.index')->with('alert',$alert);
         //ddd(here);
     }

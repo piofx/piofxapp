@@ -404,20 +404,7 @@ class PostController extends Controller
             // add to cache
             Cache::forever('popular_'.request()->get('client.id'), $popular);
         }
-        if($settings->home_layout != 'knowledgeBase' )
-        {
-            // cached related data
-            $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
-            if(!$related){
-                // Retrieve related posts
-                if(!empty($post->category) && $post->category->posts->count() > 0){
-                    $related = $post->category->posts->where('status', '1')->take(3);
-                }
-                // add to cache
-                Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
-            }
-        }
-        else{
+        
             // cached related data
             $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
             if(!empty($post->category) && $post->category->posts->count() > 0){
@@ -427,7 +414,7 @@ class PostController extends Controller
             // add to cache
             Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
 
-        }
+        
         // cached postCategory data
         $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
         if(!$postCategory){
@@ -888,12 +875,12 @@ class PostController extends Controller
     }
 
     public function subscribe(Obj $obj, Request $request){
-
+        
         $validate_email = debounce_valid_email($request->email);
         $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
         
         $obj = MailSubscriber::create($request->all());
-
+        
         event(new UserCreated($obj,$request));
         $alert = "Your Successfully subscribed!";
         //withErrors(['message'=>'Record does not exist'])
