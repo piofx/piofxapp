@@ -30,6 +30,9 @@ class CreateUsersTable extends Migration
             $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('client_id')->references('id')->on('clients')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('agency_id')->references('id')->on('agencies')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

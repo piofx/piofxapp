@@ -314,17 +314,23 @@
 						<!--begin::Tiles Widget 5-->
 						<div class="card card-custom bg-info gutter-b" style="height: 150px">
 							<!--begin::Body-->
-							<div class="card-body d-flex flex-column p-0">
-								<!--begin::Stats-->
-								<div class="flex-grow-1 card-spacer-x pt-6">
-									<div class="text-inverse-info font-weight-bold">Total Clicks <small class='text-light-info'>this month</small></div>
-									<div class="text-inverse-info font-weight-bolder font-size-h3">{{ $total_clicks }}</div>
+							@if (!empty($oneMonthDateData))
+								<div class="card-body d-flex flex-column p-0">
+									<!--begin::Stats-->
+									<div class="flex-grow-1 card-spacer-x pt-6">
+										<div class="text-inverse-info font-weight-bold">Total Clicks <small class='text-light-info'>this month</small></div>
+										<div class="text-inverse-info font-weight-bolder font-size-h3">{{ $total_clicks }}</div>
+									</div>
+									<!--end::Stats-->
+									<!--begin::Chart-->
+									<div id="admin_page_chart" data-value="{{ $oneMonthDateData }}" class="card-rounded-bottom" style="height: 50px"></div>
+									<!--end::Chart-->
 								</div>
-								<!--end::Stats-->
-								<!--begin::Chart-->
-								<div id="admin_page_chart" data-value="{{ $oneMonthDateData }}" class="card-rounded-bottom" style="height: 50px"></div>
-								<!--end::Chart-->
-							</div>
+							@else
+								<div class="card-body d-flex align-items-center">
+									<h3 class="text-white w-75"><span class="text-warning">!!</span> Please add your search console details in statistics page</h3>
+								</div>
+							@endif
 							<!--end::Body-->
 						</div>
 						<!--end::Tiles Widget 5-->

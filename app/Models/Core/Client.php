@@ -97,16 +97,8 @@ class Client extends Model
         $data['subtitle'] = $request->get('settings_subtitle');
         $data['email'] = $request->get('settings_email');
         $data['phone'] = $request->get('settings_phone');
-        $data['domain'] = $request->get('domain');
 
-        // app settings
-        $data['app'] = $request->get('settings_app');
-        $data['controller'] = $request->get('settings_controller');
-        $data['method'] = $request->get('settings_method');
-        $data['admin_controller'] = $request->get('settings_admin_controller');
-        $data['admin_method'] = $request->get('settings_admin_method');
         $request->merge(['settings'=>json_encode($data,JSON_PRETTY_PRINT)]);
-
     }
 
     public function setTemplate($request){
