@@ -405,14 +405,14 @@ class PostController extends Controller
             Cache::forever('popular_'.request()->get('client.id'), $popular);
         }
         
-            // cached related data
-            $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
-            if(!empty($post->category) && $post->category->posts->count() > 0){
-                // Retrieving all related posts   
-                $related = $post->category->posts->where('status', '1')->all();
-            }
-            // add to cache
-            Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
+        // cached related data
+        $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
+        if(!empty($post->category) && $post->category->posts->count() > 0){
+            // Retrieving all related posts   
+            $related = $post->category->posts->where('status', '1')->take(3);
+        }
+        // add to cache
+        Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
 
         
         // cached postCategory data
@@ -776,9 +776,18 @@ class PostController extends Controller
             }
         }
 
+        // Check if blog url is given as direct in client settings and modify urls accrdingly
+        $route = null;
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $route = url('/');
+        }
+
         return view("apps.".$this->app.".".$this->module.".posts")
                 ->with("app", $this)
                 ->with("objs", $objs)
+                ->with("route", $route)
                 ->with("templates", $templates);    
     }
 
