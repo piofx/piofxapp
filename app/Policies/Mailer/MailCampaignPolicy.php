@@ -39,7 +39,7 @@ class MailCampaignPolicy
      */
     public function view(User $user, MailCampaign $mailcampaign)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -53,7 +53,7 @@ class MailCampaignPolicy
      */
     public function create(User $user , MailCampaign $mailcampaign)
     {   
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -68,7 +68,7 @@ class MailCampaignPolicy
      */
     public function update(User $user, MailCampaign $mailcampaign)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -83,7 +83,7 @@ class MailCampaignPolicy
      */
     public function delete(User $user, MailCampaign $mailcampaign)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -98,7 +98,7 @@ class MailCampaignPolicy
      */
     public function edit(User $user, MailCampaign $mailcampaign)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -114,7 +114,7 @@ class MailCampaignPolicy
 
     public function before(User $user, $ability)
     {
-        if($user->isRole('superadmin'))
+        if($user->isRole('superadmin','agencyadmin','clientadmin'))
             return true;
     }
 

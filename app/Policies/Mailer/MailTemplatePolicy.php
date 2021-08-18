@@ -39,7 +39,7 @@ class MailTemplatePolicy
      */
     public function view(User $user, MailTemplate $mailtemplate)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -53,7 +53,7 @@ class MailTemplatePolicy
      */
     public function create(User $user , MailTemplate $mailtemplate)
     {   
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -68,7 +68,7 @@ class MailTemplatePolicy
      */
     public function update(User $user, MailTemplate $mailtemplate)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -83,7 +83,7 @@ class MailTemplatePolicy
      */
     public function delete(User $user, MailTemplate $mailtemplate)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -98,7 +98,7 @@ class MailTemplatePolicy
      */
     public function edit(User $user, MailTemplate $mailtemplate)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -106,7 +106,7 @@ class MailTemplatePolicy
 
     public function before(User $user, $ability)
     {
-        if($user->isRole('superadmin'))
+        if($user->isRole('superadmin','agencyadmin','clientadmin'))
             return true;
     }
 

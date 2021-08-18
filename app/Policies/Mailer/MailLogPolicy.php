@@ -39,7 +39,7 @@ class MailLogPolicy
      */
     public function view(User $user)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -54,7 +54,7 @@ class MailLogPolicy
      */
     public function delete(User $user)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -63,7 +63,7 @@ class MailLogPolicy
 
     public function before(User $user, $ability)
     {
-        if($user->isRole('superadmin'))
+        if($user->isRole('superadmin','agencyadmin','clientadmin'))
             return true;
     }
 

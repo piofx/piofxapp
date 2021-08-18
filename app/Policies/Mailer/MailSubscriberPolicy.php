@@ -39,7 +39,7 @@ class MailSubscriberPolicy
      */
     public function view(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -53,7 +53,7 @@ class MailSubscriberPolicy
      */
     public function create(User $user , MailSubscriber $mailsubscriber)
     {   
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -68,7 +68,7 @@ class MailSubscriberPolicy
      */
     public function update(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -83,7 +83,7 @@ class MailSubscriberPolicy
      */
     public function delete(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -98,7 +98,7 @@ class MailSubscriberPolicy
      */
     public function edit(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -106,7 +106,7 @@ class MailSubscriberPolicy
 
     public function upload(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -114,7 +114,7 @@ class MailSubscriberPolicy
 
     public function samplecsv(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -122,7 +122,7 @@ class MailSubscriberPolicy
 
     public function download(User $user, MailSubscriber $mailsubscriber)
     {
-        if($user->checkRole(['superadmin']))
+        if($user->checkRole(['superadmin','agencyadmin','clientadmin']))
             return true;
 
         return false;
@@ -130,7 +130,7 @@ class MailSubscriberPolicy
 
     public function before(User $user, $ability)
     {
-        if($user->isRole('superadmin'))
+        if($user->isRole('superadmin','agencyadmin','clientadmin'))
             return true;
     }
 
