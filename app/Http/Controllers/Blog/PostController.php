@@ -876,7 +876,7 @@ class PostController extends Controller
 
     public function subscribe(Obj $obj, Request $request){
 
-        $subscriber = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $request->email)->first();
+        $subscriber = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $request->email)->where('app','=',$this->app)->first();
         if ($subscriber === null)
         {   
             $validate_email = debounce_valid_email($request->email);
