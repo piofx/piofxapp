@@ -160,10 +160,10 @@ if (! function_exists('blog_image_upload')) {
                     $img->setAttribute('src', $url);
 					if($img->hasAttribute("class")){
 						$img->removeAttribute('class');
-						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3');
+						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3 w-100');
 					}
 					else{
-						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3');
+						$img->setAttribute('class', 'img-fluid rounded-lg rounded-3 w-100');
 					}
                 }
 			}
@@ -281,6 +281,7 @@ if (! function_exists('blog_image_upload')) {
 		}
 	}
 
+	// Function to convert settings to json from front end
 	if(!function_exists('dev_normal_mode')){
 		function dev_normal_mode($data){
 			$settings = array();

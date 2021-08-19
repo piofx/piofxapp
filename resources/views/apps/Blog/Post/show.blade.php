@@ -176,7 +176,7 @@
                 <!-- Featured Image -->
                 @if(!empty($obj->image) && strlen($obj->image) > 5)
                     @if(Storage::disk('s3')->exists($obj->image))
-                        <div class="text-center featured_image mb-5">
+                        <div class="text-center mb-5">
                             @php
                                 $path = explode("/", $obj->image);
                                 $path = explode(".", $path[1]);
@@ -184,15 +184,15 @@
                             @endphp
                             @if(Browser::isMobile())
                                 @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                 @else
-                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                 @endif
                             @else
                                 @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.'.$ext))
-                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
+                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
                                 @else
-                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                 @endif
                             @endif
                         </div>
@@ -229,11 +229,11 @@
                                     @else
                                         <h4 class="bg-soft-primary text-primary px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
                                     @endif
+                                    <div class="pl-2 ps-2">
+                                        <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
+                                        <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
+                                    </div>
                                 @endif
-                                <div class="pl-2 ps-2">
-                                    <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
-                                    <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
-                                </div>
                             </div>
                         </div>
                         <div class="col-5 p-0 pr-4">
