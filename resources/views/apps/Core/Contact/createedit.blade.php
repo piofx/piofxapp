@@ -26,7 +26,7 @@
   <!--end::Alert-->
 
 	<!--begin::basic card-->
-  <div class="container space-top-3">
+  <div class="container ">
     <div class="card border">
       <div class="card-body">
         <div class="row">
