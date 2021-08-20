@@ -187,9 +187,6 @@ class PageController extends Controller
             return app($controller_path)->$method($request);
 
         }
-        else if(isset($client_settings->maintenance_mode) && $client_settings->maintenance_mode == 'active'){
-            abort(404,'Website is under Maintenance');
-        }
         else if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct' && !empty($post)){
             return app()->call(
                 ('App\Http\Controllers\Blog\PostController@show'), ['slug' => $slug, 'blog_url' => 'direct']
