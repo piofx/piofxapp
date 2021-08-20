@@ -115,7 +115,7 @@ class ContactController extends Controller
             $field_name = $category.'_form';
 
 
-            
+            $data = json_decode(json_encode($data));
 
             if(isset($data->$field_name))
                 $form = $obj->processForm($data->$field_name);
