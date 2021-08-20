@@ -33,12 +33,14 @@ class MailCampaignController extends Controller
         {
             // check for search string
             $query = $request->input('query');
-            //ddd($query);
-            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
+            // Retrieve Specific record
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
         }
         else
-        {
-            $objs = $obj->paginate(10);
+        {   
+            // Retrieve Specific record
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy('name', 'asc')->paginate(10);
+            //$objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');
@@ -60,8 +62,8 @@ class MailCampaignController extends Controller
     {
         // authorize the app
         $this->authorize('create', $obj);
-
-        $templates = MailTemplate::all();
+        //fetching templates other than contact update and subscriber update 
+        $templates = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->whereNotIn('name', ['contacts_update','subscriber_update'])->get();
         
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','create')
@@ -95,11 +97,11 @@ class MailCampaignController extends Controller
         
         $obj = $obj->create($request->all());
         $ems = preg_split ("/\,/", $request->emails);
-        $template = MailTemplate::where('id',$request->mail_template_id)->first();
+        $template = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('id',$request->mail_template_id)->first();
         $request->merge(['reference_id'=> $obj->id])->merge(['app'=> $this->app])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message])->merge(['status'=> '0']);
         foreach($ems as $em)
         {   
-            $subscriber = MailSubscriber::where('email', '=', $em)->first();
+            $subscriber = MailSubscriber::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $em)->first();
             $validate_email = debounce_valid_email($em);
             if ($subscriber === null)
             {
@@ -136,7 +138,9 @@ class MailCampaignController extends Controller
         
         // authorize the app
         $this->authorize('edit', $obj);
-        $templates = MailTemplate::all();
+        //fetching templates other than contact update and subscriber update 
+        $templates = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->whereNotIn('name', ['contacts_update','subscriber_update'])->get();
+        
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','update')
@@ -185,14 +189,14 @@ class MailCampaignController extends Controller
         $current = Carbon::now();
         $diff_in_minutes = $current->diffInMinutes($scheduled);
         //deleting mailog records for of current campaign
-        $items = MailLog::where('reference_id',$obj->id)->get();
+        $items = MailLog::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('reference_id',$obj->id)->get();
         foreach($items as $item)
         {
             $item->delete();
         }
         //creating mailogs and dispatching emails 
         $ems = preg_split ("/\,/", $request->emails);
-        $template = MailTemplate::where('id',$request->mail_template_id)->first();
+        $template = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('id',$request->mail_template_id)->first();
         foreach($ems as $em)
         {
             $request->merge(['reference_id'=> $obj->id])->merge(['app'=> $this->app])->merge(['subject'=> $template->subject])->merge(['message'=> $template->message])->merge(['status'=> '0'])->merge(['email'=> $em])->merge(['agency_id'=> $obj->agency_id])->merge(['client_id'=> $obj->client_id]);
@@ -216,7 +220,7 @@ class MailCampaignController extends Controller
     {
         // load the resource
         $obj = Obj::where('id',$id)->first();
-        $template = MailTemplate::where('id',$obj->mail_template_id)->first();
+        $template = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('id',$obj->mail_template_id)->first();
         // load alerts if any
         $alert = session()->get('alert');
         // authorize the app
@@ -255,7 +259,7 @@ class MailCampaignController extends Controller
             }
         }
         //deleting mailogs 
-        $items = MailLog::where('reference_id',$obj->id)->get();
+        $items = MailLog::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('reference_id',$obj->id)->get();
         foreach($items as $item)
         {
             $item->delete();
@@ -275,7 +279,7 @@ class MailCampaignController extends Controller
         // authorize the app
         $this->authorize('resendmails', $obj);
         $ems = preg_split ("/\,/", $obj->emails);
-        $template = MailTemplate::where('id',$obj->mail_template_id)->first();
+        $template = MailTemplate::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('id',$obj->mail_template_id)->first();
         foreach($ems as $em)
         {       
             $log = MailLog::create(['agency_id' => $obj->agency_id ,'status' => 0 ,'client_id' => $obj->client_id , 'mail_template_id' => $obj->mail_template_id ,'reference_id' => $obj->id , 'email' => $em, 'scheduled_at' => $obj->scheduled_at, 'app' => $this->app , 'subject'=> $template->subject ,'message'=> $template->message]);
