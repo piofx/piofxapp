@@ -233,6 +233,7 @@ class ContactController extends Controller
                 //$data = json_decode($data);
                 if($template != NULL)
                 {
+                    if(isset($data->digest ))
                     if ($data->digest == 'rightaway')
                         {   
                             if($data->primary_email && $data->secondary_email)
