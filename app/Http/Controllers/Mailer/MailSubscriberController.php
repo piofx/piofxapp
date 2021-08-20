@@ -25,18 +25,16 @@ class MailSubscriberController extends Controller
      */
     public function index(Obj $obj,Request $request)
     {   
-        
-
         if($request->input('query'))
         {
             // check for search string
             $query = $request->input('query');
-            //ddd($query);
-            $objs = $obj->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->paginate(10); 
+            
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("email", "LIKE", "%".$query."%")->orderBy('email', 'asc')->paginate(10); 
         }
         else
         {
-            $objs = $obj->paginate(10);
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');
@@ -82,7 +80,7 @@ class MailSubscriberController extends Controller
         $request->validate([
             'email' => 'required|max:255'       
         ]); 
-        $subscriber = $obj->where('email', '=', $request->email)->first();
+        $subscriber = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $request->email)->first();
         if ($subscriber === null)
         {   
             //ddd($subscriber);
@@ -260,7 +258,7 @@ class MailSubscriberController extends Controller
                     //unset($importData_arr[0]);
                     foreach($importData_arr as $importData)
                     {   
-                        $subscriber = $obj->where('email', '=', $importData[0])->first();
+                        $subscriber = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $importData[0])->first();
                         if ($subscriber === null)
                         {
                             $validate_email = debounce_valid_email($importData[0]);

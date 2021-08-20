@@ -201,6 +201,15 @@
     </div>
   </div>
 
+  <!-- Maintenance Mode -->
+  <div class="my-3 bg-light-danger p-5 rounded-lg">
+    <h4>Maintenance Mode</h4>
+    <select name="maintenance_mode" class="form-control">
+      <option value="active">Active</option>
+      <option value="inactive" selected>Inactive</option>
+    </select>
+  </div>
+
       @endif
       
      

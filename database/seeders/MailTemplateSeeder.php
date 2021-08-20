@@ -332,6 +332,7 @@ class MailTemplateSeeder extends Seeder
                                                 Hi ,
                                                 {{$count}}
                                                 Contact Responses have been submitted!!
+                                                The name is : {{$name}}
                                                 <br />
                                                 <br />
                                                 Click on the link below to update your

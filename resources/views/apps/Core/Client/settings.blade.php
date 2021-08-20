@@ -103,12 +103,20 @@
 											<div class="col-12 col-lg-4">
 												<div class="form-group">
 													<label>{{ ucwords(str_replace('_', ' ', $k)) }}</label>
-													<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
+													@if($k == "maintenance_mode")
+														<select name="{{ 'settings-' . $k }}" class="form-control">
+															<option value="active" @if($setting == 'active'){{ 'selected' }}@endif>Active</option>
+															<option value="inactive" @if($setting == 'inactive'){{ 'selected' }}@endif>Inactive</option>
+														</select>
+													@else
+														<input type="text" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
+													@endif
 												</div>
 											</div>
 										@else
 											<input type="hidden" name="{{ 'settings-' . $k }}" class="form-control" value="{{ $setting }}">
 										@endif
+
 									@endif
 								@endforeach
 							</div>

@@ -1,5 +1,21 @@
 <x-dynamic-component :component="$app->componentName">
-  <div class="container my-5 p-5 bg-white rounded-lg shadow-sm">
+<!--begin::Breadcrumb-->
+<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
+    <li class="breadcrumb-item">
+        <a href="/admin" class="text-muted text-decoration-none">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/blog"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/blog/categories"  class="text-muted text-decoration-none">{{ ucfirst($app->module) }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="#"  class="text-muted text-decoration-none">Create/Edit</a>
+    </li>
+</ul>
+<!--end::Breadcrumb-->
+<div class="container my-5 p-5 bg-white rounded-lg shadow-sm">
     @if($stub == "create")
     <form method="POST" action="{{ route($app->module.'.store') }}">
     @else
@@ -55,5 +71,5 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
     </form>
-  </div>
+</div>
 </x-dynamic-component>

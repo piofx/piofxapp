@@ -28,12 +28,13 @@ class MailTemplateController extends Controller
         {
             // check for search string
             $query = $request->input('query');
-            //ddd($query);
-            $objs = $obj->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
+            // Retrieve Specific record
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->orderBy('name', 'asc')->paginate(10); 
         }
         else
-        {
-            $objs = $obj->paginate(10);
+        {   
+            // Retrieve Specific record
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');

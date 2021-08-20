@@ -77,6 +77,19 @@ class Client
         if($client){
             if($client->status){
                 $this->add($request,$client,$domain,$theme,$settings,$agency_settings,$agency);
+
+                // If maintenance mode is active then allow only few routes
+                // If superadmin is given in url then allow acces even in maintenance mode
+                if(isset($settings->maintenance_mode) && $settings->maintenance_mode == 'active'){
+                    $path = explode("/", $request->path());
+                    $allowed_routes = ['admin', 'login', 'register', 'forgot-password', 'logout', 'logged_in'];
+                    if(!in_array($path[0], $allowed_routes)){
+                        if(request()->get('superadmin')){
+                            return $next($request);
+                        }
+                        abort('403','Site is under Maintenance');
+                    }
+                }
                 
                 return $next($request);
             }else{

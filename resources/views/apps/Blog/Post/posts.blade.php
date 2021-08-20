@@ -6,7 +6,7 @@
             <a href="/admin" class="text-muted text-decoration-none">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="#"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
+            <a href="/admin/blog"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
         </li>
         <li class="breadcrumb-item">
             <a href="#"  class="text-muted text-decoration-none">{{ ucfirst($app->module) }}</a>
@@ -66,7 +66,7 @@
             @foreach($objs as $key=>$obj)
                 <tr class="border-bottom">
                     <th scope="row" class="px-3 align-middle">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
-                    <td class="px-3 align-middle font-weight-bolder"><a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif"" class="text-dark">{{ $obj->title }}</a></td>
+                    <td class="px-3 align-middle font-weight-bolder"><a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="text-dark">{{ $obj->title }}</a></td>
                     <td class="px-3 align-middle">{{ $obj->slug }}</td>
                     
                     <td class="px-3 align-middle">@if($obj->category) {{ $obj->category->name }}  @endif</td>
@@ -78,7 +78,7 @@
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">
                         <!-- View Button-->
-                        <a href="{{ route($app->module.'.show', $obj->slug) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-eye m-0"></i></a>
+                        <a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-eye m-0"></i></a>
                         <!-- End View Button -->
 
                         <!-- Edit Button -->

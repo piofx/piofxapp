@@ -315,7 +315,11 @@ class PostController extends Controller
         $tag = new Tag();
         $user = new User();
         $blogSettings = new BlogSettings();
-        $request = new Request();
+        $request = Request();
+
+        // load alerts if any
+        $alert = session()->get('alert');
+        
         //deletes cache data
         if($request->input('refresh')){
             Cache::forget('post_'.request()->get('client.id').'_'.$slug);
@@ -360,12 +364,10 @@ class PostController extends Controller
 
         // Cached categories data
         $categories = Cache::get('categories_'.request()->get('client.id'));
-        
         if(!$categories){
             // Retrieve all categories
             $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
             // Add to cache 
-            
             Cache::forever('categories_'.request()->get('client.id'), $categories);
         }
 
@@ -410,10 +412,9 @@ class PostController extends Controller
         if(!empty($post->category) && $post->category->posts->count() > 0){
             // Retrieving all related posts   
             $related = $post->category->posts->where('status', '1')->take(3);
+            // add to cache
+            Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
         }
-        // add to cache
-        Cache::forever('related_'.request()->get('client.id').'_'.$slug, $related);
-
         
         // cached postCategory data
         $postCategory = Cache::get('postCategory_'.request()->get('client.id').'_'.$slug);
@@ -463,7 +464,6 @@ class PostController extends Controller
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
-        $alert = "";
         return view("apps.".$this->app.".".$this->module.".show")
                 ->with("app", $this)
                 ->with("tags", $tags)
@@ -884,17 +884,21 @@ class PostController extends Controller
     }
 
     public function subscribe(Obj $obj, Request $request){
-        
-        $validate_email = debounce_valid_email($request->email);
-        $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
-        
-        $obj = MailSubscriber::create($request->all());
-        
-        event(new UserCreated($obj,$request));
-        $alert = "Your Successfully subscribed!";
-        //withErrors(['message'=>'Record does not exist'])
-        return redirect()->back()->with("alert", $alert);
-        //return redirect()->route($this->module.'.index')->with("alert", $alert);
+
+        $subscriber = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('email', '=', $request->email)->where('app','=',$this->app)->first();
+        if ($subscriber === null)
+        {   
+            $validate_email = debounce_valid_email($request->email);
+            $request->merge(['agency_id'=>request()->get('agency.id')])->merge(['client_id'=>request()->get('client.id')])->merge(['app'=>$this->app])->merge(['info'=>$request->name])->merge(['valid_email'=>$validate_email])->merge(['status'=> 1 ]);
+            
+            $obj = MailSubscriber::create($request->all());
+            
+            event(new UserCreated($obj,$request));
+            $alert = "Your Successfully subscribed!";
+            //withErrors(['message'=>'Record does not exist'])
+            return redirect()->back()->with("alert", $alert);
+            //return redirect()->route($this->module.'.index')->with("alert", $alert);
+        }
     }
 
     // Miscellenious
@@ -914,89 +918,28 @@ class PostController extends Controller
     //             $content = $body . " " . $conclusion;
     //         }            
 
-    //         $obj->update(["content" => $content]);
+    //         echo $obj->update(["content" => $content]);
     //     }
     // }
     
-    // public function searchConsole(Request $request){
-    //     $fromDate = date('Y-m-d', strtotime('-3 months'));
-    //     $toDate = date('Y-m-d', strtotime('-1 day'));
-
-    //     $client_id = '611622056329-a9sc8cab7etimqqr0uhuvi1ou0a0m25s.apps.googleusercontent.com';
-    //     $client_secret = '4pJ9Si64HP-4wEF5CIqAFpxy';
-    //     $redirect_uri = 'http://localhost:8000/admin/blog/searchConsole';
-
-    //     $client = new Google_Client();
-    //     $client->setClientId($client_id);
-    //     $client->setClientSecret($client_secret);
-    //     $client->setRedirectUri($redirect_uri);
-    //     $client->addScope("https://www.googleapis.com/auth/webmasters");
-
-    //     $client->setAccessType('offline');
-    //     $client->setIncludeGrantedScopes(true);   
-
-    //     if($request->input("code")){
-    //         $authCode = $request->input('code');
-    //         // Exchange authorization code for an access token.
-    //         $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-
-    //         // Check to see if there was an error.
-    //         if (array_key_exists('error', $accessToken)) {
-    //             throw new Exception(join(', ', $accessToken));
-    //         }
-
-    //         $request->session()->put('searchConsoleToken', $accessToken);
-    //     }
-        
-    //     if ($request->session()->has('searchConsoleToken')) {
-    //         $accessToken = $request->session()->get('searchConsoleToken');
-    //         $client->setAccessToken($accessToken);
-    //     }
-    //     else{
-    //         // Refresh the token if possible, else fetch a new one.
-    //         if ($client->getRefreshToken()) {
-    //             $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-    //         } else {
-    //             // Request authorization from the user.
-    //             $authUrl = $client->createAuthUrl();
-                
-    //             header("Location: ". $authUrl);
-    //         }
+    // public function getContent(Obj $obj){
+    //     $objs = $obj->get();
+    //     $data = array();
+    //     foreach($objs as $obj){
+    //         $data[$obj->title] = $obj->content;
     //     }
 
-    //     if ($client->getAccessToken()) {
-
-    //         $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
-
-    //         $obj->setStartDate($fromDate);
-    //         $obj->setEndDate($toDate);
-
-    //         $obj->setDimensions(['query']);
-    //         // $obj->setSearchType('web');
-    //         try {
-    //             $service = new Google_Service_Webmasters($client);
-    //             $queryData = $service->searchanalytics->query('https://packetprep.com', $obj);
-    //         } 
-    //         catch(\Exception $e ) {
-    //             echo $e->getMessage();
-    //         }  
-
-    //         $obj->setDimensions(['page']);
-    //         // $obj->setSearchType('web');
-    //         try {
-    //             $service = new Google_Service_Webmasters($client);
-    //             $pageData = $service->searchanalytics->query('https://packetprep.com', $obj);
-    //         } 
-    //         catch(\Exception $e ) {
-    //             echo $e->getMessage();
-    //         }  
-
-    //         return view("apps.".$this->app.".".$this->module.".searchConsole")
-    //                     ->with("app", $this)
-    //                     ->with("queryData", $queryData)
-    //                     ->with("pageData", $pageData);
-    //     }
+    //     Storage::disk('public')->put("changeContent.json", json_encode($data, JSON_PRETTY_PRINT));
     // }
+
+    public function changeContent(Obj $obj){
+        $data = json_decode(Storage::disk('public')->get('changeContent.json'));
+
+        foreach($data as $k=>$v){
+            $status = $obj->where("client_id", 1)->where("title", $k)->update(["content" => $v]);
+            echo $status;
+        }
+    }
 
     
 }

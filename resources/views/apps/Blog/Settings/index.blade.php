@@ -1,4 +1,20 @@
 <x-dynamic-component :component="$app->componentName">
+    <!--begin::Breadcrumb-->
+    <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
+        <li class="breadcrumb-item">
+            <a href="/admin" class="text-muted text-decoration-none">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/blog"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/blog/settings"  class="text-muted text-decoration-none">{{ ucfirst($app->module) }}</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#"  class="text-muted text-decoration-none">Normal Mode</a>
+        </li>
+    </ul>
+    <!--end::Breadcrumb-->
 
     <div class="card rounded">
         <div class="card-body">

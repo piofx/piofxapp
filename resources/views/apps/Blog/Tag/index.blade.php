@@ -6,7 +6,7 @@
             <a href="/admin" class="text-muted text-decoration-none">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="#"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
+            <a href="/admin/blog"  class="text-muted text-decoration-none">{{ ucfirst($app->app) }}</a>
         </li>
         <li class="breadcrumb-item">
             <a href="#"  class="text-muted text-decoration-none">{{ ucfirst($app->module) }}</a>

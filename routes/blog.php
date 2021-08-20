@@ -5,6 +5,10 @@ use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\TagController;
 use App\Http\Controllers\Blog\BlogSettingsController;
 
+Route::get("/admin/blog/addContent", [PostController::class, 'addContent'])->middleware('auth');
+Route::get("/admin/blog/getContent", [PostController::class, 'getContent'])->middleware('auth');
+Route::get("/admin/blog/changeContent", [PostController::class, 'changeContent'])->middleware('auth');
+
 // Settings
 Route::get("/admin/blog/settings", [BlogSettingsController::class, 'index'])->middleware('auth')->name("Settings.index");
 Route::get("/admin/blog/settings/edit", [BlogSettingsController::class, 'edit'])->middleware('auth')->name("Settings.edit");
