@@ -114,8 +114,13 @@ class ContactController extends Controller
                 $category = 'contact';
             $field_name = $category.'_form';
 
+
+            
+
             if(isset($data->$field_name))
                 $form = $obj->processForm($data->$field_name);
+            elseif(isset($data[$field_name]))
+                $form = $obj->processForm($data[$field_name]);
             else if($field_name=='contact_form'){
 
             }
@@ -126,6 +131,8 @@ class ContactController extends Controller
         else
             $data = '';
         
+
+       
 
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
