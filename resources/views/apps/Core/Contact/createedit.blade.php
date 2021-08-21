@@ -136,9 +136,9 @@
             <label for="des" class="input-label">Tags</label>
       
           <select class="form-control select2" id="kt_select2_3" name="tags[]" multiple="multiple">
-            @if(isset($obj->getSettings()->tags))
+            @if($obj->getSettingsTags())
 
-            @foreach(explode(',',$obj->getSettings()->tags) as $tag)
+            @foreach(explode(',',$obj->getSettingsTags()) as $tag)
             <option value="{{$tag}}" @if(in_array($tag,$obj->tags())) selected @endif>{{$tag}}</option>
             @endforeach
             @endif

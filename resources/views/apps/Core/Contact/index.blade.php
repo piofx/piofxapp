@@ -114,7 +114,7 @@
     <div class="col-6 col-md-2" >
       <x-snippets.cards.basic class="bg-light-warning border border-warning mb-5">
         <h5>Open Leads <a href="#" data-toggle="tooltip" title="Candidates who are yet to be contacted"><i class="flaticon-exclamation-2"></i></a></h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=1{{$url_suffix}}">{{ count($data['overall'][1])}}</a>
         </div>
       </x-snippets.cards.basic>
@@ -122,7 +122,7 @@
     <div class="col-6 col-md-2">
       <x-snippets.cards.basic class="border border-dark mb-5">
         <h5 class="">Not Responded </h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=5{{$url_suffix}}">{{ count($data['overall'][5]) }}</a>
         </div>
       </x-snippets.cards.basic>
@@ -130,7 +130,7 @@
     <div class="col-6 col-md-2">
         <x-snippets.cards.basic class="bg-light-danger border border-danger mb-5">
         <h5>Cold Leads <a href="#" data-toggle="tooltip" title="Candidates who will not join our program"><i class="flaticon-exclamation-2"></i></a></h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=2{{$url_suffix}}">{{ count($data['overall'][2])}}</a>
         </div>
       </x-snippets.cards.basic>
@@ -138,7 +138,7 @@
     <div class="col-6 col-md-2" >
         <x-snippets.cards.basic class="bg-light-info border border-info mb-5">
         <h5>Warm Leads <a href="#" data-toggle="tooltip" title="Candidates who may join our program in near future"><i class="flaticon-exclamation-2"></i></a></h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=3{{$url_suffix}}">{{ count($data['overall'][3])}}</a>
         </div>
       </x-snippets.cards.basic>
@@ -146,7 +146,7 @@
     <div class="col-6 col-md-2">
         <x-snippets.cards.basic class="bg-light-primary  border border-primary mb-5">
         <h5>Prospects <a href="#" data-toggle="tooltip" title="Candidates who are willing to take our program"><i class="flaticon-exclamation-2"></i></a></h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=4{{$url_suffix}}">{{ count($data['overall'][4])}}</a>
         </div>
       </x-snippets.cards.basic>
@@ -154,7 +154,7 @@
     <div class="col-6 col-md-2">
         <x-snippets.cards.basic class="bg-light-success border border-success mb-5">
         <h5>Customers <a href="#" data-toggle="tooltip" title="Candidates who made the purchase"><i class="flaticon-exclamation-2"></i></a></h5>
-        <div class="display-2">
+        <div class="display-3">
           <a href="{{ route('Contact.index')}}?status=0{{$url_suffix}}">{{ count($data['overall'][0])}}</a>
         </div>
       </x-snippets.cards.basic>

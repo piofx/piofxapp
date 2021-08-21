@@ -476,10 +476,26 @@ class Contact extends Model
 
      public function getSettings(){
         $client_id = \Auth::user()->client_id;
+
         $settings = null;
         if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
             $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+
+     
+
         return json_decode($settings);
+    }
+
+    public function getSettingsTags(){
+        $client_id = \Auth::user()->client_id;
+      
+        $settings = null;
+        if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
+            $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+
+        if(!isset($settings->tags))
+            return null;
+        return $settings->tags;
     }
 
     public function tags(){
