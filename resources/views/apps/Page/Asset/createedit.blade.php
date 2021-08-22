@@ -18,6 +18,11 @@
   <!--end::Breadcrumb-->
 
 
+  <!--begin::Alert-->
+  @if($alert)
+    <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
+  @endif
+  <!--end::Alert-->
 
   @if($stub=='Create')
     <form method="post" action="{{route($app->module.'.store',$app->id)}}" enctype="multipart/form-data">
@@ -26,7 +31,7 @@
   @endif  
 
   <!--begin::basic card-->
-  <x-snippets.cards.action :title="$app->module " class="border"  >
+  <x-snippets.cards.action2 :title="$app->module " :appid="$app->id" class="border"  >
   
       <div class="row">
         <div class="col-12 col-md-3">
@@ -72,11 +77,22 @@
         </div>
       </div>  
 
+      @if($data)
+      <div class="form-group bg-light border">
+        <label for="formGroupExampleInput " class="px-4 pt-4 pb-2">Editor</label>
+        <div class="">
+          <div id="content" style="min-height: 800px"></div>
+          <textarea id="content_editor" class="form-control border d-none" name="data"  rows="5">@if($stub=='Create'){{ (old('data')) ? old('data') : '' }}@else{{ $data }}@endif</textarea>
+        </div>
+      </div>
+      @else
+
       <div class="form-group bg-light border p-4">
     <label for="exampleFormControlFile1">Upload File</label>
     <input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
   
       </div>
+      @endif
       
       @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
@@ -91,7 +107,7 @@
       
     
     
-  </x-snippets.cards.action>
+  </x-snippets.cards.action2>
   <!--end::basic card-->   
   </form>
 

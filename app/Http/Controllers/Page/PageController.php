@@ -69,12 +69,14 @@ class PageController extends Controller
         $this->authorize('create', $obj);
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
-
+        // load alerts if any
+        $alert = session()->get('alert');
 
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)
                 ->with('clients',$clients)
+                ->with('alert',$alert)
                 ->with('editor',true)
                 ->with('app',$this);
     }
@@ -317,11 +319,15 @@ class PageController extends Controller
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Update')
                 ->with('obj',$obj)
                 ->with('clients',$clients)
+                ->with('alert',$alert)
                 ->with('editor',true)
                 ->with('app',$this);
         else
@@ -354,7 +360,7 @@ class PageController extends Controller
 
             // flash message and redirect to controller index page
             $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
-            return redirect()->route($this->module.'.show',[$theme_id,$id])->with('alert',$alert);
+            return redirect()->route($this->module.'.edit',[$theme_id,$id])->with('alert',$alert);
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];

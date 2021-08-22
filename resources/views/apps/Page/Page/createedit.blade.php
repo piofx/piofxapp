@@ -23,6 +23,11 @@
 	</ul>
 	<!--end::Breadcrumb-->
 
+  <!--begin::Alert-->
+  @if($alert)
+    <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
+  @endif
+  <!--end::Alert-->
 
 
   @if($stub=='Create')
@@ -32,7 +37,7 @@
   @endif  
 
 	<!--begin::basic card-->
-	<x-snippets.cards.action :title="$app->module " class="border"  >
+	<x-snippets.cards.action2 :title="$app->module " :appid="$app->id" class="border"  >
   
       <div class="row">
         <div class="col-12 col-md-3">
@@ -118,7 +123,7 @@
       
     
     
-	</x-snippets.cards.action>
+	</x-snippets.cards.action2>
 	<!--end::basic card-->   
   </form>
 

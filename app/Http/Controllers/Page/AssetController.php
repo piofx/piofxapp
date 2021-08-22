@@ -8,6 +8,7 @@ use App\Models\Page\Asset as Obj;
 use App\Models\Core\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AssetController extends Controller
 {
@@ -65,12 +66,16 @@ class AssetController extends Controller
         $this->authorize('create', $obj);
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
-
+        $data =null;
+        // load alerts if any
+        $alert = session()->get('alert');
 
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)
                 ->with('clients',$clients)
+                ->with('data',$data)
+                ->with('alert',$alert)
                 ->with('editor',true)
                 ->with('app',$this);
     }
@@ -149,11 +154,21 @@ class AssetController extends Controller
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
+        $data=null;
+        if($obj->type=='css' || $obj->type=='js'){
+            $data = Storage::disk('s3')->get($obj->path);
+        }
+
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Update')
                 ->with('obj',$obj)
                 ->with('clients',$clients)
+                ->with('alert',$alert)
+                ->with('data',$data)
                 ->with('editor',true)
                 ->with('app',$this);
         else
@@ -179,10 +194,15 @@ class AssetController extends Controller
             $obj->uploadFile($theme_id,$request);
             //update the resource
             $obj->update($request->all()); 
+
+            if($request->get('data')){
+                $data = $request->get('data');
+                Storage::disk('s3')->put($obj->path,$data);
+            }
             
             // flash message and redirect to controller index page
             $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
-            return redirect()->route($this->module.'.show',[$theme_id,$id])->with('alert',$alert);
+            return redirect()->route($this->module.'.edit',[$theme_id,$id])->with('alert',$alert);
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];

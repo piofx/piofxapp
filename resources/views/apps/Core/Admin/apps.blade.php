@@ -24,6 +24,31 @@
 			</div>
 			<!--end::Tiles Widget 11-->
 		</div>
+		<div class='col-6 col-md-4'>
+						<!--begin::Tiles Widget 11-->
+						<div class="card card-custom bg-success gutter-b" style="max-height: 150px;">
+							<div class="card-body">
+								<span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+									<!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
+									<span class="svg-icon svg-icon-white svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Home/Flower2.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+										<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+											<polygon points="0 0 24 0 24 24 0 24"/>
+											<circle fill="#000000" opacity="0.3" cx="15" cy="17" r="5"/>
+											<circle fill="#000000" opacity="0.3" cx="9" cy="17" r="5"/>
+											<circle fill="#000000" opacity="0.3" cx="7" cy="11" r="5"/>
+											<circle fill="#000000" opacity="0.3" cx="17" cy="11" r="5"/>
+											<circle fill="#000000" opacity="0.3" cx="12" cy="7" r="5"/>
+										</g>
+									</svg><!--end::Svg Icon--></span>
+									<!--end::Svg Icon-->
+								</span>
+								<div>
+									<a href="{{ url('admin/loyalty')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Loyalty</a>
+								</div>
+							</div>
+						</div>
+						<!--end::Tiles Widget 11-->
+					</div>
 
 		<div class='col-6 col-md-3'>
 			<!--begin::Tiles Widget 11-->
