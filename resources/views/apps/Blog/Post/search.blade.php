@@ -46,16 +46,20 @@
                                 @endif
                             @endif
                             <div class="p-3">
-                                <span class="d-block mb-2">
-                                    <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
-                                </span>
+                                @if(!empty($obj->category))
+                                    <span class="d-block mb-2">
+                                        <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
+                                    </span>
+                                @endif
                                 <h3>{{$obj->title}}</h3>
                                 <p>{{$obj->excerpt}}</p>
-                                <div class="mb-3">
-                                    @foreach($obj->tags as $tag)
-                                        <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
-                                    @endforeach
-                                </div>
+                                @if(!empty($obj->tags))
+                                    <div class="mb-3">
+                                        @foreach($obj->tags as $tag)
+                                            <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1 text-primary">{{ $tag->name }}</a>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-primary">@if($settings->language == 'telugu') మరింత సమాచారం @else Continue Reading @endif</a>
                             </div>
                         </div>
