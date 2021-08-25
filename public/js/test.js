@@ -124,7 +124,7 @@ $(function(){
     function submitTestUrl2(slug){
         return prefix_url+'apitest/'+slug;
     }
-	
+    
     function testUrl(slug,answers=false,button=false){
         if(answers)
             return prefix_url+'apitest/'+slug+'?answers=1';
