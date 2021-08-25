@@ -19,13 +19,14 @@
                 <input type="text" required name="client_id" class="form-control" placeholder="Ex: *****.apps.googleusercontent.com">
                 <label class="mt-3">Client Secret</label>
                 <input type="text" required name="client_secret" class="form-control">
+                <label class="mt-3">Website Url</label>
+                <input type="text" class="form-control" id="website_url" name="website_url">
                 <div class="bg-light p-5 rounded rounded-3 mt-3">
                     <h5>Place this url in the allowed redirects</h5>
                     <input name="redirect_url" readonly id="redirect_url" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-dark mt-3">Continue</button>
 
-                <input type="hidden" id="website_url" name="website_url">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>
@@ -143,17 +144,12 @@
         </div>
     @endif
 
-    <!-- Script to copy to clipboard -->
+    <!-- Set the redirect url and website url fields -->
     <script>
-        // Set the current url to redirect url
-        document.getElementById('redirect_url').value = document.URL;
+        // Set the current url without query string to redirect url
+        document.getElementById('redirect_url').value = window.location.href.split('?')[0];
         // Get the root url
-        // let website_url = window.location.protocol + "//" + window.location.host;
-        let website_url = 'https://packetprep.com'
-        document.getElementById('website_url').value = website_url;
-        function copyToClipboard(){
-            let text = document.getElementById("redirect_url");
-        }
+        document.getElementById('website_url').value = window.location.origin;
     </script>
     
 </x-dynamic-component>

@@ -446,7 +446,7 @@ class PostController extends Controller
             }
         }
     
-        // Check if post status is inactive and user is not authenticated ot if role is user then redirect to homepage
+        // Check if post status is inactive and user is not authenticated or if role is user then redirect to homepage
         // Useful if post is accessed through link
         if($obj->status == 0){
             if(!(auth()->user()) || auth()->user()->role == "user"){
@@ -612,6 +612,7 @@ class PostController extends Controller
 
         //update the resource
         $obj->update($request->all() + ['client_id' => request()->get('client.id'), 'agency_id' => request()->get('agency.id'), 'user_id' => auth()->user()->id]);
+        Cache::forget('post_'.request()->get('client.id').'_'.$obj->slug);
 
         $obj->tags()->detach();
 
@@ -795,6 +796,7 @@ class PostController extends Controller
     public function author(Obj $obj, $id, User $user, BlogSettings $blogSettings, Request $request){
         // delete cache data
         if(!empty($request->query()['refresh']) && $request->query()['refresh']){
+            Cache::forget('author_'.request()->get('client.id').'_'.$id);
             Cache::forget('authorPosts_'.request()->get('client.id').'_'.$id);
             Cache::forget('blogSettings_'.request()->get('client.id'));
         }
@@ -871,7 +873,10 @@ class PostController extends Controller
         $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", "desc")->limit('1')->where('status', '1')->first();
 
         $client_settings = json_decode(request()->get('client.settings'));
-        if(isset($client_settings->blog_url) && $client_settings->blog_url != 'direct'){
+        if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
+            $post->slug = $post->slug;
+        }
+        else{
             $post->slug = 'blog/'.$post->slug;
         }
 
