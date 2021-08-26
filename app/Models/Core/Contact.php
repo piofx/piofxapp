@@ -244,7 +244,8 @@ class Contact extends Model
             //load form fields from settings json stored in cloud
             // based on the cateogry or default 
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' )){
-                $data = json_decode(json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ),true));
+                $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+           
                 if(request()->get('category'))
                     $category = request()->get('category');
                 else
