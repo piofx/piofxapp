@@ -35,12 +35,20 @@ $(function(){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&otp=1';
                     $.post($url, d, function(data){
-                        var otp = JSON.parse(data).otp;
-                        $('.otp_input').data('otp',otp);
-                        $('.contact_block').hide();
-                        // Display the returned data in browser
-                        $('.otp_block').show();
-                        return false;  
+                        console.log(data);
+                        var d = JSON.parse(data);
+                        console.log(d);
+                        if(typeof(d.otp) != "undefined" && d.otp !== null){
+                            var otp = JSON.parse(data).otp;
+                            $('.otp_input').data('otp',otp);
+                            $('.contact_block').hide();
+                            // Display the returned data in browser
+                            $('.otp_block').show();
+                            return false; 
+                        }else{
+                             alert(d.error);
+                        }
+                        
                     });
                 });
                 }else{

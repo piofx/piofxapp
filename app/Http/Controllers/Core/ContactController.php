@@ -159,6 +159,8 @@ class ContactController extends Controller
         
         try{
 
+
+
             /* check for closest duplicates */
             $email = $request->get('email');
 
@@ -177,6 +179,9 @@ class ContactController extends Controller
                 }
                 return redirect()->back()->with('alert',$alert);
             }
+
+
+
 
             //if request is for otp
             if($request->get('otp')){
@@ -233,6 +238,7 @@ class ContactController extends Controller
             $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';
 
             
+             
             
             $client_id = request()->get('client.id');
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
@@ -244,7 +250,7 @@ class ContactController extends Controller
                 //$data = json_decode($data);
                 if($template != NULL)
                 {
-                    if(isset($data->digest ))
+                    if(isset($data->digest))
                     if ($data->digest == 'rightaway')
                         {   
                             if($data->primary_email && $data->secondary_email)
@@ -269,7 +275,7 @@ class ContactController extends Controller
 
                             $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id );
                             $content = $template->message;
-                            
+
 
                             NotifyAdmin::dispatch($details,$content);
                         }
@@ -412,11 +418,27 @@ class ContactController extends Controller
         // load the token
         $data['otp'] = rand ( 1000 , 9999);
 
+        $validated = false;
+        //validate data
+        if (strpos($phone, '+') !== false){
+            $validated=true;
+        }else{
+            if(strlen($phone)==10)
+            {
+                $phone = '+91'.$phone;
+            }else{
+                $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
+                return json_encode($message);
+            }
+                
+        }
         //send otp
         $this->sendOTP($phone,$data['otp']);
 
         //display token in json format
         return json_encode($data);
+        
+
     }
 
     /**
@@ -424,7 +446,9 @@ class ContactController extends Controller
      *
      */
     public function sendOTP($phone,$code){
-        $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$phone."/".$code;
+
+        $apikey = env('SMS_APIKEY');
+        $url = "https://2factor.in/API/V1/".$apikey."/SMS/".$phone."/".$code;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
