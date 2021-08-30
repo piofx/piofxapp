@@ -189,7 +189,7 @@ class ContactController extends Controller
 
             //if request is for otp
             if($request->get('otp')){
-                echo '1234';//$this->otp();
+                echo $this->otp();
                 dd();
             }
             
@@ -432,7 +432,7 @@ class ContactController extends Controller
                 
         }
         //send otp
-        $this->sendOTP($phone,$data['otp']);
+        //$this->sendOTP($phone,$data['otp']);
 
         //display token in json format
         return json_encode($data);
