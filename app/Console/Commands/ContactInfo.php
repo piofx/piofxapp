@@ -60,16 +60,16 @@ class ContactInfo extends Command
                 $message->subject($template->subject);
             });
 
-            $obj = MailLog::where('id',$maillog->id)->first();
-            if( count(Mail::failures()) == 0 ) {
-                $obj->status = 1;
-                $obj->save();
-            }
-            else
-            {
-                $obj->status = 2;
-                    $obj->save();
-            }
+            // $obj = MailLog::where('id',$maillog->id)->first();
+            // if( count(Mail::failures()) == 0 ) {
+            //     $obj->status = 1;
+            //     $obj->save();
+            // }
+            // else
+            // {
+            //     $obj->status = 2;
+            //         $obj->save();
+            // }
         }
 
         if($this->argument('email2') != NULL)
@@ -81,17 +81,17 @@ class ContactInfo extends Command
                 $message->subject($template->subject);
             });
 
-            $obj = MailLog::where('id',$maillog->id)->first();
+            // $obj = MailLog::where('id',$maillog->id)->first();
 
-            if( count(Mail::failures()) == 0 ) {
-                $obj->status = 1;
-                $obj->save();
-            }
-            else
-            {
-                $obj->status = 2;
-                    $obj->save();
-            }
+            // if( count(Mail::failures()) == 0 ) {
+            //     $obj->status = 1;
+            //     $obj->save();
+            // }
+            // else
+            // {
+            //     $obj->status = 2;
+            //         $obj->save();
+            // }
         }
 
     }

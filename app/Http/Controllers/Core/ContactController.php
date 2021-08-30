@@ -132,6 +132,12 @@ class ContactController extends Controller
         }
         else
             $data = '';
+
+         if(request()->get('try')){
+                $details = array('name' => 'New name' ,'phone'=>'phoe number','email' => 'email name' ,'message' => 'my message' ,'counter'=> 1 ,'email1_To' => 'packetcode@gmail.com' ,'email2_To' => 'shaadomanthra@gmail.com','client_name'=>'FA','subject'=>'Its my subject','link'=>'#' );
+                $content = 'sample content';
+                NotifyAdmin::dispatch($details,$content);
+            }
         
 
        
@@ -274,6 +280,8 @@ class ContactController extends Controller
                         }
                 }
             }
+
+           
 
             //update alert default message or load from the settings file 
             $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';

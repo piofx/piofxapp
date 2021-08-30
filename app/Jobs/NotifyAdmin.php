@@ -41,32 +41,32 @@ class NotifyAdmin implements ShouldQueue
         {
             Mail::to($this->details['email1_To'])->send(new NewContactsUpdate($this->details,$this->content));
             
-            $obj = MailLog::where('id',$this->details['log_id'])->first();
-            if( count(Mail::failures()) == 0 ) {
-                $obj->status = 1;
-                $obj->save();
-            }
-            else
-            {
-                $obj->status = 2;
-                $obj->save();
-            }
+            // $obj = MailLog::where('id',$this->details['log_id'])->first();
+            // if( count(Mail::failures()) == 0 ) {
+            //     $obj->status = 1;
+            //     $obj->save();
+            // }
+            // else
+            // {
+            //     $obj->status = 2;
+            //     $obj->save();
+            // }
         }
 
         if($this->details['email2_To'] != NULL)
         {
             Mail::to($this->details['email2_To'])->send(new NewContactsUpdate($this->details,$this->content));
             
-            $obj = MailLog::where('id',$this->details['log_id'])->first();
-            if( count(Mail::failures()) == 0 ) {
-                $obj->status = 1;
-                $obj->save();
-            }
-            else
-            {
-                $obj->status = 2;
-                $obj->save();
-            }
+            // $obj = MailLog::where('id',$this->details['log_id'])->first();
+            // if( count(Mail::failures()) == 0 ) {
+            //     $obj->status = 1;
+            //     $obj->save();
+            // }
+            // else
+            // {
+            //     $obj->status = 2;
+            //     $obj->save();
+            // }
         }
 
         
