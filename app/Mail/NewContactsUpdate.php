@@ -41,12 +41,18 @@ class NewContactsUpdate extends Mailable
         if (str_contains($this->content, '{{$email}}')) { 
            $this->content = str_replace('{{$email}}',$this->details['email'],$this->content);
         }
+        if (str_contains($this->content, '{{$phone}}')) { 
+           $this->content = str_replace('{{$phone}}',$this->details['phone'],$this->content);
+        }
         if (str_contains($this->content, '{{$message}}')) { 
             $this->content = str_replace('{{$message}}',$this->details['message'],$this->content);
         }
+        if (str_contains($this->content, '{{$link}}')) { 
+            $this->content = str_replace('{{$link}}',$this->details['link'],$this->content);
+        }
     
-        return $this->from('mail@example.com', 'Mailtrap')
-            ->subject('Contacts Update')
+        return $this->from('noreply@customerka.com', $this->details['client_name'])
+            ->subject($this->details['subject'])
             ->view('apps.Mailer.MailView.ContactList');
         
     }

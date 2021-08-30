@@ -160,27 +160,31 @@ class ContactController extends Controller
         try{
 
 
-
-            /* check for closest duplicates */
+            $client_id = request()->get('client.id');
+            $client_name = request()->get('client.name');
+            $category = request()->get('category');
             $email = $request->get('email');
+            //load settings data
+            $settings_data = null;
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
+                $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
 
-            // allow duplicate only if the previous one is atleast 10 min old
+            /* 
+            * Check for closest duplicates 
+            * allow duplicate only if the previous one is atleast 1 min old
+            */
             $date = new DateTime();
-            $date->modify('-10 minutes');
+            $date->modify('-1 minutes');
             $formatted_date = $date->format('Y-m-d H:i:s');
             $entry = $obj->where('email',$email)->where('created_at','>=',$formatted_date)->first();
-
-
             if($entry){
-                $alert = 'Your message has been saved recently.';
+                $alert = 'Your message has been saved recently. Kindly retry after few minutes.';
                 if(request()->get('api')){
                     echo $alert;
                     dd();
                 }
                 return redirect()->back()->with('alert',$alert);
             }
-
-
 
 
             //if request is for otp
@@ -234,53 +238,48 @@ class ContactController extends Controller
             // store the data
             $obj = $obj->create($request->all());
 
-            //update alert and return back
-            $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';
-
             
-             
-            
-            $client_id = request()->get('client.id');
-            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
+            // send mail alert to admin
+            if($settings_data)
             {   
                 //Fletching the template 
                 $template = MailTemplate::where('name','contacts_update')->first();
                 //open the client specific settings
-                $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
                 //$data = json_decode($data);
                 if($template != NULL)
                 {
-                    if(isset($data->digest))
-                    if ($data->digest == 'rightaway')
+                    if(isset($settings_data->digest))
+                    if ($settings_data->digest == 'rightaway')
                         {   
-                            if($data->primary_email && $data->secondary_email)
-                            {
-                                $email1_to = $data->primary_email; 
-                                $email2_to = $data->secondary_email;
-                            }
-                            elseif($data->primary_email)
-                            {
-                                $email1_to = $data->primary_email;
-                                $email2_to = '';
-                            }
-                            elseif($data->secondary_email)
-                            {
-                                $email1_to = $data->secondary_email;
-                                $email2_to = '';
-                            }
-                            
+                            // load emails to send message to
+                            $email1_to = $email2_to = null;
+                            if(isset($settings_data->primary_email))
+                                $email1_to = $settings_data->primary_email;
+                            if(isset($settings_data->secondary_email))
+                                $email2_to = $settings_data->secondary_email;
+                           
+                            //load mail template
                             $template = MailTemplate::where('name','contacts_update')->first();
+
+                            $subject = $template->subject;
+                            if($category)
+                                $subject = $subject.' - '.$category;
                             
-                            $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $template->subject,'message' => $template->message , 'status'=> 0]);
-
-                            $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id );
+                            //update the mail log
+                            $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 0]);
+                            // notify the admins via mail
+                            $details = array('name' => $obj->name ,'phone'=>$obj->phone,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject,'link'=>route('Contact.show',$obj->id) );
                             $content = $template->message;
-
-
                             NotifyAdmin::dispatch($details,$content);
                         }
                 }
             }
+
+            //update alert default message or load from the settings file 
+            $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';
+            if(isset($settings_data->alert_message))
+                $alert = $settings_data->alert_message;
+
 
             // if the call is api, return the url
             if(request()->get('api')){

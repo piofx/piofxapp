@@ -34,7 +34,7 @@ class MailTemplateController extends Controller
         else
         {   
             // Retrieve Specific record
-            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->paginate(10);
+            $objs = $obj->paginate(10);
         }
         // load alerts if any
         $alert = session()->get('alert');

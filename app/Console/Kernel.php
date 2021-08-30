@@ -33,21 +33,12 @@ class Kernel extends ConsoleKernel
             $client_id = $v[0]['client_id'];
             $agency_id = $v[0]['agency_id'];
             $data = json_decode(Storage::disk('s3')->get('settings/contact/'.$k.'.json' ));
-            if($data->primary_email && $data->secondary_email)
-            {
-                $email1 = $data->primary_email;
-                $email2 = $data->secondary_email;
-            }
-            elseif($data->primary_email)
-            {
-                $email1 = $data->primary_email;
-                $email2 = '';
-            }
-            elseif($data->secondary_email)
-            {
-                $email = $data->secondary_email;
-                $email = '';
-            }
+             // load emails to send message to
+            $email1 = $email2 = null;
+            if(isset($settings_data->primary_email))
+                $email1 = $settings_data->primary_email;
+            if(isset($settings_data->secondary_email))
+                $email2 = $settings_data->secondary_email;
             
             if($email1)
             {   
@@ -55,19 +46,22 @@ class Kernel extends ConsoleKernel
                 {   
                     $contacts = Contact::whereDate('created_at', Carbon::today())->get()->where('client_id',$k);
                     $counter = count($contacts);  
-                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->everyMinute();
+                    $term = date('h-i-s');
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id,$term])->everyMinute();
                 }
                 else if ($data->digest == 'weekly')
                 {
                     $contacts = Contact::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get()->where('client_id',$k);
                     $counter = count($contacts);
-                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->weekly();   
+                    $term = date('h-i-s');
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id,$term])->weekly();   
                 }
                 else
                 {
                     $contacts = Contact::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get()->where('client_id',$k);
                     $counter = count($contacts);
-                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id])->monthly();   
+                    $term = date('h-i-s');
+                    $schedule->command('ContactInfo',[$counter,$email1,$email2,$client_id,$agency_id,$term])->monthly();   
                 }
 
                 

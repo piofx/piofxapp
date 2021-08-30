@@ -14,7 +14,7 @@ class ContactInfo extends Command
      *
      * @var string
      */
-    protected $signature = 'ContactInfo {counter}  {email1} {email2} {client_id} {agency_id}';
+    protected $signature = 'ContactInfo {counter}  {email1} {email2} {client_id} {agency_id} {term}';
 
     /**
      * The console command description.
@@ -40,20 +40,15 @@ class ContactInfo extends Command
      */
     public function handle(Request $request)
     {   
-        $template = MailTemplate::where('name','contacts_update')->first();
+        $template = MailTemplate::where('slug','slug4')->first();
 
         $counter = $this->argument('counter');
+        $term = $this->argument('term');
         if (str_contains($template->message, '{{$count}}')) { 
            $template->message = str_replace('{{$count}}',$counter,$template->message);
         }
-        if (str_contains($template->message, '{{$name}}')) {
-            $template->message = str_replace('{{$name}}','',$template->message);
-        }
-        if (str_contains($template->message, '{{$email}}')) { 
-           $template->message = str_replace('{{$email}}','',$template->message);
-        }
-        if (str_contains($template->message, '{{$message}}')) { 
-            $template->message = str_replace('{{$message}}','',$template->message);
+        if (str_contains($template->message, '{{$term}}')) { 
+           $template->message = str_replace('{{$term}}',$counter,$template->message);
         }
 
         if($this->argument('email1') != NULL)
@@ -62,7 +57,7 @@ class ContactInfo extends Command
 
             Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
                 $message->to($this->argument('email1'));
-                $message->subject('New Contacts');
+                $message->subject($template->subject);
             });
 
             $obj = MailLog::where('id',$maillog->id)->first();
@@ -83,7 +78,7 @@ class ContactInfo extends Command
 
             Mail::send('apps.Mailer.MailView.ContactList', ['count'=> $this->argument('counter'), 'content' => $template->message] , function($message) {
                 $message->to($this->argument('email2'));
-                $message->subject('New Contacts');
+                $message->subject($template->subject);
             });
 
             $obj = MailLog::where('id',$maillog->id)->first();
