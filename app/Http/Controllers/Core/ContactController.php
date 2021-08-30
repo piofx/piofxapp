@@ -262,6 +262,8 @@ class ContactController extends Controller
                             $subject = $template->subject;
                             if($category)
                                 $subject = $subject.' - '.$category;
+                            if($obj->name)
+                                $subject = $subject.' - '.$obj->name;
 
                             //update the mail log
                             $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 0]);

@@ -60,11 +60,13 @@ $(function(){
             $(document).on("click",".otp_button", function(e){
                 e.preventDefault();
                 var formValues= $("form").serialize();
+                $('.spinner-border').show();
                 var otp = parseInt($('.otp_input').data('otp'));
                 var user_otp = parseInt($('.otp_input').val());
                 console.log(otp+ ' - '+user_otp);
                 if(otp!=user_otp){
                     $('.otp_message').show();
+                    $('.spinner-border').hide();
                     return false;
                 }else{
                     $.get('/contact/api',function(data){
@@ -77,6 +79,7 @@ $(function(){
                             $('.alert_message').html(data);
                             $('.alert_block').show();
                             $('.otp_block').hide();
+                            $('.spinner-border').hide();
                             return false;  
                         });
                     });
