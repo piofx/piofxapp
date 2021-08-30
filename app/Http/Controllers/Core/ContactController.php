@@ -189,7 +189,7 @@ class ContactController extends Controller
 
             //if request is for otp
             if($request->get('otp')){
-                echo $this->otp();
+                echo '1234';//$this->otp();
                 dd();
             }
             
@@ -264,13 +264,13 @@ class ContactController extends Controller
                             $subject = $template->subject;
                             if($category)
                                 $subject = $subject.' - '.$category;
-                            
+
                             //update the mail log
                             $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 0]);
                             // notify the admins via mail
                             $details = array('name' => $obj->name ,'phone'=>$obj->phone,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject,'link'=>route('Contact.show',$obj->id) );
                             $content = $template->message;
-                            NotifyAdmin::dispatch($details,$content);
+                            //NotifyAdmin::dispatch($details,$content);
                         }
                 }
             }
