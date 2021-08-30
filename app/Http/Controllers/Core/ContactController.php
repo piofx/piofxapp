@@ -434,7 +434,7 @@ class ContactController extends Controller
                 
         }
         //send otp
-        //$this->sendOTP($phone,$data['otp']);
+        $this->sendOTP($phone,$data['otp']);
 
         //display token in json format
         return json_encode($data);
