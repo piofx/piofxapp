@@ -94,6 +94,8 @@ class ContactController extends Controller
         //load client id
         $client_id = request()->get('client.id');
 
+
+
         //load the form elements if its defined in the settings i.e. stored in aws
         $form = $prefix = $suffix = null;
         if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' )){
@@ -119,8 +121,8 @@ class ContactController extends Controller
 
             if(isset($data->$field_name))
                 $form = $obj->processForm($data->$field_name);
-            elseif(isset($data[$field_name]))
-                $form = $obj->processForm($data[$field_name]);
+            // elseif(isset($data[$field_name]))
+            //     $form = $obj->processForm($data[$field_name]);
             else if($field_name=='contact_form'){
 
             }
@@ -165,6 +167,8 @@ class ContactController extends Controller
             $date->modify('-10 minutes');
             $formatted_date = $date->format('Y-m-d H:i:s');
             $entry = $obj->where('email',$email)->where('created_at','>=',$formatted_date)->first();
+
+
             if($entry){
                 $alert = 'Your message has been saved recently.';
                 if(request()->get('api')){
@@ -172,6 +176,12 @@ class ContactController extends Controller
                     dd();
                 }
                 return redirect()->back()->with('alert',$alert);
+            }
+
+            //if request is for otp
+            if($request->get('otp')){
+                echo $this->otp();
+                dd();
             }
             
             /* create a new entry */
@@ -211,17 +221,18 @@ class ContactController extends Controller
             $valid_email = $obj->debounce_valid_email($request->get('email'));
             $request->merge(['valid_email' => $valid_email]);
 
+            //update client id and agency id
+            if(!$request->get('client_id')){
+                $request->merge(['client_id' => request()->get('client.id')]);
+                $request->merge(['agency_id' => request()->get('agency.id')]);
+            }
             // store the data
             $obj = $obj->create($request->all());
 
             //update alert and return back
             $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';
 
-            // if the call is api, return the url
-            if(request()->get('api')){
-                echo $alert;
-                dd();
-            }
+            
             
             $client_id = request()->get('client.id');
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
@@ -258,10 +269,17 @@ class ContactController extends Controller
 
                             $details = array('name' => $obj->name ,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id );
                             $content = $template->message;
+                            
 
                             NotifyAdmin::dispatch($details,$content);
                         }
                 }
+            }
+
+            // if the call is api, return the url
+            if(request()->get('api')){
+                echo $alert;
+                dd();
             }
 
             return redirect()->back()->with('alert',$alert);
@@ -376,6 +394,44 @@ class ContactController extends Controller
         echo json_encode($data);
         dd();
 
+    }
+
+     /**
+     * Send the otp code for the request
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function otp()
+    {
+        //get client id
+        $client_id = request()->get('client.id');
+        // get the user phone number
+        $phone = request()->get('phone');
+
+        // load the token
+        $data['otp'] = rand ( 1000 , 9999);
+
+        //send otp
+        $this->sendOTP($phone,$data['otp']);
+
+        //display token in json format
+        return json_encode($data);
+    }
+
+    /**
+     * Function to send OTP code
+     *
+     */
+    public function sendOTP($phone,$code){
+        $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$phone."/".$code;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
     }
 
 

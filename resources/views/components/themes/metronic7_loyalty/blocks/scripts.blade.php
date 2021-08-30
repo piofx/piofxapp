@@ -112,8 +112,34 @@
         editor2.onDidChangeModelContent(function (e) {
             document.getElementById('content_editor2').value = editor2.getModel().getValue();
          });
+
+
         }
         
+        $(window).bind('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch (String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    event.preventDefault();
+                    if(document.getElementById("content") || document.getElementById("content2")){
+                        $url = $('.url_codesave').attr('action');
+                        var formValues= $("form").serialize();
+                        saveCode($url,formValues);
+                    }
+                    break;
+                }
+            }
+        });
+
+        function saveCode($url,formValues){
+            var formValues = formValues+'&api=1';
+             $.post($url, formValues, function(data){
+                console.log('code saved');
+                $('.code_saved').show().delay(2000).fadeOut('slow');
+                return false;  
+            });
+           
+        }
 
     });
 </script>

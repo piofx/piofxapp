@@ -352,11 +352,17 @@ class PageController extends Controller
             //update the resource
             $obj->update($request->all()); 
             //process the  html load by updating variables
-
             $obj->processHtml();
 
             //reload cache and session data
             $obj->refreshCache($theme_id);
+
+            //return the control if the request is via api
+            if($request->get('api'))
+            {
+                echo "1";
+                dd();
+            }
 
             // flash message and redirect to controller index page
             $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';

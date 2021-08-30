@@ -1,6 +1,6 @@
 
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
-
+  <x-snippets.alerts.codesave></x-snippets.alerts.codesave>
   <!--begin::Breadcrumb-->
   <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
     <li class="breadcrumb-item">
@@ -25,9 +25,9 @@
   <!--end::Alert-->
 
   @if($stub=='Create')
-    <form method="post" action="{{route($app->module.'.store',$app->id)}}" enctype="multipart/form-data">
+    <form method="post" class="url_codesave" action="{{route($app->module.'.store',$app->id)}}" enctype="multipart/form-data">
   @else
-    <form method="post" action="{{route($app->module.'.update',[$app->id,$obj->id])}}" enctype="multipart/form-data">
+    <form method="post" class="url_codesave" action="{{route($app->module.'.update',[$app->id,$obj->id])}}" enctype="multipart/form-data">
   @endif  
 
   <!--begin::basic card-->
@@ -79,7 +79,7 @@
 
       @if($data)
       <div class="form-group bg-light border">
-        <label for="formGroupExampleInput " class="px-4 pt-4 pb-2">Editor</label>
+        <label for="formGroupExampleInput " class="px-4 pt-4 pb-2">Editor (Use Ctrl+S to save)</label>
         <div class="">
           <div id="content" style="min-height: 800px"></div>
           <textarea id="content_editor" class="form-control border d-none" name="data"  rows="5">@if($stub=='Create'){{ (old('data')) ? old('data') : '' }}@else{{ $data }}@endif</textarea>

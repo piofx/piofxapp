@@ -1,6 +1,6 @@
 
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
-
+  <x-snippets.alerts.codesave></x-snippets.alerts.codesave>
 	<!--begin::Breadcrumb-->
 	<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
 		<li class="breadcrumb-item">
@@ -31,9 +31,9 @@
 
 
   @if($stub=='Create')
-    <form method="post" action="{{route($app->module.'.store',$app->id)}}" enctype="multipart/form-data">
+    <form method="post" class="url_codesave" action="{{route($app->module.'.store',$app->id)}}" enctype="multipart/form-data">
   @else
-    <form method="post" action="{{route($app->module.'.update',[$app->id,$obj->id])}}" enctype="multipart/form-data">
+    <form method="post" class="url_codesave" action="{{route($app->module.'.update',[$app->id,$obj->id])}}" enctype="multipart/form-data">
   @endif  
 
 	<!--begin::basic card-->
@@ -96,7 +96,7 @@
       </div>  
 
       <div class="form-group bg-light border">
-        <label for="formGroupExampleInput " class="px-4 pt-4 pb-2">HTML Editor</label>
+        <label for="formGroupExampleInput " class="px-4 pt-4 pb-2">HTML Editor (Use Ctrl+S to save)</label>
         <div class="">
           <div id="content" style="min-height: 800px"></div>
           <textarea id="content_editor" class="form-control border d-none" name="html"  rows="5">@if($stub=='Create'){{ (old('html')) ? old('html') : '' }}@else{{ $obj->html }}@endif</textarea>
@@ -114,15 +114,14 @@
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="id" value="{{ $obj->id }}">
       @endif
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
         <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
         <input type="hidden" name="client_id" value="{{ request()->get('client.id') }}">
         <input type="hidden" name="theme_id" value="{{ $app->id }}">
       
-    
-    
+
 	</x-snippets.cards.action2>
 	<!--end::basic card-->   
   </form>
