@@ -133,14 +133,6 @@ class ContactController extends Controller
         else
             $data = '';
 
-         if(request()->get('try')){
-                $details = array('name' => 'New name' ,'phone'=>'phoe number','email' => 'email name' ,'message' => 'my message' ,'counter'=> 1 ,'email1_To' => 'packetcode@gmail.com' ,'email2_To' => 'shaadomanthra@gmail.com','client_name'=>'FA','subject'=>'Its my subject','link'=>'#' );
-                $content = 'sample content';
-                NotifyAdmin::dispatch($details,$content);
-            }
-        
-
-       
 
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
@@ -276,7 +268,7 @@ class ContactController extends Controller
                             // notify the admins via mail
                             $details = array('name' => $obj->name ,'phone'=>$obj->phone,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject,'link'=>route('Contact.show',$obj->id) );
                             $content = $template->message;
-                            //NotifyAdmin::dispatch($details,$content);
+                            NotifyAdmin::dispatch($details,$content);
                         }
                 }
             }
