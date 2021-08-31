@@ -16,6 +16,9 @@ use Carbon\Carbon;
 use App\Exports\ContactsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use App\Mail\EmailForQueuing;
+use App\Mail\DefaultMail;
+use Mail;
 
 class ContactController extends Controller
 {
@@ -190,6 +193,12 @@ class ContactController extends Controller
                 echo $this->otp();
                 dd();
             }
+
+            //if request is for otp
+            if($request->get('email_otp')){
+                echo $this->otp('email');
+                dd();
+            }
             
             /* create a new entry */
             $data = '';
@@ -266,13 +275,52 @@ class ContactController extends Controller
                                 $subject = $subject.' - '.$obj->name;
 
                             //update the mail log
-                            $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 0]);
+                            $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $obj->email , 'app' => 'contact' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
                             // notify the admins via mail
                             $details = array('name' => $obj->name ,'phone'=>$obj->phone,'email' => $obj->email ,'message' => $obj->message ,'counter'=> 1 ,'email1_To' => $email1_to ,'email2_To' => $email2_to,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject,'link'=>route('Contact.show',$obj->id) );
                             $content = $template->message;
                             NotifyAdmin::dispatch($details,$content);
                         }
                 }
+
+                //user email
+                $sendmail = false;
+                $check_field = 'mail_subject';
+                if(isset($settings_data->$check_field)){
+                    $sendmail = $check_field;
+                    $mailcontent = $settings_data->mail_content;
+                    $mailsubject = $settings_data->mail_subject;
+                }
+                $check_field = 'mail_subject_'.$category;
+                if(isset($settings_data->$check_field)){
+                    $sendmail = $check_field;
+                    $field = 'mail_content_'.$category;
+                    $mailcontent = $settings_data->$field;
+                    $mailsubject = $settings_data->$check_field;
+                }
+
+                if($sendmail){
+                    $details['subject'] = $mailsubject;
+                    $details['content'] = $mailcontent;
+                    $details['email'] = $email;
+                    $details['name'] = $obj->name;
+                    $details['client_name'] = $client_name;
+
+                    //update the mail log
+                    $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $details['email'] , 'app' => 'contact' ,'mail_template_id' => 1, 'subject' => $details['subject'],'message' => $details['content'] , 'status'=> 1]);
+                    
+                    if (str_contains($details['content'], '{{$name}}')) { 
+                       $details['content'] = str_replace('{{$name}}',$details['name'],$details['content']);
+                    }
+                    if (str_contains($details['content'], '{{$email}}')) { 
+                       $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
+                    }
+        
+                    // send email
+                    Mail::to($details['email'])->send(new DefaultMail($details));
+
+                }
+
             }
 
            
@@ -281,7 +329,10 @@ class ContactController extends Controller
             $alert = 'Thank you! Your message has been posted to the Admin team. We will reach out to you soon.';
             if(isset($settings_data->alert_message))
                 $alert = $settings_data->alert_message;
-
+            //check for category specific message
+            $name = 'alert_message_'.$category;
+            if(isset($settings_data->$name))
+                $alert = $settings_data->$name;
 
             // if the call is api, return the url
             if(request()->get('api')){
@@ -409,32 +460,50 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function otp()
+    public function otp($email=false)
     {
         //get client id
         $client_id = request()->get('client.id');
         // get the user phone number
         $phone = request()->get('phone');
+        $email_id = request()->get('email');
 
         // load the token
         $data['otp'] = rand ( 1000 , 9999);
-
         $validated = false;
-        //validate data
-        if (strpos($phone, '+') !== false){
-            $validated=true;
-        }else{
-            if(strlen($phone)==10)
-            {
-                $phone = '+91'.$phone;
+
+        if($email){
+            //validate data
+            if (strpos($email_id, '@') !== false){
+                $validated=true;
             }else{
-                $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
-                return json_encode($message);
+                $message['error'] = 'Invalid Email format. Kindly enter a valid email for OTP verification.'.$email_id;
+                return json_encode($message);      
             }
-                
+            //send otp on phone
+            $this->sendEmailOTP($email_id,$data['otp']);
+
+        }else{
+            
+            //validate data
+            if (strpos($phone, '+') !== false){
+                $validated=true;
+            }else{
+                if(strlen($phone)==10)
+                {
+                    $phone = '+91'.$phone;
+                }else{
+                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
+                    return json_encode($message);
+                }
+                    
+            }
+            //send otp on phone
+            $this->sendOTP($phone,$data['otp']);
+
         }
-        //send otp
-        $this->sendOTP($phone,$data['otp']);
+
+        
 
         //display token in json format
         return json_encode($data);
@@ -457,6 +526,43 @@ class ContactController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         $data = curl_exec($ch);
         curl_close($ch);
+    }
+
+    /**
+     * Function to send OTP code
+     *
+     */
+    public function sendEmailOTP($email,$code){
+
+
+        //load mail template
+        $template = MailTemplate::where('slug','mail_verification')->first();
+
+
+        $subject = $template->subject;
+
+        $client_name = request()->get('client.name');
+        //update the mail log
+
+        $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $email , 'app' => 'user' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
+
+
+        
+        // notify the admins via mail
+        $details = array('email' => $email , 'count'=>$code, 'content' => $template->message,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject);
+
+        if (str_contains($details['content'], '{{$count}}')) {
+            $details['content'] = str_replace('{{$count}}',$details['count'],$details['content']);   
+        }
+        if (str_contains($details['content'], '{{$email}}')) { 
+           $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
+        }
+        
+
+        // send email
+        Mail::to($details['email'])->send(new EmailForQueuing($details));
+
+      
     }
 
 

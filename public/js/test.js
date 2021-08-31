@@ -79,7 +79,15 @@ $(function(){
     $(document).on('click', '.trytest', function(e) {
         e.preventDefault();
         var slug = $(this).data('container');
+        console.log(slug);
         var container = $("."+slug);
+        if(!container.length){
+            $(".test_container").html("<div class='"+slug+"'> loading...</div>");
+            var container = $("."+slug);
+        }
+        if(!container.length)
+            return false;
+        console.log(container+ ' here');
         var answer_button = $(this).data('answer_button');
         var testname = $(this).data('test_name');
         var testcss = $(this).data('test_css');
