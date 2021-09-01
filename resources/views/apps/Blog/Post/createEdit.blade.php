@@ -336,7 +336,7 @@
                         class="form-control p-0 d-inline ml-3" placeholder="start-typing-the-title"
                         name="slug" value="@if($stub == 'update'){{$obj ? $obj->slug : null }}@else{{ Request::old('slug') ? Request::old('slug') : null }}@endif"/>
                 </div>
-                <textarea type="text" required
+                <textarea type="text"   
                     class="form-control border h-auto px-3 py-3 mb-3 font-size-h6"
                     name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : null }}@else{{ Request::old('excerpt') ? Request::old('excerpt') : null }}@endif</textarea>
 

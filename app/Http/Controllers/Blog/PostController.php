@@ -547,7 +547,6 @@ class PostController extends Controller
         }
         else{
             if($request->input('publish') == "save_as_draft"){
-                ddd('here');
                 $request->merge(["status" => 0]);
             } 
             else if($request->input('publish') == "preview"){
@@ -865,12 +864,12 @@ class PostController extends Controller
 
 
     // Api to retrieve popular post
-    public function popularPost(Request $request){
+    public function latestPost(Request $request){
         // Initialize Object
         $obj = new Obj();
 
         // Retrieve the post
-        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("views", "desc")->limit('1')->where('status', '1')->first();
+        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', '1')->orderBy('id', 'desc')->first();
 
         $client_settings = json_decode(request()->get('client.settings'));
         if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){

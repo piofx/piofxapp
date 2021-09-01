@@ -40,7 +40,7 @@
 
                                                         </div>
                                                         <div class="card-body p-3 p-md-4">
-                                                            @if($f->category)
+                                                            @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
                                                                 <span class="d-block mb-2  mt-lg-0">
                                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                                 </span>
@@ -125,7 +125,7 @@
                                         @endif
 
                                         <div class="card-body p-3 p-md-4">
-                                            @if($f->category)
+                                            @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
                                                 <span class="d-block mb-2 mt-3 mt-lg-0">
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                 </span>
@@ -155,7 +155,7 @@
                                                 @endif
                                             </div>
                                             <div class="card-body p-3 p-md-4">
-                                                @if($f->category)
+                                                @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
                                                     <span class="d-block mb-2 mt-3 mt-lg-0">
                                                         <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                     </span>
@@ -226,7 +226,7 @@
                                         @endif
 
                                         <div class="card-body p-3 p-md-4">
-                                            @if($f->category)
+                                            @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
                                                 <span class="d-block mb-2 mt-3 mt-lg-0">
                                                     <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                 </span>

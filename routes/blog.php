@@ -49,6 +49,6 @@ Route::get("/blog/author/{name}", [PostController::class, "author"])->name("Post
 Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");
 
 // Retrieve popular post
-Route::get("/popularPost", [PostController::class, "popularPost"])->name("Post.popular");
+Route::get("/latestPost", [PostController::class, "latestPost"])->name("Post.latestPost");
 Route::post("/blog/subscribe", [PostController::class, "subscribe"])->name("Post.subscribe");
 Route::get("/blog/{slug}", [PostController::class, "show"])->name("Post.show");

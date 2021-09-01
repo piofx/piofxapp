@@ -46,7 +46,7 @@
                                 @endif
                             @endif
                             <div class="p-3">
-                                @if(!empty($obj->category))
+                                @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
                                     <span class="d-block mb-2">
                                         <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                     </span>

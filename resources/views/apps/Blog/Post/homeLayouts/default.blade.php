@@ -121,7 +121,7 @@
         <!-- Slider Nav -->
         <div class="container slick-pagination-line-wrapper content-centered-y right-0 left-0">
             <div class="content-centered-y right-0 mr-3">
-                <div id="heroSliderNav" class="js-slick-carousel slick slick-pagination-line max-w-27rem ml-auto"
+                <div id="heroSliderNav" class="js-slick-carousel slick slick-pagination-line max-w-50rem ml-auto"
                     data-hs-slick-carousel-options='{
                     "vertical": true,
                     "verticalSwiping": true,
@@ -135,10 +135,10 @@
                     @foreach($featured as $f)
                         @if($f->status != 0)
                             <div class="js-slide my-1 bg-white rounded-lg p-2">
-                                <span class="text-dark">{{ substr($f->title, 0, 20) }}</span>
-                                <span class="slick-pagination-line-progress bg-dark">
+                                <span class="text-dark">{{ $f->title }}</span>
+                                <!-- <span class="slick-pagination-line-progress bg-dark">
                                     <span class="slick-pagination-line-progress-helper"></span>
-                                </span>
+                                </span> -->
                             </div>
                         @endif
                     @endforeach
@@ -156,15 +156,15 @@
             <div class="col-12 col-lg-9">
 
                 <!-- Ad -->
-                <div class="mb-3">
-                    @if(!empty($settings->ads))
+                @if(!empty($settings->ads))
+                    <div class="mb-3">
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'before-content')
                                 {!! $ad->content !!}
                             @endif
                         @endforeach
-                    @endif
-                </div>
+                    </div>
+                @endif
                 <!-- End Ad Section -->  
 
                 @foreach($objs as $obj)
@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="card-body d-flex flex-column h-100 p-0">
-                                            @if($obj->category)
+                                            @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
                                                 <span class="d-block mb-2 mt-3 mt-lg-0">
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                                 </span>
@@ -219,7 +219,7 @@
                         @else
                             <div class="mb-5 p-3 bg-light rounded-lg">
                                 <div class="card-body d-flex flex-column h-100 p-0">
-                                    @if($obj->category)
+                                    @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
                                         <span class="d-block mb-2">
                                         <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                         </span>
@@ -252,15 +252,15 @@
                 @endforeach
 
                 <!-- Ad -->
-                <div class="my-3">
-                    @if(!empty($settings->ads))
+                @if(!empty($settings->ads))
+                    <div class="my-3">
                         @foreach($settings->ads as $ad)
                             @if($ad->position == 'after-content')
                                 {!! $ad->content !!}
                             @endif
                         @endforeach
-                    @endif
-                </div>
+                    </div>
+                @endif
                 <!-- End Ad Section -->
                 <div class="my-3">
                     {{$objs->links() ?? ""}}

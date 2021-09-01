@@ -47,7 +47,7 @@
                             @endif
                         @endif
                         <div class="card-body">
-                            @if(!empty($obj->category))
+                            @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
                                 <span class="d-block small font-weight-bold text-cap mb-2">{{ $obj->category->name }}</span>
                             @endif
                             <h5 class="mb-0 text-dark">{{ $obj->title }}</h5>

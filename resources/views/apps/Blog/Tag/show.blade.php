@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-7">
                                     <div class="card-body d-flex flex-column h-100 p-0">
-                                        @if($post->category)
+                                        @if(!empty($post->category) && strtolower($post->category) != 'uncategorized')
                                             <span class="d-block mb-2 mt-3 mt-lg-0">
                                             <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
                                             </span>
@@ -77,7 +77,7 @@
                     @else
                         <div class="mb-5 p-3 bg-light rounded-lg rounded-3">
                             <div class="card-body d-flex flex-column h-100 p-0">
-                                @if($post->category)
+                                @if(!empty($post->category) && strtolower($post->category) != 'uncategorized')
                                     <span class="d-block mb-2">
                                     <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $post->category->slug) }}">{{ $post->category->name }}</a>
                                     </span>

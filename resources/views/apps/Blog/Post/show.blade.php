@@ -174,66 +174,74 @@
         
             <div  @if($settings->post_layout != 'full') class="col-12 col-lg-8" @endif>
                 <div class="mb-3">
-                    <h1>{{$obj->title}}</h1>
-                    @if(!empty($postCategory))
+                    <h1 class="m-0">{{$obj->title}}</h1>
+
+                    @if(!empty($postCategory) && strtolower($postCategory) != 'uncategorized')
                         <a href="{{ route('Category.show', $postCategory->slug) }}" class="h5 text-decoration-none"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
                     @endif
+                    
+                    @if(!empty($obj->excerpt))
+                        <p class="text-muted mt-3">{{ $obj->excerpt }}</p>
+                    @endif
+
                 </div>
 
                 <!-- Author and share -->
-                <div class="border-top border-bottom mb-5">
-                    <div class="row align-items-md-center">
-                        <div class="col-7 p-0 pl-3">
-                            <div class="d-flex align-items-center py-1 justify-content-start">
-                                @if(!empty($author))
-                                    @if($author->image)
-                                        <div class="rounded-circle">
-                                            @php
-                                                $path = explode("/", $author->image);
-                                                $path = explode(".", $path[1]);
-                                                $path = $path[0];
-                                            @endphp
-                                            @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
-                                            @else
-                                                <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}">
-                                            @endif
+                @if($settings->author_section && $settings->author_section == 'show')
+                    <div class="border-top border-bottom mb-5">
+                        <div class="row align-items-md-center">
+                            <div class="col-7 p-0 pl-3">
+                                <div class="d-flex align-items-center py-1 justify-content-start">
+                                    @if(!empty($author))
+                                        @if($author->image)
+                                            <div class="rounded-circle">
+                                                @php
+                                                    $path = explode("/", $author->image);
+                                                    $path = explode(".", $path[1]);
+                                                    $path = $path[0];
+                                                @endphp
+                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                @else
+                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}">
+                                                @endif
+                                            </div>
+                                        @else
+                                            <h4 class="bg-soft-primary text-primary m-0 px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
+                                        @endif
+                                        <div class="pl-2 ps-2">
+                                            <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
+                                            <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
                                         </div>
-                                    @else
-                                        <h4 class="bg-soft-primary text-primary m-0 px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
                                     @endif
-                                    <div class="pl-2 ps-2">
-                                        <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
-                                        <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
-                                    </div>
-                                @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-5 p-0 pr-4">
-                            <div class="d-flex justify-content-md-end align-items-center">
-                                <!-- Facebook (url) -->
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
+                            <div class="col-5 p-0 pr-4">
+                                <div class="d-flex justify-content-md-end align-items-center">
+                                    <!-- Facebook (url) -->
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
 
-                                <!-- Twitter (url, text, @mention) -->
-                                <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
+                                    <!-- Twitter (url, text, @mention) -->
+                                    <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
 
-                                <!-- Reddit (url, title) -->
-                                <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                    <i class="fab fa-reddit"></i>
-                                </a>
+                                    <!-- Reddit (url, title) -->
+                                    <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                        <i class="fab fa-reddit"></i>
+                                    </a>
 
-                                <!-- LinkedIn (url, title, summary, source url) -->
-                                <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
+                                    <!-- LinkedIn (url, title, summary, source url) -->
+                                    <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <!-- End Author and share -->
 
                 <!-- Featured Image -->
@@ -308,15 +316,22 @@
                     }
                 @endphp
 
-                @if($obj->visibility == "private")
-                    @if(auth()->user())
-                        @php
-                            $user_group = explode(",", auth()->user()->group);
-                            $post_group = explode(",", $obj->group);
-                            $group = array_intersect($user_group, $post_group);
-                        @endphp
-                        @if(sizeOf($group) > 0)
-                            {!! $obj->content !!}
+                <div style="font-size: 1.2rem; line-height: 2rem;">
+                    @if($obj->visibility == "private")
+                        @if(auth()->user())
+                            @php
+                                $user_group = explode(",", auth()->user()->group);
+                                $post_group = explode(",", $obj->group);
+                                $group = array_intersect($user_group, $post_group);
+                            @endphp
+                            @if(sizeOf($group) > 0)
+                                {!! $obj->content !!}
+                            @else
+                                <div class="text-center bg-soft-danger p-3 rounded-lg">
+                                    <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
+                                    <img src="{{ asset('img/locked.png') }}" class="img-fluid w-50">
+                                </div>
+                            @endif
                         @else
                             <div class="text-center bg-soft-danger p-3 rounded-lg">
                                 <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
@@ -324,22 +339,17 @@
                             </div>
                         @endif
                     @else
-                        <div class="text-center bg-soft-danger p-3 rounded-lg">
-                            <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
-                            <img src="{{ asset('img/locked.png') }}" class="img-fluid w-50">
-                        </div>
+                        @if(!empty($altContent))
+                            {!! $altContent !!}
+                        @else
+                            {!! $obj->content !!}
+                        @endif
                     @endif
-                @else
-                    @if(!empty($altContent))
-                        {!! $altContent !!}
-                    @else
-                        {!! $obj->content !!}
-                    @endif
-                @endif
+                </div>
 
                 <!-- Tags -->
                 @if(!empty($postTags) && sizeof($postTags) > 0)
-                    <div class="mt-4">
+                    <div class="mt-5">
                         <h4>Tags</h4>
                         @foreach($postTags as $tag)
                             <a class="btn btn-xs btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
@@ -349,7 +359,7 @@
                 <!-- End Tags -->
 
                 <!-- Share -->
-                <div class="d-flex justify-content-sm-between align-items-sm-center mb-5">
+                <div class="d-flex justify-content-sm-between align-items-sm-center mt-3 mb-5">
                     <div class="d-flex align-items-center">
                         <small class="text-muted font-weight-bold">SHARE:</small>
 
@@ -382,7 +392,7 @@
                 <!-- End Ad Section -->
 
                 <!-- Newsletter -->
-                @if(Auth::user())
+                <!-- @if(Auth::user())
                     <div class="bg-soft-danger p-5 rounded-lg rounded-3">
                         <div class="mb-3">
                             <h2 class="m-0">Liked what you have read?</h2>
@@ -415,7 +425,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endif -->
                 <!-- End Newsletter -->
 
                 <!-- Related Posts Full Section -->
