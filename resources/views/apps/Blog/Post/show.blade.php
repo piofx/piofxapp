@@ -187,6 +187,7 @@
                 </div>
 
                 <!-- Author and share -->
+                @if(isset($settings->author_section ))
                 @if($settings->author_section && $settings->author_section == 'show')
                     <div class="border-top border-bottom mb-5">
                         <div class="row align-items-md-center">
@@ -241,6 +242,7 @@
                             </div>
                         </div>
                     </div>
+                @endif
                 @endif
                 <!-- End Author and share -->
 
