@@ -30,3 +30,11 @@
     overflow: hidden;
     position: absolute;
 } */
+
+/* blockquote css */
+.plain_box{
+    background: #fff7e0;
+    border-radius: 5px;
+    padding: 40px;
+    font-size: 1.4rem;
+}

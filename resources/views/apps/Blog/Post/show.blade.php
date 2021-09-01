@@ -181,7 +181,9 @@
                     @endif
                     
                     @if(!empty($obj->excerpt))
+                    <div style="font-size: 1.2rem; line-height: 2rem;">
                         <p class="text-muted mt-3">{{ $obj->excerpt }}</p>
+                    </div>
                     @endif
 
                 </div>
