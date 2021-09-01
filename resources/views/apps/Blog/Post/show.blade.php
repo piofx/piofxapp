@@ -176,7 +176,7 @@
                 <div class="mb-3">
                     <h1 class="m-0">{{$obj->title}}</h1>
 
-                    @if(!empty($postCategory) && strtolower($postCategory) != 'uncategorized')
+                    @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
                         <a href="{{ route('Category.show', $postCategory->slug) }}" class="h5 text-decoration-none"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
                     @endif
                     

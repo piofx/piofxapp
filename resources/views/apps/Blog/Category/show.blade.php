@@ -17,7 +17,7 @@
 	<!-- Blogs Section -->
 	<div class="container space-1 space-lg-2">
 		<div class="row justify-content-lg-between">
-			<div class="col-lg-8">
+			<div class="col-lg-9">
 				<!-- Ad -->
 				<div class="mb-3">
 						@if(!empty($settings->ads))

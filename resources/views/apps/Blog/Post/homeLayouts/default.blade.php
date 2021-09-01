@@ -187,8 +187,8 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="card-body d-flex flex-column h-100 p-0">
-                                            @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
-                                                <span class="d-block mb-2 mt-3 mt-lg-0">
+                                            @if(!empty($obj->category) && strtolower($obj->category->name) != 'uncategorized')
+                                                <span class="d-block mb-2 mt-3 mt-lg-2">
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                                 </span>
                                             @endif
@@ -219,7 +219,7 @@
                         @else
                             <div class="mb-5 p-3 bg-light rounded-lg">
                                 <div class="card-body d-flex flex-column h-100 p-0">
-                                    @if(!empty($obj->category) && strtolower($obj->category) != 'uncategorized')
+                                    @if(!empty($obj->category) && strtolower($obj->category->name) != 'uncategorized')
                                         <span class="d-block mb-2">
                                         <a class="font-weight-bold text-decoration-none text-primary" href="{{ route('Category.show', $obj->category->slug) }}">{{ $obj->category->name }}</a>
                                         </span>

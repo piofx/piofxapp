@@ -40,7 +40,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="card-body">
-                                                            @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
+                                                            @if(!empty($f->category) && strtolower($f->category->name) != 'uncategorized')
                                                                 <span class="d-block mb-2 mt-3 mt-lg-0">
                                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                                 </span>
@@ -120,7 +120,7 @@
                                         @endif
 
                                         <div class="card-body p-3 p-md-4">
-                                            @if(!empty($f->category) && strtolower($f->category) != 'uncategorized')
+                                            @if(!empty($f->category) && strtolower($f->category->name) != 'uncategorized')
                                                 <span class="d-block mb-2 mt-3 mt-lg-0">
                                                     <a class="font-weight-bold text-decoration-none text-primary " href="{{ route('Category.show', $f->category->slug) }}">{{ $f->category->name }}</a>
                                                 </span>
