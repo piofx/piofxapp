@@ -197,7 +197,7 @@ class AssetController extends Controller
 
             if($request->get('data')){
                 $data = $request->get('data');
-                Storage::disk('s3')->put($obj->path,$data);
+                Storage::disk('s3')->put($obj->path,$data,'public');
             }
             
             // flash message and redirect to controller index page

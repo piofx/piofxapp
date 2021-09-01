@@ -7,7 +7,7 @@
    </div>
    <div class="col text-right">
     <button type="submit" class="btn btn-primary font-weight-bold mr-2">Submit</button>
-    <a href="{{route('Page.index',$appid)}}"  class="btn btn-light-info font-weight-bold">Close</a>
+    <a href="{{route($title.'.index',$appid)}}"  class="btn btn-light-info font-weight-bold">Close</a>
    </div>
   </div>
  </div>

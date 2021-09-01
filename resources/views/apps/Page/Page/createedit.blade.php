@@ -37,7 +37,7 @@
   @endif  
 
 	<!--begin::basic card-->
-	<x-snippets.cards.action2 :title="$app->module " :appid="$app->id" class="border"  >
+	<x-snippets.cards.action2 :title="$app->module" :appid="$app->id" class="border"  >
   
       <div class="row">
         <div class="col-12 col-md-3">
