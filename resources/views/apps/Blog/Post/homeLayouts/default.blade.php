@@ -262,9 +262,12 @@
                     </div>
                 @endif
                 <!-- End Ad Section -->
-                <div class="my-3">
+
+                <!-- Pagination -->
+                <div class="my-3 overflow-auto">
                     {{$objs->links() ?? ""}}
                 </div>
+                <!-- Pagination -->
             </div>
 
             <!-- Right Section -->
