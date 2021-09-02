@@ -30,6 +30,24 @@ if (!function_exists('componentName')) {
 	}
 }
 
+// function to load modules from the settings
+if (!function_exists('updateMetaTitle')) {
+	function updateMetaTitle($title){
+		$content = request()->get('app.theme.prefix');
+        $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
+        request()->merge(['app.theme.prefix' => $buffer,]);
+	}
+}
+
+// function to load modules from the settings
+if (!function_exists('updateMetaDescription')) {
+	function updateMetaDescription($description){
+		$content = request()->get('app.theme.prefix');
+        $buffer =  preg_replace('/<meta name="description" content="(.*)"\/>/i','<meta name="description" content="'.$description.'" />', $content);
+        request()->merge(['app.theme.prefix' => $buffer,]);
+	}
+}
+
 
 
 // function to retrive data theme settings

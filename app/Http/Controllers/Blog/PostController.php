@@ -462,6 +462,17 @@ class PostController extends Controller
             $ext = 'jpg';
         }
 
+        // change meta title
+        $title = $obj->meta_title;
+        if($title)
+            updateMetaTitle($title.' | '.request()->get('client.name'));
+        
+        // change meta description
+        $description = $obj->meta_description;
+        if($description)
+            updateMetaDescription($description);
+        
+
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
         return view("apps.".$this->app.".".$this->module.".show")
