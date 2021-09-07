@@ -169,6 +169,8 @@ class PageController extends Controller
         $agency_settings = request()->get('agency.settings');
         $client_settings = json_decode(request()->get('client.settings'));
 
+
+        
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
             $app = $client_settings->app;
@@ -201,19 +203,20 @@ class PageController extends Controller
 
             // check for direct match
             if(isset($redirects['/'.$requestUrl])){
-                return redirect($redirects['/'.$requestUrl]);
+                return redirect($redirects['/'.$requestUrl],301);
             }
             // Check if the redirect slug exists in the url, if true replace it
             else if(isset($redirects['/'.end($requestUrlParts)])){
                 $newSlug = explode("/",$redirects['/'.end($requestUrlParts)]);
                 $newUrl = str_replace(end($requestUrlParts), end($newSlug), $requestUrl);
-                return redirect($newUrl);
+                return redirect($newUrl,301);
             }
             // check if there is something like /xyz/* and redirect accordingly
             else if(isset($redirects['/'.$requestUrlParts[0].'/*'])){
-                return redirect($redirects['/'.$requestUrlParts[0].'/*']);
+                return redirect($redirects['/'.$requestUrlParts[0].'/*'],301);
             }
         }
+        
         
         if(request()->get('refresh')){
             Cache::forget('page_'.$domain.'_'.$theme_id.'_'.$slug);

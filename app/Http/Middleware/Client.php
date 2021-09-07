@@ -71,6 +71,11 @@ class Client
         //load page data for app embed in the theme
         $this->themeapp($theme,$client_id,$domain,$request);
 
+        //check for redirects
+        $redirect_check = $this->redirect($settings);
+        if($redirect_check)
+            return redirect($redirect_check,301);
+
         if(!$settings)
             abort('404','Invalid Settings');
         
@@ -145,6 +150,32 @@ class Client
             }
         }
         
+    }
+
+    public function redirect($client_settings){
+
+        if(isset($client_settings->redirect)){
+
+            $redirects = json_decode(json_encode($client_settings->redirect, JSON_PRETTY_PRINT), true);
+
+            $requestUrl = request()->path();
+            $requestUrlParts = explode("/", $requestUrl);
+            // check for direct match
+            if(isset($redirects['/'.$requestUrl])){
+                return $redirects['/'.$requestUrl];
+            }
+            // Check if the redirect slug exists in the url, if true replace it
+            else if(isset($redirects['/'.end($requestUrlParts)])){
+                $newSlug = explode("/",$redirects['/'.end($requestUrlParts)]);
+                $newUrl = str_replace(end($requestUrlParts), end($newSlug), $requestUrl);
+                return $newUrl;
+            }
+            // check if there is something like /xyz/* and redirect accordingly
+            else if(isset($redirects['/'.$requestUrlParts[0].'/*'])){
+                return $redirects['/'.$requestUrlParts[0].'/*'];
+            }
+        }
+        return null;
     }
 
     public function maintenance(){

@@ -304,6 +304,10 @@ if (! function_exists('blog_image_upload')) {
 		function dev_normal_mode($data){
 			$settings = array();
 			$names = [];
+			if(!isset($data['mode']))
+				$data['mode'] = 'normal';
+
+
 			// Check if data is sent from normal mode or dev mode
 			if($data['mode'] == 'normal'){
 				// Add the key and vales to settins array by checking if there is a nested array
