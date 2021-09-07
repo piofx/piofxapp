@@ -195,6 +195,7 @@ class ClientController extends Controller
             // authorize the app
             $this->authorize('update', $obj);
             
+            
             // ddd($request->all());
             // Send data to helper and update client settings
             $settings = dev_normal_mode($request->all()); 

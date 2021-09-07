@@ -141,9 +141,9 @@
             <div class="col-12 col-md-4">
               <div class="form-group">
                 <label for="formGroupExampleInput ">Theme</label>
-                <input type="text" class="form-control" name="settings_theme" id="formGroupExampleInput" placeholder="Enter the theme Name" 
+                <input type="text" class="form-control" name="settings-theme" id="formGroupExampleInput" placeholder="Enter the theme Name" 
                 @if($stub=='Create')
-                value="{{ (old('settings_theme')) ? old('settings_theme') : 'default' }}"
+                value="{{ (old('settings-theme')) ? old('settings-theme') : 'default' }}"
                 @else
                 value = "{{ isset(json_decode($obj->settings)->theme)? json_decode($obj->settings)->theme :'' }}"
                 @endif
@@ -153,9 +153,9 @@
             <div class="col-12 col-md-4">
              <div class="form-group">
               <label for="formGroupExampleInput ">Title</label>
-              <input type="text" class="form-control" name="settings_title" id="formGroupExampleInput" placeholder="Enter the site title" 
+              <input type="text" class="form-control" name="settings-title" id="formGroupExampleInput" placeholder="Enter the site title" 
               @if($stub=='Create')
-              value="{{ (old('settings_title')) ? old('settings_title') : '' }}"
+              value="{{ (old('settings-title')) ? old('settings-title') : '' }}"
               @else
               value = "{{ isset(json_decode($obj->settings)->title)? json_decode($obj->settings)->title :'' }}"
               @endif
@@ -165,9 +165,9 @@
           <div class="col-12 col-md-4">
            <div class="form-group">
             <label for="formGroupExampleInput ">Sub Title</label>
-            <input type="text" class="form-control" name="settings_subtitle" id="formGroupExampleInput" placeholder="Enter the site subtitle" 
+            <input type="text" class="form-control" name="settings-subtitle" id="formGroupExampleInput" placeholder="Enter the site subtitle" 
             @if($stub=='Create')
-            value="{{ (old('settings_subtitle')) ? old('settings_subtitle') : '' }}"
+            value="{{ (old('settings-subtitle')) ? old('settings-subtitle') : '' }}"
             @else
             value = "{{ isset(json_decode($obj->settings)->subtitle)? json_decode($obj->settings)->subtitle :'' }}"
             @endif
@@ -177,9 +177,9 @@
         <div class="col-12 col-md-4">
           <div class="form-group">
             <label for="formGroupExampleInput ">Display Email</label>
-            <input type="text" class="form-control" name="settings_email" id="formGroupExampleInput" placeholder="Enter the email to be displayed" 
+            <input type="text" class="form-control" name="settings-email" id="formGroupExampleInput" placeholder="Enter the email to be displayed" 
             @if($stub=='Create')
-            value="{{ (old('settings_email')) ? old('settings_email') : '' }}"
+            value="{{ (old('settings-email')) ? old('settings-email') : '' }}"
             @else
             value = "{{ isset(json_decode($obj->settings)->email)? json_decode($obj->settings)->email :'' }}"
             @endif
@@ -189,9 +189,9 @@
         <div class="col-12 col-md-4">
          <div class="form-group">
           <label for="formGroupExampleInput ">Display Phone</label>
-          <input type="text" class="form-control" name="settings_phone" id="formGroupExampleInput" placeholder="Enter the phone number to be displayed" 
+          <input type="text" class="form-control" name="settings-phone" id="formGroupExampleInput" placeholder="Enter the phone number to be displayed" 
           @if($stub=='Create')
-          value="{{ (old('settings_phone')) ? old('settings_phone') : '' }}"
+          value="{{ (old('settings-phone')) ? old('settings-phone') : '' }}"
           @else
           value = "{{ isset(json_decode($obj->settings)->phone)? json_decode($obj->settings)->phone :'' }}"
           @endif
@@ -204,7 +204,7 @@
   <!-- Maintenance Mode -->
   <div class="my-3 bg-light-danger p-5 rounded-lg">
     <h4>Maintenance Mode</h4>
-    <select name="maintenance_mode" class="form-control">
+    <select name="settings-maintenance_mode" class="form-control">
       <option value="active">Active</option>
       <option value="inactive" selected>Inactive</option>
     </select>
