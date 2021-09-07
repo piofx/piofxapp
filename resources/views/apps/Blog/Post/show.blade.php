@@ -12,16 +12,13 @@
 
     <!-- Article Description Section -->
     <div class="container space-top-3">
-
-        
-    <nav class="my-3">
-        <ol class="breadcrumb p-0 pb-3 m-2" style="background: transparent;">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
-            <li class="breadcrumb-item">{{ $obj->title }}</li>
-        </ol>
-    </nav>
-
+        <nav class="my-3">
+            <ol class="breadcrumb p-0 pb-3 m-2" style="background: transparent;">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                <li class="breadcrumb-item">{{ $obj->title }}</li>
+            </ol>
+        </nav>
 
         <!-- Ad -->
         @if(!empty($settings->ads))
@@ -183,7 +180,7 @@
             @endif
         
             <div  @if($settings->post_layout != 'full') class="col-12 col-lg-8" @endif>
-                <div class="bg-white p-3 rounded">
+                <div class="bg-white p-3 rounded rounded-3 rounded-lg">
                     <div class="mb-3">
                         <div class="d-md-flex align-items-center justify-content-between mb-4">
                             <div>
@@ -193,7 +190,7 @@
                             @php
                                 $allowed_roles = ['superadmin', 'agencyadmin', 'clientadmin'];
                             @endphp
-                            @if(in_array(auth()->user()->role, $allowed_roles))
+                            @if(!empty(auth()->user()) && in_array(auth()->user()->role, $allowed_roles))
                                 <a href="{{ route($app->module.'.edit', $obj->slug) }}" class="mt-1 mt-md-0"><i class="fas fa-edit text-muted" style="font-size: 1.5rem;"></i></a>
                             @endif
                         </div>

@@ -171,7 +171,7 @@
                     @if($obj->status != 0)
                         <!-- Blog -->
                         @if(!empty($obj->image) && strlen($obj->image) > 5 && Storage::disk('s3')->exists($obj->image))
-                            <div class="mb-5 p-3 bg-light rounded-lg">
+                            <div class="mb-5 p-3 bg-light shadow rounded-lg">
                                 <div class="row">
                                     <div class="col-md-5 d-flex align-items-center">
                                         @php
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="mb-5 p-3 bg-light rounded-lg">
+                            <div class="mb-5 p-3 bg-light shadow rounded-lg">
                                 <div class="card-body d-flex flex-column h-100 p-0">
                                     @if(!empty($obj->category) && strtolower($obj->category->name) != 'uncategorized')
                                         <span class="d-block mb-2">
