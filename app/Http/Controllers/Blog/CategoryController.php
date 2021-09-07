@@ -57,13 +57,9 @@ class CategoryController extends Controller
 
 		// Retrieve specific Record based on slug
 		$category = Cache::get("category_".request()->get('client.id')."_".$slug);
-        //ddd($category);
 		if(!$category){
-            //$category = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
 			$category = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
-            //ddd($category);
 			Cache::forever('category_'.request()->get('client.id')."_".$slug, $category);
-            //ddd($category);
 		}
 
         // Check if pagination is clicked 

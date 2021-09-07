@@ -11,14 +11,16 @@
     @endphp
 
     <!-- Article Description Section -->
-    <div class="container space-top-3">
-        <nav class="my-3">
-            <ol class="breadcrumb p-0 pb-3 m-2" style="background: transparent;">
+    <div class="container space-top-2">
+        <!-- Breadcrumbs -->
+        <nav class="my-1 pt-7 pt-lg-8">
+            <ol class="breadcrumb m-0 p-0" style="background: transparent;">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
                 <li class="breadcrumb-item">{{ $obj->title }}</li>
             </ol>
         </nav>
+        <!-- Breadcrumbs -->
 
         <!-- Ad -->
         @if(!empty($settings->ads))
@@ -38,7 +40,7 @@
         <div class="mt-3">
         @endif
             @if($settings->post_layout == 'left')
-                <div class="col-12 col-lg-4 d-none d-lg-block">
+                <div class="col-12 col-lg-3 d-none d-lg-block">
                     <!-- Ad -->
                     @if(!empty($settings->ads))
                         <div class="mb-5">
@@ -179,7 +181,7 @@
                 </div>
             @endif
         
-            <div  @if($settings->post_layout != 'full') class="col-12 col-lg-8" @endif>
+            <div  @if($settings->post_layout != 'full') class="col-12 col-lg-9" @endif>
                 <div class="bg-white p-3 rounded rounded-3 rounded-lg">
                     <div class="mb-3">
                         <div class="d-md-flex align-items-center justify-content-between mb-4">
@@ -187,19 +189,24 @@
                                 <h1 class="m-0">{{$obj->title}}</h1>
                                 <div class="border-bottom border-3 border-primary rounded-lg rounded-3" style="width: 5rem"></div>
                             </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar-alt mr-2" style="margin-bottom: 0.2rem;"></i>
+                                {{ $obj->created_at ? $obj->created_at->format('M d Y') : '' }}
+                            </div>
+                            @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
+                                <p class="m-0 mr-3 ml-3"> | </p>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('Category.show', $postCategory->slug) }}" class="text-decoration-none d-flex align-items-center"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
+                                </div>
+                            @endif
                             @php
                                 $allowed_roles = ['superadmin', 'agencyadmin', 'clientadmin'];
                             @endphp
                             @if(!empty(auth()->user()) && in_array(auth()->user()->role, $allowed_roles))
-                                <a href="{{ route($app->module.'.edit', $obj->slug) }}" class="mt-1 mt-md-0"><i class="fas fa-edit text-muted" style="font-size: 1.5rem;"></i></a>
-                            @endif
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-calendar-alt mb-1 mr-2"></i>
-                            {{ $obj->created_at ? $obj->created_at->format('M d Y') : '' }}
-                            @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
                                 <p class="m-0 mr-3 ml-3"> | </p>
-                                <a href="{{ route('Category.show', $postCategory->slug) }}" class="text-decoration-none"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
+                                <a href="{{ route($app->module.'.edit', $obj->slug) }}"><i class="fas fa-edit" style="margin-bottom: 0.1rem;"></i> Edit</a>
                             @endif
                         </div>
 
@@ -640,7 +647,7 @@
             </div>
 
             @if($settings->post_layout == 'right')
-            <div class="col-12 col-lg-4 d-none d-lg-block">
+            <div class="col-12 col-lg-3 d-none d-lg-block">
                 <!-- Ad -->
                 @if(!empty($settings->ads))
                     <div class="mb-5">
