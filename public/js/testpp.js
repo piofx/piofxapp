@@ -31,8 +31,7 @@ $(function(){
             $.get(url,function(data){
                 $questions = JSON.parse(data);
                 $questions.forEach(function(d,i){
-                    console.log(d);
-                    ele = "<div class='row no-gutters q_"+slug+"_"+i+"' data-answer='"+d.answer+"'>\
+                    ele = "<div class='row no-gutters q_"+slug+"_"+i+"' data-answer='"+d.answer+"' >\
                             <div class='col-2 col-md-1'><div class=' bg-soft-info  py-1 px-1 text-center rounded'>"
                             +(i+1)+
                             "</div></div>\
@@ -96,7 +95,8 @@ $(function(){
                                     </div>\
                                 </div>\
                             </div><div class='text-danger  incorrect incorrect_"+slug+"_"+i+" ' style='display:none'>Nah! Option (<span class='text-primary text-bold ans_"+slug+"_"+i+" '>D</span>) is not the correct answer</div>\
-                            <div class='text-success correct correct_"+slug+"_"+i+" ' style='display:none'>Wow! you have picked the  correct option (<span class='text-primary text-bold ans_"+slug+"_"+i+" '>D</span>)</div></div>"
+                            <div class='text-success correct correct_"+slug+"_"+i+" ' style='display:none'>Wow! you have picked the  correct option (<span class='text-primary text-bold ans_"+slug+"_"+i+" '>D</span>)</div>\
+                            <div class='bg-soft-success p-3 rounded mt-1 explanation_"+slug+"_"+i+" ' style='display:none'><h5>Explanation</h5>"+d.explanation.replace("'","")+"</div></div>"
 
                     container.append(ele);
                     
@@ -133,12 +133,16 @@ $(function(){
         $response = $(this).val();
         $ans = $('.q_'+$slug+'_'+$qno).data('answer');
         $('.ans_'+$slug+'_'+$qno).html($response.toUpperCase());
+
         $('.correct_'+$slug+'_'+$qno).hide();
         $('.incorrect_'+$slug+'_'+$qno).hide();
         if($ans.toUpperCase() == $response.toUpperCase())
         {
 
             $('.correct_'+$slug+'_'+$qno).show();
+            if(!$('.expl_'+$slug+'_'+$qno).length){
+                $('.correct_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expl_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
+            }
             confetti({
               particleCount: 100,
               spread: 70,
@@ -147,8 +151,16 @@ $(function(){
 
         }else{
             $('.incorrect_'+$slug+'_'+$qno).show();
+            if(!$('.expll_'+$slug+'_'+$qno).length){
+                $('.incorrect_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expll_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
+            }
         }
         
+    });
+
+    $(document).on('click','.explanation',function(){
+        var item = $(this).data('anchor');
+        $('.'+item).toggle();
     });
 
  

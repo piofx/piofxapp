@@ -79,8 +79,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
-                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                        <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                        <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,15 +88,15 @@
                                         @endif
                                     @else
                                         <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                            <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                             @if($post->excerpt)
-                                                <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
+                                                <p class="">{{ substr($post->excerpt, 0, 50) }}...</p>
                                             @else
                                                 @php
                                                     $content = strip_tags($post->content);
                                                     $content = substr($content, 0 , 50);
                                                 @endphp
-                                                <p class="text-muted">{{ $content }}...</p>
+                                                <p class="">{{ $content }}...</p>
                                             @endif
                                         </div>
                                     @endif
@@ -141,8 +141,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
-                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                        <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                        <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,15 +150,15 @@
                                         @endif
                                     @else
                                         <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                            <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                             @if($post->excerpt)
-                                                <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                                <p class="">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                             @else
                                                 @php
                                                     $content = strip_tags($post->content);
                                                     $content = substr($content, 0 , 50);
                                                 @endphp
-                                                <p class="text-muted">{{ $content }}...</p>
+                                                <p class="">{{ $content }}...</p>
                                             @endif
                                         </div>
                                     @endif
@@ -182,7 +182,7 @@
             @endif
         
             <div  @if($settings->post_layout != 'full') class="col-12 col-lg-9" @endif>
-                <div class="bg-white p-3 rounded rounded-3 rounded-lg">
+                <div class="bg-white p-3 rounded rounded-3 rounded-lg mb-4">
                     <div class="mb-3">
                         <div class="d-md-flex align-items-center justify-content-between mb-4">
                             <div>
@@ -193,7 +193,7 @@
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-calendar-alt mr-2" style="margin-bottom: 0.2rem;"></i>
-                                {{ $obj->created_at ? $obj->created_at->format('M d Y') : '' }}
+                                {{ $obj->updated_at ? $obj->updated_at->format('M d Y') : '' }}
                             </div>
                             @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
                                 <p class="m-0 mr-3 ml-3"> | </p>
@@ -212,7 +212,7 @@
 
                         @if(!empty($obj->excerpt))
                         <div style="font-size: 1.2rem; line-height: 2rem;">
-                            <p class="text-muted mt-3">{{ $obj->excerpt }}</p>
+                            <p class=" mt-3">{{ $obj->excerpt }}</p>
                         </div>
                         @endif
 
@@ -243,8 +243,8 @@
                                                 <h4 class="bg-soft-primary text-primary m-0 px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
                                             @endif
                                             <div class="pl-2 ps-2">
-                                                <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
-                                                <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
+                                                <h5 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h5>
+                                                <span class="d-block ">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
                                             </div>
                                         @endif
                                     </div>
@@ -395,7 +395,7 @@
                     <!-- Share -->
                     <div class="d-flex justify-content-sm-between align-items-sm-center mt-3 mb-5">
                         <div class="d-flex align-items-center">
-                            <small class="text-muted font-weight-bold">SHARE:</small>
+                            <small class=" font-weight-bold">SHARE:</small>
 
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
                                 <i class="fab fa-facebook-f"></i>
@@ -432,7 +432,7 @@
                     <div class="bg-soft-danger p-5 rounded-lg rounded-3">
                         <div class="mb-3">
                             <h2 class="m-0">Liked what you have read?</h2>
-                            <h5 class="text-muted">Subscribe to our Newsletter</h5>
+                            <h5 class="">Subscribe to our Newsletter</h5>
                         </div>
                         <form action="{{route($app->module.'.subscribe')}}" enctype="multipart/form-data" method="POST">
                             <button class="btn btn-danger btn-sm">Subscribe</button>
@@ -448,7 +448,7 @@
                             <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
                                 <div class="mb-3">
                                     <h2 class="m-0">Liked what you have read?</h2>
-                                    <h5 class="text-muted">Subscribe to our Newsletter</h5>
+                                    <h5 class="">Subscribe to our Newsletter</h5>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 d-lg-flex align-items-center justify-content-center">
@@ -493,8 +493,8 @@
                                                                 @endif
                                                             </div>
                                                             <div class="col-8 pl-0">
-                                                                <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                                <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                                <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                                <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                             </div>
                                                         </div>
                                                         <!-- End Related Post -->
@@ -506,15 +506,15 @@
                                                 <!-- Related Post -->
                                                 <div class="bg-soft-primary p-3 rounded-lg d-flex align-items-center" style="min-height: 9.3rem;">
                                                     <div>
-                                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="">{{ $post->title }}</a></h6>
+                                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="">{{ $post->title }}</a></h5>
                                                         @if($post->excerpt)
-                                                            <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
+                                                            <p class="">{{ substr($post->excerpt, 0, 50) }}...</p>
                                                         @else
                                                             @php
                                                                 $content = strip_tags($post->content);
                                                                 $content = substr($content, 0 , 50);
                                                             @endphp
-                                                            <p class="text-muted">{{ $content }}...</p>
+                                                            <p class="">{{ $content }}...</p>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -556,8 +556,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                    <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                    <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -565,15 +565,15 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                         @if($post->excerpt)
-                                            <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
+                                            <p class="">{{ substr($post->excerpt, 0, 50) }}...</p>
                                         @else
                                             @php
                                                 $content = strip_tags($post->content);
                                                 $content = substr($content, 0 , 50);
                                             @endphp
-                                            <p class="text-muted">{{ $content }}...</p>
+                                            <p class="">{{ $content }}...</p>
                                         @endif
                                     </div>
                                 @endif
@@ -618,8 +618,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                    <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                    <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -627,15 +627,15 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                         @if($post->excerpt)
-                                            <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                            <p class="">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                         @else
                                             @php
                                                 $content = strip_tags($post->content);
                                                 $content = substr($content, 0 , 50);
                                             @endphp
-                                            <p class="text-muted">{{ $content }}...</p>
+                                            <p class="">{{ $content }}...</p>
                                         @endif
                                     </div>
                                 @endif
@@ -686,8 +686,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                    <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                    <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -695,15 +695,15 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-primary p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                         @if($post->excerpt)
-                                            <p class="text-muted">{{ substr($post->excerpt, 0, 50) }}...</p>
+                                            <p class="">{{ substr($post->excerpt, 0, 50) }}...</p>
                                         @else
                                             @php
                                                 $content = strip_tags($post->content);
                                                 $content = substr($content, 0 , 50);
                                             @endphp
-                                            <p class="text-muted">{{ $content }}...</p>
+                                            <p class="">{{ $content }}...</p>
                                         @endif
                                     </div>
                                 @endif
@@ -748,8 +748,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
-                                                    <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
-                                                    <p class="text-muted m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
+                                                    <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
+                                                    <p class=" m-0">{{ $post->created_at ? $post->created_at->diffForHumans() : "" }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -757,15 +757,15 @@
                                     @endif
                                 @else
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
-                                        <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
+                                        <h5 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h5>
                                         @if($post->excerpt)
-                                            <p class="text-muted">{!! substr($post->excerpt, 0, 50) !!}...</p>
+                                            <p class="">{!! substr($post->excerpt, 0, 50) !!}...</p>
                                         @else
                                             @php
                                                 $content = strip_tags($post->content);
                                                 $content = substr($content, 0 , 50);
                                             @endphp
-                                            <p class="text-muted">{{ $content }}...</p>
+                                            <p class="">{{ $content }}...</p>
                                         @endif
                                     </div>
                                 @endif
