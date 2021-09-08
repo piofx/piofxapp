@@ -19,12 +19,13 @@ class BlogSettings extends Model
             // Retrieve settings
             $settings = json_decode(Storage::disk("s3")->get($settingsfilename), true);
             // check if anything is missing in default structure
-            if(!isset($settings['home_layout']) || !isset($settings['post_layout']) || !isset($settings['comments']) || !isset($settings['language'])){
+            if(!isset($settings['home_layout']) || !isset($settings['post_layout']) || !isset($settings['comments']) || !isset($settings['language']) || !isset($settings['author_section'])){
                 $settings = json_encode(array(
                 "home_layout" => "default",
                 "post_layout" => "right",
                 "comments" => 'false',
                 "language" => "english",
+                "author_section" => 'hide'
                 ), JSON_PRETTY_PRINT);
                 Storage::disk("s3")->put($settingsfilename, $settings);
             }
@@ -37,6 +38,7 @@ class BlogSettings extends Model
                 "post_layout" => "right",
                 "comments" => 'false',
                 "language" => 'english',
+                "author_section" => 'hide',
                 "ads" => [
                        array(
                             "content" => "<a href='#'><img src='https://imgur.com/zIAYYIL.png' class='img-fluid rounded-lg'></a>",

@@ -2,27 +2,27 @@
 
     <div class="space-top-2">
         <div class="container mt-5 text-center">
-                <!-- Info -->
-                <div class="mt-7">
-                    <h1 class="text-dark mb-3">@if($settings->language == 'telugu') శోధన ఫలితాలు @else Search Results @endif</h1>
+            <!-- Info -->
+            <div class="mt-7">
+                <h1 class="text-dark mb-3">@if($settings->language == 'telugu') శోధన ఫలితాలు @else Search Results @endif</h1>
+            </div>
+            <!-- End Info -->
+            <!-- Form -->
+            <form action="{{ route('Post.search') }}">
+                <div class="bg-white border-1 rounded-3 rounded-lg shadow d-flex align-items-center p-3">
+                    <input type="text" class="form-control form-control-lg border-0 outline-0 shadow-none" name="query"
+                                placeholder="@if($settings->language == 'telugu') ఎడైనా వెతకండి @else Search Something @endif...">
+                    <button type="submit" class="btn btn-outline-primary btn-lg">@if($settings->language == 'telugu') వెతకండి @else Search @endif</button>
                 </div>
-                <!-- End Info -->
-                <!-- Form -->
-                <form action="{{ route('Post.search') }}">
-                    <div class="border-1 rounded-3 shadow d-flex align-items-center p-3">
-                        <input type="text" class="form-control form-control-lg border-0 outline-0 shadow-none" name="query"
-                                    placeholder="@if($settings->language == 'telugu') ఎడైనా వెతకండి @else Search Something @endif...">
-                        <button type="submit" class="btn btn-outline-primary btn-lg">@if($settings->language == 'telugu') వెతకండి @else Search @endif</button>
-                    </div>
-                </form>
-                <!-- End Form -->
+            </form>
+            <!-- End Form -->
         </div>
     </div>
     
     <!-- Results Section -->
-    <div class="container space-1 mt-3">
+    <div class="container mt-5">
         <h5 class="text-muted font-weight-bold m-0 p-0 mb-2 mt-4">Found <span class="text-primary fw-bold font-weight-bold">{{ $objs->total() }}</span> Matching Posts</h5>
-        <div class="row ">
+        <div class="row">
             @if($objs->isNotEmpty())
                 @foreach($objs as $obj)
                 <div class="col-sm-6 col-lg-4 px-2 px-lg-3 py-3 rounded-lg">
@@ -74,14 +74,9 @@
             @endif
         </div>
 
-        <div class="my-3">
+        <div class="my-3 overflow-auto">
             {{ $objs->appends(["query"=>request()->get('query'), "page"=>request()->get('page')])->links() }}
         </div>
-    
     </div>
-
     <!-- End Results Section -->
-
-
-
 </x-dynamic-component>

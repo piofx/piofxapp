@@ -11,7 +11,16 @@
     @endphp
 
     <!-- Article Description Section -->
-    <div class="container space-top-3">
+    <div class="container space-top-2">
+        <!-- Breadcrumbs -->
+        <nav class="my-1 pt-7 pt-lg-8">
+            <ol class="breadcrumb m-0 p-0" style="background: transparent;">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                <li class="breadcrumb-item">{{ $obj->title }}</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumbs -->
 
         <!-- Ad -->
         @if(!empty($settings->ads))
@@ -31,7 +40,7 @@
         <div class="mt-3">
         @endif
             @if($settings->post_layout == 'left')
-                <div class="col-12 col-lg-4 d-none d-lg-block">
+                <div class="col-12 col-lg-3 d-none d-lg-block">
                     <!-- Ad -->
                     @if(!empty($settings->ads))
                         <div class="mb-5">
@@ -172,164 +181,191 @@
                 </div>
             @endif
         
-            <div  @if($settings->post_layout != 'full') class="col-12 col-lg-8" @endif>
-                <div class="mb-3">
-                    <h1 class="m-0">{{$obj->title}}</h1>
+            <div  @if($settings->post_layout != 'full') class="col-12 col-lg-9" @endif>
+                <div class="bg-white p-3 rounded rounded-3 rounded-lg">
+                    <div class="mb-3">
+                        <div class="d-md-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <h1 class="m-0">{{$obj->title}}</h1>
+                                <div class="border-bottom border-3 border-primary rounded-lg rounded-3" style="width: 5rem"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar-alt mr-2" style="margin-bottom: 0.2rem;"></i>
+                                {{ $obj->created_at ? $obj->created_at->format('M d Y') : '' }}
+                            </div>
+                            @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
+                                <p class="m-0 mr-3 ml-3"> | </p>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('Category.show', $postCategory->slug) }}" class="text-decoration-none d-flex align-items-center"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
+                                </div>
+                            @endif
+                            @php
+                                $allowed_roles = ['superadmin', 'agencyadmin', 'clientadmin'];
+                            @endphp
+                            @if(!empty(auth()->user()) && in_array(auth()->user()->role, $allowed_roles))
+                                <p class="m-0 mr-3 ml-3"> | </p>
+                                <a href="{{ route($app->module.'.edit', $obj->slug) }}"><i class="fas fa-edit" style="margin-bottom: 0.1rem;"></i> Edit</a>
+                            @endif
+                        </div>
 
-                    @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
-                        <a href="{{ route('Category.show', $postCategory->slug) }}" class="h5 text-decoration-none"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
-                    @endif
-                    
-                    @if(!empty($obj->excerpt))
-                    <div style="font-size: 1.2rem; line-height: 2rem;">
-                        <p class="text-muted mt-3">{{ $obj->excerpt }}</p>
+                        @if(!empty($obj->excerpt))
+                        <div style="font-size: 1.2rem; line-height: 2rem;">
+                            <p class="text-muted mt-3">{{ $obj->excerpt }}</p>
+                        </div>
+                        @endif
+
                     </div>
-                    @endif
 
-                </div>
-
-                <!-- Author and share -->
-                @if(isset($settings->author_section ))
-                @if($settings->author_section && $settings->author_section == 'show')
-                    <div class="border-top border-bottom mb-5">
-                        <div class="row align-items-md-center">
-                            <div class="col-7 p-0 pl-3">
-                                <div class="d-flex align-items-center py-1 justify-content-start">
-                                    @if(!empty($author))
-                                        @if($author->image)
-                                            <div class="rounded-circle">
-                                                @php
-                                                    $path = explode("/", $author->image);
-                                                    $path = explode(".", $path[1]);
-                                                    $path = $path[0];
-                                                @endphp
-                                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
-                                                @else
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}">
-                                                @endif
+                    <!-- Author and share -->
+                    @if(isset($settings->author_section ))
+                    @if($settings->author_section && $settings->author_section == 'show')
+                        <div class="border-top border-bottom mb-5">
+                            <div class="row align-items-md-center">
+                                <div class="col-7 p-0 pl-3">
+                                    <div class="d-flex align-items-center py-1 justify-content-start">
+                                        @if(!empty($author))
+                                            @if($author->image)
+                                                <div class="rounded-circle">
+                                                    @php
+                                                        $path = explode("/", $author->image);
+                                                        $path = explode(".", $path[1]);
+                                                        $path = $path[0];
+                                                    @endphp
+                                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                    @else
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}">
+                                                    @endif
+                                                </div>
+                                            @else
+                                                <h4 class="bg-soft-primary text-primary m-0 px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
+                                            @endif
+                                            <div class="pl-2 ps-2">
+                                                <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
+                                                <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
                                             </div>
-                                        @else
-                                            <h4 class="bg-soft-primary text-primary m-0 px-4 py-3 rounded-circle">{{ strtoupper($author->name[0]) }}</h4>
                                         @endif
-                                        <div class="pl-2 ps-2">
-                                            <h6 class="m-0"><a href="{{ route($app->module.'.author', $author->id) }}">{{ $author->name}}</a></h6>
-                                            <span class="d-block text-muted">{{ $obj->created_at ? $obj->created_at->diffForHumans() : "" }}</span>
-                                        </div>
-                                    @endif
+                                    </div>
+                                </div>
+                                <div class="col-5 p-0 pr-4">
+                                    <div class="d-flex justify-content-md-end align-items-center">
+                                        <!-- Facebook (url) -->
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+
+                                        <!-- Twitter (url, text, @mention) -->
+                                        <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+
+                                        <!-- Reddit (url, title) -->
+                                        <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                            <i class="fab fa-reddit"></i>
+                                        </a>
+
+                                        <!-- LinkedIn (url, title, summary, source url) -->
+                                        <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-5 p-0 pr-4">
-                                <div class="d-flex justify-content-md-end align-items-center">
-                                    <!-- Facebook (url) -->
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-
-                                    <!-- Twitter (url, text, @mention) -->
-                                    <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-
-                                    <!-- Reddit (url, title) -->
-                                    <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                        <i class="fab fa-reddit"></i>
-                                    </a>
-
-                                    <!-- LinkedIn (url, title, summary, source url) -->
-                                    <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ml-2 ms-2">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @endif
-                <!-- End Author and share -->
-
-                <!-- Featured Image -->
-                @if(!empty($obj->image) && strlen($obj->image) > 5)
-                    @if(Storage::disk('s3')->exists($obj->image))
-                        <div class="text-center mb-5">
-                            @php
-                                $path = explode("/", $obj->image);
-                                $path = explode(".", $path[1]);
-                                $path = $path[0];
-                            @endphp
-                            @if(Browser::isMobile())
-                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
-                                @else
-                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
-                                @endif
-                            @else
-                                @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.'.$ext))
-                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
-                                @else
-                                    <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
-                                @endif
-                            @endif
                         </div>
                     @endif
-                @endif
-                <!-- End Featured Image -->
+                    @endif
+                    <!-- End Author and share -->
 
-                <!-- Ad -->
-                @if(!empty($settings->ads))
-                    <div class="mb-5">
-                        @foreach($settings->ads as $ad)
-                            @if($ad->position == 'before-content')
-                                {!! $ad->content !!}
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-                <!-- End Ad Section -->
+                    <!-- Featured Image -->
+                    @if(!empty($obj->image) && strlen($obj->image) > 5)
+                        @if(Storage::disk('s3')->exists($obj->image))
+                            <div class="text-center mb-5">
+                                @php
+                                    $path = explode("/", $obj->image);
+                                    $path = explode(".", $path[1]);
+                                    $path = $path[0];
+                                @endphp
+                                @if(Browser::isMobile())
+                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                    @else
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                    @endif
+                                @else
+                                    @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.'.$ext))
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
+                                    @else
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                    @endif
+                                @endif
+                            </div>
+                        @endif
+                    @endif
+                    <!-- End Featured Image -->
 
-                @php
-                    $dom = new \DomDocument();
-                    libxml_use_internal_errors(true);
-                    $dom->loadHtml(mb_convert_encoding($obj->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
-                    $images = $dom->getElementsByTagName('img');
-                    $src = null;
-                    $altContent = null;
+                    <!-- Ad -->
+                    @if(!empty($settings->ads))
+                        <div class="mb-5">
+                            @foreach($settings->ads as $ad)
+                                @if($ad->position == 'before-content')
+                                    {!! $ad->content !!}
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                    <!-- End Ad Section -->
 
-                    $device = '_resized.';
-                    if(Browser::isMobile()){
-                        $device = '_mobile.';
-                    }
+                    @php
+                        $dom = new \DomDocument();
+                        libxml_use_internal_errors(true);
+                        $dom->loadHtml(mb_convert_encoding($obj->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+                        $images = $dom->getElementsByTagName('img');
+                        $src = null;
+                        $altContent = null;
 
-                    foreach($images as $k => $img){
-                        $src = $img->getAttribute('src');
-                        $path = parse_url($src, PHP_URL_PATH);
-                        $path = explode("/", $path);
-                        $path = end($path);
-                        $path = explode(".", $path);
-                        $path = $path[0];
-                        if(Storage::disk('s3')->exists('resized_images/'.$path. $device .$ext)){
-                            $base = explode("/images", $src);
-                            $url = $base[0] . '/resized_images/'.$path. $device .$ext;
-                            $img->removeAttribute('src');
-                            $img->setAttribute('src', $url);
+                        $device = '_resized.';
+                        if(Browser::isMobile()){
+                            $device = '_mobile.';
                         }
-                    }  
 
-                    if($src){
-                        $altContent = $dom->saveHTML();
-                    }
-                @endphp
+                        foreach($images as $k => $img){
+                            $src = $img->getAttribute('src');
+                            $path = parse_url($src, PHP_URL_PATH);
+                            $path = explode("/", $path);
+                            $path = end($path);
+                            $path = explode(".", $path);
+                            $path = $path[0];
+                            if(Storage::disk('s3')->exists('resized_images/'.$path. $device .$ext)){
+                                $base = explode("/images", $src);
+                                $url = $base[0] . '/resized_images/'.$path. $device .$ext;
+                                $img->removeAttribute('src');
+                                $img->setAttribute('src', $url);
+                            }
+                        }  
 
-                <div style="font-size: 1.2rem; line-height: 2rem;">
-                    @if($obj->visibility == "private")
-                        @if(auth()->user())
-                            @php
-                                $user_group = explode(",", auth()->user()->group);
-                                $post_group = explode(",", $obj->group);
-                                $group = array_intersect($user_group, $post_group);
-                            @endphp
-                            @if(sizeOf($group) > 0)
-                                {!! $obj->content !!}
+                        if($src){
+                            $altContent = $dom->saveHTML();
+                        }
+                    @endphp
+
+                    <div style="font-size: 1.2rem; line-height: 2rem;">
+                        @if($obj->visibility == "private")
+                            @if(auth()->user())
+                                @php
+                                    $user_group = explode(",", auth()->user()->group);
+                                    $post_group = explode(",", $obj->group);
+                                    $group = array_intersect($user_group, $post_group);
+                                @endphp
+                                @if(sizeOf($group) > 0)
+                                    {!! $obj->content !!}
+                                @else
+                                    <div class="text-center bg-soft-danger p-3 rounded-lg">
+                                        <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
+                                        <img src="{{ asset('img/locked.png') }}" class="img-fluid w-50">
+                                    </div>
+                                @endif
                             @else
                                 <div class="text-center bg-soft-danger p-3 rounded-lg">
                                     <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
@@ -337,63 +373,59 @@
                                 </div>
                             @endif
                         @else
-                            <div class="text-center bg-soft-danger p-3 rounded-lg">
-                                <h3 class="rounded-lg">Sorry but it seems that this post is currently locked</h3>
-                                <img src="{{ asset('img/locked.png') }}" class="img-fluid w-50">
-                            </div>
-                        @endif
-                    @else
-                        @if(!empty($altContent))
-                            {!! $altContent !!}
-                        @else
-                            {!! $obj->content !!}
-                        @endif
-                    @endif
-                </div>
-
-                <!-- Tags -->
-                @if(!empty($postTags) && sizeof($postTags) > 0)
-                    <div class="mt-5">
-                        <h4>Tags</h4>
-                        @foreach($postTags as $tag)
-                            <a class="btn btn-xs btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
-                        @endforeach
-                    </div>
-                @endif
-                <!-- End Tags -->
-
-                <!-- Share -->
-                <div class="d-flex justify-content-sm-between align-items-sm-center mt-3 mb-5">
-                    <div class="d-flex align-items-center">
-                        <small class="text-muted font-weight-bold">SHARE:</small>
-
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
-                            <i class="fab fa-reddit"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- End Share -->
-
-                <!-- Ad -->
-                @if(!empty($settings->ads))
-                    <div class="mb-5">
-                        @foreach($settings->ads as $ad)
-                            @if($ad->position == 'after-content')
-                                {!! $ad->content !!}
+                            @if(!empty($altContent))
+                                {!! $altContent !!}
+                            @else
+                                {!! $obj->content !!}
                             @endif
-                        @endforeach
+                        @endif
                     </div>
-                @endif
-                <!-- End Ad Section -->
+
+                    <!-- Tags -->
+                    @if(!empty($postTags) && sizeof($postTags) > 0)
+                        <div class="mt-5">
+                            <h4>Tags</h4>
+                            @foreach($postTags as $tag)
+                                <a class="btn btn-xs btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                            @endforeach
+                        </div>
+                    @endif
+                    <!-- End Tags -->
+
+                    <!-- Share -->
+                    <div class="d-flex justify-content-sm-between align-items-sm-center mt-3 mb-5">
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted font-weight-bold">SHARE:</small>
+
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://reddit.com/submit?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
+                                <i class="fab fa-reddit"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/shareArticle?url={{ url()->current() }}&title={{ rawurlencode($obj->title) }}&summary={{ $obj->excerpt }}&source={{ url('/') }}" target="_blank" class="btn btn-xs btn-icon btn-ghost-secondary rounded-circle ml-2 ms-2">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Share -->
+
+                    <!-- Ad -->
+                    @if(!empty($settings->ads))
+                        <div class="mb-5">
+                            @foreach($settings->ads as $ad)
+                                @if($ad->position == 'after-content')
+                                    {!! $ad->content !!}
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                    <!-- End Ad Section -->
+                </div>
+
 
                 <!-- Newsletter -->
                 <!-- @if(Auth::user())
@@ -615,7 +647,7 @@
             </div>
 
             @if($settings->post_layout == 'right')
-            <div class="col-12 col-lg-4 d-none d-lg-block">
+            <div class="col-12 col-lg-3 d-none d-lg-block">
                 <!-- Ad -->
                 @if(!empty($settings->ads))
                     <div class="mb-5">

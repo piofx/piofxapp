@@ -171,7 +171,7 @@
                     @if($obj->status != 0)
                         <!-- Blog -->
                         @if(!empty($obj->image) && strlen($obj->image) > 5 && Storage::disk('s3')->exists($obj->image))
-                            <div class="mb-5 p-3 bg-light rounded-lg">
+                            <div class="mb-5 p-3 bg-white shadow rounded-lg">
                                 <div class="row">
                                     <div class="col-md-5 d-flex align-items-center">
                                         @php
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="mb-5 p-3 bg-light rounded-lg">
+                            <div class="mb-5 p-3 bg-white shadow rounded-lg">
                                 <div class="card-body d-flex flex-column h-100 p-0">
                                     @if(!empty($obj->category) && strtolower($obj->category->name) != 'uncategorized')
                                         <span class="d-block mb-2">
@@ -262,9 +262,12 @@
                     </div>
                 @endif
                 <!-- End Ad Section -->
-                <div class="my-3">
+
+                <!-- Pagination -->
+                <div class="my-3 overflow-auto">
                     {{$objs->links() ?? ""}}
                 </div>
+                <!-- Pagination -->
             </div>
 
             <!-- Right Section -->
@@ -303,7 +306,7 @@
                         @foreach($categories as $category)
                             @if($category->posts->count() > 0)
                                 <a type="button" href="{{ route('Category.show', $category->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
-                                {{ $category->name }}<span class="badge bg-primary text-white rounded-pill"></span>
+                                {{ $category->name }}<span class="badge bg-primary text-white rounded-pill">{{ $category->posts->count() }}</span>
                                 </a>
                             @endif
                         @endforeach

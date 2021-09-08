@@ -1,40 +1,56 @@
 <x-dynamic-component :component="$app->componentName">
 
 	<!-- Hero Section -->
-	<div class="bg-dark space-top-3 d-flex justify-content-center align-items-center"
-			style="min-height: 20rem;">
-		<div class="text-center">
-			<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
-			@if($category->meta_description)
-				<div class="bg-dark p-3 rounded-lg">
-					<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
+	@if($category)
+		@if(!empty($category->image) && strlen($category->image) > 5 && Storage::disk('s3')->exists($category->image))
+			<div class="space-top-3 d-flex justify-content-center align-items-center"
+					style="min-height: 30rem;background-image: url('{{Storage::disk('s3')->url($category->image)}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+				<div class="text-center">
+					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
+					@if($category->meta_description)
+						<div class="bg-dark py-1 rounded-lg">
+							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
+						</div>
+					@endif
 				</div>
-			@endif
-		</div>
-	</div>
+			</div>
+		@else
+			<div class="bg-dark space-top-3 d-flex justify-content-center align-items-center"
+					style="min-height: 20rem;">
+				<div class="text-center">
+					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
+					@if($category->meta_description)
+						<div class="bg-dark rounded-lg">
+							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
+						</div>
+					@endif
+				</div>
+			</div>
+		@endif
+	@endif
 	<!-- End Hero Section -->
 
 	<!-- Blogs Section -->
-	<div class="container space-1 space-lg-2">
+	<div class="container space-1">
 		<div class="row justify-content-lg-between">
 			<div class="col-lg-9">
 				<!-- Ad -->
-				<div class="mb-3">
-						@if(!empty($settings->ads))
-								@foreach($settings->ads as $ad)
-										@if($ad->position == 'before-content')
-												{!! $ad->content !!}
-										@endif
-								@endforeach
-						@endif
-				</div>
+				@if(!empty($settings->ads))
+					<div class="mb-3">
+						@foreach($settings->ads as $ad)
+								@if($ad->position == 'before-content')
+										{!! $ad->content !!}
+								@endif
+						@endforeach
+					</div>
+				@endif
 				<!-- End Ad Section -->  
 				@if($posts->count() > 0)
 					@foreach($posts as $post)
 						@if($post->status != 0)
 							<!-- Blog -->
 							@if(!empty($post->image) && strlen($post->image) > 5 && Storage::disk('s3')->exists($post->image))
-								<div class="mb-5 p-3 bg-light rounded-lg">
+								<div class="mb-5 p-3 bg-white shadow rounded-lg">
 										<div class="row">
 												<div class="col-md-5 d-flex align-items-center">
 														@php
@@ -75,7 +91,7 @@
 										</div>
 								</div>
 							@else
-								<div class="mb-5 p-3 bg-light rounded-lg">
+								<div class="mb-5 p-3 bg-white shadow rounded-lg">
 										<div class="card-body d-flex flex-column h-100 p-0">
 												<h3><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">{{$post->title}}</a></h3>
 												@if($post->excerpt)
@@ -110,21 +126,21 @@
 				@endif
 				
 				<!-- Ad -->
-				<div class="my-3">
-					@if(!empty($settings->ads))
+				@if(!empty($settings->ads))
+					<div class="my-3">
 						@foreach($settings->ads as $ad)
 							@if($ad->position == 'after-content')
 								{!! $ad->content !!}
 							@endif
 						@endforeach
-					@endif
-				</div>
+					</div>
+				@endif
 				<!-- End Ad Section -->
 
 				<!-- Paginatin -->
-				<div class="my-3">
-                {{ $posts->links() ?? "" }}
-            </div>
+				<div class="my-3 overflow-auto">
+					{{ $posts->links() ?? "" }}
+				</div>
 				<!-- End Pagination -->
 			</div>
 			<!-- End Blog -->
@@ -133,55 +149,60 @@
 			<div class="col-lg-3">
 				<div class="mb-5">
 					<!-- Search Form -->
-						<form action="{{ route('Post.search') }}" method="GET">
-							<div class="input-group mb-3"> 
-								<input type="text" class="form-control input-text" placeholder="Search..." name="query">
-								<div class="input-group-append">
-									<button class="btn btn-outline-primary btn-md" type="submit">
-										<i class="fa fa-search"></i>
-									</button>
-								</div>
+					<form action="{{ route('Post.search') }}" method="GET">
+						<div class="input-group mb-3"> 
+							<input type="text" class="form-control input-text" placeholder="Search..." name="query">
+							<div class="input-group-append">
+								<button class="btn btn-outline-primary btn-md" type="submit">
+									<i class="fa fa-search"></i>
+								</button>
 							</div>
-						</form>
+						</div>
+					</form>
 					<!-- End Search Form -->
 				</div>
 
 				<!-- Ad -->
-            <div class="my-5">
-                @if(!empty($settings->ads))
-                    @foreach($settings->ads as $ad)
-                        @if($ad->position == 'sidebar-top')
-                            {!! $ad->content !!}
-                        @endif
-                    @endforeach
-                @endif
-            </div>
-            <!-- End Ad Section -->
-
-				<!---------Categories section-----> 
-				<div class="mb-5">
-					<h5 class="font-weight-bold mb-3">Categories</h5>
-					<div class="list-group">
-						@foreach($objs as $obj)
-								@if($obj->posts->count() > 0)
-										<a type="button" href="{{ route('Category.show', $obj->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
-										{{ $obj->name }}<span class="badge bg-primary text-white rounded-pill">{{ $obj->posts->count() }}</span>
-										</a>
-								@endif
+				@if(!empty($settings->ads))
+					<div class="my-5">
+						@foreach($settings->ads as $ad)
+							@if($ad->position == 'sidebar-top')
+								{!! $ad->content !!}
+							@endif
 						@endforeach
 					</div>
-				</div>
+				@endif
+				<!-- End Ad Section -->
+
+				<!---------Categories section-----> 
+				@if(!empty($objs))
+					<div class="mb-5">
+						<h5 class="font-weight-bold mb-3">Categories</h5>
+						<div class="list-group">
+							@foreach($objs as $obj)
+									@if($obj->posts->count() > 0)
+											<a type="button" href="{{ route('Category.show', $obj->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" aria-current="true">
+											{{ $obj->name }}<span class="badge bg-primary text-white rounded-pill">{{ $obj->posts->count() }}</span>
+											</a>
+									@endif
+							@endforeach
+						</div>
+					</div>
+				@endif
 				<!--------- End categories section----->
 
 				<!----- Tags section------>
-				<div class="mb-5">
-					<h5 class="font-weight-bold mb-3">Tags</h5>
-					@foreach($tags as $tag)
-						<a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
-					@endforeach
-				</div>
+				@if(!empty($tags))
+					<div class="mb-5">
+						<h5 class="font-weight-bold mb-3">Tags</h5>
+						@foreach($tags as $tag)
+							<a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+						@endforeach
+					</div>
+				@endif
 				<!----- End Tags Section------>
 
+				@if(!empty($popular))
 				<div class="mb-7">
 					<div class="mb-3">
 						<h3>Popular</h3>
@@ -233,32 +254,33 @@
 					@endforeach
 					<!-- End Popular Posts -->
 				</div>
+				@endif
 
 				<!-- Ad -->
-            <div class="mb-3">
-                @if(!empty($settings->ads))
-                    @foreach($settings->ads as $ad)
-                        @if($ad->position == 'sidebar-bottom')
-                            {!! $ad->content !!}
-                        @endif
-                    @endforeach
-                @endif
-            </div>
-            <!-- End Ad Section -->
+				@if(!empty($settings->ads))
+					<div class="mb-3">
+						@foreach($settings->ads as $ad)
+							@if($ad->position == 'sidebar-bottom')
+								{!! $ad->content !!}
+							@endif
+						@endforeach
+					</div>
+				@endif
+				<!-- End Ad Section -->
 			</div>
 		</div>
 		<!-- End of Row -->
 
 		<!-- Ad -->
-		<div class="my-3">
-			@if(!empty($settings->ads))
-					@foreach($settings->ads as $ad)
-						@if($ad->position == 'after-body')
-							{!! $ad->content !!}
-						@endif
-					@endforeach
-			@endif
-		</div>
+		@if(!empty($settings->ads))
+			<div class="my-3">
+				@foreach($settings->ads as $ad)
+					@if($ad->position == 'after-body')
+						{!! $ad->content !!}
+					@endif
+				@endforeach
+			</div>
+		@endif
 		<!-- End Ad Section -->
 	</div>
 	<!-- End Blogs Section -->

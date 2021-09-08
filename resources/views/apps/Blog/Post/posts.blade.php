@@ -35,12 +35,12 @@
                         <button id="btnGroupDrop1" type="button" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-plus fa-sm"></i> Add Record
                         </button>
-                        @foreach($templates as $template)
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <li><a href="{{ route($app->module.'.create', 'template=none') }}" class="dropdown-item">No Template</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li><a href="{{ route($app->module.'.create', 'template=none') }}" class="dropdown-item">No Template</a></li>
+                            @foreach($templates as $template)
                                 <li><a class="dropdown-item" href="{{ route($app->module.'.create', 'template='.$template) }}">{{ ucwords(str_replace('_', ' ', $template)) }}</a></li>
-                            </ul>
-                        @endforeach
+                            @endforeach
+                        </ul>
                     </div>
                 @else
                     <a href="{{ route($app->module.'.create', 'template=none') }}" class="btn btn-light-primary font-weight-bold ml-md-2 d-flex align-items-center"><i class="fas fa-plus fa-sm"></i> Add Record</a>
@@ -131,5 +131,4 @@
         {{$objs->links() ?? ''}}
         <!-- End Pagination -->
     </div>
-
 </x-dynamic-component>
