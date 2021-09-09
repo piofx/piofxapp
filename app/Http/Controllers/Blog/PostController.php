@@ -50,6 +50,7 @@ class PostController extends Controller
         if($request->input('refresh')){
             Cache::forget('posts_'.request()->get('client.id'));
             Cache::forget('featured_'.request()->get('client.id'));
+            Cache::forget('featured_section_'.request()->get('client.id'));
             Cache::forget('popular_'.request()->get('client.id'));
             Cache::forget('categories_'.request()->get('client.id'));
             Cache::forget('tags_'.request()->get('client.id'));
@@ -87,6 +88,21 @@ class PostController extends Controller
             $featured = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with('category')->with("user")->where('featured', 'on')->orderBy("id", 'desc')->get();
             // add to cache
             Cache::forever('featured_'.request()->get('client.id'), $featured);
+        }
+
+        // Cached Featured section count - for show/hide
+        $featured_section = Cache::get('featured_section_'.request()->get('client.id'));
+        if(!$featured_section){
+            // Retrieve Featured section post count
+            $featured_section_posts = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', '1')->where('featured', 'on')->count();
+            if($featured_section_posts > 0){
+                $featured_section = true;
+            }
+            else{
+                $featured_section = false;
+            }
+            // add to cache
+            Cache::forever('featured_section_'.request()->get('client.id'), $featured_section);
         }
 
         // cached popular data
@@ -161,6 +177,7 @@ class PostController extends Controller
                 ->with("categories", $categories)
                 ->with("tags", $tags)
                 ->with("featured", $featured)
+                ->with("featured_section", $featured_section)
                 ->with("popular", $popular)
                 ->with("settings", $settings)
                 ->with("ext", $ext)

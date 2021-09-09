@@ -151,7 +151,7 @@
     <!-- End Hero Section -->
     
     <!-- Blogs Section -->
-    <div class="container space-1 @if(!($featured->count() > 0)) {{ 'space-top-3' }} @endif">
+    <div class="container space-1 @if(!$featured_section) {{ 'space-top-3' }} @endif">
         <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-5' }} @endif">
             <div class="col-12 col-lg-9">
 

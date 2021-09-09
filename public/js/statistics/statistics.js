@@ -1,7 +1,18 @@
 $(document).ready(function () {
+    // Set the redirect and website url in the input fields
+    if(document.getElementById('redirect_url') && document.getElementById('website_url')){
+        // Set the current url without query string to redirect url
+        document.getElementById('redirect_url').value = window.location.href.split('?')[0];
+        // Get the root url
+        document.getElementById('website_url').value = window.location.origin;
+    }
+
     let KTAppSettings = initSettings();
     adminPageChart(KTAppSettings);
-    mainStatistics();
+
+    let data = document.getElementById("statChartData");
+    totalClicksChart(data);
+    avgPositionChart(data);
 });
 
 function adminPageChart(KTAppSettings) {
@@ -117,33 +128,66 @@ function adminPageChart(KTAppSettings) {
     }
 }
 
-function mainStatistics() {
-    var chart = document.getElementById("statistics_chart");
-    if (!chart) {
+function totalClicksChart(data) {
+    let total_clicks = document.getElementById('total_clicks_chart');
+    if (!total_clicks) {
         return;
     } else {
-        let chart_data = JSON.parse(chart.getAttribute("data-value"));
-
-        console.log(chart_data);
+        let chart_data = JSON.parse(data.getAttribute("data-value"));
 
         if (chart_data) {
-            const apexChart = "#statistics_chart";
+            const apexChart = "#total_clicks_chart";
             var options = {
                 series: [
                     {
                         name: "Total Clicks",
                         data: Object.values(chart_data["clicks"]),
                     },
-                    {
-                        name: "Total Impressions",
-                        data: Object.values(chart_data["impressions"]),
+                ],
+                chart: {
+                    height: 350,
+                    type: "area",
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    curve: "smooth",
+                },
+                xaxis: {
+                    type: "datetime",
+                    categories: Object.values(chart_data["dates"]),
+                },
+                tooltip: {
+                    x: {
+                        format: "dd/MM/yy",
                     },
+                },
+                colors: [primary, success],
+            };
+
+            var chart = new ApexCharts(
+                document.querySelector(apexChart),
+                options
+            );
+            chart.render();
+        }
+    }
+}
+
+function avgPositionChart(data){
+    let avg_position = document.getElementById('avg_position_chart');
+    if (!avg_position) {
+        return;
+    } else {
+        let chart_data = JSON.parse(data.getAttribute("data-value"));
+
+        if (chart_data) {
+            const apexChart = "#avg_position_chart";
+            var options = {
+                series: [
                     {
-                        name: "Avg CTR",
-                        data: Object.values(chart_data["ctr"]),
-                    },
-                    {
-                        name: "Avg Position",
+                        name: "Average Position",
                         data: Object.values(chart_data["position"]),
                     },
                 ],

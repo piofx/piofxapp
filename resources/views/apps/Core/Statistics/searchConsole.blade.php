@@ -46,6 +46,8 @@
             </div>
             <a href="{{ route('Statistics.index', 'statisticsRefresh=true') }}" class="btn btn-dark"><i class="fas fa-sync-alt"></i> Refresh</a>
         </div>
+
+        <!-- Overview -->
         <div class="bg-white rounded" style="padding: 2rem;">
             <h3 class="text-primary mb-5">Overview</h3>
             
@@ -65,91 +67,96 @@
                         <h1 class="display-3">{{ $fullData['total_clicks'] }}</h1>
                     </div>
                     <div class="bg-white rounded shadow-sm p-5 ml-lg-2 mt-3 mt-lg-0">
-                        <h6 class="text-danger mb-3">Total Impressions</h6>
-                        <h1 class="display-3">{{ $fullData['total_impressions'] }}</h1>
-                    </div>
-                    <div class="bg-white rounded shadow-sm p-5 ml-lg-2 mt-3 mt-lg-0">
-                        <h6 class="text-muted mb-3">Average CTR</h6>
-                        <h1 class="display-3">{{ $fullData['average_ctr'] }}%</h1>
-                    </div>
-                    <div class="bg-white rounded shadow-sm p-5 ml-lg-2 mt-3 mt-lg-0">
                         <h6 class="text-muted mb-3">Average Position</h6>
                         <h1 class="display-3">{{ $fullData['average_position'] }}</h1>
                     </div>
                 </div>
             @endif
-            @if(!empty($dateData))
-                <div class="mt-5">
-                    <!-- Chart -->
-                    <div id="statistics_chart" data-value="{{ $dateData }}"></div>
-                </div>
-            @endif
         </div>
-        
-        <div class="bg-white mt-5 p-5">
-            <div class="nav nav-pills mb-3 py-3" id="pills-tab" role="tablist">
-                <a class="btn btn-dark" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Queries</a>
-                <a class="btn btn-secondary ml-3" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pages</a>
-            </div>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                   <div class="table-responsive">
-                    <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Top Queries</th>
-                                    <th scope="col">Clicks</th>
-                                    <th scope="col">Impressions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($queryData as $k => $data)
-                                    @if ($k < 30)
-                                        <tr>
-                                            <td>{{$data['keys'][0]}}</td>
-                                            <td>{{$data['clicks']}}</td>
-                                            <td>{{$data['impressions']}}</td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                    </table>
-                   </div>
+        <!-- End Overview -->
+
+        @if(!empty($dateData))
+            <div class="mt-5 bg-white" style="padding: 2rem;">
+                <!-- Chart Data -->
+                <div id="statChartData" data-value="{{ $dateData }}"></div>
+                <!-- Charts -->
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h3 class="mb-3 font-weight-bold">Total Clicks</h3>
+                        <div class="bg-white shadow p-3">
+                            <div id="total_clicks_chart"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 mt-5 mt-lg-0">
+                        <h3 class="mb-3 font-weight-bold">Average Position</h3>
+                        <div class="bg-white shadow p-3">
+                            <div id="avg_position_chart"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Top Pages</th>
-                                    <th scope="col">Clicks</th>
-                                    <th scope="col">Impressions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($pagesData as $k => $data)
-                                    @if ($k < 30)
-                                        <tr>
-                                            <td>{{$data['keys'][0]}}</td>
-                                            <td>{{$data['clicks']}}</td>
-                                            <td>{{$data['impressions']}}</td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
+            </div>
+        @endif
+        
+        <!-- Queries and pages -->
+        <div class=" mt-5 p-5">
+            <div class="row">
+                <div class="col-12 col-lg-6 px-0 pr-lg-3 pl-lg-0">
+                    <h3>Top Queries</h3>
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Clicks</th>
+                                        <th scope="col">Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($queryData as $k => $data)
+                                        @if ($k < 30)
+                                            <tr>
+                                                <td>{{$data['keys'][0]}}</td>
+                                                <td>{{$data['clicks']}}</td>
+                                                <td>{{ round($data['position'], 1)}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 px-0 pl-lg-3 pr-lg-0 mt-5 mt-lg-0">
+                    <h3>Top Pages</h3>
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Clicks</th>
+                                        <th scope="col">Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pagesData as $k => $data)
+                                        @if ($k < 30)
+                                            <tr>
+                                                <td>{{$data['keys'][0]}}</td>
+                                                <td>{{$data['clicks']}}</td>
+                                                <td>{{ round($data['position'], 1)}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- End Queries and Pages -->
     @endif
-
-    <!-- Set the redirect url and website url fields -->
-    <script>
-        // Set the current url without query string to redirect url
-        document.getElementById('redirect_url').value = window.location.href.split('?')[0];
-        // Get the root url
-        document.getElementById('website_url').value = window.location.origin;
-    </script>
     
 </x-dynamic-component>

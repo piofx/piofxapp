@@ -237,8 +237,8 @@ class StatisticsController extends Controller
                     array_push($dates, $data['keys'][0]);
                     array_push($clicks, $data['clicks']);
                     array_push($impressions, $data['impressions']);
-                    array_push($ctr, round($data['ctr'] * 100, 2));
-                    array_push($position, round($data['position'], 2));
+                    array_push($ctr, round($data['ctr'] * 100, 1));
+                    array_push($position, round($data['position'], 1));
                 }
 
                 $dateData = array();
@@ -254,7 +254,7 @@ class StatisticsController extends Controller
                 foreach($fullData as $data){
                     $total_clicks = format_number($data['clicks']);
                     $total_impressions = format_number($data['impressions']);
-                    $average_ctr = round($data['ctr'] * 100, 2);
+                    $average_ctr = round($data['ctr'] * 100, 1);
                     $average_position = round($data['position'], 1);
                 }
 
