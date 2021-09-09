@@ -25,16 +25,16 @@
         $meta_description = strtolower($obj->meta_description);
         $tag = strtolower($tag);
 
-        if(strpos($title, $tag)){
+        if(strpos($title, $tag) !== false){
             $title_keywords[$tag] = substr_count($title, $tag); 
         }
-        if(strpos($content, $tag)){
+        if(strpos($content, $tag) !== false){
             $content_keywords[$tag] = substr_count($content, $tag); 
         }
-        if(strpos($meta_title, $tag)){
+        if(strpos($meta_title, $tag) !== false){
             $meta_title_keywords[$tag] = substr_count($meta_title, $tag); 
         }
-        if(strpos($meta_description, $tag)){
+        if(strpos($meta_description, $tag) !== false){
             $meta_description_keywords[$tag] = substr_count($meta_description, $tag); 
         }
     }

@@ -8,7 +8,7 @@
 				<div class="text-center">
 					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
 					@if($category->meta_description)
-						<div class="bg-dark py-1 rounded-lg">
+						<div class="bg-dark py-1 rounded-lg px-2">
 							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
 						</div>
 					@endif
@@ -20,7 +20,7 @@
 				<div class="text-center">
 					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
 					@if($category->meta_description)
-						<div class="bg-dark rounded-lg">
+						<div class="bg-dark rounded-lg px-2">
 							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
 						</div>
 					@endif
