@@ -20,10 +20,11 @@ class CreatePostsTable extends Migration
             $table->bigInteger('client_id')->nullable();
             $table->text('title');
             $table->text('slug');
+            $table->longText('top_head')->nullable();
             $table->integer('category_id')->nullable();
             $table->integer('tag_id')->nullable();
             $table->longText('image')->nullable();
-            $table->text('excerpt')->nullable();
+            $table->longText('excerpt')->nullable();
             $table->longText('content');
             $table->string('featured')->nullable();
             $table->string('visibility')->nullable();

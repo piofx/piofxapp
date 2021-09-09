@@ -184,6 +184,9 @@
             <div  @if($settings->post_layout != 'full') class="col-12 col-lg-9" @endif>
                 <div class="bg-white p-3 rounded rounded-3 rounded-lg">
                     <div class="mb-3">
+                        @if(!empty($obj->top_head))
+                            <h5 class="text-muted m-0">{{$obj->top_head}}</h5>
+                        @endif
                         <div class="d-md-flex align-items-center justify-content-between mb-4">
                             <div>
                                 <h1 class="m-0">{{$obj->title}}</h1>

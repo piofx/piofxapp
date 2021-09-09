@@ -67,13 +67,17 @@ function slugify(text) {
 
 // Create slug and meta title on keyup in title field
 function createSlugAndMetaTitle() {
-    let title = document.getElementById("title").value;
-    let slug = slugify(title);
+    let title = document.getElementById("title");
+
+    // Increase Textarea size based on content
+    if (title.clientHeight < title.scrollHeight) title.style.height=title.scrollHeight+"px";
+
+    let slug = slugify(title.value);
 
     document.getElementById("slug").value = slug;
 
     if (document.getElementById("meta_title")) {
-        document.getElementById("meta_title").innerHTML = title;
+        document.getElementById("meta_title").innerHTML = title.value;
     }
 }
 

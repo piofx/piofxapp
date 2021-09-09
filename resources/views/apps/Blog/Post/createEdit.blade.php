@@ -327,7 +327,7 @@
         <div class="row container m-0 p-0 my-5">
             <div class="col-12 col-lg-9 bg-white p-5 rounded-lg">
                 <textarea type="text" id="title" onkeyup="createSlugAndMetaTitle()" required
-                    class="form-control p-0 display-3 text-wrap" style="border: none; background: transparent;height:auto;"
+                    class="form-control p-0 display-3 text-wrap" rows="1    " style="border: none; background: transparent;"
                     placeholder="Type your title here"
                     name="title">@if($stub == 'update'){{$obj ? $obj->title : 'Title'}}@else{{ Request::old('title') ? Request::old('title') : null }}@endif</textarea>
                 <div class="d-flex align-items-center justify-content-left">
@@ -336,6 +336,7 @@
                         class="form-control p-0 d-inline ml-3" placeholder="start-typing-the-title"
                         name="slug" value="@if($stub == 'update'){{$obj ? $obj->slug : null }}@else{{ Request::old('slug') ? Request::old('slug') : null }}@endif"/>
                 </div>
+                <input type="text" class="form-control mb-3" name="top_head" placeholder="Top Head Content" value="@if($stub == 'update'){{$obj ? $obj->top_head : null }}@else{{ Request::old('top_head') ? Request::old('top_head') : null }}@endif">
                 <textarea type="text"   
                     class="form-control border h-auto px-3 py-3 mb-3 font-size-h6"
                     name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : null }}@else{{ Request::old('excerpt') ? Request::old('excerpt') : null }}@endif</textarea>
