@@ -154,11 +154,15 @@ class Client
 
     public function redirect($client_settings){
 
+
         if(isset($client_settings->redirect)){
 
             $redirects = json_decode(json_encode($client_settings->redirect, JSON_PRETTY_PRINT), true);
 
             $requestUrl = request()->path();
+            //exclude the admin routes
+            if (strpos($requestUrl, 'admin') !== false)
+                return null;
             $requestUrlParts = explode("/", $requestUrl);
             // check for direct match
             if(isset($redirects['/'.$requestUrl])){

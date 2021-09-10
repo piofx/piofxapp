@@ -196,6 +196,7 @@ class ContactController extends Controller
 
             //if request is for otp
             if($request->get('email_otp')){
+            
                 echo $this->otp('email');
                 dd();
             }
