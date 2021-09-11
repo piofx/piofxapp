@@ -33,7 +33,7 @@ class EmailForQueuing extends Mailable
     
         return $this->from('noreply@customerka.com', $this->details['client_name'])
             ->subject($this->details['subject'])
-            ->view('apps.Mailer.Mailview.campaignMail');
+            ->view('apps.Mailer.MailView.campaignMail');
     }
 
     
