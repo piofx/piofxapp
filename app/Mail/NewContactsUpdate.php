@@ -50,6 +50,9 @@ class NewContactsUpdate extends Mailable
         if (str_contains($this->content, '{{$link}}')) { 
             $this->content = str_replace('{{$link}}',$this->details['link'],$this->content);
         }
+        if (str_contains($this->content, '{{$client}}')) { 
+            $this->content = str_replace('{{$client}}',$this->details['client_name'],$this->content);
+        }
     
         return $this->from('noreply@customerka.com', $this->details['client_name'])
             ->subject($this->details['subject'])

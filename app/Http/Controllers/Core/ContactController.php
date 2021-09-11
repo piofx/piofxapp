@@ -196,7 +196,7 @@ class ContactController extends Controller
 
             //if request is for otp
             if($request->get('email_otp')){
-            
+
                 echo $this->otp('email');
                 dd();
             }
@@ -316,6 +316,11 @@ class ContactController extends Controller
                     if (str_contains($details['content'], '{{$email}}')) { 
                        $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
                     }
+                    if (str_contains($details['content'], '{{$client}}')) { 
+                       $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
+                    }
+
+                    $details['content'] = Obj::variableReplace($details['content'],$settings_data);
         
                     // send email
                     Mail::to($details['email'])->send(new DefaultMail($details));
@@ -557,6 +562,9 @@ class ContactController extends Controller
         }
         if (str_contains($details['content'], '{{$email}}')) { 
            $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
+        }
+        if (str_contains($details['content'], '{{$client}}')) { 
+            $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
         }
         
 
