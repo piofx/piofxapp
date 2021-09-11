@@ -50,10 +50,6 @@ class ContactController extends Controller
         //client id
         $client_id = request()->get('client.id');
 
-        if($request->get('test')){
-            $this->sendEmailOTP('packetcode@gmail.com','2345');
-        }
-
         // authorize the app
         $this->authorize('viewAny', $obj);
         //load user for personal listing
