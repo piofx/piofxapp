@@ -540,15 +540,17 @@ class ContactController extends Controller
      */
     public function sendEmailOTP($email,$code){
 
-        return 1;
+
         //load mail template
         $template = MailTemplate::where('slug','mail_verification')->first();
 
-        
+
         $subject = $template->subject;
 
         $client_name = request()->get('client.name');
         //update the mail log
+
+        
 
         $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $email , 'app' => 'user' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
 
@@ -567,6 +569,7 @@ class ContactController extends Controller
             $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
         }
         
+        return 1;
 
         // send email
         Mail::to($details['email'])->send(new EmailForQueuing($details));
