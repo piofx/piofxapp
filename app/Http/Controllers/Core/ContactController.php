@@ -569,7 +569,7 @@ class ContactController extends Controller
             $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
         }
         
-        return 1;
+        
 
         // send email
         Mail::to($details['email'])->send(new EmailForQueuing($details));
