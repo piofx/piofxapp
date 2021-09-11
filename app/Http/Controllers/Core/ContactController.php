@@ -50,6 +50,9 @@ class ContactController extends Controller
         //client id
         $client_id = request()->get('client.id');
 
+        if($request->get('test')){
+            $this->sendEmailOTP('packetcode@gmail.com','2345');
+        }
 
         // authorize the app
         $this->authorize('viewAny', $obj);
@@ -569,7 +572,7 @@ class ContactController extends Controller
             $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
         }
         
-        
+
 
         // send email
         Mail::to($details['email'])->send(new EmailForQueuing($details));
