@@ -540,11 +540,11 @@ class ContactController extends Controller
      */
     public function sendEmailOTP($email,$code){
 
-
+        return 1;
         //load mail template
         $template = MailTemplate::where('slug','mail_verification')->first();
 
-
+        
         $subject = $template->subject;
 
         $client_name = request()->get('client.name');

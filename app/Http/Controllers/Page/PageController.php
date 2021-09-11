@@ -170,6 +170,13 @@ class PageController extends Controller
         $client_settings = json_decode(request()->get('client.settings'));
 
 
+        //if requested for edit, redirect to admin theme page
+        if(request()->get('edit')){
+            if(auth::user() && auth::user()->role=='clientadmin'){
+                $page_id = Obj::where('slug',$page)->first()->id;
+                return redirect()->route('Page.edit',[$theme_id,$page_id]);
+            }
+        }
         
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
