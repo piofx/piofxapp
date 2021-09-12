@@ -27,7 +27,6 @@ $(function(){
             if(testmode)
                 url = url+'&test_score=1';
 
-            console.log('url - '+url);
             $.get(url,function(data){
                 $questions = JSON.parse(data);
                 $questions.forEach(function(d,i){

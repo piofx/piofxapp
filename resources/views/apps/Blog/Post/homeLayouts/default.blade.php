@@ -151,8 +151,8 @@
     <!-- End Hero Section -->
     
     <!-- Blogs Section -->
-    <div class="container space-1 @if(!($featured->count() > 0)) {{ 'space-top-3' }} @endif">
-        <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-5' }} @endif">
+    <div class="container space-1 @if(!($featured->count() > 0)) {{ 'space-top-2' }} @endif">
+        <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-9 mt-md-7' }} @endif">
             <div class="col-12 col-lg-9">
 
                 <!-- Ad -->
@@ -180,9 +180,9 @@
                                             $path = $path[0];
                                         @endphp
                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-2" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                         @else
-                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-2" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                         @endif
                                     </div>
                                     <div class="col-md-7">

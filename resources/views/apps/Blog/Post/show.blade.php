@@ -13,11 +13,11 @@
     <!-- Article Description Section -->
     <div class="container space-top-2">
         <!-- Breadcrumbs -->
-        <nav class="my-1 pt-7 pt-lg-8">
+        <nav class="my-1 pt-8 pt-lg-6">
             <ol class="breadcrumb m-0 p-0" style="background: transparent;">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
-                <li class="breadcrumb-item">{{ $obj->title }}</li>
+                <li class="breadcrumb-item d-none d-md-inline">{{ $obj->title }}</li>
             </ol>
         </nav>
         <!-- Breadcrumbs -->
