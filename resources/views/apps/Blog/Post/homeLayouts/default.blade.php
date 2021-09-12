@@ -180,9 +180,9 @@
                                             $path = $path[0];
                                         @endphp
                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                            <img class="img-fluid rounded-lg rounded-3 mb-2" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-1" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
                                         @else
-                                            <img class="img-fluid rounded-lg rounded-3 mb-2" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-1" src="{{ Storage::disk('s3')->url($obj->image) }}">
                                         @endif
                                     </div>
                                     <div class="col-md-7">
