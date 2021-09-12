@@ -1,7 +1,7 @@
 
 $(function(){
 
-    var prefix_url = 'https://xplore.in.net/';
+    var prefix_url = 'https://learn.packetprep.com/';
 
     if($(".test-container").length){
 
