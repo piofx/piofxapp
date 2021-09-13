@@ -24,22 +24,13 @@ function adminPageChart(KTAppSettings) {
 
         if (chart_data) {
             let clicks_max = Math.max.apply(Math, chart_data["clicks"]);
-            let impressions_max = Math.max.apply(
-                Math,
-                chart_data["impressions"]
-            );
-            let max_value = Math.max(clicks_max, impressions_max);
 
             var options = {
                 series: [
                     {
                         name: "Clicks",
                         data: Object.values(chart_data["clicks"]),
-                    },
-                    {
-                        name: "Impressions",
-                        data: Object.values(chart_data["impressions"]),
-                    },
+                    }
                 ],
                 chart: {
                     type: "bar",
@@ -67,14 +58,13 @@ function adminPageChart(KTAppSettings) {
                 },
                 fill: {
                     type: ["solid", "gradient"],
-                    opacity: 0.25,
                 },
                 xaxis: {
                     categories: Object.values(chart_data["dates"]),
                 },
                 yaxis: {
                     min: 0,
-                    max: max_value,
+                    max: clicks_max,
                 },
                 states: {
                     normal: {
@@ -106,7 +96,7 @@ function adminPageChart(KTAppSettings) {
                         enabled: false,
                     },
                     x: {
-                        show: false,
+                        format: "dd/MM/yy",
                     },
                     y: {
                         title: {

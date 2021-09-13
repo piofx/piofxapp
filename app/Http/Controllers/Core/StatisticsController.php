@@ -41,17 +41,17 @@ class StatisticsController extends Controller
         $queryData = null;
         $pagesData = null;
         $selector = "3Months";
-        $refresh = false;
 
         if($request->input('selector')){
             $selector = $request->input('selector');
         }
 
+        // If refresh is clicked, delete the file from s3
         if($request->input('statisticsRefresh')){
-            $refresh = true;
+            Storage::disk('s3')->delete("searchConsole/consoleData_".request()->get('client.id').".json");
         }
 
-        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json") || $refresh){
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client
             $client = new Google_Client();
 
@@ -206,22 +206,11 @@ class StatisticsController extends Controller
                 $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
 
                 $authentication = True;
-
-                // return redirect()->route($this->module.'.index');
             }
-
-            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-            //         ->with('app',$this)
-            //         ->with('authentication', $authentication);
         }
         else{
             $authentication = True;
             $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
-
-            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-            //         ->with('app',$this)
-            //         ->with('authentication', $authentication)
-            //         ->with('searchConsoleData', $searchConsoleData);
         }
 
         if(!empty($searchConsoleData)){

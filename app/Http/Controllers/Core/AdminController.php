@@ -79,7 +79,7 @@ class AdminController extends Controller
                 $dates = array();
                 $clicks = array();
                 $impressions = array();
-                for($i=count($oneMonthDateData)-1; $i>count($oneMonthDateData)-5; $i--){
+                for($i=count($oneMonthDateData)-1; $i>count($oneMonthDateData)-11; $i--){
                     array_push($dates, $oneMonthDateData[$i]['keys'][0]);
                     array_push($clicks, $oneMonthDateData[$i]['clicks']);
                     array_push($impressions, $oneMonthDateData[$i]['impressions']);
