@@ -158,5 +158,13 @@
         </div>
         <!-- End Queries and Pages -->
     @endif
+
+    <!-- Set the redirect and website url in the input fields -->
+    <script>
+        // Set the current url without query string to redirect url
+        document.getElementById('redirect_url').value = window.location.href.split('?')[0];
+        // Get the root url
+        document.getElementById('website_url').value = window.location.origin;
+    </script>
     
 </x-dynamic-component>

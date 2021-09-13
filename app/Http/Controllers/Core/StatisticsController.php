@@ -46,10 +46,14 @@ class StatisticsController extends Controller
             $selector = $request->input('selector');
         }
 
+        // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
+
         // If refresh is clicked, delete the file from s3
         if($request->input('statisticsRefresh')){
             Storage::disk('s3')->delete("searchConsole/consoleData_".request()->get('client.id').".json");
         }
+
+        // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
 
         if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client
@@ -118,6 +122,8 @@ class StatisticsController extends Controller
                     $request->session()->put('searchConsoleToken', $accessToken);
                 }
             }
+
+            // ddd($client->getAccessToken());
 
             // Check if session has the access token
             // If it does then set the access token for the client
