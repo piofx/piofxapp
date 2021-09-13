@@ -1,7 +1,7 @@
 
 $(function(){
 
-    var prefix_url = 'https://xplore.in.net/';
+    var prefix_url = 'https://learn.packetprep.com/';
 
     if($(".test-container").length){
 
@@ -26,7 +26,6 @@ $(function(){
                 url = url+'&style_test=1';
             if(testmode)
                 url = url+'&test_score=1';
-
 
             $.get(url,function(data){
                 $questions = JSON.parse(data);

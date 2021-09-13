@@ -50,7 +50,6 @@ class ContactController extends Controller
         //client id
         $client_id = request()->get('client.id');
 
-
         // authorize the app
         $this->authorize('viewAny', $obj);
         //load user for personal listing
@@ -196,6 +195,7 @@ class ContactController extends Controller
 
             //if request is for otp
             if($request->get('email_otp')){
+
                 echo $this->otp('email');
                 dd();
             }
@@ -315,6 +315,11 @@ class ContactController extends Controller
                     if (str_contains($details['content'], '{{$email}}')) { 
                        $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
                     }
+                    if (str_contains($details['content'], '{{$client}}')) { 
+                       $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
+                    }
+
+                    $details['content'] = Obj::variableReplace($details['content'],$settings_data);
         
                     // send email
                     Mail::to($details['email'])->send(new DefaultMail($details));
@@ -544,6 +549,8 @@ class ContactController extends Controller
         $client_name = request()->get('client.name');
         //update the mail log
 
+        
+
         $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $email , 'app' => 'user' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
 
 
@@ -557,7 +564,11 @@ class ContactController extends Controller
         if (str_contains($details['content'], '{{$email}}')) { 
            $details['content'] = str_replace('{{$email}}',$details['email'],$details['content']);
         }
+        if (str_contains($details['content'], '{{$client}}')) { 
+            $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
+        }
         
+
 
         // send email
         Mail::to($details['email'])->send(new EmailForQueuing($details));

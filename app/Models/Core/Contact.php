@@ -597,6 +597,29 @@ class Contact extends Model
             return 0;
     }
 
+    public static function variableReplace($content,$settings){
+
+        
+        if(preg_match_all('/{{+(.*?)}}/', $content, $regs))
+        {
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+              
+
+                $pos_0 = substr($variable,0,1);
+
+                //varaibles in the current page settings
+                if($pos_0=='$'){
+                    $variable_name = str_replace('$', '', $variable);
+
+                    $data = (isset($settings->$variable_name)) ? $settings->$variable_name : '';
+                   
+                    $content = str_replace('{{'.$reg.'}}', $data , $content);
+                }
+            }
+        }
+        return $content;
+    }
     
     
     public static function getCsv($columnNames, $rows, $fileName = 'file.csv') {

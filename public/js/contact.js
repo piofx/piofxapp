@@ -96,6 +96,7 @@ $(function(){
             console.log('form email');
             $(document).on("click",".contact_button", function(e){
                 e.preventDefault();
+
                  $('.spinner-border').show();
                 var formValues= $("form").serialize();
                 var name = $('input[name=name]').val();
@@ -105,10 +106,13 @@ $(function(){
                     $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&email_otp=1';
+                      console.log($url);
+                     
                     $.post($url, d, function(data){
                         console.log(data);
                         var d = JSON.parse(data);
                         console.log(d);
+                       
                         if(typeof(d.otp) != "undefined" && d.otp !== null){
                             var otp = JSON.parse(data).otp;
                             $('.spinner-border').hide();
