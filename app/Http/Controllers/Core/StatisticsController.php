@@ -70,14 +70,14 @@ class StatisticsController extends Controller
             // Check if request has the auth code
             if($request->input("client_id") || $request->input("code")){
                 if($request->session()->get('clientId')){
-                    $client_id = $request->session()->get('clientId');
+                    $client_id = trim($request->session()->get('clientId'));
                 }else{
                     $client_id = trim($request->input('client_id'));
                     $request->session()->put('clientId', $client_id);
                 }
 
                 if($request->session()->get('clientSecret')){
-                    $client_secret = $request->session()->get('clientSecret');
+                    $client_secret = trim($request->session()->get('clientSecret'));
                 }else{
                     $client_secret = trim($request->input('client_secret'));
                     $request->session()->put('clientSecret', $client_secret);
