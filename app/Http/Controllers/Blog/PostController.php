@@ -426,6 +426,7 @@ class PostController extends Controller
         
         // cached related data
         $related = Cache::get('related_'.request()->get('client.id').'_'.$slug);
+        if(!$related)
         if(!empty($post->category) && $post->category->posts->count() > 0){
             // Retrieving all related posts   
             $related = $post->category->posts->where('status', '1')->take(3);
