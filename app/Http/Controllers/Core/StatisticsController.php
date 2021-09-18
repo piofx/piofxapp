@@ -46,6 +46,13 @@ class StatisticsController extends Controller
             $selector = $request->input('selector');
         }
 
+        if($request->get('refresh')){
+            $request->session()->forget('clientWebsiteUrl');
+            $request->session()->forget('clientId');
+            $request->session()->forget('clientSecret');
+            $request->session()->forget('clientRedirectUrl');
+        }
+
         // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
 
         // If refresh is clicked, delete the file from s3
@@ -117,7 +124,7 @@ class StatisticsController extends Controller
 
                     if(request()->get('client'))
                      dd($client);
-                 
+
                     // Exchange authorization code for an access token.
                     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
                     
