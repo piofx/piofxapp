@@ -102,6 +102,8 @@ class StatisticsController extends Controller
                 if($request->input("client_id")){
                     // Create an authentication url and redirect to the authentication page
                     $authUrl = $client->createAuthUrl();
+                    if(request()->get('dumpd'))
+                        dd($authUrl);
                     header("Location: ". $authUrl);
                 }
                 elseif($request->input("code")){  

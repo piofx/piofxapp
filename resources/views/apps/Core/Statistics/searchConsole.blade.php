@@ -24,6 +24,7 @@
                 <div class="bg-light p-5 rounded rounded-3 mt-3">
                     <h5>Place this url in the allowed redirects</h5>
                     <input name="redirect_url" readonly id="redirect_url" class="form-control">
+                    <input name="dumpd" type="hidden" value="{{request()->get('dumpd')}}">
                 </div>
                 <button type="submit" class="btn btn-dark mt-3">Continue</button>
 
