@@ -51,6 +51,7 @@ class StatisticsController extends Controller
             $request->session()->forget('clientId');
             $request->session()->forget('clientSecret');
             $request->session()->forget('clientRedirectUrl');
+            $request->session()->forget('searchConsoleToken');
         }
 
         // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
@@ -58,6 +59,7 @@ class StatisticsController extends Controller
         // If refresh is clicked, delete the file from s3
         if($request->input('statisticsRefresh')){
             Storage::disk('s3')->delete("searchConsole/consoleData_".request()->get('client.id').".json");
+            
         }
 
         // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
