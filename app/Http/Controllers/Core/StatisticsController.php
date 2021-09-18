@@ -41,17 +41,21 @@ class StatisticsController extends Controller
         $queryData = null;
         $pagesData = null;
         $selector = "3Months";
-        $refresh = false;
 
         if($request->input('selector')){
             $selector = $request->input('selector');
         }
 
+        // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
+
+        // If refresh is clicked, delete the file from s3
         if($request->input('statisticsRefresh')){
-            $refresh = true;
+            Storage::disk('s3')->delete("searchConsole/consoleData_".request()->get('client.id').".json");
         }
 
-        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json") || $refresh){
+        // ddd(Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json"));
+
+        if(!Storage::disk('s3')->exists("searchConsole/consoleData_".request()->get('client.id').".json")){
             // Initialize a new google client
             $client = new Google_Client();
 
@@ -120,6 +124,8 @@ class StatisticsController extends Controller
                     $request->session()->put('searchConsoleToken', $accessToken);
                 }
             }
+
+            // ddd($client->getAccessToken());
 
             // Check if session has the access token
             // If it does then set the access token for the client
@@ -208,22 +214,11 @@ class StatisticsController extends Controller
                 $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
 
                 $authentication = True;
-
-                // return redirect()->route($this->module.'.index');
             }
-
-            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-            //         ->with('app',$this)
-            //         ->with('authentication', $authentication);
         }
         else{
             $authentication = True;
             $searchConsoleData = json_decode(Storage::disk('s3')->get("searchConsole/consoleData_".request()->get('client.id').".json"), true);
-
-            // return view('apps.'.$this->app.'.'.$this->module.'.searchConsole')
-            //         ->with('app',$this)
-            //         ->with('authentication', $authentication)
-            //         ->with('searchConsoleData', $searchConsoleData);
         }
 
         if(!empty($searchConsoleData)){
@@ -239,8 +234,8 @@ class StatisticsController extends Controller
                     array_push($dates, $data['keys'][0]);
                     array_push($clicks, $data['clicks']);
                     array_push($impressions, $data['impressions']);
-                    array_push($ctr, round($data['ctr'] * 100, 2));
-                    array_push($position, round($data['position'], 2));
+                    array_push($ctr, round($data['ctr'] * 100, 1));
+                    array_push($position, round($data['position'], 1));
                 }
 
                 $dateData = array();
@@ -256,7 +251,7 @@ class StatisticsController extends Controller
                 foreach($fullData as $data){
                     $total_clicks = format_number($data['clicks']);
                     $total_impressions = format_number($data['impressions']);
-                    $average_ctr = round($data['ctr'] * 100, 2);
+                    $average_ctr = round($data['ctr'] * 100, 1);
                     $average_position = round($data['position'], 1);
                 }
 
