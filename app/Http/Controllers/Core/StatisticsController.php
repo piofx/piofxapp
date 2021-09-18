@@ -112,17 +112,19 @@ class StatisticsController extends Controller
                 }
                 elseif($request->input("code")){  
                     $authCode = $request->input('code');
+                    if(request()->get('a_code'))
+                     dd($authCode);
+
+                    if(request()->get('client'))
+                     dd($client);
+                 
                     // Exchange authorization code for an access token.
                     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
                     
                     if(request()->get('a_token'))
                      dd($accessToken);
 
-                    if(request()->get('a_code'))
-                     dd($authCode);
-
-                    if(request()->get('client'))
-                     dd($client);
+                    
 
                     // Check to see if there was an error.
                     if (array_key_exists('error', $accessToken)) {
