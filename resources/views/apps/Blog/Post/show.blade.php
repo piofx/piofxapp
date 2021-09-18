@@ -73,9 +73,9 @@
                                                             $path = $path[0];
                                                         @endphp
                                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                         @else
-                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
@@ -135,9 +135,9 @@
                                                             $path = $path[0];
                                                         @endphp
                                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                         @else
-                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                            <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                         @endif
                                                     </div>
                                                     <div class="col-8 pl-0">
@@ -292,15 +292,15 @@
                                 @endphp
                                 @if(Browser::isMobile())
                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                     @else
-                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                     @endif
                                 @else
                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_resized.'.$ext))
-                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}">
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_resized.'.$ext) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                     @else
-                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}">
+                                        <img class="img-fluid rounded-lg rounded-3 w-100" src="{{ Storage::disk('s3')->url($obj->image) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                     @endif
                                 @endif
                             </div>
@@ -490,9 +490,9 @@
                                                                     $path = $path[0];
                                                                 @endphp
                                                                 @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                                 @else
-                                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                                 @endif
                                                             </div>
                                                             <div class="col-8 pl-0">
@@ -553,9 +553,9 @@
                                                         $path = $path[0];
                                                     @endphp
                                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                                     @else
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
@@ -615,9 +615,9 @@
                                                         $path = $path[0];
                                                     @endphp
                                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @else
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
@@ -683,9 +683,9 @@
                                                         $path = $path[0];
                                                     @endphp
                                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @else
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
@@ -745,9 +745,9 @@
                                                         $path = $path[0];
                                                     @endphp
                                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @else
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @endif
                                                 </div>
                                                 <div class="col-8 pl-0">
