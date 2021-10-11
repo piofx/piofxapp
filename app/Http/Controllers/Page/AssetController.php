@@ -158,7 +158,7 @@ class AssetController extends Controller
         $alert = session()->get('alert');
 
         $data=null;
-        if($obj->type=='css' || $obj->type=='js'){
+        if($obj->type=='css' || $obj->type=='js' || $obj->type=='json'){
             $data = Storage::disk('s3')->get($obj->path);
         }
 

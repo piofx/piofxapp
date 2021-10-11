@@ -135,6 +135,7 @@ $(function(){
 
         $('.correct_'+$slug+'_'+$qno).hide();
         $('.incorrect_'+$slug+'_'+$qno).hide();
+        if($ans)
         if($ans.toUpperCase() == $response.toUpperCase())
         {
 

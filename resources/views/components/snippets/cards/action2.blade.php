@@ -3,7 +3,13 @@
  <div class="card-footer bg-gray-100 border-top-0">
   <div class="row align-items-center">
    <div class="col text-left">
-    <h2>{{$title}} Module</h2>
+    <h2>{{$title}} Module
+        @if($title=='Page')
+        @if(isset($pageid))
+            <small class="ml-2"> <a href="{{route($title.'.theme',[$appid,$pageid])}}" target="_blank">preview <i class="fa fa-angle-right"></i></a></small>
+        @endif
+        @endif
+    </h2>
    </div>
    <div class="col text-right">
     <button type="submit" class="btn btn-primary font-weight-bold mr-2">Submit</button>

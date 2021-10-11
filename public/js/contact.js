@@ -97,12 +97,13 @@ $(function(){
             $(document).on("click",".contact_button", function(e){
                 e.preventDefault();
 
-                 $('.spinner-border').show();
+                 
                 var formValues= $("form").serialize();
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
                 if(name && phone && email){
+                    $('.spinner-border').show();
                     $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&email_otp=1';

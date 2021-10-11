@@ -374,6 +374,11 @@ class PageController extends Controller
                 dd();
             }
 
+            //open preview
+            if($request->get('preview')){
+                return redirect()->route($this->module.'.theme',[$theme_id,$id]);
+            }
+
             // flash message and redirect to controller index page
             $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
             return redirect()->route($this->module.'.edit',[$theme_id,$id])->with('alert',$alert);
