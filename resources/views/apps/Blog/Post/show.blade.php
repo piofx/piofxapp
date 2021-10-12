@@ -110,8 +110,11 @@
                     @if(!empty($tags) && sizeof($tags) > 0)
                         <div class="mb-5">
                             <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
-                            @foreach($tags as $tag)
+                            @foreach($tags as $kt=>$tag)
                             <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                                @if($kt==6)
+                                    @break
+                                @endif  
                             @endforeach
                         </div>
                     @endif
