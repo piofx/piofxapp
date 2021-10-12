@@ -1,11 +1,11 @@
 $(function(){
 
-    var prefix_url = 'https://prep.firstacademy.in/';
 
     if($(".test-container-json").length){
 
         $( ".test-container-json" ).each(function() {
-            var url = $(this).data('url');
+            let r = (Math.random() + 1).toString(36).substring(7);
+            var url = $(this).data('url')+'?r='+r;
             var container = $(this);
             fetch(url)
             .then(res => res.json())
