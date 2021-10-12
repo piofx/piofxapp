@@ -61,32 +61,32 @@ $(function(){
             }
              if(data.a){
                   html =html+ "<div class='opt'><div class='form-check'>"+
-                  "<input class='form-check-input mt-1' type='radio' id='"+qno+"_a' name='"+set+"_"+qno+"' value='a'>"+
-                    "<label class='form-check-label' for='"+qno+"_a'>"+data.a+"</label>"+
+                  "<input class='form-check-input mt-1' type='radio' id='"+set+"_"+qno+"_a' name='"+set+"_"+qno+"' value='a'>"+
+                    "<label class='form-check-label' for='"+set+"_"+qno+"_a'>"+data.a+"</label>"+
                     "<span class='ans_"+set+"_"+qno+" ans_"+set+"_"+qno+"_a'></span></div></div>";
              }
              if(data.b){
                   html =html+ "<div class='opt'><div class='form-check'>"+
-                  "<input class='form-check-input mt-1' type='radio' id='"+qno+"_b' name='"+set+"_"+qno+"'  value='b'>"+
-                    "<label class='form-check-label' for='"+qno+"_b'>"+data.b+"</label>"+
+                  "<input class='form-check-input mt-1' type='radio' id='"+set+"_"+qno+"_b' name='"+set+"_"+qno+"'  value='b'>"+
+                    "<label class='form-check-label' for='"+set+"_"+qno+"_b'>"+data.b+"</label>"+
                     "<span class='ans_"+set+"_"+qno+" ans_"+set+"_"+qno+"_b'></span></div></div>";
              }
              if(data.c){
                   html =html+ "<div class='opt'><div class='form-check'>"+
-                  "<input class='form-check-input mt-1' type='radio' id='"+qno+"_c' name='"+set+"_"+qno+"' value='c'>"+
-                    "<label class='form-check-label' for='"+qno+"_c'>"+data.c+"</label>"+
+                  "<input class='form-check-input mt-1' type='radio' id='"+set+"_"+qno+"_c' name='"+set+"_"+qno+"' value='c'>"+
+                    "<label class='form-check-label' for='"+set+"_"+qno+"_c'>"+data.c+"</label>"+
                     "<span class='ans_"+set+"_"+qno+" ans_"+set+"_"+qno+"_c'></span></div></div>";
              }
              if(data.d){
                   html =html+ "<div class='opt'><div class='form-check'>"+
-                  "<input class='form-check-input mt-1' type='radio' id='"+qno+"_d' name='"+set+"_"+qno+"' value='d'>"+
-                    "<label class='form-check-label' for='"+qno+"_d'>"+data.d+"</label>"+
+                  "<input class='form-check-input mt-1' type='radio' id='"+set+"_"+qno+"_d' name='"+set+"_"+qno+"' value='d'>"+
+                    "<label class='form-check-label' for='"+set+"_"+qno+"_d'>"+data.d+"</label>"+
                     "<span class='ans_"+set+"_"+qno+" ans_"+set+"_"+qno+"_d'></span></div></div>";
              }
              if(data.e){
                   html =html+ "<div class='opt'><div class='form-check'>"+
-                  "<input class='form-check-input mt-1' type='radio' id='"+qno+"_e' name='"+set+"_"+qno+"' value='e'>"+
-                    "<label class='form-check-label' for='"+qno+"_e'>"+data.e+"</label>"+
+                  "<input class='form-check-input mt-1' type='radio' id='"+set+"_"+qno+"_e' name='"+set+"_"+qno+"' value='e'>"+
+                    "<label class='form-check-label' for='"+set+"_"+qno+"_e'>"+data.e+"</label>"+
                     "<span class='ans_"+set+"_"+qno+" ans_"+set+"_"+qno+"_e'></span></div></div>";
              }
 
