@@ -184,8 +184,11 @@
                 @if(!empty($objs))
                     <div class="mb-5">
                         <h5 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h5>
-                        @foreach($objs as $obj)
+                        @foreach($objs as $kt=>$obj)
                             <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $obj->slug) }}">{{ $obj->name }}</a>
+                         @if($kt==6)
+                            @break
+                        @endif  
                         @endforeach
                     </div>    
                 @endif

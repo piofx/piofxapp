@@ -195,8 +195,11 @@
 				@if(!empty($tags))
 					<div class="mb-5">
 						<h5 class="font-weight-bold mb-3">Tags</h5>
-						@foreach($tags as $tag)
+						@foreach($tags as $kt=>$tag)
 							<a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+						 @if($kt==6)
+                            @break
+                        @endif  
 						@endforeach
 					</div>
 				@endif
