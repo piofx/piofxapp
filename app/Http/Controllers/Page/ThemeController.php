@@ -758,7 +758,10 @@ class ThemeController extends Controller
         if($status)
             $alert = 'Data is saved!';
 
-        
+        //if request is delete
+        if(request()->get('delete')){
+            return $this->destroy($id);
+        }
 
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.show')
@@ -875,6 +878,20 @@ class ThemeController extends Controller
         $obj = Obj::where('id',$id)->first();
         // authorize
         $this->authorize('update', $obj);
+        //delete all the related resources
+        $assets = Asset::where('theme_id',$id)->get();
+        foreach($assets as $a){
+             Storage::disk('s3')->delete($a->path);
+             $a->delete();
+        }
+        $modules = Module::where('theme_id',$id)->get();
+        foreach($modules as $m){
+            $m->delete();
+        }
+        $pages = Page::where('theme_id',$id)->get();
+        foreach($pages as $p){
+            $p->delete();
+        }
         // delete the resource
         $obj->delete();
 

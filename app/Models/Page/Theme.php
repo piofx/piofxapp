@@ -243,6 +243,7 @@ class Theme extends Model
 
         //add the slashes 
         if($json)
+        if(isset($json->slug))
         if(strpos($json->slug, '@') !== false){
             $json->slug = str_replace('@','/',$json->slug);
         }

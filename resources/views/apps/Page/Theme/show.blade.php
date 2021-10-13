@@ -55,7 +55,7 @@
                 <div class="btn-group" role="group" aria-label="First group">
                   <a href="{{ route('Theme.page',$obj->id)}}"  class="btn btn-primary "><i class="la la-eye"></i> preview</a>
                   <a href="{{ route('Theme.edit',$obj->id)}}"  class="btn btn-success "><i class="la la-gear"></i> Settings</a>
-                  	 <a href="{{ route('Theme.edit',$obj->id)}}"  class="btn btn-danger "><i class="la la-trash"></i> Delete</a>
+                  	 <a href="#"  class="btn btn-danger " data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete"><i class="la la-trash"></i> Delete</a>
 
                 </div>
               </div>
@@ -296,6 +296,32 @@
 
     	</div>
 	</div>
+
+	<div class="modal fade" id="exampleModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                This following action is permanent and it cannot be reverted.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                
+                <form method="post" action="{{route('Theme.destroy',$obj->id)}}">
+               
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <button type="submit" class="btn btn-danger">Delete Permanently</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </x-dynamic-component>
