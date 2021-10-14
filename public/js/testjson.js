@@ -33,7 +33,7 @@ $(function(){
                             });
                             $('body').append('<div class="total_'+set+' d-none" >'+$total+'</div>'); 
                             
-                            subcontainer.append('<div><button class="btn btn-success mb-3 check_answers" data-set="'+set+'" >Check answers</button>'+
+                            subcontainer.append('<div class="mt-3"><button class="btn btn-success mb-3 check_answers" data-set="'+set+'" >Check answers</button>'+
                                 '<button class="btn btn-outline-dark mb-3 ml-3 clear_answers" data-set="'+set+'" >Clear</button>'+
                                 '<span class="ml-3"><span class="score_'+set+' h4"></span></span></div>');
                             $('.score_'+set).hide();
