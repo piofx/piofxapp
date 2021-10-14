@@ -196,7 +196,7 @@ $(function(){
     function match_answers($uans,$each_ans){
         $flag=0;
         $.each($each_ans, function(i,$oans){
-            if($uans==$oans){
+            if($uans.toLowerCase()==$oans.toLowerCase()){
                 $flag = 1;
                 return false;
             }
