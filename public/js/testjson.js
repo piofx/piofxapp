@@ -107,7 +107,7 @@ $(function(){
         }
 
         html=html+"</div>";
-        $('body').append('<div class="'+set+'_'+qno+'" data-answer='+data.answer+' data-type='+data.type+'></div>');
+        $('body').append('<div class="'+set+'_'+qno+'" data-answer="'+data.answer+'" data-type="'+data.type+'"></div>');
         subcontainer.append(html);
     }
 
@@ -196,7 +196,7 @@ $(function(){
     function match_answers($uans,$each_ans){
         $flag=0;
         $.each($each_ans, function(i,$oans){
-            if($uans.toLowerCase()==$oans.toLowerCase()){
+            if($uans.toLowerCase().replace(/\s+/g, '')==$oans.toLowerCase().replace(/\s+/g, '')){
                 $flag = 1;
                 return false;
             }
