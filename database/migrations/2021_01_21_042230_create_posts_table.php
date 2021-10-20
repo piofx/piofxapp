@@ -34,6 +34,8 @@ class CreatePostsTable extends Migration
             $table->text('meta_description')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamp('published_at')->nullable();
+            $table->text('top_head');
+            $table->text('link');
             $table->timestamps();
         });
     }

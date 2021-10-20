@@ -426,6 +426,27 @@
                     </div>
 
                     <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+                         <div class="card border rounded-lg mt-5">
+                            <div class="card-header" id="headingOne6">
+                                <div class="card-title" data-toggle="collapse" data-target="#collapseOne1">
+                                    <i class="fas fa-cookie"></i> Link
+                                </div>
+                            </div>
+                            <div id="collapseOne1" class="collapse show" data-parent="#accordionExample6">
+                                <div class="card-body">
+                                    <!--begin::Form Group-->
+                                    <div class="form-group m-0">
+                                        <textarea type="text" id="link" rows="3"
+                                            class="form-control h-auto bg-light border mb-2 p-3 rounded-md font-size-h6"
+                                            name="link_title" placeholder="Link Title">@if($stub == 'update'){{ $obj->link_title ? $obj->link_title : null }}@else{{ Request::old('link_title') ? Request::old('link_title') : null }}@endif</textarea>
+                                        <textarea type="text" id="link" rows="3"
+                                            class="form-control h-auto bg-light border mb-2 p-3 rounded-md font-size-h6"
+                                            name="link" placeholder="External Hyperlink">@if($stub == 'update'){{ $obj->link ? $obj->link : null }}@else{{ Request::old('link') ? Request::old('link') : null }}@endif</textarea>
+                                    </div>
+                                    <!--end::Form Group-->
+                                </div>
+                            </div>
+                        </div>
                         <div class="card border rounded-lg mt-5">
                             <div class="card-header" id="headingOne6">
                                 <div class="card-title" data-toggle="collapse" data-target="#collapseOne1">

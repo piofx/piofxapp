@@ -80,7 +80,7 @@
                     <td class="px-3 align-middle text-primary font-weight-bolder">{{ $obj->created_at ? $obj->created_at->diffForHumans() : '' }}</td>
                     <td class="px-3 d-flex align-items-center justify-content-center align-middle">
                         <!-- View Button-->
-                        <a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-eye m-0"></i></a>
+                        <a href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" target="_blank"><i class="fas fa-eye m-0"></i></a>
                         <!-- End View Button -->
 
                         <!-- Edit Button -->

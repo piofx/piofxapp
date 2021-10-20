@@ -273,11 +273,10 @@
             <!-- Right Section -->
             <div class="col-12 col-lg-3">
 
-                @auth
-                @if(Auth::user()->role=='clientadmin')
-                <a href="/admin/blog/create?template=none" class="btn btn-sm btn-danger w-100 mb-3">Write Blog</a>
-                @endif
-                @endauth
+                <!-- login -->
+                @include('apps.Blog.Post.homeLayouts.login')
+                <!-- end login -->
+                
                 <div class="mb-5">
                     <!-- Search Form -->
                     <form action="{{ route($app->module.'.search') }}" method="GET">

@@ -208,7 +208,7 @@
                                 </div>
                             @endif
                             @php
-                                $allowed_roles = ['superadmin', 'agencyadmin', 'clientadmin'];
+                                $allowed_roles = ['superadmin', 'agencyadmin', 'clientadmin','clientmoderator'];
                             @endphp
                             @if(!empty(auth()->user()) && in_array(auth()->user()->role, $allowed_roles))
                                 <p class="m-0 mr-3 ml-3"> | </p>
@@ -386,6 +386,14 @@
                             @endif
                         @endif
                     </div>
+
+                    <!-- Link -->
+                    @guest
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                    @else
+                    <a href="{{$obj->link}}" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                    @endif
+                    <!-- end link-->
 
                     <!-- Tags -->
                     @if(!empty($postTags) && sizeof($postTags) > 0)
@@ -654,6 +662,11 @@
 
             @if($settings->post_layout == 'right')
             <div class="col-12 col-lg-3 d-none d-lg-block">
+
+                <!-- login -->
+                @include('apps.Blog.Post.homeLayouts.login')
+                <!-- end login -->
+
                 <!-- Ad -->
                 @if(!empty($settings->ads))
                     <div class="mb-5">
@@ -811,5 +824,9 @@
         <!-- End Ad Section -->
     </div>
     <!-- End Article Description Section -->
+
+     <!-- login modal -->
+    @include('apps.Blog.Post.homeLayouts.loginModal')
+     <!-- end login modal-->
 
 </x-dynamic-component>
