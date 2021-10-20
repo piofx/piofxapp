@@ -72,7 +72,7 @@ class UserPolicy
             return true;
         elseif(($u->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydeveloper'])))
             return true;
-        elseif($user->checkRole(['superadmin','superdeveloper']))
+        elseif(($u->client_id == $user->client_id) && $u->id ==$user->id)
             return true;
 
         return false;
@@ -92,7 +92,7 @@ class UserPolicy
             return true;
         elseif(($u->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydeveloper'])))
             return true;
-        elseif($user->checkRole(['superadmin','superdeveloper']))
+        elseif(($u->client_id == $user->client_id) && $u->id ==$user->id)
             return true;
 
         return false;

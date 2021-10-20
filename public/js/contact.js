@@ -1,5 +1,7 @@
 $(function(){
 
+
+    //contact form
     if($("form").length){
         $url = $("form").attr('action');
         //general form submission
@@ -16,6 +18,33 @@ $(function(){
                         $('.contact_block').hide();
                         $('.alert_message').html(data);
                         $('.alert_block').show();
+                        return false;  
+                    });
+                });
+            });
+        }
+
+        //login form submission
+        if($("form").data('login')==1){
+            $(document).on("click",".login_button", function(e){
+                e.preventDefault();
+                var formValues= $("form").serialize();
+                $.get('/contact/api',function(data){
+                    var token = JSON.parse(data).token;
+                    var d = formValues+'&_token='+token+'&api=1';
+                    $.post($url, d, function(data){
+                        // Display the returned data in browser
+                       
+                        d = JSON.parse(data);
+                        if(d.login==1){
+                            $('.login_message').html("<p class='text-white mb-0'><b>"+d.message+".</b> This page will be relaoded in few seconds</p>").show();
+                            setTimeout(function(){
+                                location.reload();
+                            },2000);
+                        }else{
+                            $('.login_message').html("<p class='text-white mb-0'><b>"+d.message+"</b><br> Incase of a query, Kindly reach out to the admin team.</p>").show();
+                           
+                        }
                         return false;  
                     });
                 });
@@ -169,5 +198,8 @@ $(function(){
         }
 
     }
+
+    //login form
+
 	
 });

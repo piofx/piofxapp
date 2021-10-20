@@ -129,32 +129,51 @@ $(function(){
     $(document).on('change','.form-check-input',function(){
         $qno = $(this).data('qno');
         $slug = $(this).data('slug');
-        $response = $(this).val();
-        $ans = $('.q_'+$slug+'_'+$qno).data('answer');
-        $('.ans_'+$slug+'_'+$qno).html($response.toUpperCase());
+        $user = $('.apiuser').data('user');
+        $login = $(".test-container").data('login');
 
-        $('.correct_'+$slug+'_'+$qno).hide();
-        $('.incorrect_'+$slug+'_'+$qno).hide();
-        if($ans)
-        if($ans.toUpperCase() == $response.toUpperCase())
-        {
+        if($login){
+            $.get('/user/apiuser',function(data){
+                d = JSON.parse(data);
+                if(d.user==0){
+                    $('#loginModal').modal('show')
+                    return false;
+                }else{
 
-            $('.correct_'+$slug+'_'+$qno).show();
-            if(!$('.expl_'+$slug+'_'+$qno).length){
-                $('.correct_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expl_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
-            }
-            confetti({
-              particleCount: 100,
-              spread: 70,
-              origin: { y: 0.6 }
+                }        
             });
+            
+        }
 
-        }else{
-            $('.incorrect_'+$slug+'_'+$qno).show();
-            if(!$('.expll_'+$slug+'_'+$qno).length){
-                $('.incorrect_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expll_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
+        if($user){
+            $response = $(this).val();
+            $ans = $('.q_'+$slug+'_'+$qno).data('answer');
+            $('.ans_'+$slug+'_'+$qno).html($response.toUpperCase());
+
+            $('.correct_'+$slug+'_'+$qno).hide();
+            $('.incorrect_'+$slug+'_'+$qno).hide();
+            if($ans)
+            if($ans.toUpperCase() == $response.toUpperCase())
+            {
+
+                $('.correct_'+$slug+'_'+$qno).show();
+                if(!$('.expl_'+$slug+'_'+$qno).length){
+                    $('.correct_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expl_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
+                }
+                confetti({
+                  particleCount: 100,
+                  spread: 70,
+                  origin: { y: 0.6 }
+                });
+
+            }else{
+                $('.incorrect_'+$slug+'_'+$qno).show();
+                if(!$('.expll_'+$slug+'_'+$qno).length){
+                    $('.incorrect_'+$slug+'_'+$qno).append("&nbsp;<span class='text-primary explanation expll_"+$slug+"_"+$qno+"' style='cursor:pointer' data-anchor='explanation_"+$slug+"_"+$qno+"' > view explanation</span>");
+                }
             }
         }
+        
         
     });
 

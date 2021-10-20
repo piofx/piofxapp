@@ -384,4 +384,55 @@ if (! function_exists('blog_image_upload')) {
 		}
 	}
 
+	if(!function_exists("processForm")){
+		function processForm($data){
+	        $d = [];
+	        $form = explode(',',$data);
+	        foreach($form as $k=>$f){
+	            $item = ["name"=>$f,"type"=>"input","values"=>""];
+	            if(preg_match_all('/<<+(.*?)>>/', $f, $regs))
+	            {
+	                foreach ($regs[1] as $reg){
+	                    $variable = trim($reg);
+	                    $item['name'] = str_replace($regs[0], '', $f);
+
+
+	                    if(is_numeric($variable)){
+	                        $item['type'] = 'textarea';
+	                        $item['values'] = $variable;
+
+	                    }else if($variable=='file'){
+	                        $item['type'] = 'file';
+	                        $item['values'] = $variable;
+	                    }else{
+	                        $options = explode('/',$variable);
+	                        $item['values'] = $options;
+	                        $item['type'] = 'checkbox';
+	                    }
+	                    
+	                }
+	            }
+
+	            if(preg_match_all('/{{+(.*?)}}/', $f, $regs))
+	            {
+
+	                foreach ($regs[1] as $reg){
+	                    $variable = trim($reg);
+	                    $item['name'] = str_replace($regs[0], '', $f);
+	                    $options = explode('/',$variable);
+	                    $item['values'] = $options;
+	                    $item['type'] = 'radio';
+	                    
+	                }
+	            }
+
+	            $d[$k] = $item;
+
+	        }
+
+	        return $d;
+	    }
+	}
+
+
 }

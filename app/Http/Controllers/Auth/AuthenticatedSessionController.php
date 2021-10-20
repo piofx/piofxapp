@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      *
      */
     public function __construct(){
-        $this->componentName = componentName('agency','login');
+        $this->componentName = componentName('agency','plainmini');
         $this->module   =   'User';
         
     }

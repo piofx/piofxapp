@@ -54,6 +54,138 @@ class UserController extends Controller
     }
 
     /**
+     * Api Login
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function api_user(Obj $obj)
+    {   
+        
+        //load client id
+        $client_id = request()->get('client.id');
+        $u = Auth::user();
+        if($u)
+        {
+            $message['user']="1";
+            $message['message'] = "Logged in!";
+            echo json_encode($message);
+        }else{
+            $message['user']="0";
+            $message['message'] = "Not Logged in!";
+            echo json_encode($message);
+        }            
+       
+    }
+
+    /**
+     * Api Login
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function api_login(Obj $obj)
+    {   
+        
+        //load client id
+        $client_id = request()->get('client.id');
+        $email = request()->get('email');
+        $password = request()->get('password');
+
+        //check validity
+        if(Auth::attempt(['email' => $email, 'password' => $password,'client_id'=>$client_id]))
+        {
+            $message['login']="1";
+            $message['message'] = "Successfully Logged in!";
+            echo json_encode($message);
+        }else{
+            $message['login']="0";
+            $message['message'] = "Invalid Credentials!";
+            echo json_encode($message);
+        }            
+       
+    }
+
+    /**
+     * Api Register
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function api_register(Obj $obj,Request $request)
+    {   
+
+        
+        //load client id
+        $client_id = request()->get('client.id');
+        $email = request()->get('email');
+        $password = request()->get('password');
+        $name = request()->get('name');
+        $phone = request()->get('phone');
+        $password = request()->get('password');
+        $agency_id = request()->get('agency.id');
+
+
+        $u = Obj::where('email',$email)->where('client_id',$client_id)->first();
+
+        // $message['login']="1";
+        //     $message['message'] = "Successfully Logged in!";
+        //     echo json_encode($message);
+        //     dd();
+
+        if(!$u){
+            $user = Obj::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => Hash::make($password),
+                'phone' => $phone,
+                'client_id'=>$client_id,
+                'agency_id'=>$agency_id,
+                'status'=>1
+            ]);
+            // save all the extra form fields into message
+            $data = '';
+            $json = [];
+            foreach($request->all() as $k=>$v){
+                if (strpos($k, 'settings_') !== false){
+                    //check for files and upload to aws
+                    if($request->hasFile($k)){
+                        $pieces = explode('settings_',$k);
+                        $file =  $request->all()[$k];
+                        //upload
+                        $file_data = $obj->uploadFile($file);
+                        //link the file url
+                        $data = $data.$pieces[1].' : <a href="'.$file_data[0].'">'.$file_data[1].'</a><br>'; 
+                        $json[$pieces[1]] = '<a href="'.$file_data[0].'">'.$file_data[1].'</a>';
+                    }else{
+                        $pieces = explode('settings_',$k);
+                        if(is_array($v)){
+                            $v = implode(',',$v);
+                        }
+                        $data = $data.$pieces[1].' : '.$v.'<br>'; 
+                        $json[$pieces[1]] = $v;
+                    }
+                    
+                }
+            }
+            $user->data = $data;
+            $user->json = $json;
+            $user->save();
+
+            Auth::attempt(['email' => $email, 'password' => $password,'client_id'=>$client_id]);
+            $message['login']="1";
+            $message['message'] = "Successfully Logged in!";
+            echo json_encode($message);
+            dd();
+        }else{
+            $message['login']="0";
+            $message['message'] = "User already exists!";
+            echo json_encode($message);
+            dd();
+        }
+                   
+       
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -281,6 +413,8 @@ class UserController extends Controller
     public function profile_edit($id){
         // load the resource
         $obj = Obj::where('id',$id)->first();
+        $this->authorize('view', $obj);
+        $this->componentName = componentName('agency','plain');
     
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.profile_edit')
@@ -295,7 +429,8 @@ class UserController extends Controller
         
         // load the resource
         $obj = Obj::where('id',$id)->first();
-    
+        $this->componentName = componentName('agency','plain');
+        $this->authorize('view', $obj);
         //update the resource
         $obj->update($request->all()); 
         
@@ -308,6 +443,8 @@ class UserController extends Controller
 
         // load the resource
         $record = Obj::where('id',$id)->first();
+        $this->componentName = componentName('agency','plain');
+        $this->authorize('view', $record);
         
         $this->module = 'User';
         return view("apps.Core.User.general")->with('app',$this)->with('record',$record);
@@ -317,6 +454,8 @@ class UserController extends Controller
 
        // load the resource
        $obj = Obj::where('id',$id)->first();
+       $this->componentName = componentName('agency','plain');
+       $this->authorize('view', $obj);
 
        // load alerts if any
        $alert = session()->get('alert');

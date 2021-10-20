@@ -120,6 +120,10 @@ Route::delete('/admin/user/{user}', [UserController::class, 'destroy'])
 		->middleware(['auth'])->name('User.destroy');
 Route::get('/admin/user/{id}', [UserController::class, 'show'])
 		->middleware(['auth'])->name('User.show');
+Route::post('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
+Route::get('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
+Route::get('/user/apiuser', [UserController::class, 'api_user'])->name('User.apiuser');
+Route::post('/user/apiregister', [UserController::class, 'api_register'])->name('User.apiregister');
 
 /* User Profile Routes*/ 
 Route::get('/profile', [AdminController::class, 'profile'])->name('profile');

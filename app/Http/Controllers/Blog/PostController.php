@@ -45,6 +45,7 @@ class PostController extends Controller
         $tag = new Tag();
         $user = new User();
         $blogSettings = new BlogSettings();
+       
 
         //deletes cache data
         if($request->input('refresh')){
@@ -778,6 +779,9 @@ class PostController extends Controller
         $obj = new Obj();
         // If search query exists
         $query = $request->input('query');
+
+        if(!Auth::user()->checkRole(['clientadmin','clientmoderator']))
+            abort('403','Restricted Access');
         
         // Retrieve all records
         $objs = $obj->where('agency_id', auth()->user()->agency_id)->where('client_id', auth()->user()->client_id)->where("title", "LIKE", "%".$query."%")->with('category')->with('tags')->orderBy("id", 'desc')->paginate(10);

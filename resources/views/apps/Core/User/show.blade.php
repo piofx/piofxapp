@@ -62,7 +62,17 @@
 		<div class="row mb-2">
 			<div class="col-md-4"><b>Role</b></div>
 			<div class="col-md-8">
-				<pre><code style="white-space: pre-wrap">{{ $obj->role}}</code></pre>
+				<span class="badge badge-primary">{{ $obj->role}}</span>
+			</div>
+		</div>
+		<div class="row mb-2">
+			<div class="col-md-4"><b>Data</b></div>
+			<div class="col-md-8">
+				@if($obj->data)
+					{!!$obj->data!!}
+				@else
+				-
+				@endif
 			</div>
 		</div>
 

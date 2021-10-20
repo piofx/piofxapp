@@ -17,7 +17,7 @@ class NewPasswordController extends Controller
      *
      */
     public function __construct(){
-        $this->componentName = componentName('agency','login');
+        $this->componentName = componentName('agency','plainmini');
     }
 
     /**

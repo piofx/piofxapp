@@ -13,7 +13,7 @@ class PasswordResetLinkController extends Controller
      *
      */
     public function __construct(){
-        $this->componentName = componentName('agency','login');
+        $this->componentName = componentName('agency','plainmini');
     }
     /**
      * Display the password reset link request view.

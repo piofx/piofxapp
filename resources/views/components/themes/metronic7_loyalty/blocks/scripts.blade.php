@@ -172,6 +172,9 @@
 <!-- Blog Js -->
 <script src="{{ asset('js/Blog/blog.js') }}"></script> 
 
+<!-- Login Js -->
+<script src="{{ asset('js/login.js') }}"></script> 
+
 <!-- Statistics Js -->
 <script src="{{ asset('js/statistics/statistics.js') }}"></script>
 

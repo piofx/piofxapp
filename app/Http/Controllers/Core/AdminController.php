@@ -124,6 +124,7 @@ class AdminController extends Controller
     public function profile(Request $request){
         $record = \Auth::user();
         $this->module = 'User';
+        $this->componentName = componentName('agency','plain');
         return view("apps.Core.User.general")->with('app',$this)->with('record',$record);
     }
 

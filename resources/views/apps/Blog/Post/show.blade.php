@@ -389,11 +389,12 @@
 
                     <!-- Link -->
                     @if($obj->link)
-                        @guest
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                        @auth
+                        <a href="{{$obj->link}}" class="btn btn-primary" target="_blank">{{$obj->link_title}}</a>
                         @else
-                        <a href="{{$obj->link}}" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
-                        @endif
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                        
+                        @endauth
                     @endif
                     <!-- end link-->
 
@@ -831,4 +832,5 @@
     @include('apps.Blog.Post.homeLayouts.loginModal')
      <!-- end login modal-->
 
+    
 </x-dynamic-component>
