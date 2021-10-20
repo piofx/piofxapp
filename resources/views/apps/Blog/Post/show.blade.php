@@ -388,10 +388,12 @@
                     </div>
 
                     <!-- Link -->
-                    @guest
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
-                    @else
-                    <a href="{{$obj->link}}" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                    @if($obj->link)
+                        @guest
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                        @else
+                        <a href="{{$obj->link}}" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                        @endif
                     @endif
                     <!-- end link-->
 
