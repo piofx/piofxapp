@@ -22,6 +22,7 @@ $("#post_editor").summernote({
     ['fontsize', ['fontsize']],
     ['table', ['table']],
     ['color', ['color']],
+    ['insert', ['link', 'picture', 'video']],
     ['para', ['ul', 'ol', 'paragraph']],
     ['height', ['height','codeview','fullscreen']]
   ],
