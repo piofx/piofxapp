@@ -306,6 +306,9 @@ class PostController extends Controller
             return redirect()->route($this->module.'.edit', ['slug' =>  $request->input('slug')]);
         } 
 
+        // update all cache data
+        $obj->cacheRefresh();
+
         return redirect()->route($this->module.'.list');
     }
 
@@ -557,6 +560,8 @@ class PostController extends Controller
         if(!$request->input('featured')){
             $request->request->add(['featured' => null]);
         }
+        // update all cache data
+        $obj->cacheRefresh();
 
         // Check status and change it to boolean
         if($request->input("status")){

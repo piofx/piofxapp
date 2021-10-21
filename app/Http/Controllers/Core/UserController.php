@@ -176,7 +176,7 @@ class UserController extends Controller
             dd();
         }else{
             $message['login']="0";
-            $message['message'] = "User already exists!";
+            $message['message'] = "User account already exists in our database, Kindly use forgot password to reset!";
             echo json_encode($message);
             dd();
         }

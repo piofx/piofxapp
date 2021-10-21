@@ -31,7 +31,7 @@ class CreatePostsTable extends Migration
             $table->text('group')->nullable();
             $table->bigInteger("views")->default(0);
             $table->text('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
+            $table->longText('meta_description')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamp('published_at')->nullable();
             $table->text('top_head');

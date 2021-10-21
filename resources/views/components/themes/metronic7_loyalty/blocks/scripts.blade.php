@@ -29,23 +29,23 @@
 
 
 <script src="{{  asset('js/codemirror/lib/codemirror.js') }}"></script>
-<script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
+
 <script>
-	var options = {
+	 var options = {
           lineNumbers: true,
-          lineWrapping:true,
-          styleActiveLine: true,
-          matchBrackets: true,
-          autoRefresh:true,
-          mode: "text/x-c++src",
-          theme: "eclipse",
-          indentUnit: 4
-        };
-    if(document.getElementById("editor")){
-    var editor = CodeMirror.fromTextArea(document.getElementById("editor"), options);
-    editor.setSize(null, 900);
+           lineWrapping:true,
+           styleActiveLine: true,
+           matchBrackets: true,
+           autoRefresh:true,
+           mode: "text/x-c++src",
+           theme: "eclipse",
+           indentUnit: 4
+         };
+     if(document.getElementById("editor")){
+     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), options);
+     editor.setSize(null, 900);
      var editor2 = CodeMirror.fromTextArea(document.getElementById("editor2"), options);
-   }
+    }
 
    $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -65,6 +65,7 @@
 </script>
 
 <!--- end of contact form -->
+
 <!-- Monaco editor -->
 <script>
     var require = {
@@ -155,6 +156,7 @@
 
 <!-- Summernote Js -->
 <script src="{{ asset('plugins/summernote/summernote.min.js') }}"></script>
+    
 
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
@@ -163,9 +165,9 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
 
-<!-- Lightbox Plugin -->
+<!-- Lightbox Plugin
 <script src="{{ asset('plugins/lightbox2/dist/js/lightbox.min.js/lightbox.js') }}"></script>
-
+-->
 <!-- Loyalty Js -->
 <script src="{{ asset('js/loyalty/loyalty.js') }}"></script>
 

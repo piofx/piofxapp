@@ -399,6 +399,7 @@ class ContactController extends Controller
         $editor = false;
         $settings = null;
 
+
         if(request()->get('store')){
             if($request->input('mode') == 'normal'){
                 $settings = dev_normal_mode($request->all());
@@ -428,7 +429,6 @@ class ContactController extends Controller
             if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json' ))
                 $settings = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ), true);
         }
-
         if($client_id)
             return view('apps.'.$this->app.'.'.$this->module.'.settings')
                 ->with('stub','Update')

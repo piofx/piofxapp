@@ -16,13 +16,20 @@ function deleteImage() {
 $("#post_editor").summernote({
     minHeight: 750,
     focus: true,
-    fontNames: [
-        "Arial",
-        "Arial Black",
-        "Comic Sans MS",
-        "Courier New",
-        "Merriweather",
-        "Eczar",
+    toolbar: [
+    ['style', ['bold', 'italic', 'underline', 'clear','style']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['fontsize', ['fontsize']],
+    ['color', ['color']],
+    ['para', ['ul', 'ol', 'paragraph']],
+    ['height', ['height','codeview']]
+  ],
+  styleTags: [
+    'p',{ title: 'Blockquote ', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
+        { title: 'Blockquote S1', tag: 'blockquote', className: 'blockquote style1', value: 'blockquote' },
+        { title: 'Blockquote S2', tag: 'blockquote', className: 'blockquote style2', value: 'blockquote' },
+        { title: 'Blockquote S3', tag: 'blockquote', className: 'blockquote style3', value: 'blockquote' },
+         'h1', 'h2', 'h3', 'h4', 'h5', 
     ],
     codemirror: {
         // codemirror options
@@ -82,10 +89,20 @@ function createSlugAndMetaTitle() {
 }
 
 function blogLinks(){
-    let content = $("#post_editor").summernote("code");
+    let content = $("#post_editor").summernote({
+  toolbar: [
+    // [groupName, [list of button]]
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['fontsize', ['fontsize']],
+    ['color', ['color']],
+    ['para', ['ul', 'ol', 'paragraph']],
+    ['height', ['height']]
+  ]
+});
     if (content) {
         var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-        let urls = content.match(urlRegex);
+        let urls = [];//content.match(urlRegex);
 
         let internalLinks = {};
         let externalLinks = {};

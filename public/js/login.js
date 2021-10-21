@@ -89,7 +89,8 @@ $(function(){
                                      });
                                      
                                 }else{
-                                    $('.login_message').html("<p class='text-white mb-0'><b>"+d.message+"</b><br> Incase of a query, Kindly reach out to the admin team.</p>").show();
+                                    $('.login_spinner').hide();
+                                    alert(d.message);
                                    
                                 }
                             return false;  
