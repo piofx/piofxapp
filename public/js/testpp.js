@@ -141,11 +141,10 @@ $(function(){
                 }else{
 
                 }        
-            });
-            
+            }); 
         }
 
-        if($user){
+        if($user || !$login){
             $response = $(this).val();
             $ans = $('.q_'+$slug+'_'+$qno).data('answer');
             $('.ans_'+$slug+'_'+$qno).html($response.toUpperCase());
@@ -177,10 +176,10 @@ $(function(){
         
     });
 
-    // $(document).on('click','.explanation',function(){
-    //     var item = $(this).data('anchor');
-    //     $('.'+item).toggle();
-    // });
+    $(document).on('click','.explanation',function(){
+        var item = $(this).data('anchor');
+        $('.'+item).toggle();
+    });
 
  
 
