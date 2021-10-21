@@ -177,10 +177,10 @@ $(function(){
         
     });
 
-    $(document).on('click','.explanation',function(){
-        var item = $(this).data('anchor');
-        $('.'+item).toggle();
-    });
+    // $(document).on('click','.explanation',function(){
+    //     var item = $(this).data('anchor');
+    //     $('.'+item).toggle();
+    // });
 
  
 
