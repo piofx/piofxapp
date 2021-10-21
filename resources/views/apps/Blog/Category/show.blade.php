@@ -5,11 +5,11 @@
 		@if(!empty($category->image) && strlen($category->image) > 5 && Storage::disk('s3')->exists($category->image))
 			<div class="space-top-3 d-flex justify-content-center align-items-center"
 					style="min-height: 30rem;background-image: url('{{Storage::disk('s3')->url($category->image)}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-				<div class="text-center">
+				<div class="text-center px-5">
 					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
 					@if($category->meta_description)
-						<div class="bg-dark py-1 rounded-lg px-2">
-							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
+						<div class="bg-dark py-1 rounded-lg  mt-2 px-2">
+							<h5 class="text-white mb-0 ">{{ $category->meta_description }}</h5>
 						</div>
 					@endif
 				</div>
@@ -20,8 +20,8 @@
 				<div class="text-center px-5 ">
 					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
 					@if($category->meta_description)
-						<div class="bg-dark rounded-lg px-2">
-							<h5 class="text-white mb-0">{{ $category->meta_description }}</h5>
+						<div class="bg-dark rounded-lg mt-2 px-2">
+							<h5 class="text-white mb-0 "  >{{ $category->meta_description }}</h5>
 						</div>
 					@endif
 				</div>
