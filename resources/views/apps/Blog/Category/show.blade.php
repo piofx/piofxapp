@@ -17,7 +17,7 @@
 		@else
 			<div class="bg-dark space-top-3 d-flex justify-content-center align-items-center"
 					style="min-height: 20rem;">
-				<div class="text-center">
+				<div class="text-center px-5 ">
 					<h1><span class="bg-dark px-3 py-2 rounded-lg text-warning">{{ $category->name }}</span></h1>
 					@if($category->meta_description)
 						<div class="bg-dark rounded-lg px-2">
@@ -53,16 +53,18 @@
 								<div class="mb-5 p-3 bg-white shadow rounded-lg">
 										<div class="row">
 												<div class="col-md-5 d-flex align-items-center">
+													<a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route('Post.show', $post->slug) }}@endif">
 														@php
 																$path = explode("/", $post->image);
 																$path = explode(".", $path[1]);
 																$path = $path[0];
 														@endphp
 														@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-																<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+																<img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
 														@else
-																<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
-														@endif                        
+																<img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url($post->image) }}">
+														@endif  
+														</a>                      
 												</div>
 												<div class="col-md-7">
 														<div class="card-body d-flex flex-column h-100 p-0">
@@ -226,9 +228,9 @@
 																				$path = $path[0];
 																		@endphp
 																		@if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-																				<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
+																				<img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}">
 																		@else
-																				<img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}">
+																				<img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url($post->image) }}">
 																		@endif
 																</div>
 																<div class="col-8 pl-0">

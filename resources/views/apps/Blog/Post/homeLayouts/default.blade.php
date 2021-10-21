@@ -72,9 +72,9 @@
                                                         $path = $path[0];
                                                     @endphp
                                                     @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
+                                                        <img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @else
-                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($author->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
+                                                        <img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url($author->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                     @endif
                                                 </div>
                                             @else
@@ -174,17 +174,20 @@
                             <div class="mb-5 p-3 bg-white shadow rounded-lg">
                                 <div class="row">
                                     <div class="col-md-5 d-flex align-items-center">
+                                        <a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$obj->slug }}@else{{ route($app->module.'.show', $obj->slug) }}@endif">
                                         @php
                                             $path = explode("/", $obj->image);
                                             $path = explode(".", $path[1]);
                                             $path = $path[0];
                                         @endphp
                                         @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                            <img class="img-fluid rounded-lg rounded-3 mb-1" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-2  mb-1" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                         @else
-                                            <img class="img-fluid rounded-lg rounded-3 mb-1" src="{{ Storage::disk('s3')->url($obj->image) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
+                                            <img class="img-fluid rounded-lg rounded-3 mb-2  mb-1" src="{{ Storage::disk('s3')->url($obj->image) }}" alt="{{$obj->title}} - {{request()->get('client.name')}}">
                                         @endif
+                                        </a>
                                     </div>
+
                                     <div class="col-md-7">
                                         <div class="card-body d-flex flex-column h-100 p-0">
                                             @if(!empty($obj->category) && strtolower($obj->category->name) != 'uncategorized')
@@ -342,16 +345,18 @@
                                     <div class="bg-soft-danger p-3 rounded-lg mb-3">
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-4">
+                                                <a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">
                                                 @php
                                                     $path = explode("/", $post->image);
                                                     $path = explode(".", $path[1]);
                                                     $path = $path[0];
                                                 @endphp
                                                 @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
+                                                    <img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                 @else
-                                                    <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
+                                                    <img class="img-fluid rounded-lg rounded-3 mb-2 " src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                 @endif
+                                                </a>
                                             </div>
                                             <div class="col-8 pl-0">
                                                 <h6 class="mb-0"><a class="text-decoration-none text-dark" href="@if(!empty($route)){{ $route.'/'.$post->slug }}@else{{ route($app->module.'.show', $post->slug) }}@endif">{{ $post->title }}</a></h6>
