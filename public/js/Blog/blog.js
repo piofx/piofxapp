@@ -20,9 +20,10 @@ $("#post_editor").summernote({
     ['style', ['bold', 'italic', 'underline', 'clear','style']],
     ['font', ['strikethrough', 'superscript', 'subscript']],
     ['fontsize', ['fontsize']],
+    ['table', ['table']],
     ['color', ['color']],
     ['para', ['ul', 'ol', 'paragraph']],
-    ['height', ['height','codeview']]
+    ['height', ['height','codeview','fullscreen']]
   ],
   styleTags: [
     'p',{ title: 'Blockquote ', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
