@@ -107,6 +107,7 @@
                     <!-- End Related Posts Section -->
 
                     <!----- Tags section------>
+                    @if(!isset($settings->tag)) 
                     @if(!empty($tags) && sizeof($tags) > 0)
                         <div class="mb-5">
                             <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
@@ -117,6 +118,7 @@
                                 @endif  
                             @endforeach
                         </div>
+                    @endif
                     @endif
                     <!----- End Tags Section------>
 
@@ -601,6 +603,7 @@
                 <!-- End Related Posts Section -->
 
                 <!----- Tags section------>
+                @if(!isset($settings->tag)) 
                 @if(!empty($tags) && sizeof($tags) > 0)
                     <div class="mb-5">
                         <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
@@ -609,6 +612,8 @@
                         @endforeach
                     </div>
                 @endif
+                @endif
+
                 <!----- End Tags Section------>
 
                 <!-- Popular Posts -->
@@ -736,6 +741,7 @@
                 <!-- End Related Posts Section -->
 
                 <!----- Tags section------>
+                @if(!isset($settings->tag)) 
                 @if(!empty($tags) && sizeof($tags) > 0)
                     <div class="mb-5">
                         <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
@@ -746,6 +752,7 @@
                             @endif  
                         @endforeach
                     </div>
+                @endif
                 @endif
                 <!----- End Tags Section------>
 
