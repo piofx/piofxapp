@@ -217,8 +217,8 @@
                         </div>
 
                         @if(!empty($obj->excerpt))
-                        <div style="font-size: 1.2rem; line-height: 2rem;">
-                            <p class=" mt-3">{{ $obj->excerpt }}</p>
+                        <div style="font-size: 1.2rem; line-height: 2rem;" >
+                           <p class="mt-3"> {{ $obj->excerpt }}</p>
                         </div>
                         @endif
 
@@ -390,9 +390,9 @@
                     <!-- Link -->
                     @if($obj->link)
                         @auth
-                        <a href="{{$obj->link}}" class="btn btn-primary" target="_blank">{{$obj->link_title}}</a>
+                        <a href="{{$obj->link}}" class="btn btn-primary mb-4" target="_blank">{{$obj->link_title}}</a>
                         @else
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
+                        <a href="#" class="btn btn-primary mb-4" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
                         
                         @endauth
                     @endif
