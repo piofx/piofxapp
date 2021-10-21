@@ -645,6 +645,7 @@ class PostController extends Controller
         }
         //
         $content = preg_replace('/font-family.+?;/', "", request()->get('content'));
+        $content = preg_replace('/font-size.+?;/', "", $content);
         request()->merge(['content'=>$content]);
 
         //update the resource
