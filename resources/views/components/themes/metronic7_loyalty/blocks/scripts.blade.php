@@ -154,9 +154,14 @@
 
 
 
+<script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script>
+<script>
+var container = document.getElementById('post_edito');
+var editor = new Quill(container);
+    </script>
 <!-- Summernote Js -->
-<script src="{{ asset('plugins/summernote/summernote.min.js') }}"></script>
-    
+<script src="{{ asset('plugins/summernote/summernote_cleaner.js') }}"></script>
+
 
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">

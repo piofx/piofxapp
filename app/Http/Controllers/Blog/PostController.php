@@ -643,6 +643,9 @@ class PostController extends Controller
                 Storage::disk("s3")->delete('resized_images/'.$filename.'mobile.jpg');
             }
         }
+        //
+        $content = preg_replace('/font-family.+?;/', "", request()->get('content'));
+        request()->merge(['content'=>$content]);
 
         //update the resource
         $obj->update($request->all() + ['client_id' => request()->get('client.id'), 'agency_id' => request()->get('agency.id'), 'user_id' => auth()->user()->id]);

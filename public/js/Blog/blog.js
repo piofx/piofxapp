@@ -17,6 +17,7 @@ $("#post_editor").summernote({
     minHeight: 750,
     focus: true,
     toolbar: [
+    ['cleaner',['cleaner']],
     ['style', ['bold', 'italic', 'underline', 'clear','style']],
     ['font', ['strikethrough', 'superscript', 'subscript']],
     ['fontsize', ['fontsize']],
@@ -41,6 +42,13 @@ $("#post_editor").summernote({
         htmlMode: true,
         lineNumbers: true,
     },
+     callbacks: {
+        onPaste: function (e) {
+            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+            e.preventDefault();
+            document.execCommand('insertText', false, bufferText);
+        }
+    }
 });
 
 function showGroup() {
