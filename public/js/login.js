@@ -15,6 +15,7 @@ $(function(){
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
                 if(name && phone && email){
+                $('.otp_spinner').show();
                 $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&api=1&sendotp=1';
@@ -22,6 +23,7 @@ $(function(){
                         // Display the returned data in browser
                        console.log(data);
                         if(data==1){
+                            $('.otp_spinner').hide();
                             alert('OTP has been sent to your email, It will take a few seconds to reach. Kindly check SPAM and Promotions folder before retrying.')
                         }
                         

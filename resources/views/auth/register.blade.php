@@ -43,6 +43,9 @@
                                 <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
                                 <small>Kindly enter valid email id for OTP verification</small><br>
                                 <button class="btn btn-outline-dark btn-sm mt-3 generate_otp">Generate OTP</button>
+                                 <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
+  <span class="sr-only">Loading...</span>
+</div><br>
                             </div>
                             </div>
 
