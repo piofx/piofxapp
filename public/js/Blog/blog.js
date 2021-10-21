@@ -26,9 +26,9 @@ $("#post_editor").summernote({
   ],
   styleTags: [
     'p',{ title: 'Blockquote ', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
-        { title: 'Blockquote S1', tag: 'blockquote', className: 'blockquote style1', value: 'blockquote' },
-        { title: 'Blockquote S2', tag: 'blockquote', className: 'blockquote style2', value: 'blockquote' },
-        { title: 'Blockquote S3', tag: 'blockquote', className: 'blockquote style3', value: 'blockquote' },
+        { title: 'Blockquote S1', tag: 'blockquote', className: 'style1', value: 'blockquote' },
+        { title: 'Blockquote S2', tag: 'blockquote', className: 'style2', value: 'blockquote' },
+        { title: 'Blockquote S3', tag: 'blockquote', className: 'style3', value: 'blockquote' },
          'h1', 'h2', 'h3', 'h4', 'h5', 
     ],
     codemirror: {
