@@ -260,15 +260,30 @@ class PageController extends Controller
             if($obj->status)
                 return view('apps.'.$this->app.'.'.$this->module.'.public')
                     ->with('obj',$obj)->with('app',$this);
-            else
-                abort(404,'Page not active');
+            else{
+                $p404 =  Obj::where('slug','404')->where('client_id',$client_id)->where('theme_id',$theme_id)->first();
+                if(!$p404)
+                    abort(404,'Page not active');
+                else{
+                    return view('apps.'.$this->app.'.'.$this->module.'.public')
+                    ->with('obj',$p404)->with('app',$this);
+                }
+            }   
         else{
             if($slug=='/'){
                 $this->componentName = componentName('agency','default');
                 return view('welcome')->with('app',$this);
             }
-            else
-                abort(404,'Page not found');
+            else{
+
+                 $p404 =  Obj::where('slug','404')->where('client_id',$client_id)->where('theme_id',$theme_id)->first();
+                if(!$p404)
+                    abort(404,'Page not active');
+                else{
+                    return view('apps.'.$this->app.'.'.$this->module.'.public')
+                    ->with('obj',$p404)->with('app',$this);
+                }
+            }
         }
     
        
