@@ -51,9 +51,6 @@ $(function(){
                 else 
                     container.html("<div class='bg-white w-100 p-3 h4'><p>Your score is "+d.score+"/"+d.total+"</p><button class='btn btn-soft-danger ml-2 trytest' data-container='"+slug+"'>Retry Test</button></div>");
                 
-                $('html, body').animate({
-                    scrollTop: container.offset().top - 200
-                }, 500);
             }else{
                 if(show_answers)
                     container.html("<div class='mb-3'>"+data+"<button class='btn btn-soft-primary showanswers' data-container='"+slug+"'>Show Answers</button><button class='btn btn-soft-success ml-2 trytest' data-container='"+slug+"'>Retry Test</button></div>");
@@ -108,9 +105,7 @@ $(function(){
 
         $.get(url,function(data){
             container.html(data);
-            $('html, body').animate({
-                    scrollTop: container.offset().top - 200
-            }, 500);
+           
 
         });    
     });
