@@ -127,6 +127,7 @@ $(function(){
     }
 
     $(document).on('change','.form-check-input',function(){
+        console.log('change response');
         $qno = $(this).data('qno');
         $slug = $(this).data('slug');
         $user = $('.apiuser').data('user');
@@ -151,6 +152,7 @@ $(function(){
 
             $('.correct_'+$slug+'_'+$qno).hide();
             $('.incorrect_'+$slug+'_'+$qno).hide();
+            console.log('check answer');
             if($ans)
             if($ans.toUpperCase() == $response.toUpperCase())
             {
