@@ -6,12 +6,26 @@ $(function(){
         $url = $("form").attr('action');
         //general form submission
         if($("form").data('api')==1){
+            console.log('api');
             $(document).on("click",".contact_button", function(e){
+                console.log('clicked');
                 e.preventDefault();
                 var formValues= $("form").serialize();
                 $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
+                    var query = window.location.search.substring(1);
+                    var qs = parse_query_string(query);
+                  
+                    if(qs.source){
+                        formValues = formValues+'&settings_source='+qs.source;
+                      
+                    }
+                    if(qs.campaign){
+                        formValues = formValues+'&settings_campaign='+qs.campaign;
+                      
+                    }
                     var d = formValues+'&_token='+token+'&api=1';
+                    console.log(d);
                     $.post($url, d, function(data){
                         // Display the returned data in browser
                         console.log(data);
@@ -22,6 +36,28 @@ $(function(){
                     });
                 });
             });
+        }
+
+        function parse_query_string(query) {
+          var vars = query.split("&");
+          var query_string = {};
+          for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1]);
+            // If first entry with this name
+            if (typeof query_string[key] === "undefined") {
+              query_string[key] = decodeURIComponent(value);
+              // If second entry with this name
+            } else if (typeof query_string[key] === "string") {
+              var arr = [query_string[key], decodeURIComponent(value)];
+              query_string[key] = arr;
+              // If third or later entry with this name
+            } else {
+              query_string[key].push(decodeURIComponent(value));
+            }
+          }
+          return query_string;
         }
 
         //login form submission

@@ -464,7 +464,6 @@ class Contact extends Model
                     ->whereIn('status',$status_array)
                     ->whereIn('category',$category_array)
                     ->whereBetween('updated_at',$date_range)
-                    ->whereIn('user_id',$user_array)
                     ->count();
             }
         }
@@ -473,6 +472,8 @@ class Contact extends Model
 
         return $data;
     }
+
+
 
 
      public function getSettings(){

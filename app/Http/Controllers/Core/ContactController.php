@@ -64,6 +64,8 @@ class ContactController extends Controller
             $data = $obj->getData($item,30,$user,$status);
         else
             return $obj->getData($item,30,$user,$status);
+
+        //dd($data);
         
         //url_suffix - to ensure filter are applied to the data processed 
         $url_suffix = $obj->urlSuffix();
@@ -242,6 +244,18 @@ class ContactController extends Controller
                 $request->merge(['client_id' => request()->get('client.id')]);
                 $request->merge(['agency_id' => request()->get('agency.id')]);
             }
+
+            //update tags
+            $tags='';
+            if($request->get('settings_source')){
+                $tags = $request->get('settings_source');
+            }
+            if($request->get('settings_campaign')){
+                $tags = $tags.','.$request->get('settings_campaign');
+                
+            }
+            $request->merge(['tags' => $tags]);
+
             // store the data
             $obj = $obj->create($request->all());
 
