@@ -467,9 +467,6 @@ class Contact extends Model
                     ->count();
             }
         }
-
-       
-
         return $data;
     }
 

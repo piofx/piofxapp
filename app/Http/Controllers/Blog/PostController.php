@@ -368,7 +368,7 @@ class PostController extends Controller
         $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
         if(!$post){
             // Retrieve specific record views
-            $post = $obj->where("slug", $slug)->first();
+            $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->first();
             // Retrieving post views
             $postViews = $post->views;
             // Update View Count
