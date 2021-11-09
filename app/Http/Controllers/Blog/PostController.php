@@ -377,6 +377,7 @@ class PostController extends Controller
             $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->with('category')->with('tags')->first();
             // Retrieving post views
             $postViews = $post->views;
+            
 
             // Add to cache
             Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
