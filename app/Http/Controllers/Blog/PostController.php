@@ -372,9 +372,9 @@ class PostController extends Controller
             // Retrieving post views
             $postViews = $post->views;
             // Update View Count
-            $obj->where("slug", $slug)->update(["views" => $postViews+1]);
+            $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->update(["views" => $postViews+1]);
             // Retrieve specific Record
-            $post = $obj->where("slug", $slug)->with('category')->with('tags')->first();
+            $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->with('category')->with('tags')->first();
             // Retrieving post views
             $postViews = $post->views;
 
