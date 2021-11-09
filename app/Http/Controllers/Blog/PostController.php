@@ -369,19 +369,24 @@ class PostController extends Controller
         if(!$post){
             // Retrieve specific record views
             $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->first();
-            // Retrieving post views
-            $postViews = $post->views;
-            // Update View Count
-            $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->update(["views" => $postViews+1]);
-            // Retrieve specific Record
-            $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->with('category')->with('tags')->first();
-            // Retrieving post views
-            $postViews = $post->views;
-            
+            if($post){
+                // Retrieving post views
+                $postViews = $post->views;
+                // Update View Count
+                $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->update(["views" => $postViews+1]);
+                // Retrieve specific Record
+                $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->with('category')->with('tags')->first();
+                // Retrieving post views
+                $postViews = $post->views;
 
-            // Add to cache
-            Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
-            Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews);
+
+                // Add to cache
+                Cache::forever('post_'.request()->get('client.id').'_'.$slug, $post);
+                Cache::forever('postViews_'.request()->get('client.id').'_'.$slug, $postViews);
+            }else{
+                abort('404','No article found');
+            }
+            
         }
 
         // Cached categories data
