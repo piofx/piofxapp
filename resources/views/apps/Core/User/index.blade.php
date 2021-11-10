@@ -94,7 +94,7 @@
               <table class="table table-bordered mb-0">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">#({{$total}})</th>
                     <th scope="col">Name </th>
                     <th scope="col">Email / Phone</th>
                     <th scope="col">Details</th>
