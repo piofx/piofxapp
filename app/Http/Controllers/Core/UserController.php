@@ -44,12 +44,15 @@ class UserController extends Controller
         $user = Auth::user();
         // retrive the listing
         //$objs = $obj->getRecords($item,30,$user);
+        $total = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->count();
+        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("created_at", "desc")->paginate(30);
 
-        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->orderBy("name", "asc")->get();
+        
 
         return view('apps.'.$this->app.'.'.$this->module.'.index')
                 ->with('app',$this)
                 ->with('alert',$alert)
+                ->with('total',$total)
                 ->with('objs',$objs);
     }
 

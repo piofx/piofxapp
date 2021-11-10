@@ -89,17 +89,15 @@
   <x-snippets.cards.basic>
   <div class="row">
       <div class="col-10">
-        @if($objs != '')
+        @if($objs->total()!=0)
             <div class="table-responsive">
               <table class="table table-bordered mb-0">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name </th>
-                    <th scope="col">Client</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Email / Phone</th>
+                    <th scope="col">Details</th>
                     <th scope="col">Created</th>
                   </tr>
                 </thead>
@@ -113,15 +111,10 @@
                       {{ $obj->name }}
                       </a>
                     </td>
-                    <td>{{$obj->client->name}}</td>
-                    <td>{{$obj->phone}}</td>
-                    <td>{{ $obj->email }}</td>
-                    <td>@if($obj->status==0)
-                      <span class="badge badge-warning">Inactive</span>
-                      @elseif($obj->status==1)
-                      <span class="badge badge-success">Active</span>
-                    @endif</td>
-                    <td></td>
+                    <td>{{ $obj->email }}<br>{{$obj->phone}}</td>
+                    
+                    <td>{!! $obj->data !!}</td>
+                    <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>
                   </tr>
                   @endforeach      
                 </tbody>
@@ -132,6 +125,9 @@
             No items found
           </div>
         @endif
+         <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
+        {{$objs->appends(['status'=>request()->get('status'),'user_id'=>request()->get('user_id'),'tag'=>request()->get('tag'),'category'=>request()->get('category'),'date_filter'=>request()->get('date_filter')])->links()  }}
+      </nav>
      </div>
 
       <div class="col-2 px-0">
