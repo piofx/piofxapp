@@ -27,9 +27,12 @@
                     </a> 
                     @if(Auth::user()->checkRole(['superadmin','agencyadmin','clientadmin']))
                         <a href="{{ route($app->module.'.settings') }}" class="btn btn-warning btn-sm ml-2"  >
-                            <i class="fa fa-cog p-0"></i> 
+                            <i class="fa fa-cog p-0"></i> Settings
                         </a>
                     @endif
+                     <a href="{{ route($app->module.'.statistics') }}" class="btn btn-success btn-sm ml-2"  >
+                            <i class="fa fa-chart-bar p-0"></i> Statistics
+                        </a>
                 </div>
                 <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
                     <!--begin::Form-->

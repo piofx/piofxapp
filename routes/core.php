@@ -112,6 +112,8 @@ Route::get('/admin/user/samplecsv', [UserController::class, 'samplecsv'])
 		->middleware(['auth'])->name('User.samplecsv');
 Route::post('/admin/user/upload', [UserController::class, 'upload'])
 		->middleware(['auth'])->name('User.upload');
+Route::get('/admin/user/statistics', [UserController::class, 'statistics'])
+		->middleware(['auth'])->name('User.statistics');
 Route::put('/admin/user/{user}', [UserController::class, 'update'])
 		->middleware(['auth'])->name('User.update');
 Route::get('/admin/user/{id}/resetpassword', [UserController::class, 'resetpassword'])
@@ -120,6 +122,8 @@ Route::delete('/admin/user/{user}', [UserController::class, 'destroy'])
 		->middleware(['auth'])->name('User.destroy');
 Route::get('/admin/user/{id}', [UserController::class, 'show'])
 		->middleware(['auth'])->name('User.show');
+
+/* User API Routes*/		
 Route::post('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
 Route::get('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
 Route::get('/user/apiuser', [UserController::class, 'api_user'])->name('User.apiuser');

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -93,11 +95,23 @@ class UserController extends Controller
         $email = request()->get('email');
         $password = request()->get('password');
 
+
+
         //check validity
         if(Auth::attempt(['email' => $email, 'password' => $password,'client_id'=>$client_id]))
         {
             $message['login']="1";
             $message['message'] = "Successfully Logged in!";
+            //update user login timestamp
+            $user = Auth::user();
+            $lastlogindate = Cache::get('lastlogind_'.$user->id);
+            if($lastlogindate != Carbon::now()->toDateString()){
+                $date = Carbon::now()->toDateString();
+                $user = \Auth::user();
+                $user->remember_token= substr(md5(mt_rand()), 0, 7);
+                $user->save(); 
+                Cache::put('lastlogind_'.$user->id,$date,43200);
+            }
             echo json_encode($message);
         }else{
             $message['login']="0";
@@ -576,6 +590,78 @@ class UserController extends Controller
             abort(404);
     }
 
+    /**
+     * Stastics of the users
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics(Request $request){
+        $client_id = $request->get('client.id');
+        
+        $data = Cache::get('user_stat_data_'.$client_id);
+        if($request->get('refresh'))
+        {
+            Cache::forget('user_stat_data_'.$client_id);
+        }
+
+        if(!$data){
+             //some dates
+            $now = Carbon::now();
+            $weekStartDate = $now->startOfWeek()->format('Y-m-d H:i');
+            $weekEndDate = $now->endOfWeek()->format('Y-m-d H:i');
+            $last_year = (new \Carbon\Carbon('first day of last year'))->year;
+            $this_year = (new \Carbon\Carbon('first day of this year'))->year;
+            $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
+            $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
+
+            // all data stats
+            $data['all']['total'] = Obj::select('id')->where('client_id',$client_id)->count();
+            $data['all']['this_week'] = Obj::select('id')->where('client_id',$client_id)->where('created_at','>', $weekStartDate)->where('created_at','<', $weekEndDate)->count();
+            $data['all']['this_month'] = Obj::select('id')->where('client_id',$client_id)->whereMonth('created_at', Carbon::now()->month)->count();
+            $data['all']['last_month'] = Obj::select('id')->where('client_id',$client_id)->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+            $data['all']['this_year'] = Obj::select('id')->where('client_id',$client_id)->where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
+            $data['all']['last_year'] = Obj::select('id')->where('client_id',$client_id)->where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
+
+            // active data stats
+            $data['active']['this_week'] = Obj::select('id')->where('client_id',$client_id)->where('updated_at','>', $weekStartDate)->where('updated_at','<', $weekEndDate)->count();
+            $data['active']['this_month'] = Obj::select('id')->where('client_id',$client_id)->whereMonth('updated_at', Carbon::now()->month)->count();
+            $data['active']['past_30'] = Obj::select('id')->where('client_id',$client_id)->where('created_at', '>', now()->subDays(30)->endOfDay())->count();
+            $data['active']['past_60'] = Obj::select('id')->where('client_id',$client_id)->where('created_at', '>', now()->subDays(60)->endOfDay())->count();
+            $data['active']['past_90'] = Obj::select('id')->where('client_id',$client_id)->where('created_at', '>', now()->subDays(90)->endOfDay())->count();
+            $data['active']['past_180'] = Obj::select('id')->where('client_id',$client_id)->where('created_at', '>', now()->subDays(180)->endOfDay())->count();
+            
+
+            //settings params
+            $settings = '';
+            if(Storage::disk('s3')->exists('settings/user/'.$client_id.'.json' ))
+                $settings = json_decode(json_decode(Storage::disk('s3')->get('settings/user/'.$client_id.'.json' )));
+            
+            if(isset($settings->form)){
+                $form = $settings->form;
+                $fields = processForm($form);
+                foreach($fields as $f){
+
+                    if ($f['type']=='radio') {
+                        foreach($f['values'] as $v){
+                            $data['other'][$f['name']][$v] =  Obj::select('id')->where('client_id',$client_id)->where('data','LIKE',"%{$v}%")->count();
+                        }
+                    }
+                }
+           
+            }
+
+            Cache::forever('user_stat_data_'.$client_id,$data);
+
+        }
+       
+
+        return view('apps.'.$this->app.'.'.$this->module.'.statistics')
+                ->with('data',$data)
+                ->with('app',$this);
+      
+    }
+
     public function download(Obj $obj , $fileName = 'file.csv')
     {
 
@@ -648,8 +734,6 @@ class UserController extends Controller
         );
         return getCsv($columns, $rows, 'data_'.request()->get('client.name').'_'.strtotime("now").'_sample.csv');     
     }
-
-
 
 
     public function upload(Obj $obj, Request $request)

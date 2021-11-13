@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\EmailForQueuing;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -39,6 +41,18 @@ class AdminController extends Controller
     {  
         //check if the user is not admin
         $user = \Auth::user();
+
+        //update user login timestamp
+        $lastlogindate = Cache::get('lastlogine_'.$user->id);
+        if($lastlogindate != Carbon::now()->toDateString()){
+
+            $date = Carbon::now()->toDateString();
+            $user = \Auth::user();
+            $user->remember_token= substr(md5(mt_rand()), 0, 7);
+            $user->save(); 
+            Cache::put('lastlogine_'.$user->id,$date,43200);
+        }
+        
         if($user->role=='user'){
             
             return redirect()->route('profile');

@@ -153,13 +153,7 @@ class PageController extends Controller
     	// get the url path excluding domain name
     	$slug = request()->path();
 
-        // Cached Post Data
-        $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
-        if(!$post){
-            // Retrieve specific record views
-            $post = Post::where("slug", $slug)->first();
-        }
-
+       
     	// get the client id & domain
     	$client_id = request()->get('client.id');
         $theme_id = request()->get('client.theme.id');
