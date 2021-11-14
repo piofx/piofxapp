@@ -19,7 +19,7 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
               </div>
               <button type="button" class="btn btn-primary login_button">Login</button>
-              <a href="/register?redirect={{url()->current()}}" class="btn btn-outline-dark ">Register</a>
+              <a href="/register?redirect={{url()->full()}}" class="btn btn-outline-dark ">Register</a>
               <div class="alert alert-success mt-4 login_message" style="display: none;"></div>
             </form>
       </div>

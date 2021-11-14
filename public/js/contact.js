@@ -18,11 +18,25 @@ $(function(){
                   
                     if(qs.source){
                         formValues = formValues+'&settings_source='+qs.source;
-                      
                     }
                     if(qs.campaign){
                         formValues = formValues+'&settings_campaign='+qs.campaign;
-                      
+                    }
+
+                    if(qs.utm_source){
+                        formValues = formValues+'&settings_utm_source='+qs.utm_source;
+                    }
+                    if(qs.utm_campaign){
+                        formValues = formValues+'&settings_utm_campaign='+qs.utm_campaign;
+                    }
+                    if(qs.utm_medium){
+                        formValues = formValues+'&settings_utm_medium='+qs.utm_medium;
+                    }
+                    if(qs.utm_item){
+                        formValues = formValues+'&settings_utm_item='+qs.utm_item;
+                    }
+                    if(qs.utm_content){
+                        formValues = formValues+'&settings_utm_content='+qs.utm_content;
                     }
                     var d = formValues+'&_token='+token+'&api=1';
                     console.log(d);
