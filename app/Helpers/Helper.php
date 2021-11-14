@@ -31,6 +31,14 @@ if (!function_exists('componentName')) {
 }
 
 // function to load modules from the settings
+if (!function_exists('adminMetaTitle')) {
+	function adminMetaTitle($title){
+		$client_name = request()->get('client.name');
+		request()->merge(['client.meta_title'=>$title . ' | ' .$client_name]);
+	}
+}
+
+// function to load modules from the settings
 if (!function_exists('updateMetaTitle')) {
 	function updateMetaTitle($title){
 		$content = request()->get('app.theme.prefix');
@@ -38,6 +46,8 @@ if (!function_exists('updateMetaTitle')) {
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
+
+
 
 // function to load modules from the settings
 if (!function_exists('updateMetaDescription')) {

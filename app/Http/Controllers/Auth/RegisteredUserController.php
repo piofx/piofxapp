@@ -37,7 +37,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-
+        //update page meta title
+        adminMetaTitle('Register');
+        
         if(request()->get('dump2')){
             //client settings
         $settings = json_decode(request()->get('client.settings'));

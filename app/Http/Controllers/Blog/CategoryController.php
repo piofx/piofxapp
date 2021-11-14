@@ -32,6 +32,9 @@ class CategoryController extends Controller
       // If search query exists
       $query = $request->input('query');
 
+
+      //update page meta title
+      adminMetaTitle('Categories - Blog ');
       // Authorize the request
       $this->authorize('view', $obj);
       // Retrieve all records
@@ -181,6 +184,10 @@ class CategoryController extends Controller
       $obj = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
       // Authorize the request
       $this->authorize('edit', $obj);
+
+
+        //update page meta title
+        adminMetaTitle('[Category edit] '.$obj->name);
 
       return view("apps.".$this->app.".".$this->module.".createEdit")
               ->with("stub", "update")

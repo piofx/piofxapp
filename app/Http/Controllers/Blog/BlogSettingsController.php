@@ -33,6 +33,9 @@ class BlogSettingsController extends Controller
         // Retrieve Settings
         $settings = $settings->getSettings();
 
+
+        //update page meta title
+        adminMetaTitle('Blog Settings');
         // load alerts if any
         $alert = session()->get('alert');
 
@@ -86,6 +89,9 @@ class BlogSettingsController extends Controller
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
         $settings = Storage::disk("s3")->get($settingsfilename);
 
+
+        //update page meta title
+        adminMetaTitle('[Blog Settings] Dev Mode');
         // load alerts if any
         $alert = session()->get('alert');
 

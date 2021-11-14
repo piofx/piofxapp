@@ -40,6 +40,10 @@ class UserController extends Controller
         // load alerts if any
         $alert = session()->get('alert');
 
+
+        //update page meta title
+        adminMetaTitle('Users');
+
         // authorize the app
         $this->authorize('viewAny', $obj);
         //load user for personal listing
@@ -563,6 +567,10 @@ class UserController extends Controller
         // load alerts if any
         $alert = session()->get('alert');
 
+
+        //update page meta title
+        adminMetaTitle('User settings ');
+
         $data = null;
         if(request()->get('store')){
             //save the settings files in aws
@@ -604,6 +612,10 @@ class UserController extends Controller
         {
             Cache::forget('user_stat_data_'.$client_id);
         }
+
+
+        //update page meta title
+        adminMetaTitle('User Statistics ');
 
         if(!$data){
              //some dates

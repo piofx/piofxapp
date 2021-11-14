@@ -22,6 +22,8 @@ class PasswordResetLinkController extends Controller
      */
     public function create()
     {
+        //update page meta title
+        adminMetaTitle('Forgot');
         return view('auth.forgot-password')->with('app',$this);
     }
 

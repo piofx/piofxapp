@@ -113,6 +113,7 @@ class Client
 
         $request->request->add(['client.id' => $client->id]);
         $request->request->add(['client.name' => $client->name]);
+        $request->request->add(['client.meta_title' => $client->name]);
         $request->request->add(['client.settings' => $client->settings]);
         $request->request->add(['client.devmode' => false]);
         if(isset($settings->devmode)){

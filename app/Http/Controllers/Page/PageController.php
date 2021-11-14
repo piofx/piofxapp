@@ -25,6 +25,7 @@ class PageController extends Controller
         $this->app      =   'Page';
         $this->module   =   'Page';
         $this->componentName = componentName('agency');
+        $this->theme = Theme::where('id',$this->id)->first();
     }
 
     /**
@@ -34,6 +35,9 @@ class PageController extends Controller
      */
     public function index($theme_id,Obj $obj,Request $request)
     {
+
+        //update page meta title
+        adminMetaTitle('Pages - '.$this->theme->name);
 
         // check for search string
         $item = $request->item;
@@ -121,6 +125,9 @@ class PageController extends Controller
         // load the resource
         $obj = Obj::where('id',$id)->first();
    
+        //update page meta title
+        adminMetaTitle($obj->name.' - '.$this->theme->name);
+
         // load alerts if any
         $alert = session()->get('alert');
         // authorize the app
@@ -335,6 +342,10 @@ class PageController extends Controller
         $obj = Obj::where('id',$id)->first();
         // authorize the app
         $this->authorize('view', $obj);
+
+        //update page meta title
+        adminMetaTitle($obj->name.' [edit] - '.$this->theme->name);
+
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 

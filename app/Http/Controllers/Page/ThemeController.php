@@ -38,6 +38,9 @@ class ThemeController extends Controller
     public function index(Obj $obj,Request $request)
     {
 
+        //update page meta title
+        adminMetaTitle('Themes');
+
         // check for search string
         $item = $request->item;
         // load alerts if any
@@ -128,6 +131,11 @@ class ThemeController extends Controller
 
         //dump the theme data
         $obj = Obj::where('id',$id)->first();
+
+
+        //update page meta title
+        adminMetaTitle('[Theme Dev mode] '.$obj->name);
+
         $filename = 'theme_'.$obj->slug.'.json';
         Storage::disk('public')->put('devmode/'.$id.'/data/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
         Storage::disk('public')->put('devmode/'.$id.'/code/settings/'.$filename, json_encode(json_decode($obj->settings),JSON_PRETTY_PRINT));
@@ -741,6 +749,7 @@ class ThemeController extends Controller
      */
     public function show($id)
     {
+
         // load the resource
         $obj = Obj::where('id',$id)->first();
         // load alerts if any
@@ -748,6 +757,8 @@ class ThemeController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
 
+        //update page meta title
+        adminMetaTitle($obj->name.' - Theme');
 
         //save settings if any
         $status = $obj->saveSettings();
@@ -812,6 +823,10 @@ class ThemeController extends Controller
         $obj = Obj::where('id',$id)->first();
         // authorize the app
         $this->authorize('view', $obj);
+
+
+        //update page meta title
+        adminMetaTitle('[Theme edit] '.$obj->name); 
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 

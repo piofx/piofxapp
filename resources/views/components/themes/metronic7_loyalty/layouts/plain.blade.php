@@ -4,7 +4,7 @@
 <!--begin::Head-->
 <head>
     <meta charset="utf-8" />
-    <title>{{ request()->get('client.name') }}</title>
+    <title>{{ request()->get('client.meta_title') }}</title>
     <meta name="description" content="{{ agency('meta_description') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     @include('components.themes.metronic7_loyalty.blocks.styles')

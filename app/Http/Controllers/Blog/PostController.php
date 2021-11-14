@@ -46,6 +46,8 @@ class PostController extends Controller
         $user = new User();
         $blogSettings = new BlogSettings();
        
+        //update page meta title
+        adminMetaTitle('Blog');
 
         //deletes cache data
         if($request->input('refresh')){
@@ -529,6 +531,9 @@ class PostController extends Controller
         $obj = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
         // Authorize the request
         $this->authorize('edit', $obj);
+
+        //update page meta title
+        adminMetaTitle('[Blog edit] '.$obj->title);
         // Retrieve all categories
         $categories = $category->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
         // Retrieve all tags
@@ -794,6 +799,9 @@ class PostController extends Controller
         $obj = new Obj();
         // If search query exists
         $query = $request->input('query');
+
+        //update page meta title
+        adminMetaTitle('Blog Admin');
 
         if(!Auth::user()->checkRole(['clientadmin','clientmoderator']))
             abort('403','Restricted Access');

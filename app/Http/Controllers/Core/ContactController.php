@@ -50,6 +50,10 @@ class ContactController extends Controller
         //client id
         $client_id = request()->get('client.id');
 
+
+        //update page meta title
+        adminMetaTitle('Contact Form');
+
         // authorize the app
         $this->authorize('viewAny', $obj);
         //load user for personal listing
@@ -383,6 +387,10 @@ class ContactController extends Controller
         // load the resource
         $obj = Obj::where('id',$id)->first();
 
+
+        //update page meta title
+        adminMetaTitle('[Contact Form] '.$obj->name);
+
         // load related resources
         $objs = Obj::where('email',$obj->email)->where('id','!=',$obj->id)->get();
         // load alerts if any
@@ -606,6 +614,9 @@ class ContactController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
 
+
+        //update page meta title
+        adminMetaTitle('[Contact edit] '.$obj->name);
 
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.createedit')

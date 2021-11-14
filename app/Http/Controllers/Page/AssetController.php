@@ -9,6 +9,7 @@ use App\Models\Core\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Page\Theme;
 
 class AssetController extends Controller
 {
@@ -22,6 +23,7 @@ class AssetController extends Controller
         $this->app      =   'Page';
         $this->module   =   'Asset';
         $this->componentName = componentName('agency');
+        $this->theme = Theme::where('id',$this->id)->first();
     }
 
     /**
@@ -32,6 +34,8 @@ class AssetController extends Controller
     public function index($theme_id,Obj $obj,Request $request)
     {
 
+        //update page meta title
+        adminMetaTitle('Assets - '.$this->theme->name);
 
         // check for search string
         $item = $request->item;
@@ -124,6 +128,8 @@ class AssetController extends Controller
     {
         // load the resource
         $obj = Obj::where('id',$id)->first();
+        //update page meta title
+        adminMetaTitle($obj->name.' - '.$this->theme->name);
    
         // load alerts if any
         $alert = session()->get('alert');
@@ -154,6 +160,8 @@ class AssetController extends Controller
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 
+        //update page meta title
+        adminMetaTitle($obj->name.' [edit] - '.$this->theme->name);
         // load alerts if any
         $alert = session()->get('alert');
 

@@ -33,6 +33,9 @@ class TagController extends Controller
         $query = $request->input('query');
         // Authorize the request
         $this->authorize('view', $obj);
+
+        //update page meta title
+        adminMetaTitle('Tags - Blog');
         // Retrieve all records
         $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->orderBy("name", 'asc')->paginate(10);
 
@@ -177,6 +180,10 @@ class TagController extends Controller
     {
         // Retrieve Specific record
         $obj = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("slug", $slug)->first();
+
+
+        //update page meta title
+        adminMetaTitle('[Tag edit] '.$obj->name);
 
         // Authorize the request
         $this->authorize('edit', $obj);

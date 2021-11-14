@@ -8,6 +8,7 @@ use App\Models\Page\Module as Obj;
 use App\Models\Core\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Page\Theme;
 
 class ModuleController extends Controller
 {
@@ -21,6 +22,7 @@ class ModuleController extends Controller
         $this->app      =   'Page';
         $this->module   =   'Module';
         $this->componentName = componentName('agency');
+        $this->theme = Theme::where('id',$this->id)->first();
     }
 
     /**
@@ -30,6 +32,9 @@ class ModuleController extends Controller
      */
     public function index($theme_id,Obj $obj,Request $request)
     {
+
+        //update page meta title
+        adminMetaTitle('Modules - '.$this->theme->name);
 
         // check for search string
         $item = $request->item;
@@ -116,6 +121,9 @@ class ModuleController extends Controller
         // authorize the app
         $this->authorize('update', $obj);
 
+        //update page meta title
+        adminMetaTitle($obj->name.' - '.$this->theme->name);
+
         //save settings if any
         $obj->saveSettings();
 
@@ -142,6 +150,9 @@ class ModuleController extends Controller
         $obj = Obj::where('id',$id)->first();
         // authorize the app
         $this->authorize('view', $obj);
+
+        //update page meta title
+        adminMetaTitle($obj->name.' [edit] - '.$this->theme->name);
         // get the clients
         $clients = Client::where('id',request()->get('client.id'))->get();
 

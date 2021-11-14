@@ -42,6 +42,9 @@ class AdminController extends Controller
         //check if the user is not admin
         $user = \Auth::user();
 
+        //update page meta title
+        adminMetaTitle('Admin Dashboard');
+
         //update user login timestamp
         $lastlogindate = Cache::get('lastlogine_'.$user->id);
         if($lastlogindate != Carbon::now()->toDateString()){
@@ -52,7 +55,7 @@ class AdminController extends Controller
             $user->save(); 
             Cache::put('lastlogine_'.$user->id,$date,43200);
         }
-        
+
         if($user->role=='user'){
             
             return redirect()->route('profile');

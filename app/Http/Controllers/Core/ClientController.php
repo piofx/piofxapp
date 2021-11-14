@@ -152,14 +152,26 @@ class ClientController extends Controller
         if($request->input('mode')){
             if($request->input('mode') == 'dev'){
                 $editor = true;
+
             }
         }
+
+
+      
 
         // load alerts if any
         $alert = session()->get('alert');
 
         // load the resource
         $obj = Obj::where('id',$id)->first();
+
+
+        //update page meta title
+        if($request->input('mode') != 'dev')
+            adminMetaTitle('Global Settings');
+        else
+            adminMetaTitle('Global Settings [Dev mode]');
+
         
         // authorize the app
         $this->authorize('edit', $obj);

@@ -31,6 +31,8 @@ class AuthenticatedSessionController extends Controller
     {
         // load alerts if any
         $alert = session()->get('alert');
+        //update page meta title
+        adminMetaTitle('Login');
         return view('auth.login')->with('app',$this)->with('alert',$alert);
     }
 
@@ -45,8 +47,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-        
-        
         $request->session()->regenerate();
         return redirect(RouteServiceProvider::HOME);
         
