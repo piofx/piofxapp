@@ -171,6 +171,8 @@ class PageController extends Controller
         $client_settings = json_decode(request()->get('client.settings'));
 
 
+        //$post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
+        $post = Cache::get('post_'.request()->get('client.id').'_'.$page);
         //if requested for edit, redirect to admin theme page
         if(request()->get('edit')){
             if(auth::user() && auth::user()->role=='clientadmin'){
@@ -200,6 +202,7 @@ class PageController extends Controller
 
         }
         else if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct' && !empty($post)){
+
             return app()->call(
                 ('App\Http\Controllers\Blog\PostController@show'), ['slug' => $slug, 'blog_url' => 'direct']
             );

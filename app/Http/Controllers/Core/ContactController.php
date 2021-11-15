@@ -266,8 +266,8 @@ class ContactController extends Controller
             if($request->get('settings_utm_medium')){
                 $tags = $tags.','.$request->get('settings_utm_medium'); 
             }
-            if($request->get('settings_utm_item')){
-                $tags = $tags.','.$request->get('settings_utm_item'); 
+            if($request->get('settings_utm_term')){
+                $tags = $tags.','.$request->get('settings_utm_term'); 
             }
             if($request->get('settings_utm_content')){
                 $tags = $tags.','.$request->get('settings_utm_content'); 

@@ -324,6 +324,7 @@ class PostController extends Controller
     {
         $route = null;
         $client_settings = json_decode(request()->get('client.settings'));
+
         if($blog_url != 'direct'){
             if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){
                 abort(404,'Page not found');
@@ -368,6 +369,7 @@ class PostController extends Controller
 
         // Cached Post Data
         $post = Cache::get('post_'.request()->get('client.id').'_'.$slug);
+
         if(!$post){
             // Retrieve specific record views
             $post = $obj->where("slug", $slug)->where('client_id',request()->get('client.id'))->first();

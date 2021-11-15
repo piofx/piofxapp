@@ -32,8 +32,8 @@ $(function(){
                     if(qs.utm_medium){
                         formValues = formValues+'&settings_utm_medium='+qs.utm_medium;
                     }
-                    if(qs.utm_item){
-                        formValues = formValues+'&settings_utm_item='+qs.utm_item;
+                    if(qs.utm_term){
+                        formValues = formValues+'&settings_utm_term='+qs.utm_term;
                     }
                     if(qs.utm_content){
                         formValues = formValues+'&settings_utm_content='+qs.utm_content;
