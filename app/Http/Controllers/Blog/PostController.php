@@ -636,10 +636,13 @@ class PostController extends Controller
         }
 
         foreach($database_srcs as $src){
-            if(!in_array($src, $request_srcs)){
-                $path = parse_url($src, PHP_URL_PATH);
-                Storage::disk("s3")->delete($path); 
+            if(strpos($src, '.png') !== false && strpos($src, '.jpg') !== false  && strpos($src, '.jpeg') !== false){
+                if(!in_array($src, $request_srcs)){
+                    $path = parse_url($src, PHP_URL_PATH);
+                    Storage::disk("s3")->delete($path); 
+                }
             }
+            
         }
 
         // Check and delete featured image from storage if it is changed
