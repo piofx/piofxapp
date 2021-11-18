@@ -110,6 +110,7 @@ $(function(){
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
+                console.log('phone - '+phone);
                 if(name && phone && email){
                     $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
