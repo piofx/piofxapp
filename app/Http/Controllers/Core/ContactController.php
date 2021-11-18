@@ -534,7 +534,7 @@ class ContactController extends Controller
                 {
                     $phone = '+91'.$phone;
                 }else{
-                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
+                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification. -'.$phone.' count-'.strlen($phone);
                     return json_encode($message);
                 }
                     
