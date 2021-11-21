@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Mail\EmailForQueuing;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Admin\Tracker;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -23,6 +24,8 @@ class AdminController extends Controller
      */
     public function __construct()
     {
+        $this->app      =   'Core';
+        $this->module   =   'Tracker';
         $this->componentName = componentName('agency');
     }
 
@@ -31,6 +34,7 @@ class AdminController extends Controller
         Mail::to('packetcode@gmail.com')
             ->send(new EmailForQueuing('heloo all'));
     }
+
 
     /**
      * Display a listing of the resource.
@@ -136,6 +140,53 @@ class AdminController extends Controller
                     ->with('average_position', $average_position)
                     ->with('oneMonthDateData', json_encode($oneMonthDateData));
         }
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tracker(Tracker $obj)
+    {  
+        //check if the user is not admin
+        $user = \Auth::user();
+
+        //update page meta title
+        adminMetaTitle('Tracker | Admin');
+
+
+        $request = request();
+        // get the url path excluding domain name
+        $slug = request()->path();
+
+        // get the client id & domain
+        $client_id = request()->get('client.id');
+        $theme_id = request()->get('client.theme.id');
+        $domain = request()->get('domain.name');
+
+        $agency_settings = request()->get('agency.settings');
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        if($request->get('api')){
+            // store the data
+            $obj = $obj->create($request->all());
+            dd('1');
+        }
+        
+        // get tracker data
+        $trackers  = Tracker::where('client_id',$client_id)->get();
+        $data['campaign'] = $trackers->groupBy('utm_campaign');
+        $data['source'] = $trackers->groupBy('utm_source');
+        $data['medium'] = $trackers->groupBy('utm_medium');
+        $data['term'] = $trackers->groupBy('utm_term');
+        $data['content'] = $trackers->groupBy('utm_content');
+
+        return view('apps.Core.Tracker.index')
+                    ->with('app',$this)
+                    ->with('componentName',$this->componentName)
+                    ->with('data',$data);
     }
 
     public function profile(Request $request){

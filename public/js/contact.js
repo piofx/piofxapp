@@ -250,7 +250,45 @@ $(function(){
 
     }
 
-    //login form
+    // link click
+    $(document).on('click','.click_link',function(e){
+        e.preventDefault();
+        var url = $(this).data('href'); 
+        var user_id = $(this).data('user_id'); 
+        var client_id = $(this).data('client_id'); 
+        var agency_id = $(this).data('agency_id'); 
+         $.get('/contact/api',function(data){
+                    var token = JSON.parse(data).token;
+                    var query = window.location.search.substring(1);
+                    var qs = parse_query_string(query);
+                    formValues = '';
+                    
+
+                    if(qs.utm_source){
+                        formValues = formValues+'&utm_source='+qs.utm_source;
+                    }
+                    if(qs.utm_campaign){
+                        formValues = formValues+'&utm_campaign='+qs.utm_campaign;
+                    }
+                    if(qs.utm_medium){
+                        formValues = formValues+'&utm_medium='+qs.utm_medium;
+                    }
+                    if(qs.utm_term){
+                        formValues = formValues+'&utm_term='+qs.utm_term;
+                    }
+                    if(qs.utm_content){
+                        formValues = formValues+'&utm_content='+qs.utm_content;
+                    }
+                    var d = formValues+'&_token='+token+'&api=1&url='+url+'&user_id='+user_id+'&client_id='+client_id+'&agency_id='+agency_id;
+                    console.log(d);
+                    $.post('/admin/tracker', d, function(data){
+                        // Display the returned data in browser
+                        console.log(data);
+                        window.open(url, '_blank').focus();
+                        return false;  
+                    });
+                });
+    });
 
 	
 });

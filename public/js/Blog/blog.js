@@ -3,6 +3,9 @@ $(document).ready(function () {
     blogLinks();    
 });
 
+
+
+
 // Delete Image
 function deleteImage() {
     // document.getElementById("featured_image").style.display = "none";

@@ -392,7 +392,7 @@
                     <!-- Link -->
                     @if($obj->link)
                         @auth
-                        <a href="{{$obj->link}}" class="btn btn-primary mb-4" target="_blank">{{$obj->link_title}}</a>
+                        <div class="btn btn-primary mb-4 click_link"  data-href="{{$obj->link}}" data-user_id="{{Auth::user()->id}}" data-client_id="{{request('client.id')}}" data-agency_id="{{request()->get('agency.id')}}">{{$obj->link_title}}</div>
                         @else
                         <a href="#" class="btn btn-primary mb-4" data-toggle="modal" data-target="#loginModal">{{$obj->link_title}}</a>
                         

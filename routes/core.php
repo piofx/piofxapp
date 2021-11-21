@@ -11,6 +11,10 @@ use App\Http\Controllers\Core\StatisticsController;
 /* Admin routes */
 Route::get('/admin', [AdminController::class, 'index'])
 		->middleware(['auth'])->name('dashboard');
+Route::get('/admin/tracker', [AdminController::class, 'tracker'])
+		->middleware(['auth'])->name('tracker');
+Route::post('/admin/tracker', [AdminController::class, 'tracker'])
+		->middleware(['auth'])->name('tracker');
 Route::get('/admin/apps', [AdminController::class, 'apps'])
 		->middleware(['auth'])->name('apps');
 //sample email
