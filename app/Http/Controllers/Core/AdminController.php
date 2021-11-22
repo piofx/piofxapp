@@ -174,7 +174,7 @@ class AdminController extends Controller
             // store the data
             $url = request()->get('url');
             $uid = request()->get('user_id');
-            $exists = $obj->where('url',$url)->where('user_id',$user_id)->where('client_id',$client_id)->first();
+            $exists = $obj->where('url',$url)->where('user_id',$uid)->where('client_id',$client_id)->first();
             if(!$exists)
                 $obj = $obj->create($request->all());
             dd('1');
