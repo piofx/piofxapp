@@ -286,6 +286,7 @@ $(function(){
                     }
                     var d = formValues+'&_token='+token+'&api=1&url='+curr_url+'&user_id='+user_id+'&client_id='+client_id+'&agency_id='+agency_id;
                     console.log(d);
+                    
                     $.post('/admin/tracker', d, function(data){
                         // Display the returned data in browser
                         console.log(data);
