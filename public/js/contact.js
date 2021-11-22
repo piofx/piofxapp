@@ -266,7 +266,11 @@ $(function(){
 
                     if(qs.utm_source){
                         formValues = formValues+'&utm_source='+qs.utm_source;
+                    }else{
+                        window.open(url, '_blank').focus();
+                        return false;
                     }
+
                     if(qs.utm_campaign){
                         formValues = formValues+'&utm_campaign='+qs.utm_campaign;
                     }

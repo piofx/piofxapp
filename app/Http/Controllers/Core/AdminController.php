@@ -31,8 +31,9 @@ class AdminController extends Controller
 
     //sample test email
     public function sampletestemail(){
-        Mail::to('packetcode@gmail.com')
-            ->send(new EmailForQueuing('heloo all'));
+        $details=array("email"=>"packetcode@gmail.com","count"=>234,"client_name"=>"packetprep","subject"=>"s sample subject","content"=>"some content new","from"=>"noreply@mail.packetprep.com");
+        Mail::mailer('pp_smtp')->to('packetcode@gmail.com')
+            ->send(new EmailForQueuing($details));
     }
 
 

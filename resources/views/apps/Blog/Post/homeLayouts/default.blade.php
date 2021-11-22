@@ -150,10 +150,27 @@
     </div>
     <!-- End Hero Section -->
     
+
+
     <!-- Blogs Section -->
     <div class="container space-1 @if(!$featured_section) {{ 'space-top-2' }} @endif">
         <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-9 mt-md-10 mt-lg-8 ' }} @endif">
             <div class="col-12 col-lg-9">
+
+                <div class="mb-5 d-block d-md-none" >
+                    <!-- Search Form -->
+                    <form action="{{ route($app->module.'.search') }}" method="GET">
+                        <div class="input-group mb-3"> 
+                            <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary btn-md" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- End Search Form -->
+                </div>
 
                 <!-- Ad -->
                 @if(!empty($settings->ads))
@@ -280,7 +297,7 @@
                 @include('apps.Blog.Post.homeLayouts.login')
                 <!-- end login -->
                 
-                <div class="mb-5">
+                <div class="mb-5 d-none d-md-block" >
                     <!-- Search Form -->
                     <form action="{{ route($app->module.'.search') }}" method="GET">
                         <div class="input-group mb-3"> 
@@ -326,7 +343,7 @@
                 <div class="my-5">
                     <h3 class="font-weight-bold mb-3">Tags</h3>
                     @foreach($tags as $kt=>$tag)
-                        <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                         @if($kt==6)
                             @break
                         @endif    
