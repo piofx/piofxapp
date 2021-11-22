@@ -254,6 +254,7 @@ $(function(){
     $(document).on('click','.click_link',function(e){
         e.preventDefault();
         var url = $(this).data('href'); 
+        var curr_url = window.location.href;
         var user_id = $(this).data('user_id'); 
         var client_id = $(this).data('client_id'); 
         var agency_id = $(this).data('agency_id'); 
@@ -283,7 +284,7 @@ $(function(){
                     if(qs.utm_content){
                         formValues = formValues+'&utm_content='+qs.utm_content;
                     }
-                    var d = formValues+'&_token='+token+'&api=1&url='+url+'&user_id='+user_id+'&client_id='+client_id+'&agency_id='+agency_id;
+                    var d = formValues+'&_token='+token+'&api=1&url='+curr_url+'&user_id='+user_id+'&client_id='+client_id+'&agency_id='+agency_id;
                     console.log(d);
                     $.post('/admin/tracker', d, function(data){
                         // Display the returned data in browser
