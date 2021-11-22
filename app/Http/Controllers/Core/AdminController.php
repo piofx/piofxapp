@@ -155,7 +155,7 @@ class AdminController extends Controller
         $user = \Auth::user();
 
         //update page meta title
-        adminMetaTitle('Tracker | Admin');
+        adminMetaTitle('Tracker Admin');
 
 
         $request = request();
@@ -172,7 +172,11 @@ class AdminController extends Controller
 
         if($request->get('api')){
             // store the data
-            $obj = $obj->create($request->all());
+            $url = request()->get('url');
+            $uid = request()->get('user_id');
+            $exists = $obj->where('url',$url)->where('user_id',$user_id)->where('client_id',$client_id)->first();
+            if(!$exists)
+                $obj = $obj->create($request->all());
             dd('1');
         }
         
