@@ -153,6 +153,7 @@ $(function(){
                     $.get('/contact/api',function(data){
                         var token = JSON.parse(data).token;
                         var d = formValues+'&_token='+token+'&api=1';
+                         console.log(d);
                         $.post($url, d, function(data){
                              // Display the returned data in browser
                             console.log(data);
@@ -231,6 +232,7 @@ $(function(){
                     $.get('/contact/api',function(data){
                         var token = JSON.parse(data).token;
                         var d = formValues+'&_token='+token+'&api=1';
+                        console.log(d);
                         $.post($url, d, function(data){
                              // Display the returned data in browser
                             console.log(data);
@@ -286,7 +288,7 @@ $(function(){
                     }
                     var d = formValues+'&_token='+token+'&api=1&url='+curr_url+'&user_id='+user_id+'&client_id='+client_id+'&agency_id='+agency_id;
                     console.log(d);
-                    
+
                     $.post('/admin/tracker', d, function(data){
                         // Display the returned data in browser
                         console.log(data);

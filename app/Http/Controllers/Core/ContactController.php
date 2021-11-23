@@ -206,6 +206,7 @@ class ContactController extends Controller
                 dd();
             }
             
+
             /* create a new entry */
             $data = '';
             $json = [];
@@ -239,15 +240,18 @@ class ContactController extends Controller
                 $request->merge(['json' => json_encode($json)]);
             }
 
+
             //validate emails
             $valid_email = $obj->debounce_valid_email($request->get('email'));
             $request->merge(['valid_email' => $valid_email]);
 
+            
             //update client id and agency id
             if(!$request->get('client_id')){
                 $request->merge(['client_id' => request()->get('client.id')]);
                 $request->merge(['agency_id' => request()->get('agency.id')]);
             }
+
 
             //update tags
             $tags='';
@@ -273,6 +277,7 @@ class ContactController extends Controller
                 $tags = $tags.','.$request->get('settings_utm_content'); 
             }
             $request->merge(['tags' => $tags]);
+
 
             // store the data
             $obj = $obj->create($request->all());
@@ -534,7 +539,7 @@ class ContactController extends Controller
                 {
                     $phone = '+91'.$phone;
                 }else{
-                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification. -'.$phone.' count-'.strlen($phone);
+                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
                     return json_encode($message);
                 }
                     
