@@ -74,12 +74,12 @@ class PostController extends Controller
         // Check if pagination is clicked 
         if(!empty($request->query()['page']) && $request->query()['page'] > 1){
             // Retrieve all posts
-            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('5');
+            $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('15');
         }else{
             $objs = Cache::get('posts_'.request()->get('client.id'));
             if(!$objs){
                 // Retrieve all posts
-                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('5');
+                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('15');
                 Cache::forever('posts_'.request()->get('client.id'), $objs);
             }
         }

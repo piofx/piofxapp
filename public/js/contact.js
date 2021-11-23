@@ -10,7 +10,7 @@ $(function(){
             $(document).on("click",".contact_button", function(e){
                 console.log('clicked');
                 e.preventDefault();
-                var formValues= $("form").serialize();
+                var formValues= $(this).closest("form").serialize();
                 $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var query = window.location.search.substring(1);
@@ -106,7 +106,7 @@ $(function(){
             console.log('form sms otp');
             $(document).on("click",".contact_button", function(e){
                 e.preventDefault();
-                var formValues= $("form").serialize();
+                var formValues= $(this).closest("form").serialize();
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
@@ -140,7 +140,7 @@ $(function(){
 
             $(document).on("click",".otp_button", function(e){
                 e.preventDefault();
-                var formValues= $("form").serialize();
+                var formValues= $(this).closest("form").serialize();
                 $('.spinner-border').show();
                 var otp = parseInt($('.otp_input').data('otp'));
                 var user_otp = parseInt($('.otp_input').val());
@@ -178,7 +178,7 @@ $(function(){
                 e.preventDefault();
 
                  
-                var formValues= $("form").serialize();
+                var formValues= $(this).closest("form").serialize();
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
@@ -218,7 +218,7 @@ $(function(){
 
             $(document).on("click",".otp_button", function(e){
                 e.preventDefault();
-                var formValues= $("form").serialize();
+                var formValues= $(this).closest("form").serialize();
                 $('.spinner-border').show();
                 var otp = parseInt($('.otp_input').data('otp'));
                 var user_otp = parseInt($('.otp_input').val());
