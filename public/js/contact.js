@@ -107,9 +107,9 @@ $(function(){
             $(document).on("click",".contact_button", function(e){
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
-                var name = $('input[name=name]').val();
-                var phone = $('input[name=phone]').val();
-                var email = $('input[name=email]').val();
+                var name = $(this).closest("form").find("input[name=name]").val();
+                var phone = $(this).closest("form").find("input[name=phone]").val();
+                var email = $(this).closest("form").find("input[name=email]").val();
                 console.log('phone - '+phone);
                 if(name && phone && email){
                     $.get('/contact/api',function(data){
@@ -142,8 +142,8 @@ $(function(){
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
                 $('.spinner-border').show();
-                var otp = parseInt($('.otp_input').data('otp'));
-                var user_otp = parseInt($('.otp_input').val());
+                var otp = parseInt($(this).closest("form").find('.otp_input').data('otp'));
+                var user_otp = parseInt($(this).closest("form").find('.otp_input').val());
                 console.log(otp+ ' - '+user_otp);
                 if(otp!=user_otp){
                     $('.otp_message').show();
@@ -180,9 +180,9 @@ $(function(){
 
                  
                 var formValues= $(this).closest("form").serialize();
-                var name = $('input[name=name]').val();
-                var phone = $('input[name=phone]').val();
-                var email = $('input[name=email]').val();
+                var name = $(this).closest("form").find("input[name=name]").val();
+                var phone = $(this).closest("form").find("input[name=phone]").val();
+                var email = $(this).closest("form").find("input[name=email]").val();
                 if(name && phone && email){
                     $('.spinner-border').show();
                     $.get('/contact/api',function(data){
@@ -221,8 +221,8 @@ $(function(){
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
                 $('.spinner-border').show();
-                var otp = parseInt($('.otp_input').data('otp'));
-                var user_otp = parseInt($('.otp_input').val());
+                var otp = parseInt($(this).closest("form").find('.otp_input').data('otp'));
+                var user_otp = parseInt($(this).closest("form").find('.otp_input').val());
                 console.log(otp+ ' - '+user_otp);
                 if(otp!=user_otp){
                     $('.otp_message').show();
