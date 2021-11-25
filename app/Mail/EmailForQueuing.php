@@ -30,7 +30,7 @@ class EmailForQueuing extends Mailable
      */
     public function build()
     {
-        if($this->details['from'])
+        if(isset($this->details['from']))
             $from = $this->details['from'];
         else
             $from = 'noreply@customerka.com';

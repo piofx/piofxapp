@@ -580,22 +580,18 @@ class ContactController extends Controller
      */
     public function sendEmailOTP($email,$code){
 
+        //client settings
+        $settings = json_decode(request()->get('client.settings'));
 
         //load mail template
         $template = MailTemplate::where('slug','mail_verification')->first();
-
-
         $subject = $template->subject;
-
         $client_name = request()->get('client.name');
+
         //update the mail log
-
-        
-
         $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $email , 'app' => 'user' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
 
 
-        
         // notify the admins via mail
         $details = array('email' => $email , 'count'=>$code, 'content' => $template->message,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject);
 
@@ -610,9 +606,21 @@ class ContactController extends Controller
         }
         
 
+        if(isset($settings->mailgunfrom))
+            $details['from'] = $settings->mailgunfrom;
+        else
+           $details['from'] = 'noreply@customerka.com';
 
-        // send email
-        Mail::to($details['email'])->send(new EmailForQueuing($details));
+        if(isset($settings->mailgunclient)){
+             Mail::mailer($settings->mailgunclient)->to($details['email'])->send(new EmailForQueuing($details));
+        }
+        else
+        {
+             Mail::to($details['email'])->send(new EmailForQueuing($details));
+        }
+
+        // // send email
+        // Mail::to($details['email'])->send(new EmailForQueuing($details));
 
       
     }

@@ -56,6 +56,17 @@ return [
             'auth_mode' => null,
         ],
 
+        'fa_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('FA_MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('FA_MAIL_USERNAME'),
+            'password' => env('FA_MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

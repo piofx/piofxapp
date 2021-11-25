@@ -40,45 +40,7 @@ class RegisteredUserController extends Controller
         //update page meta title
         adminMetaTitle('Register');
         
-        if(request()->get('dump2')){
-            //client settings
-        $settings = json_decode(request()->get('client.settings'));
-        if(isset($settings->mailgunkey))
-            $mailgunKey = $settings->mailgunkey;
-        else
-            $mailgunKey = env('MAIL_MAILGUNKEY');
-
-        if(isset($settings->mailgundomain))
-            $mailgunDomain = $settings->mailgundomain;
-        else
-            $mailgunDomain = env('MAIL_MAILGUNDOMAIN');
-
-
-        //load mail template
-        $template = MailTemplate::where('slug','mail_verification')->first();
-
-        $email = 'krishnatejags@gmail.com';
-        $code  = 1234;
-        $subject = $template->subject;
-
-        $client_name = request()->get('client.name');
-        //update the mail log
-
-
-        $maillog = MailLog::create(['agency_id' => request()->get('agency.id') ,'client_id' => request()->get('client.id') ,'email' => $email , 'app' => 'user' ,'mail_template_id' => $template->id, 'subject' => $subject,'message' => $template->message , 'status'=> 1]);
-
-
-        
-        // notify the admins via mail
-        $details = array('email' => $email , 'count'=>$code, 'content' => $template->message,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject);
-
-      
-
-        Mail::setConfig($mailgunKey, $mailgunDomain)->to($details['email'])->send(new EmailForQueuing($details));
-            dd('here');
-            return 1;
-        }
-
+       
         if(!request()->session()->get('code')){
             $code = mt_rand(1000, 9999);
             request()->session()->put('code',$code);
@@ -153,12 +115,19 @@ class RegisteredUserController extends Controller
         if (str_contains($details['content'], '{{$client}}')) { 
             $details['content'] = str_replace('{{$client}}',$details['client_name'],$details['content']);
         }
-        
 
-        // send email
-        // $mailgunKey = 
-        // $mailgunDomain = 
-        Mail::to($details['email'])->send(new EmailForQueuing($details));
+        if(isset($settings->mailgunfrom))
+            $details['from'] = $settings->mailgunfrom;
+        else
+           $details['from'] = 'noreply@customerka.com';
+
+        if(isset($settings->mailgunclient)){
+             Mail::mailer($settings->mailgunclient)->to($details['email'])->send(new EmailForQueuing($details));
+        }
+        else
+        {
+             Mail::to($details['email'])->send(new EmailForQueuing($details));
+        }
 
       
     }
