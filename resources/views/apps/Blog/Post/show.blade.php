@@ -746,7 +746,7 @@
                     <div class="mb-5">
                         <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
                         @foreach($tags as $kt=>$tag)
-                        <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                             @if($kt==6)
                                 @break
                             @endif  
