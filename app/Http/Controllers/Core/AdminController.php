@@ -194,6 +194,47 @@ class AdminController extends Controller
                     ->with('data',$data);
     }
 
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function user($u,Tracker $obj)
+    {  
+        //check if the user is not admin
+        $user = \Auth::user()->where('id',$u)->first();
+
+        //update page meta title
+        adminMetaTitle('User Tracker Admin');
+
+
+        $request = request();
+        // get the url path excluding domain name
+        $slug = request()->path();
+
+        // get the client id & domain
+        $client_id = request()->get('client.id');
+        $theme_id = request()->get('client.theme.id');
+        $domain = request()->get('domain.name');
+
+        $agency_settings = request()->get('agency.settings');
+        $client_settings = json_decode(request()->get('client.settings'));
+
+        
+        
+        // get tracker data
+        $trackers  = Tracker::where('client_id',$client_id)->where('user_id',$u)->paginate(30);
+
+
+
+        return view('apps.Core.Tracker.user')
+                    ->with('app',$this)
+                    ->with('componentName',$this->componentName)
+                    ->with('user',$user)
+                    ->with('objs',$trackers);
+    }
+
     public function profile(Request $request){
         $record = \Auth::user();
         $this->module = 'User';

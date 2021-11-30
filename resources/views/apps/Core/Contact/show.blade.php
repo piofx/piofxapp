@@ -108,7 +108,7 @@
 				<!--end::basic card-->   
 		</div>
 		@if($user)
-		<div class="col-12 col-md-3">
+		<div class="col-12 col-md-4">
 			<!--begin::basic card-->
 			<x-snippets.cards.basic class="bg-primary text-white">
 				<h4><i class="fa fa-user text-white"></i> Registered Info</h4>
@@ -137,6 +137,12 @@
 				<div class="row mb-2">
 						<div class="col-4 col-md-4"><b>Last Login</b></div>
 						<div class="col-8 col-md-8"><span class="badge badge-success">{!! $user->updated_at->diffForHumans() !!}</span></div>
+				</div>
+				<div class="row mb-2">
+						<div class="col-4 col-md-4"><b>Interactions</b></div>
+						<div class="col-8 col-md-8">
+							<a href="{{ route('user.tracker',$user->id)}}"><span class="badge badge-warning">{!! count($user->tracker) !!}</span></a>
+							</div>
 				</div>
 			</x-snippets.cards.basic>
 			<!--end::basic card-->  

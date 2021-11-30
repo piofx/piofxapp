@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Core\Client;
 use App\Models\Core\Contact;
+use App\Models\Admin\Tracker;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -79,6 +80,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Get the client that owns the page.
+     *
+     */
+    public function tracker()
+    {
+        return $this->hasMany(Tracker::class);
     }
 
       /**

@@ -15,6 +15,8 @@ Route::get('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
 Route::post('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
+Route::get('/admin/tracker/user/{user}', [AdminController::class, 'user'])
+		->middleware(['auth'])->name('user.tracker');
 Route::get('/admin/apps', [AdminController::class, 'apps'])
 		->middleware(['auth'])->name('apps');
 //sample email
