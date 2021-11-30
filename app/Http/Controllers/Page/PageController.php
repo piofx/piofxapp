@@ -254,6 +254,11 @@ class PageController extends Controller
             });
         }
 
+        // check for authbased replacement
+        if($obj){
+            $obj = $obj->checkAuthBasedReclacement();
+        }
+
         // update layout
         $this->componentName = 'themes.barebone.layouts.app';
 

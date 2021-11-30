@@ -69,6 +69,65 @@ class Page extends Model
 
     }
 
+
+    /**
+     * Function to replace the auth varaibles
+     *
+     */
+    public function checkAuthBasedReclacement(){
+
+        $content = $this->html_minified;
+        $settings = json_decode($this->settings);
+        $data = '';
+
+        $this->auth = 1;
+        //auth variavle
+        if(\Auth::user()){
+            if(preg_match_all('/@auth+(.*?)@endauth/', $content, $regs))
+            {
+
+                foreach ($regs[1] as $reg){
+                    $variable = trim($reg);
+                    $content = str_replace('@auth', '' , $content);
+                    $content = str_replace('@endauth', '' , $content);
+                    if(preg_match_all('/@noauth+(.*?)@endnoauth/', $content, $regs))
+                    {   
+                         foreach ($regs[1] as $reg){
+                            $content = str_replace('@noauth'.$reg.'@endnoauth', '' , $content);
+                        }
+                    }
+                    $this->auth = 1;
+                }
+
+                   
+            }
+
+        }else{
+            if(preg_match_all('/@noauth+(.*?)@endnoauth/', $content, $regs))
+            {
+
+                foreach ($regs[1] as $reg){
+                    $variable = trim($reg);
+                    $content = str_replace('@noauth', '' , $content);
+                    $content = str_replace('@endnoauth', '' , $content);
+                    if(preg_match_all('/@auth+(.*?)@endauth/', $content, $regs))
+                    {   
+                         foreach ($regs[1] as $reg){
+                            $content = str_replace('@auth'.$reg.'@endauth', '<form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
+                        }
+                    }
+                    $this->auth = 0;
+                }
+
+                
+            }
+        }
+        $content = $this->minifyHtml($content);
+        $this->html_minified = $content;
+
+        return $this;
+    }
+
     /**
      * Function to replace the variables
      *

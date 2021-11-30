@@ -76,9 +76,12 @@ $(function(){
 
         //login form submission
         if($("form").data('login')==1){
-            $(document).on("click",".login_button", function(e){
+            
+        }
+        $(document).on("click",".login_button", function(e){
                 e.preventDefault();
                 var formValues= $("form").serialize();
+                console.log($url);
                 $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&api=1';
@@ -99,7 +102,6 @@ $(function(){
                     });
                 });
             });
-        }
 
         //form submission with otp verification
         if($("form").data('otp')==1){

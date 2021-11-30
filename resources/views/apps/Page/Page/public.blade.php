@@ -2,4 +2,8 @@
 	
 	{!! $obj->html_minified !!}
 
+	@if(!$obj->auth)
+		@include('apps.Blog.Post.homeLayouts.loginModal')
+	@endif
+
 </x-dynamic-component>
