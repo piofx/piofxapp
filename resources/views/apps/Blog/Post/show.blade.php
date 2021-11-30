@@ -206,7 +206,7 @@
                             @if(!empty($postCategory->name) && strtolower($postCategory->name) != 'uncategorized')
                                 <p class="m-0 mr-3 ml-3"> | </p>
                                 <div class="d-flex align-items-center">
-                                    <a href="{{ route('Category.show', $postCategory->slug) }}" class="text-decoration-none d-flex align-items-center"><span class="badge badge-dark">{{ $postCategory->name }}</span></a>
+                                    <a href="{{ route('Category.show', $postCategory->slug) }}" class="text-decoration-none d-flex align-items-center"><span class="badge badge-secondary">{{ $postCategory->name }}</span></a>
                                 </div>
                             @endif
                             @php
@@ -405,7 +405,7 @@
                         <div class="mt-5">
                             <h4>Tags</h4>
                             @foreach($postTags as $tag)
-                                <a class="btn btn-xs btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                                <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                             @endforeach
                         </div>
                     @endif
@@ -608,7 +608,7 @@
                     <div class="mb-5">
                         <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
                         @foreach($tags as $tag)
-                        <a class="btn btn-sm btn-outline-dark mb-1" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
+                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
                         @endforeach
                     </div>
                 @endif
