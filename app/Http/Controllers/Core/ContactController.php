@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use DateTime;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Exports\ContactsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -409,9 +410,11 @@ class ContactController extends Controller
 
         //update page meta title
         adminMetaTitle('[Contact Form] '.$obj->name);
+        $client_id = request()->get('client.id');
 
         // load related resources
-        $objs = Obj::where('email',$obj->email)->where('id','!=',$obj->id)->get();
+        $objs = Obj::where('email',$obj->email)->where('id','!=',$obj->id)->where('client_id',$client_id)->get();
+        $user = User::where('email',$obj->email)->where('client_id',$client_id)->first();
         // load alerts if any
         $alert = session()->get('alert');
         // authorize the app
@@ -419,7 +422,7 @@ class ContactController extends Controller
 
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('objs',$objs)->with('app',$this)->with('alert',$alert);
+                    ->with('obj',$obj)->with('objs',$objs)->with('user',$user)->with('app',$this)->with('alert',$alert);
         else
             abort(404);
     }

@@ -82,46 +82,62 @@ class Page extends Model
 
         $this->auth = 1;
         //auth variavle
-        if(\Auth::user()){
-            if(preg_match_all('/@auth+(.*?)@endauth/', $content, $regs))
-            {
+        if(preg_match_all('/@guest+(.*?)@endguest/', $content, $regs))
+        {
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@else') !== false) {
+                    $pieces = explode('@else',$variable);
 
-                foreach ($regs[1] as $reg){
-                    $variable = trim($reg);
-                    $content = str_replace('@auth', '' , $content);
-                    $content = str_replace('@endauth', '' , $content);
-                    if(preg_match_all('/@noauth+(.*?)@endnoauth/', $content, $regs))
-                    {   
-                         foreach ($regs[1] as $reg){
-                            $content = str_replace('@noauth'.$reg.'@endnoauth', '' , $content);
-                        }
+                    if(!\Auth::user()){
+                        $content = str_replace('@guest'.$reg.'@endguest', $pieces[0].'<form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
+                        $this->auth = 0;
+                    }else{
+                        $content = str_replace('@guest'.$reg.'@endguest', $pieces[1] , $content);  
+                        
                     }
-                    $this->auth = 1;
+                }else{
+                    if(!\Auth::user()){
+                        $content = str_replace('@auth'.$reg.'@endauth', $reg , $content);
+                        $this->auth = 0;
+                    }else{
+                        $content = str_replace('@auth'.$reg.'@endauth', '' , $content); 
+                        $this->auth = 1; 
+                    }
                 }
-
-                   
             }
+            
+        }
 
-        }else{
-            if(preg_match_all('/@noauth+(.*?)@endnoauth/', $content, $regs))
-            {
 
-                foreach ($regs[1] as $reg){
-                    $variable = trim($reg);
-                    $content = str_replace('@noauth', '' , $content);
-                    $content = str_replace('@endnoauth', '' , $content);
-                    if(preg_match_all('/@auth+(.*?)@endauth/', $content, $regs))
-                    {   
-                         foreach ($regs[1] as $reg){
-                            $content = str_replace('@auth'.$reg.'@endauth', '<form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
-                        }
+        if(preg_match_all('/@loginpopup+(.*?)@endloginpopup/', $content, $regs))
+        {
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@else') !== false) {
+                    $pieces = explode('@else',$variable);
+                    if(!\Auth::user()){
+                        $content = str_replace('@loginpopup'.$reg.'@endloginpopup', '<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">'.$pieces[0].'</a><form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
+                        $this->auth = 0;
+                    }else{
+                        $content = str_replace('@loginpopup'.$reg.'@endloginpopup', $pieces[1] , $content);  
+                        $this->auth = 1;
                     }
-                    $this->auth = 0;
+                }else{
+                    if(!\Auth::user()){
+                        $content = str_replace('@auth'.$reg.'@endauth', $reg , $content);
+                        $this->auth = 0;
+                    }else{
+                        $content = str_replace('@auth'.$reg.'@endauth', '' , $content); 
+                        $this->auth = 1; 
+                    }
                 }
+            }
+            
+        }
+
 
                 
-            }
-        }
         $content = $this->minifyHtml($content);
         $this->html_minified = $content;
 
