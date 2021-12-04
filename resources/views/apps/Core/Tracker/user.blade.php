@@ -63,16 +63,16 @@
                       Source : {{$obj->utm_source}} <br>
                     @endif
                      @if($obj->utm_medium )
-                      Source : {{$obj->utm_medium}} <br>
+                      Medium : {{$obj->utm_medium}} <br>
                     @endif
                      @if($obj->utm_campaign )
-                      Source : {{$obj->utm_campaign}} <br>
+                      Campaign : {{$obj->utm_campaign}} <br>
                     @endif
                      @if($obj->utm_content )
-                      Source : {{$obj->utm_content}} <br>
+                      Content : {{$obj->utm_content}} <br>
                     @endif
                      @if($obj->utm_term )
-                      Source : {{$obj->utm_term}} <br>
+                      Term : {{$obj->utm_term}} <br>
                     @endif
                     
                   </td>

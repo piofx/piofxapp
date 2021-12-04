@@ -168,7 +168,7 @@ class StatisticsController extends Controller
                     // Create a new object for search console
                     $obj = new \Google_Service_Webmasters_SearchAnalyticsQueryRequest();
                     $obj->setSearchType('web');
-                    $obj->setRowLimit('25000');
+                    $obj->setRowLimit('5000');
                     $retrievedData = array();
 
                     if($i == 0){
