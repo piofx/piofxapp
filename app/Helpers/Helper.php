@@ -42,7 +42,17 @@ if (!function_exists('adminMetaTitle')) {
 if (!function_exists('updateMetaTitle')) {
 	function updateMetaTitle($title){
 		$content = request()->get('app.theme.prefix');
+
         $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
+        request()->merge(['app.theme.prefix' => $buffer,]);
+	}
+}
+
+// function to load modules from the settings
+if (!function_exists('updateMetaImage')) {
+	function updateMetaImage($image){
+		$content = request()->get('app.theme.prefix');
+        $buffer = preg_replace('/(<meta property="og:image" content=")(.*?)(">)/i', '$1' . $image . '$3', $content);
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }

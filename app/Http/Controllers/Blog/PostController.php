@@ -503,6 +503,11 @@ class PostController extends Controller
         $description = $obj->meta_description;
         if($description)
             updateMetaDescription($description);
+
+        // change meta image
+        $image = $obj->image;
+        if($image)
+            updateMetaImage($image);
         
 
         // change the componentname from admin to client 
@@ -758,7 +763,7 @@ class PostController extends Controller
         }
 
         // Retrieve ids of all posts which match title with the query string
-        $title_ids = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("title", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
+        $title_ids = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("title", "LIKE", "%".$query."%")->orwhere("excerpt", "LIKE", "%".$query."%")->orwhere("content", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
         // Retrieve ids of all posts which match category name with the query string
         $category_ids = Category::where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where("name", "LIKE", "%".$query."%")->get("id")->pluck("id")->toArray();
         $category_ids = Obj::whereIn("category_id", $category_ids)->get("id")->pluck("id")->toArray();
