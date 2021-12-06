@@ -506,8 +506,10 @@ class PostController extends Controller
 
         // change meta image
         $image = $obj->image;
-        if($image)
+        if($image){
+            $image = Storage::disk('s3')->url($image);
             updateMetaImage($image);
+        }
         
 
         // change the componentname from admin to client 
