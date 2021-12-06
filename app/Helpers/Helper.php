@@ -56,6 +56,15 @@ if (!function_exists('updateMetaImage')) {
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
+// function to load modules from the settings
+if (!function_exists('updateMetaUrl')) {
+	function updateMetaUrl(){
+		$content = request()->get('app.theme.prefix');
+		$url = url()->current();
+        $buffer = preg_replace('/(<meta property="og:url" content=")(.*?)(">)/i', '$1' . $url . '$3', $content);
+        request()->merge(['app.theme.prefix' => $buffer,]);
+	}
+}
 
 
 
