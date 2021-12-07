@@ -44,7 +44,7 @@ if (!function_exists('updateMetaTitle')) {
 		$content = request()->get('app.theme.prefix');
 
         $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
-        $buffer = preg_replace('/(<meta property="og:title" content=")(.*?)(">)/i', '$1' . $title . '$3', $buffer);
+        $buffer = preg_replace('/(<meta property="og:title" content=")(.*?)(" \/>)/i', '$1' . $title . '$3', $buffer);
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
@@ -53,7 +53,7 @@ if (!function_exists('updateMetaTitle')) {
 if (!function_exists('updateMetaImage')) {
 	function updateMetaImage($image){
 		$content = request()->get('app.theme.prefix');
-        $buffer = preg_replace('/(<meta property="og:image" content=")(.*?)(">)/i', '$1' . $image . '$3', $content);
+        $buffer = preg_replace('/(<meta property="og:image" content=")(.*?)(" \/>)/i', '$1' . $image . '$3', $content);
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
@@ -62,7 +62,7 @@ if (!function_exists('updateMetaUrl')) {
 	function updateMetaUrl(){
 		$content = request()->get('app.theme.prefix');
 		$url = url()->current();
-        $buffer = preg_replace('/(<meta property="og:url" content=")(.*?)(">)/i', '$1' . $url . '$3', $content);
+        $buffer = preg_replace('/(<meta property="og:url" content=")(.*?)(" \/>)/i', '$1' . $url . '$3', $content);
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
@@ -73,9 +73,9 @@ if (!function_exists('updateMetaUrl')) {
 if (!function_exists('updateMetaDescription')) {
 	function updateMetaDescription($description){
 		$content = request()->get('app.theme.prefix');
-        $buffer =  preg_replace('/<meta name="description" content="(.*)"\/>/i','<meta name="description" content="'.$description.'" />', $content);
+        $buffer =  preg_replace('/<meta name="description" content="(.*)" \/>/i','<meta name="description" content="'.$description.'" />', $content);
 
-        $buffer = preg_replace('/(<meta property="og:description" content=")(.*?)(">)/i', '$1' . $description . '$3', $buffer);
+        $buffer = preg_replace('/(<meta property="og:description" content=")(.*?)(" \/>)/i', '$1' . $description . '$3', $buffer);
         request()->merge(['app.theme.prefix' => $buffer,]);
 	}
 }
