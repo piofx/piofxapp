@@ -778,7 +778,7 @@ class PostController extends Controller
         // Remove duplicates from the ids list and create a new array
         $post_ids = array_unique(array_merge($title_ids,$category_ids, $tag_ids), SORT_REGULAR);
         // Retrieve posts which match the given title query
-        $objs = $obj->whereIn("id", $post_ids)->where('status', 1)->with('category')->with('tags')->paginate(6);
+        $objs = $obj->whereIn("id", $post_ids)->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', 1)->with('category')->with('tags')->paginate(6);
 
         // Check if blog url is given as direct in client settings and modify urls accrdingly
         $route = null;
