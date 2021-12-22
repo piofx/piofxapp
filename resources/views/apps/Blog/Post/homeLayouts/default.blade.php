@@ -8,7 +8,7 @@
         <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-9 mt-md-10 mt-lg-8 ' }} @endif">
             <div class="col-12 col-lg-9">
 
-                <div class="mb-5 d-block d-md-none" >
+                <div class="mb-5 d-block d-lg-none" >
                     <!-- Search Form -->
                     <form action="{{ route($app->module.'.search') }}" method="GET">
                         <div class="input-group mb-3"> 
@@ -238,7 +238,7 @@
                 @include('apps.Blog.Post.homeLayouts.login')
                 <!-- end login -->
                 
-                <div class="mb-5 d-none d-md-block" >
+                <div class="mb-5 d-none d-lg-block" >
                     <!-- Search Form -->
                     <form action="{{ route($app->module.'.search') }}" method="GET">
                         <div class="input-group mb-3"> 
