@@ -294,7 +294,7 @@ class ContactController extends Controller
                 if($template != NULL)
                 {
                     if(isset($settings_data->digest))
-                    if ($settings_data->digest == 'rightaway' && $request->get('digest')!=0)
+                    if ($settings_data->digest == 'rightaway' && $request->get('digest')!='no')
                         {   
                             // load emails to send message to
                             $email1_to = $email2_to = null;
