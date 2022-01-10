@@ -279,10 +279,10 @@ class ContactController extends Controller
             }
             $request->merge(['tags' => $tags]);
 
-
-            // store the data
-            $obj = $obj->create($request->all());
-
+           
+                $obj = $obj->create($request->all());
+           
+            //dd($obj);
             
             // send mail alert to admin
             if($settings_data)
@@ -294,7 +294,7 @@ class ContactController extends Controller
                 if($template != NULL)
                 {
                     if(isset($settings_data->digest))
-                    if ($settings_data->digest == 'rightaway' && $request->get('digest')!='no')
+                    if ($settings_data->digest == 'rightaway' && $request->get('settings_digest') != 'no')
                         {   
                             // load emails to send message to
                             $email1_to = $email2_to = null;

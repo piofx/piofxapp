@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Page\Page as Obj;
 use App\Models\Core\Client;
 use App\Models\Page\Theme;
+use App\Models\Page\Asset;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Blog\PostController;
 use App\Models\Blog\Post;
@@ -16,7 +18,7 @@ use App\Models\Blog\Post;
 class PageController extends Controller
 {
     /**
-     * Define the app and module object variables and component name 
+     * Define the app and module object variables and component name
      *
      */
     public function __construct(){
@@ -68,7 +70,7 @@ class PageController extends Controller
      */
     public function create($theme_id,Obj $obj)
     {
-    	
+
         // authorize the app
         $this->authorize('create', $obj);
         // get the clients
@@ -94,7 +96,7 @@ class PageController extends Controller
     public function store($theme_id,Obj $obj,Request $request)
     {
         try{
-            
+
             /* create a new entry */
             $obj = $obj->create($request->all());
 
@@ -124,7 +126,7 @@ class PageController extends Controller
     {
         // load the resource
         $obj = Obj::where('id',$id)->first();
-   
+
         //update page meta title
         adminMetaTitle($obj->name.' - '.$this->theme->name);
 
@@ -160,7 +162,7 @@ class PageController extends Controller
     	// get the url path excluding domain name
     	$slug = request()->path();
 
-       
+
     	// get the client id & domain
     	$client_id = request()->get('client.id');
         $theme_id = request()->get('client.theme.id');
@@ -181,11 +183,24 @@ class PageController extends Controller
         //if requested for edit, redirect to admin theme page
         if(request()->get('edit')){
             if(auth::user() && auth::user()->role=='clientadmin'){
-                $page_id = Obj::where('slug',$page)->first()->id;
+                $page_id = Obj::where('slug',$page)->where('theme_id',$theme_id)->first()->id;
                 return redirect()->route('Page.edit',[$theme_id,$page_id]);
             }
         }
-        
+
+
+        //if the node is sitemap.xml
+        if($slug=='sitemap.xml'){
+          $xml = Asset::where('theme_id',$theme_id)->where('slug','sitemap.xml')->first();
+
+          if($xml){
+            header('Content-type: text/xml');
+            $xml_data = Storage::disk('s3')->get($xml->path);
+            echo $xml_data;
+            exit();
+          }
+        }
+
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
             $app = $client_settings->app;
@@ -202,7 +217,7 @@ class PageController extends Controller
             $method = $agency_settings->method;
 
             $controller_path =  'App\Http\Controllers\\'.$app.'\\'.$controller;
-           
+
             return app($controller_path)->$method($request);
 
         }
@@ -232,8 +247,8 @@ class PageController extends Controller
                 return redirect($redirects['/'.$requestUrlParts[0].'/*'],301);
             }
         }
-        
-        
+
+
         if(request()->get('refresh')){
             Cache::forget('page_'.$domain.'_'.$theme_id.'_'.$slug);
         }
@@ -242,12 +257,12 @@ class PageController extends Controller
         // load the resource either from cache or storage for devmode
         if(isset($client_settings->devmode)){
             if($client_settings->devmode){
-                
+
                     $obj = Obj::loadpage($theme_id,$theme_slug,$slug);
             }
-                
+
         }
-        
+
         if(!$obj){
                 $obj = Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug, function () use($slug,$client_id,$theme_id){
                 return Obj::where('slug',$slug)->where('client_id',$client_id)->where('theme_id',$theme_id)->first();
@@ -282,7 +297,7 @@ class PageController extends Controller
                     return view('apps.'.$this->app.'.'.$this->module.'.public')
                     ->with('obj',$p404)->with('app',$this);
                 }
-            }   
+            }
         else{
             if($slug=='/'){
                 $this->componentName = componentName('agency','default');
@@ -299,8 +314,8 @@ class PageController extends Controller
                 }
             }
         }
-    
-       
+
+
     }
 
 
@@ -312,7 +327,7 @@ class PageController extends Controller
      */
     public function theme($theme_id,$page_id)
     {
-        
+
 
         // get the client id & domain
         $client_id = request()->get('client.id');
@@ -337,7 +352,7 @@ class PageController extends Controller
             else
                 abort(404,'Page not active');
         else{
-            
+
                 abort(404,'Page not found');
         }
     }
@@ -387,13 +402,13 @@ class PageController extends Controller
     public function update($theme_id,Request $request, $id)
     {
         try{
-            
+
             // load the resource
             $obj = Obj::where('id',$id)->first();
             // authorize the app
             $this->authorize('update', $obj);
             //update the resource
-            $obj->update($request->all()); 
+            $obj->update($request->all());
             //process the  html load by updating variables
             $obj->processHtml();
 
