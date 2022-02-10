@@ -42,10 +42,14 @@ if (!function_exists('adminMetaTitle')) {
 if (!function_exists('updateMetaTitle')) {
 	function updateMetaTitle($title){
 		$content = request()->get('app.theme.prefix');
-
-        $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
-       $buffer = preg_replace('/(<meta property="og:title" content=")(.*?)(">)/i', '$1' . $title . '$3', $buffer);
-        request()->merge(['app.theme.prefix' => $buffer,]);
+		
+		$pieces = explode('<title>',$content);
+		
+        $buffer = $pieces[0].'<title>'.$title.$pieces[1];//preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
+      	$pieces = explode('<meta property="og:title" content="',$buffer);
+      	$new_buffer = $pieces[0].'<meta property="og:title" content="'.$title.$pieces[1];
+        //$buffer = preg_replace('/(<meta property="og:title" content=")(.*?)(">)/i', '$1' . $title . '$3', $buffer);
+        request()->merge(['app.theme.prefix' => $new_buffer,]);
 	}
 }
 

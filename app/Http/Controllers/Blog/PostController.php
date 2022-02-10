@@ -334,12 +334,14 @@ class PostController extends Controller
             $route = url('/');
         }
 
+
         $obj = new Obj();
         $category = new Category();
         $tag = new Tag();
         $user = new User();
         $blogSettings = new BlogSettings();
         $request = Request();
+
 
         // load alerts if any
         $alert = session()->get('alert');
@@ -496,10 +498,11 @@ class PostController extends Controller
 
         // change meta title
         $title = $obj->meta_title;
+       
         if($title)
             updateMetaTitle($title.' | '.request()->get('client.name'));
         
-        // change meta description
+        //change meta description
         $description = $obj->meta_description;
         if($description)
             updateMetaDescription($description);
@@ -511,8 +514,9 @@ class PostController extends Controller
             updateMetaImage($image);
         }
 
-         updateMetaUrl();
-        
+        updateMetaUrl();
+
+        //dd(request()->get('app.theme.prefix'));
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
