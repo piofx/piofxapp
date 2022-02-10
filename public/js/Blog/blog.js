@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Get internal and external links
-    blogLinks();    
+    blogLinks();
 });
 
 
@@ -35,7 +35,7 @@ $("#post_editor").summernote({
         { title: 'Blockquote S1', tag: 'blockquote', className: 'style1', value: 'blockquote' },
         { title: 'Blockquote S2', tag: 'blockquote', className: 'style2', value: 'blockquote' },
         { title: 'Blockquote S3', tag: 'blockquote', className: 'style3', value: 'blockquote' },
-         'h1', 'h2', 'h3', 'h4', 'h5', 
+         'h1', 'h2', 'h3', 'h4', 'h5',
     ],
     codemirror: {
         // codemirror options

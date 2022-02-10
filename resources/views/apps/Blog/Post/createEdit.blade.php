@@ -26,16 +26,16 @@
         $tag = strtolower($tag);
 
         if(strpos($title, $tag) !== false){
-            $title_keywords[$tag] = substr_count($title, $tag); 
+            $title_keywords[$tag] = substr_count($title, $tag);
         }
         if(strpos($content, $tag) !== false){
-            $content_keywords[$tag] = substr_count($content, $tag); 
+            $content_keywords[$tag] = substr_count($content, $tag);
         }
         if(strpos($meta_title, $tag) !== false){
-            $meta_title_keywords[$tag] = substr_count($meta_title, $tag); 
+            $meta_title_keywords[$tag] = substr_count($meta_title, $tag);
         }
         if(strpos($meta_description, $tag) !== false){
-            $meta_description_keywords[$tag] = substr_count($meta_description, $tag); 
+            $meta_description_keywords[$tag] = substr_count($meta_description, $tag);
         }
     }
 
@@ -117,7 +117,7 @@
                 @endif
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-primary ml-lg-3" onclick="this.form.submitted=this.value;" name="publish" value="now">{{ $stub == 'update' ? 'Update' : 'Publish Now'}}</button>
-                
+
                 <!-- Name and value of the button pressed -->
                 <input type="hidden" name="publish" id="publishName">
             </div>
@@ -185,7 +185,7 @@
                                             {{ $title_characters }} Characters
                                             @if($title_characters > 50 && $title_characters < 70)
                                                 <i class="fas fa-check-circle text-success"></i>
-                                            @else 
+                                            @else
                                                 <i class="fas fa-times-circle text-danger"></i>
                                             @endif
                                         @endif
@@ -199,7 +199,7 @@
                                             {{ $content_words }} Words
                                             @if($content_words > 1000)
                                                 <i class="fas fa-check-circle text-success"></i>
-                                            @else 
+                                            @else
                                                 <i class="fas fa-times-circle text-danger"></i>
                                             @endif
                                         @endif
@@ -216,7 +216,7 @@
                                             @else
                                                 <i class="fas fa-times-circle text-danger"></i>
                                             @endif
-                                        @endif 
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -337,7 +337,7 @@
                         name="slug" value="@if($stub == 'update'){{$obj ? $obj->slug : null }}@else{{ Request::old('slug') ? Request::old('slug') : null }}@endif"/>
                 </div>
                 <input type="text" class="form-control mb-3" name="top_head" placeholder="Top Head Content" value="@if($stub == 'update'){{$obj ? $obj->top_head : null }}@else{{ Request::old('top_head') ? Request::old('top_head') : null }}@endif">
-                <textarea type="text"   
+                <textarea type="text"
                     class="form-control border h-auto px-3 py-3 mb-3 font-size-h6"
                     name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : null }}@else{{ Request::old('excerpt') ? Request::old('excerpt') : null }}@endif</textarea>
 
@@ -366,9 +366,9 @@
                             <span class="mr-2"></span>
                                 Featured Post
                         </label>
-                    </div> 
+                    </div>
                     <!-- End Featured -->
-    
+
                     <!-- Public or Priovate -->
                     <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
                         <div class="card border rounded-lg mt-5">
@@ -397,18 +397,18 @@
                         </div>
                     </div>
                     <!-- Public or Private -->
-                    
+
 
                     <div class="p-7 rounded border my-3 bg-white">
                         <h3 class="d-flex align-items-center mb-5">Featured Image</h3>
-                        
+
                         <div id="featured_image" class="d-none @if($obj->image) {{ 'd-block' }} @else {{ 'd-none' }} @endif">
                             @if(!empty($obj->image) && strlen($obj->image) > 5 && Storage::disk('s3')->exists($obj->image))
                                 <img src="{{ Storage::disk('s3')->url($obj->image) }}" class="img-fluid rounded">
                             @endif
                             <button type="button" class="btn btn-danger mt-3" id="delete_image" onclick="deleteImage()">Delete</button>
                         </div>
-            
+
                         <div id="dropzone" class="d-none @if($obj->image) {{ 'd-none' }} @else {{ 'd-block' }} @endif">
                             <div class="card card-custom m-0 gutter-b">
                                 <div class="dropzone dropzone-default bg-light" id="kt_dropzone_1">
@@ -421,7 +421,7 @@
                                 <input type="hidden" class="_token" name="_token" value="{{ csrf_token() }}">
                             </div>
                         </div>
-                        
+
                         <input type="hidden" id="image_url" name="image" value="@if($stub == 'update'){{$obj ? $obj->image : null }}@endif">
                     </div>
 
@@ -498,7 +498,7 @@
                                         @foreach($tags as $tag)
                                                 <option value="{{ $tag->id }}" @if($stub == "update") @if(in_array($tag->id, $tag_ids)) {{ "selected" }} @endif @endif>{{ $tag->name }}</option>
                                         @endforeach
-                                        
+
                                     </select>
                                     <!------end Tags-------->
                                 </div>
@@ -506,7 +506,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <!-- end::Right Column -->
         </div>

@@ -678,13 +678,12 @@ class PostController extends Controller
         Cache::forget('post_'.request()->get('client.id').'_'.$obj->slug);
 
         $obj->tags()->detach();
-
+       // dd($request->input('tag_ids'));
         if($request->input('tag_ids')){
             foreach($request->input('tag_ids') as $tag_id){
                 if(is_numeric($tag_id)){
-                    if(!$obj->tags->contains($tag_id)){
-                        $obj->tags()->attach($tag_id);
-                    }
+                    $obj->tags()->attach($tag_id);
+                    //dd('attached');
                 }
                 else{
                     $tag_id = $tag->new_tag($tag_id);
@@ -693,6 +692,7 @@ class PostController extends Controller
             }
         }
 
+       //dd($obj->tags);
         // Redirect to show if preview is clicked
         if($request->input('publish') == "preview"){
             return redirect()->route($this->module.'.show', ['slug' =>  $request->input('slug')]);

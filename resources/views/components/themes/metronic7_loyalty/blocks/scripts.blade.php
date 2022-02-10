@@ -50,7 +50,7 @@
    $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
-   
+
 </script>
 <!--end::Page Scripts-->
 
@@ -96,7 +96,7 @@
             });
 
         }
-        
+
         if(document.getElementById("content2")){
             const editor2 = monaco.editor.create(document.getElementById("content2"), {
             theme: 'vs-dark',
@@ -116,7 +116,7 @@
 
 
         }
-        
+
         $(window).bind('keydown', function(event) {
             if (event.ctrlKey || event.metaKey) {
                 switch (String.fromCharCode(event.which).toLowerCase()) {
@@ -137,9 +137,9 @@
              $.post($url, formValues, function(data){
                 console.log('code saved');
                 $('.code_saved').show().delay(2000).fadeOut('slow');
-                return false;  
+                return false;
             });
-           
+
         }
 
     });
@@ -150,7 +150,6 @@
         $('#datetimepicker1').datetimepicker();
     });
 </script>
-
 
 
 
@@ -177,10 +176,10 @@ var editor = new Quill(container);
 <script src="{{ asset('js/loyalty/loyalty.js') }}"></script>
 
 <!-- Blog Js -->
-<script src="{{ asset('js/Blog/blog.js') }}"></script> 
+<script src="{{ asset('js/Blog/blog.js') }}"></script>
 
 <!-- Login Js -->
-<script src="{{ asset('js/login.js') }}"></script> 
+<script src="{{ asset('js/login.js') }}"></script>
 
 <!-- Statistics Js -->
 <script src="{{ asset('js/statistics/statistics.js') }}"></script>
@@ -192,6 +191,5 @@ var editor = new Quill(container);
             var d = new Date();
             var n = d.getTimezoneOffset();
             $('#timezone').val(n)
-        });        
+        });
 </script>
-

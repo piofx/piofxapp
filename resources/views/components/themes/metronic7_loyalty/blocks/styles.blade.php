@@ -28,11 +28,9 @@
 <!-- monaco editor -->
 <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
 
-<!-- Lightbox Plugin 
+<!-- Lightbox Plugin
 <link href="{{ asset('plugins/lightbox2/dist/css/lightbox.min.css/lightbox.css') }}" rel="stylesheet" />
 -->
 
 <!-- Blog Stylesheet -->
 <link rel="stylesheet" href="{{ asset('css/Blog/blog.css') }}">
-
-
