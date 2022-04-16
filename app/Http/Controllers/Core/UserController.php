@@ -145,13 +145,14 @@ class UserController extends Controller
 
 
         $u = Obj::where('email',$email)->where('client_id',$client_id)->first();
+        $u1 = Obj::where('phone',$phone)->where('client_id',$client_id)->first();
 
         // $message['login']="1";
         //     $message['message'] = "Successfully Logged in!";
         //     echo json_encode($message);
         //     dd();
 
-        if(!$u){
+        if(!$u && !$u1){
             $user = Obj::create([
                 'name' => $name,
                 'email' => $email,
@@ -195,9 +196,14 @@ class UserController extends Controller
             $message['message'] = "Successfully Logged in!";
             echo json_encode($message);
             dd();
+        }else if($u){
+            $message['login']="0";
+            $message['message'] = "User account with email (".$email.") already exists in our database, Kindly use forgot password to reset!";
+            echo json_encode($message);
+            dd();
         }else{
             $message['login']="0";
-            $message['message'] = "User account already exists in our database, Kindly use forgot password to reset!";
+            $message['message'] = "User account with phone (".$phone.") already exists in our database, Kindly use forgot password to reset!";
             echo json_encode($message);
             dd();
         }

@@ -104,10 +104,45 @@ $(function(){
             });
 
         }
-    }
+
+        // login form via otp
+         //form submission with otp verification
+        if($("form").data('otp')==1){
+            console.log('form sms otp');
+            $(document).on("click",".generate_phone_otp", function(e){
+                e.preventDefault();
+                var formValues= $(this).closest("form").serialize();
+                var phone = $(this).closest("form").find("input[name=phone]").val();
+                console.log('phone - '+phone);
+                if(phone ){
+                    $.get('/contact/api',function(data){
+                    var token = JSON.parse(data).token;
+                    var d = formValues+'&_token='+token+'&generate_otp=1';
+                    $.post($url, d, function(data){
+                        console.log(data);
+                        var d = JSON.parse(data);
+                        console.log(d);
+
+                        if(typeof(d.code) != "undefined" && d.code !== null){
+                            alert('OTP has been sent to your phone number! Kidly wait for 2min before retrying.');
+                      
+                            return false; 
+                        }else{
+                             alert(d.error);
+                        }
+                       
+                        
+                    });
+                });
+                }else{
+                    alert('Kindly enter a valid phone number!');
+                }
+                
+            });
+        }
 
     
-
+    }
 
 	
 });

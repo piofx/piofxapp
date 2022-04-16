@@ -21,9 +21,11 @@
                         </div>
                         <div class='col-12 col-md-6'>
                              <!-- Phone number -->
+
                             <div class="form-group">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
-                                <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
+                                <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
+                                
                             </div>
                         </div>
                     </div>
@@ -39,13 +41,13 @@
                             <div class="rounded mb-4 p-4" style="background: #d6edf7">
                              <!-- Email Address -->
                             <div class="">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
-                                <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
-                                <small>Kindly enter valid email id for OTP verification</small><br>
-                                <button class="btn btn-outline-dark btn-sm mt-3 generate_otp">Generate OTP</button>
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
+                                <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
+                                <small>Kindly enter valid phone number for OTP verification</small><br>
+                                <button class="btn btn-outline-dark btn-sm mt-3 generate_otp_phone">Generate OTP</button>
                                  <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
-  <span class="sr-only">Loading...</span>
-</div><br>
+                                  <span class="sr-only">Loading...</span>
+                                </div><br>
                             </div>
                             </div>
 
@@ -156,10 +158,7 @@
                                          <div class="spinner-border spinner-border-sm ml-2 mt-1 login_spinner" role="status" style="display: none;">
   <span class="sr-only">Loading...</span>
 </div><br>
-                    <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a> &nbsp;&nbsp;&nbsp;     
-
-                    <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>
-                       
+                    <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a>                
                     </div>
                     </div>
                     <!--end::Action-->

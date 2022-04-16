@@ -31,6 +31,47 @@ class RegisteredUserController extends Controller
     }
 
     /**
+     *  new registration form
+     * */
+
+    public function phone()
+    {
+
+        //update page meta title
+        adminMetaTitle('Register');
+        
+       
+        if(!request()->session()->get('code')){
+            $code = mt_rand(1000, 9999);
+            request()->session()->put('code',$code);
+        }else{
+            $code = request()->session()->get('code');
+        }
+
+        if(request()->get('sendotp'))
+        {
+            $this->sendPhoneOTP(request()->get('phone'),$code);
+            echo 1;
+            dd();
+        }
+        //load client id
+        $client_id = request()->get('client.id');
+         //load the form elements if its defined in the settings i.e. stored in aws
+        $form = null;
+        if(Storage::disk('s3')->exists('settings/user/'.$client_id.'.json' )){
+            //open the client specific settings
+            $data = json_decode(json_decode(Storage::disk('s3')->get('settings/user/'.$client_id.'.json' ),true));
+            if(isset($data->form))
+                $form = processForm($data->form);
+        }
+        else
+            $data = '';
+
+        return view('auth.register_phone')->with('app',$this)->with('code',$code)->with('form',$form);
+
+    }
+
+    /**
      * Display the registration view.
      *
      * @return \Illuminate\View\View
@@ -70,8 +111,18 @@ class RegisteredUserController extends Controller
         return view('auth.register')->with('app',$this)->with('code',$code)->with('form',$form);
     }
 
+
     /**
-     * Function to send OTP code
+     * Function to send Phone OTP code
+     *
+     */
+    public function sendPhoneOTP($number,$code){
+
+    }
+
+
+    /**
+     * Function to send Email OTP code
      *
      */
     public function sendEmailOTP($email,$code){

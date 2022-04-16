@@ -23,6 +23,30 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the login view for phone.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function phone()
+    {
+        // load alerts if any
+        $alert = session()->get('alert');
+
+        // generate 4 digit code
+        if(!request()->session()->get('phone_code')){
+            $code = mt_rand(1000, 9999);
+            request()->session()->put('phone_code',$code);
+        }else{
+            $code = request()->session()->get('phone_code');
+        }
+
+
+        //update page meta title
+        adminMetaTitle('Login');
+        return view('auth.login_phone')->with('app',$this)->with('alert',$alert)->with('code',$code);
+    }
+
+    /**
      * Display the login view.
      *
      * @return \Illuminate\View\View
