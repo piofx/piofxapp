@@ -47,7 +47,7 @@ if (!function_exists('updateMetaTitle')) {
 		
         $buffer = $pieces[0].'<title>'.$title.$pieces[1];//preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $content);
       	$pieces = explode('<meta property="og:title" content="',$buffer);
-      	if(count($pieces)){
+      	if(isset($pieces[1])){
       		$new_buffer = $pieces[0].'<meta property="og:title" content="'.$title.$pieces[1];
        	 //$buffer = preg_replace('/(<meta property="og:title" content=")(.*?)(">)/i', '$1' . $title . '$3', $buffer);
         	request()->merge(['app.theme.prefix' => $new_buffer,]);
