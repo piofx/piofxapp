@@ -87,9 +87,11 @@ if (!function_exists('updateMetaDescription')) {
         //$buffer = preg_replace('/(<meta name="description" content=")(.*?)(">)/i', '$1' . $description . '$3', $content);
         // $buffer =  preg_replace('/(<meta name="description" content=")(.*?)(">)/i','<meta name="description" content="'.$description.'" >', $content);
 		$pieces = explode('<meta property="og:description" content="',$content);
+		if(isset($pieces[1])){
 		$new_buffer = $pieces[0].'<meta property="og:description" content="'.$description.$pieces[1];
        //$new_buffer = preg_replace('/(<meta property="og:description" content=")(.*?)(">)/i', '$1' . $description . '$3', $buffer);
         request()->merge(['app.theme.prefix' => $new_buffer,]);
+    	}
 	}
 }
 
