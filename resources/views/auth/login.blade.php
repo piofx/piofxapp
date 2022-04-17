@@ -57,8 +57,9 @@
                     <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>
                     @endif
                         <!--end::Signin-->
-                        <hr>
+                        
                     @if ($phone_login)
+                    <hr>
                     <a href="{{ route('login_phone') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Login via SMS OTP</a>
                     @endif
    
