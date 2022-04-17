@@ -16,10 +16,12 @@ class LoginController extends Controller{
         $generate_otp = trim($request->get('generate_otp'));
         $client_id = trim($request->get('client_id'));
         $code = request()->session()->get('phone_code');
+        $redirect = request()->session()->get('redirect');
+
+     
 
         if($generate_otp){
             
-
             $data = $this->otp();
             echo $data;
             exit();
@@ -30,6 +32,9 @@ class LoginController extends Controller{
             $credentials = $request->only('email', 'password','client_id');
             if (Auth::attempt($credentials)) {
                 // if success login
+                if($redirect)
+                    return redirect()->to($redirect);
+                else    
                 return redirect('/admin');
             }
             $alert = 'Invalid Email or Password';
@@ -55,6 +60,9 @@ class LoginController extends Controller{
 
             if (Auth::loginUsingId($u->id)) {
                 // if success login
+                if($redirect)
+                    return redirect()->to($redirect);
+                else    
                 return redirect('/admin');
             }
             $alert = 'Invalid attempt. Try again!';

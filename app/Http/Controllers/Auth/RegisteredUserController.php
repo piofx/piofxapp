@@ -81,6 +81,19 @@ class RegisteredUserController extends Controller
         //update page meta title
         adminMetaTitle('Register');
         
+        //load client settings
+        $phone_login = false;
+        $client_settings = json_decode(request()->get('client.settings'));
+        if(isset($client_settings->phone_otp_register)){
+            if($client_settings->phone_otp_register){
+                if(request()->get('redirect'))
+                    $url = url('/')."/register_phone?redirect=".request()->get('redirect');
+                else
+                    $url = url('/')."/register_phone";
+                return redirect()->to($url);
+            }
+        }
+
        
         if(!request()->session()->get('code')){
             $code = mt_rand(1000, 9999);

@@ -2,7 +2,7 @@
         <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
         <!--begin::Form-->
-        <form method="POST" action="{{ route('User.apiregister') }}" data-register="1">
+        <form method="POST" action="{{ route('User.apiregister') }}" data-register="1" data-register_otp="1">
             @csrf
                     <!--begin::Title-->
                     <div class="pb-13 pt-lg-0 pt-5">
@@ -44,7 +44,7 @@
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
                                 <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
                                 <small>Kindly enter valid phone number for OTP verification</small><br>
-                                <button class="btn btn-outline-dark btn-sm mt-3 generate_otp_phone">Generate OTP</button>
+                                <button class="btn btn-outline-dark btn-sm mt-3 generate_phone_otp">Generate OTP</button>
                                  <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
                                   <span class="sr-only">Loading...</span>
                                 </div><br>
@@ -58,7 +58,7 @@
                             <div class="">
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="otp" :value="__('OTP')">OTP Verification</label>
                                 <input id="otp" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="text" name="otp" value="{{ old('otp') }}" required autofocus autocomplete="off" />
-                                    <small>Kindly check SPAM & Promotions folder for otp email</small><br>
+                                    <small>Kindly wait for 2mins for OTP via sms, before retrying.</small><br>
                                 <button class="btn btn-outline-dark btn-sm mt-3 validate_otp" data-otp="{{$code}}">Validate OTP 
                                 </button><span class="text-dark ml-3 otp_success" style="display: none;"><i class="fa fa-check-circle text-dark"></i> Success</span>
                             </div>
@@ -158,7 +158,8 @@
                                          <div class="spinner-border spinner-border-sm ml-2 mt-1 login_spinner" role="status" style="display: none;">
   <span class="sr-only">Loading...</span>
 </div><br>
-                    <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a>                
+                    <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a>  &nbsp;&nbsp;
+                    <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>              
                     </div>
                     </div>
                     <!--end::Action-->

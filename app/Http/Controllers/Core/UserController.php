@@ -142,6 +142,7 @@ class UserController extends Controller
         $phone = request()->get('phone');
         $password = request()->get('password');
         $agency_id = request()->get('agency.id');
+        $generate_otp = request()->get('generate_otp');
 
 
         $u = Obj::where('email',$email)->where('client_id',$client_id)->first();
@@ -151,6 +152,13 @@ class UserController extends Controller
         //     $message['message'] = "Successfully Logged in!";
         //     echo json_encode($message);
         //     dd();
+
+        if($generate_otp){
+            $data = $this->otp($u,$u1);
+            echo $data;
+            exit();
+            return 1;
+        }
 
         if(!$u && !$u1){
             $user = Obj::create([
@@ -209,6 +217,78 @@ class UserController extends Controller
         }
                    
        
+    }
+
+     /**
+     * Send the otp code for the request
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function otp($u,$u1)
+    {
+       
+        //get client id
+        $client_id = request()->get('client.id');
+        // get the user phone number
+        $phone = request()->get('phone');
+
+        // load the token
+        $data['code'] = request()->session()->get('code');
+        $validated = false;
+
+
+        if($u){
+            $message['error'] = 'User account exists with email id ('.$u->email.') Kindly use forgot password to login.';
+            return json_encode($message);
+        }
+        if($u1){
+            $message['error'] = 'User account exists with phone ('.$u1->phone.') Kindly use forgot password to login.';
+            return json_encode($message);
+        }
+        if($phone){
+            
+            //validate data
+            if (strpos($phone, '+') !== false){
+                $validated=true;
+            }else{
+                if(strlen($phone)==10)
+                {
+                    $phone = '+91'.$phone;
+                }else{
+                    $message['error'] = 'Invalid Phone number format. Kindly enter a valid phone number with international calling extension (eg: For india +918888888888) for OTP verification.';
+                    return json_encode($message);
+                }
+                    
+            }
+            //send otp on phone
+            $this->sendOTP($phone,$data['code']);
+
+        }
+
+        
+
+        //display token in json format
+        return json_encode($data);
+        
+
+    }
+
+    /**
+     * Function to send OTP code
+     *
+     */
+    public function sendOTP($phone,$code){
+
+        $apikey = env('SMS_APIKEY');
+        $url = "https://2factor.in/API/V1/".$apikey."/SMS/".$phone."/".$code;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
     }
 
 

@@ -40,6 +40,10 @@ class AuthenticatedSessionController extends Controller
             $code = request()->session()->get('phone_code');
         }
 
+         //register the redirect
+        if(request()->get('redirect'))
+        request()->session()->put('redirect',request()->get('redirect'));
+
 
         //update page meta title
         adminMetaTitle('Login');
@@ -55,9 +59,20 @@ class AuthenticatedSessionController extends Controller
     {
         // load alerts if any
         $alert = session()->get('alert');
+        //load client settings
+        $phone_login = false;
+        $client_settings = json_decode(request()->get('client.settings'));
+        if(isset($client_settings->phone_otp_login)){
+            if($client_settings->phone_otp_login){
+                $phone_login = true;;
+            }
+        }
+        //register the redirect
+        if(request()->get('redirect'))
+        request()->session()->put('redirect',request()->get('redirect'));
         //update page meta title
         adminMetaTitle('Login');
-        return view('auth.login')->with('app',$this)->with('alert',$alert);
+        return view('auth.login')->with('app',$this)->with('alert',$alert)->with('phone_login',$phone_login);
     }
 
     

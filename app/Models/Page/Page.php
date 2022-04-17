@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Core\Client;
+use App\Models\Core\Contact;
 use App\Models\Page\Module;
 use App\Models\Page\Theme;
 use App\Models\Page\Asset;
@@ -79,6 +80,8 @@ class Page extends Model
         $content = $this->html_minified;
         $settings = json_decode($this->settings);
         $data = '';
+        //get client id
+        $client_id = request()->get('client.id');
 
         $this->auth = 1;
         //auth variavle
@@ -130,6 +133,35 @@ class Page extends Model
                     }else{
                         $content = str_replace('@auth'.$reg.'@endauth', '' , $content); 
                         $this->auth = 1; 
+                    }
+                }
+            }
+            
+        }
+
+        if(preg_match_all('/@uniqueform+(.*?)@enduniqueform/', $content, $regs))
+        {
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@uniqueformelse') !== false) {
+                    $pieces = explode('@uniqueformelse',$variable);
+                    $form_entry = false;
+                    if(preg_match_all('/@formname+(.*?)@endformname/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $category_name = trim($reg2);
+                            // remove the @formname block
+                            $pieces[0] = str_replace('@formname'.$reg2.'@endformname', '' , $pieces[0]);
+                        }
+                        $form_entry = Contact::where('category',$category_name)->where('client_id',$client_id)->first();
+                    }
+
+                    if(!$form_entry){
+                        $content = str_replace('@uniqueform'.$reg.'@enduniqueform', $pieces[0] , $content);
+                   
+                    }else{
+                        $content = str_replace('@uniqueform'.$reg.'@enduniqueform', $pieces[1] , $content);  
+                
                     }
                 }
             }

@@ -20,6 +20,11 @@
               </div>
               <button type="button" class="btn btn-primary login_button">Login</button>
               <a href="/register?redirect={{url()->full()}}" class="btn btn-outline-dark ">Register</a>
+              <hr>
+              @if(client('phone_otp_login'))
+
+              <a href="/login_phone?redirect={{url()->full()}}" class="my-2 ">Login via SMS OTP</a>
+              @endif
               <div class="alert alert-success mt-4 login_message" style="display: none;"></div>
             </form>
       </div>

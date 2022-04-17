@@ -50,6 +50,8 @@ class AdminController extends Controller
         //update page meta title
         adminMetaTitle('Admin Dashboard');
 
+
+
         //update user login timestamp
         $lastlogindate = Cache::get('lastlogine_'.$user->id);
         if($lastlogindate != Carbon::now()->toDateString()){
@@ -76,6 +78,8 @@ class AdminController extends Controller
 
         $agency_settings = request()->get('agency.settings');
         $client_settings = json_decode(request()->get('client.settings'));
+
+      
 
         // Get user search console data
         $total_clicks = null;
