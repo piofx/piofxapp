@@ -9,6 +9,7 @@ $(function(){
             console.log('api');
             $(document).on("click",".contact_button", function(e){
                 console.log('clicked');
+                $('.spinner-border').show();
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
                 $.get('/contact/api',function(data){
@@ -46,6 +47,7 @@ $(function(){
                         $('.contact_block').hide();
                         $('.alert_message').html(data);
                         $('.alert_block').show();
+                        $('.spinner-border').hide();
                         return false;  
                     });
                 });
