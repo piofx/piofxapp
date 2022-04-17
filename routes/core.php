@@ -88,6 +88,8 @@ Route::post('/admin/contact/settings', [ContactController::class, 'settings'])
 		->middleware(['auth'])->name('Contact.settings');
 Route::post('/admin/contact', [ContactController::class, 'store'])
 		->name('Contact.store');
+Route::get('/admin/contact2', [ContactController::class, 'store'])
+		->name('Contact.store');		
 Route::put('/admin/contact/{contact}', [ContactController::class, 'update'])
 		->middleware(['auth'])->name('Contact.update');
 Route::delete('/admin/contact/{contact}', [ContactController::class, 'destroy'])
