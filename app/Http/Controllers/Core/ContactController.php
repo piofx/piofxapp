@@ -258,25 +258,46 @@ class ContactController extends Controller
             $tags='';
             if($request->get('settings_source')){
                 $tags = $request->get('settings_source');
+            }else if(request()->session()->get('settings_source')){
+                $tags = request()->session()->get('settings_source');
             }
+
             if($request->get('settings_utm_source')){
                 $tags = $request->get('settings_utm_source');
+            }else if(request()->session()->get('settings_utm_source')){
+                $tags = request()->session()->get('settings_utm_source');
             }
+
             if($request->get('settings_campaign')){
                 $tags = $tags.','.$request->get('settings_campaign'); 
+            }else if(request()->session()->get('settings_campaign')){
+                $tags = $tags.','.request()->session()->get('settings_campaign');
             }
+
             if($request->get('settings_utm_campaign')){
                 $tags = $tags.','.$request->get('settings_utm_campaign'); 
+            }else if(request()->session()->get('settings_utm_campaign')){
+                $tags = $tags.','.request()->session()->get('settings_utm_campaign');
             }
+
             if($request->get('settings_utm_medium')){
                 $tags = $tags.','.$request->get('settings_utm_medium'); 
+            }else if(request()->session()->get('settings_utm_medium')){
+                $tags = $tags.','.request()->session()->get('settings_utm_medium');
             }
+
             if($request->get('settings_utm_term')){
                 $tags = $tags.','.$request->get('settings_utm_term'); 
+            }else if(request()->session()->get('settings_utm_term')){
+                $tags = $tags.','.request()->session()->get('settings_utm_term');
             }
+
             if($request->get('settings_utm_content')){
                 $tags = $tags.','.$request->get('settings_utm_content'); 
+            }else if(request()->session()->get('settings_utm_content')){
+                $tags = $tags.','.request()->session()->get('settings_utm_content');
             }
+
             $request->merge(['tags' => $tags]);
 
     

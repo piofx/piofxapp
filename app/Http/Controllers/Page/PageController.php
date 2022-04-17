@@ -272,6 +272,7 @@ class PageController extends Controller
         // check for authbased replacement
         if($obj){
             $obj = $obj->checkAuthBasedReclacement();
+            $obj->loadRequestParamsInSession();
         }
 
         // update layout

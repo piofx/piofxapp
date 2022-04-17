@@ -70,6 +70,42 @@ class Page extends Model
 
     }
 
+    /** 
+     * 
+     * Function to store request params in session
+     * 
+     */
+    public function loadRequestParamsInSession(){
+        $request = request();
+        if($request->get('settings_source')){
+             request()->session()->put('settings_source',$request->get('settings_source'));
+        }
+
+        if($request->get('settings_utm_source')){
+             request()->session()->put('settings_utm_source',$request->get('settings_utm_source'));
+        }
+
+        if($request->get('settings_campaign')){
+             request()->session()->put('settings_campaign',$request->get('settings_campaign'));
+        }
+
+        if($request->get('settings_utm_campaign')){
+             request()->session()->put('settings_utm_campaign',$request->get('settings_utm_campaign'));
+        }
+
+        if($request->get('settings_utm_medium')){
+             request()->session()->put('settings_utm_medium',$request->get('settings_utm_medium'));
+        }
+        if($request->get('settings_utm_term')){
+             request()->session()->put('settings_utm_term',$request->get('settings_utm_term'));
+        }
+        if($request->get('settings_utm_content')){
+             request()->session()->put('settings_utm_content',$request->get('settings_utm_content'));
+        }
+
+    }
+
+
 
     /**
      * Function to replace the auth varaibles
