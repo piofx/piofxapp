@@ -137,10 +137,10 @@ class Page extends Model
                     }
                 }else{
                     if(!\Auth::user()){
-                        $content = str_replace('@auth'.$reg.'@endauth', $reg , $content);
+                        $content = str_replace('@guest'.$reg.'@endguest', $reg , $content);
                         $this->auth = 0;
                     }else{
-                        $content = str_replace('@auth'.$reg.'@endauth', '' , $content); 
+                        $content = str_replace('@guest'.$reg.'@endguest', '' , $content); 
                         $this->auth = 1; 
                     }
                 }
