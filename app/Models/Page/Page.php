@@ -120,7 +120,7 @@ class Page extends Model
                 if (strpos($variable, '@else') !== false) {
                     $pieces = explode('@else',$variable);
                     if(!\Auth::user()){
-                        $content = str_replace('@loginpopup'.$reg.'@endloginpopup', '<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">'.$pieces[0].'</a><form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
+                        $content = str_replace('@loginpopup'.$reg.'@endloginpopup', '<a href="#" class="btn btn-primary btn-loginpopup" data-toggle="modal" data-target="#loginModal">'.$pieces[0].'</a><form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
                         $this->auth = 0;
                     }else{
                         $content = str_replace('@loginpopup'.$reg.'@endloginpopup', $pieces[1] , $content);  
