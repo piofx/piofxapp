@@ -201,6 +201,13 @@ class PageController extends Controller
           }
         }
 
+        // check for authbased replacement
+        if($obj){
+            $obj = $obj->checkAuthBasedReclacement();
+            $obj->loadRequestParamsInSession();
+        }
+
+
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
             $app = $client_settings->app;
@@ -269,11 +276,6 @@ class PageController extends Controller
             });
         }
 
-        // check for authbased replacement
-        if($obj){
-            $obj = $obj->checkAuthBasedReclacement();
-            $obj->loadRequestParamsInSession();
-        }
 
         // update layout
         $this->componentName = 'themes.barebone.layouts.app';
