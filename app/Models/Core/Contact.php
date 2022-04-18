@@ -97,6 +97,9 @@ class Contact extends Model
        
     }
 
+  
+
+
     /**
      * Load the filter tags
      * 

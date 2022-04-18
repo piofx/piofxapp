@@ -206,6 +206,8 @@ class ContactController extends Controller
                 echo $this->otp('email');
                 dd();
             }
+
+           
             
 
             /* create a new entry */
@@ -235,6 +237,20 @@ class ContactController extends Controller
                         
                     }
                 }
+
+                 // if user attribute is active
+                    $usr = \Auth::user();
+                    if($usr){
+                        $utags = json_decode($usr->json);
+                        $data = $data.'uid:'.$usr->id.'<br>';
+                        $json['uid'] = $usr->id;
+                        foreach($utags as $a=>$b){
+                            $data = $data.$a.' : '.$b.'<br>'; 
+                            $json[$a] = $b;
+                        }
+                    }
+                
+
                 // store the concatinated form fileds into message
                 $request->merge(['message' => $data]);
                 // store the form fileds data in json, inorder to used in excel download
@@ -299,6 +315,8 @@ class ContactController extends Controller
             }
 
             $request->merge(['tags' => $tags]);
+
+
 
     
             $obj = $obj->create($request->all());
