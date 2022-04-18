@@ -244,6 +244,7 @@ class ContactController extends Controller
                         $utags = json_decode($usr->json);
                         $data = $data.'uid:'.$usr->id.'<br>';
                         $json['uid'] = $usr->id;
+                        if($utags)
                         foreach($utags as $a=>$b){
                             $data = $data.$a.' : '.$b.'<br>'; 
                             $json[$a] = $b;
