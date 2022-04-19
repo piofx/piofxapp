@@ -250,6 +250,13 @@ class ContactController extends Controller
                             $json[$a] = $b;
                         }
 
+                        if($request->get('usr')){
+                            dd($usr->json);
+                        }
+                        if($request->get('utags')){
+                            dd($utags);
+                        }
+
                         if($request->get('dd')){
                             dd($json);
                         }
