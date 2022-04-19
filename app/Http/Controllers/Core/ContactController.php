@@ -249,6 +249,10 @@ class ContactController extends Controller
                             $data = $data.$a.' : '.$b.'<br>'; 
                             $json[$a] = $b;
                         }
+
+                        if($request->get('dd')){
+                            dd($json);
+                        }
                     }
                 
 
