@@ -226,10 +226,52 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         event(new UserCreated($user,$request));
+
+        $this->requestParams();
         
         return redirect(RouteServiceProvider::HOME);
     }
 
+    public function requestParams(){
+        $request = request();
+        if($request->get('settings_source')){
+             request()->session()->put('settings_source',$request->get('settings_source'));
+        }
+
+        if($request->get('settings_utm_source')){
+             request()->session()->put('settings_utm_source',$request->get('settings_utm_source'));
+        }else if($request->get('utm_source')){
+            request()->session()->put('settings_utm_source',$request->get('utm_source'));
+        }
+
+        if($request->get('settings_campaign')){
+             request()->session()->put('settings_campaign',$request->get('settings_campaign'));
+        }
+
+        if($request->get('settings_utm_campaign')){
+             request()->session()->put('settings_utm_campaign',$request->get('settings_utm_campaign'));
+        }else if($request->get('utm_campaign')){
+            request()->session()->put('settings_utm_campaign',$request->get('utm_campaign'));
+        }
+
+        if($request->get('settings_utm_medium')){
+             request()->session()->put('settings_utm_medium',$request->get('settings_utm_medium'));
+        }else if($request->get('utm_medium')){
+             request()->session()->put('settings_utm_medium',$request->get('utm_medium'));
+        }
+
+        if($request->get('settings_utm_term')){
+             request()->session()->put('settings_utm_term',$request->get('settings_utm_term'));
+        }else if($request->get('utm_term')){
+            request()->session()->put('settings_utm_term',$request->get('utm_term'));
+        }
+
+        if($request->get('settings_utm_content')){
+             request()->session()->put('settings_utm_content',$request->get('settings_utm_content'));
+        }else if($request->get('utm_content')){
+            request()->session()->put('settings_utm_content',$request->get('utm_content'));
+        }
+    }
     
     
 

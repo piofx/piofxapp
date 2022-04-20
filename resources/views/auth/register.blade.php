@@ -139,7 +139,12 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
         <input type="hidden" name="client_id" value="{{ request()->get('client.id') }}">
-            <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
+        <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
+        <input type="hidden" name="utm_source" value="{{ request()->get('utm_source') }}">
+        <input type="hidden" name="utm_campaign" value="{{ request()->get('utm_campaign') }}">
+        <input type="hidden" name="utm_medium" value="{{ request()->get('utm_medium') }}">
+        <input type="hidden" name="utm_content" value="{{ request()->get('utm_content') }}">
+        <input type="hidden" name="utm_term" value="{{ request()->get('utm_term') }}">
         <input type="hidden" name="code" value="{{ $code }}">
 
                     
