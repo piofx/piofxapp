@@ -92,8 +92,8 @@ Route::post('/admin/contact/settings', [ContactController::class, 'settings'])
 Route::post('/admin/contact', [ContactController::class, 'store'])
 		->middleware(['cors'])
 		->name('Contact.store');
-Route::get('/admin/contact/store', [ContactController::class, 'store'])
-		->name('Contact.store');		
+Route::get('/admin/contact/stored', [ContactController::class, 'store'])
+		->name('Contact.stored');		
 Route::put('/admin/contact/{contact}', [ContactController::class, 'update'])
 		->middleware(['auth'])->name('Contact.update');
 Route::delete('/admin/contact/{contact}', [ContactController::class, 'destroy'])

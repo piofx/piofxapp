@@ -41,6 +41,7 @@ $(function(){
                     }
                     var d = formValues+'&_token='+token+'&api=1';
                     console.log(d);
+                    console.log($url);
                     $.post($url, d, function(data){
                         // Display the returned data in browser
                         console.log(data);
