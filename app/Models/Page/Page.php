@@ -189,7 +189,7 @@ class Page extends Model
                             // remove the @formname block
                             $pieces[0] = str_replace('@formname'.$reg2.'@endformname', '' , $pieces[0]);
                         }
-                        $form_entry = Contact::where('category',$category_name)->where('client_id',$client_id)->first();
+                        $form_entry = Contact::where('category',$category_name)->where('email',\Auth::user()->email)->where('client_id',$client_id)->first();
                     }
 
                     if(!$form_entry){
