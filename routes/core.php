@@ -76,12 +76,15 @@ Route::get('/contact', [ContactController::class, 'create'])
 		->name('Contact.create');
 Route::get('/contact/api', [ContactController::class, 'api'])
 		->name('Contact.api');
+
 Route::get('/contact/otp', [ContactController::class, 'otp'])
 		->name('Contact.otp');
 Route::get('/admin/contact', [ContactController::class, 'index'])
 		->middleware(['auth'])->name('Contact.index');
 Route::get('/admin/contact/{contact}/edit', [ContactController::class, 'edit'])
 		->middleware(['auth'])->name('Contact.edit');
+Route::get('/admin/contact/api', [ContactController::class, 'api'])
+		->name('Contact.admin.api');
 Route::get('/admin/contact/settings', [ContactController::class, 'settings'])
 		->middleware(['auth'])->name('Contact.settings');
 Route::post('/admin/contact/settings', [ContactController::class, 'settings'])
