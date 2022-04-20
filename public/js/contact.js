@@ -12,6 +12,8 @@ $(function(){
                 $('.spinner-border').show();
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
+                console.log($url);
+                console.log($url+'/api');
                 $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var query = window.location.search.substring(1);
