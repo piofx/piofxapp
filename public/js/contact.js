@@ -12,7 +12,7 @@ $(function(){
                 $('.spinner-border').show();
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
-                $.get('/contact/api',function(data){
+                $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var query = window.location.search.substring(1);
                     var qs = parse_query_string(query);
@@ -84,7 +84,7 @@ $(function(){
                 e.preventDefault();
                 var formValues= $("form").serialize();
                 console.log($url);
-                $.get('/contact/api',function(data){
+                $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&api=1';
                     $.post($url, d, function(data){
@@ -116,7 +116,7 @@ $(function(){
                 var email = $(this).closest("form").find("input[name=email]").val();
                 console.log('phone - '+phone);
                 if(name && phone && email){
-                    $.get('/contact/api',function(data){
+                    $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&otp=1';
                     $.post($url, d, function(data){
@@ -154,7 +154,7 @@ $(function(){
                     $('.spinner-border').hide();
                     return false;
                 }else{
-                    $.get('/contact/api',function(data){
+                    $.get($url+'/api',function(data){
                         var token = JSON.parse(data).token;
                         var d = formValues+'&_token='+token+'&api=1';
                          console.log(d);
@@ -189,7 +189,7 @@ $(function(){
                 var email = $(this).closest("form").find("input[name=email]").val();
                 if(name && phone && email){
                     $('.spinner-border').show();
-                    $.get('/contact/api',function(data){
+                    $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&email_otp=1';
                       console.log($url);
@@ -233,7 +233,7 @@ $(function(){
                     $('.spinner-border').hide();
                     return false;
                 }else{
-                    $.get('/contact/api',function(data){
+                    $.get($url+'/api',function(data){
                         var token = JSON.parse(data).token;
                         var d = formValues+'&_token='+token+'&api=1';
                         console.log(d);
@@ -264,7 +264,7 @@ $(function(){
         var user_id = $(this).data('user_id'); 
         var client_id = $(this).data('client_id'); 
         var agency_id = $(this).data('agency_id'); 
-         $.get('/contact/api',function(data){
+         $.get($url+'/api',function(data){
                     var token = JSON.parse(data).token;
                     var query = window.location.search.substring(1);
                     var qs = parse_query_string(query);
