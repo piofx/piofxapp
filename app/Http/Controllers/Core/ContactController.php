@@ -155,6 +155,36 @@ class ContactController extends Controller
                 ->with('app',$this);
     }
 
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics(Obj $obj,Request $request)
+    {   
+        $settings_data = null;
+        $client_id = request()->get('client.id');
+            $client_name = request()->get('client.name');
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
+                $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+      
+        $data = [];
+        if(isset($settings_data->statistics)){
+            $tags = explode(",",$settings_data->statistics);
+            foreach($tags as $tg){
+                $data[$tg] = Obj::where('message','like','%'.$tg.'%')->count();       
+            }
+        }
+
+        return view('apps.'.$this->app.'.'.$this->module.'.statistics')
+                ->with('data',$data)
+                ->with('editor',true)
+                ->with('app',$this);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
