@@ -39,6 +39,9 @@
       <a href="{{ route('Contact.create') }}" class="btn btn-primary btn-sm mt-1 mt-md-0"  >
         <i class="flaticon-plus"></i> Create 
       </a>
+       <a href="{{ route('Contact.admin.statistics') }}" class="btn btn-danger btn-sm mt-1 mt-md-0"  >
+         Statistics 
+      </a>
     </div> 
     @if(request()->get('user_id'))
     @foreach($users as $user)
