@@ -7,6 +7,9 @@
 			<a href="{{ route('dashboard')}}" class="text-muted">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item">
+			<a href="{{ route('Contact.index')}}" class="text-muted">Contact</a>
+		</li>
+		<li class="breadcrumb-item">
 			<a href="" class="text-muted">Statistics</a>
 		</li>
 	</ul>
