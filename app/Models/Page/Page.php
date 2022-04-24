@@ -244,11 +244,11 @@ class Page extends Model
                    
                     }else{
                         
-                        $pieces[0] = str_replace("@score",$test_attempt->attempt->score,$pieces[0]);
-                        $pieces[0] = str_replace("@max",$test_attempt->attempt->max,$pieces[0]);
+                        $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
+                        $pieces[1] = str_replace("@max",$test_attempt->attempt->max,$pieces[1]);
 
-                        $html = "<div class='alert alert-primary alert-testapi'>".$pieces[0]."</div>";
-                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);  
+                        $html = "<div class='alert alert-primary alert-testapi'>".$pieces[1]."</div>";
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[1] , $content);  
                     }
                 }
             }
