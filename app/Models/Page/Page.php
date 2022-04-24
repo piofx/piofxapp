@@ -123,7 +123,7 @@ class Page extends Model
      * Function to replace the auth varaibles
      *
      */
-    public function checkAuthBasedReclacement(){
+    public function checkAuthBasedReplacement(){
 
         $content = $this->html_minified;
         $settings = json_decode($this->settings);
@@ -217,11 +217,117 @@ class Page extends Model
         }
 
 
+         if(preg_match_all('/@testapi+(.*?)@endtestapi/', $content, $regs))
+        {
+            $email = \Auth::user()->email;
+
+ 
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@testapielse') !== false) {
+                    $pieces = explode('@testapielse',$variable);
+                    $form_entry = false;
+                    if(preg_match_all('/@testslug+(.*?)@endtestslug/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $slug = trim($reg2);
+                            // remove the @testslug block
+                            $pieces[0] = str_replace('@testslug'.$reg2.'@endtestslug', '' , $pieces[0]);
+                        }
+                        $test_attempt = Page::testAttemptCheck($email,$slug);
+                    }
+
+                    if(!$test_attempt){
+                        
+                        $html = "<a href='".Page::testUrl($email,$slug)."' class='btn btn-danger btn-testapi'>". $pieces[0]."</a>";
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);
+                   
+                    }else{
+                        if(isset($test_attempt->exam->message))
+                        $message = $test_attempt->exam->message;
+                        else if(isset($test_attempt->message))
+                            $message = $test_attempt->message;
+                        $html = "<div class='alert alert-primary alert-testapi'>".$message."</div>";
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);  
+                    }
+                }
+            }
+            
+        }
+
+
                 
         $content = $this->minifyHtml($content);
         $this->html_minified = $content;
 
         return $this;
+    }
+
+
+    /**
+     * Function to return the test url
+     *
+     */
+    public static function testUrl($email,$slug){
+
+        // create url
+        $client_settings = json_decode(request()->get('client.settings'));
+        if(isset($client_settings->testapi_url)){
+           $url = $client_settings->testapi_url;
+           $lastchar = $url[-1];
+            if ( strcmp($lastchar, "/") === 0 ) {
+               $url = $url.'test/'.$slug.'?email='.$email.'&hashcode=piofxapp734'.'&redirect='.url()->current();
+            } else {
+               $url = $url.'/test/'.$slug.'?email='.$email.'&hashcode=piofxapp734'.'&redirect='.url()->current();
+            }
+
+            return $url;
+        }else
+         return null;
+        
+    }
+
+    /**
+     * Function to check if the test has been attempted
+     *
+     */
+    public static function testAttemptCheck($email,$slug){
+
+        // create url
+        $client_settings = json_decode(request()->get('client.settings'));
+        $user = \Auth::user();
+        if(isset($client_settings->testapi_url)){
+           $url = $client_settings->testapi_url;
+           $lastchar = $url[-1];
+            if ( strcmp($lastchar, "/") === 0 ) {
+               $url = $url.'test/'.$slug.'/analysis_api?email='.$email.'&hashcode=piofxapp734&name='.$user->name.'&phone='.$user->phone;
+            } else {
+               $url = $url.'/test/'.$slug.'/analysis_api?email='.$email.'&hashcode=piofxapp734&name='.$user->name.'&phone='.$user->phone;
+            }
+
+
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $headers = array(
+               "Accept: application/json",
+            );
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            //for debug only!
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_VERBOSE, true);
+
+            $resp = curl_exec($curl);
+            curl_close($curl);
+
+
+            // Will dump a beauty json :3
+            return json_decode($resp, true); 
+        }else
+         return null;
+        
     }
 
     /**
