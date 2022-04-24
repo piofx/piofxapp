@@ -247,6 +247,9 @@ class Page extends Model
                         $message = $test_attempt->exam->message;
                         else if(isset($test_attempt->message))
                             $message = $test_attempt->message;
+                        else
+                            $message = json_encode($test_attempt);
+                        
                         $html = "<div class='alert alert-primary alert-testapi'>".$message."</div>";
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);  
                     }
