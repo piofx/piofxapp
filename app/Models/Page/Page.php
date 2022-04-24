@@ -243,20 +243,12 @@ class Page extends Model
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);
                    
                     }else{
-                        if($test_attempt->exam->solutions==2){
-                            if(isset($test_attempt->exam->message))
-                                $message = $test_attempt->exam->message;
-                            else if(isset($test_attempt->message))
-                                $message = $test_attempt->message;
-                            else
-                                $message = json_encode($test_attempt);
-                        }else{
-                            $message = 'You have scored '.$test_attempt->attempt->score.'/'.$test_attempt->attempt->max;
-                        }
                         
+                        $pieces[0] = str_replace("@score",$test_attempt->attempt->score,$pieces[0]);
+                        $pieces[0] = str_replace("@max",$test_attempt->attempt->max,$pieces[0]);
 
-                        $html = "<div class='alert alert-primary alert-testapi'>".$message."</div>";
-                        $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);  
+                        $html = "<div class='alert alert-primary alert-testapi'>".$pieces[0]."</div>";
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);  
                     }
                 }
             }
