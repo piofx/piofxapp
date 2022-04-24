@@ -227,23 +227,22 @@ class Page extends Model
                 if (strpos($variable, '@testapielse') !== false) {
                     $pieces = explode('@testapielse',$variable);
                     $form_entry = false;
-                    if(preg_match_all('/@testslug+(.*?)@endtestslug/', $pieces[0], $regs2))
+                    $test_attempt = false;
+                    if(preg_match_all('/@testurl+(.*?)@endtesturl/', $pieces[0], $regs2))
                     {
                         foreach ($regs2[1] as $reg2){
                             $slug = trim($reg2);
                             // remove the @testslug block
-                            $pieces[0] = str_replace('@testslug'.$reg2.'@endtestslug', '' , $pieces[0]);
+                            $pieces[0] = str_replace('@testurl'.$reg2.'@endtesturl', Page::testUrl($email,$slug) , $pieces[0]);
                         }
                         $test_attempt = Page::testAttemptCheck($email,$slug);
                     }
 
+
+
                     if(!$test_attempt){
-                        
-                        $html = "<a href='".Page::testUrl($email,$slug)."' class='btn btn-danger btn-testapi'>". $pieces[0]."</a>";
-                        $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);
-                   
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
                     }else{
-                        
                         $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
                         $pieces[1] = str_replace("@max",$test_attempt->attempt->max,$pieces[1]);
 
