@@ -249,7 +249,7 @@ class Page extends Model
                             $message = $test_attempt->message;
                         else
                             $message = json_encode($test_attempt);
-                        
+
                         $html = "<div class='alert alert-primary alert-testapi'>".$message."</div>";
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $html , $content);  
                     }
@@ -327,7 +327,7 @@ class Page extends Model
 
 
             // Will dump a beauty json :3
-            return json_decode($resp, true); 
+            return json_decode($resp); 
         }else
          return null;
         
