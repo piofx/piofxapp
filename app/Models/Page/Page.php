@@ -251,7 +251,7 @@ class Page extends Model
                             else
                                 $message = json_encode($test_attempt);
                         }else{
-                            $message = 'You have scored '.$test_attempt->attempt->score.'/'.$test_attempt->max;
+                            $message = 'You have scored '.$test_attempt->attempt->score.'/'.$test_attempt->attempt->max;
                         }
                         
 
