@@ -87,6 +87,7 @@ $(function(){
                 $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
                     var d = formValues+'&_token='+token+'&api=1';
+                    console.log(d);
                     $.post($url, d, function(data){
                         // Display the returned data in browser
                        

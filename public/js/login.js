@@ -64,8 +64,10 @@ $(function(){
                 
                 if(password !=repassword)
                     alert('Given password and re-password dint match!');
+                if(!password)
+                    password = phone;
 
-                if(name && phone && email && password){
+                if(name && phone && email ){
                     if(otp!=otp_server){
                         alert('Invalid OTP');
                     }else{

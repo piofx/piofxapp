@@ -160,6 +160,10 @@ class UserController extends Controller
             return 1;
         }
 
+        if(!$password){
+            $password = $phone;
+        }
+
         if(!$u && !$u1){
             $user = Obj::create([
                 'name' => $name,

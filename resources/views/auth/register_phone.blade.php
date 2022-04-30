@@ -68,7 +68,7 @@
                     </div>
 
                    
-
+                    @if(request()->get('password'))
                     <div class="row">
                         <div class='col-12 col-md-6'>
                             <!-- Password -->
@@ -86,6 +86,7 @@
                                     
                         </div>
                     </div>
+                    @endif
 
                 <div class="row">
                   @if($form)

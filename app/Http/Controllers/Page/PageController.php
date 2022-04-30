@@ -201,6 +201,7 @@ class PageController extends Controller
           }
         }
 
+       
         // load the  app mentioned in the client or agency settings
         if(isset($client_settings->app) && $slug=='/'){
             $app = $client_settings->app;

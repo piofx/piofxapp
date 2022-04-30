@@ -7,6 +7,7 @@ use App\Http\Controllers\Core\ClientController;
 use App\Http\Controllers\Core\ContactController;
 use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Core\StatisticsController;
+use App\Http\Controllers\Core\OrderController;
 
 /* Admin routes */
 Route::get('/admin', [AdminController::class, 'index'])
@@ -155,6 +156,10 @@ Route::get('/admin/statistics', [StatisticsController::class, 'index'])
 		->middleware(['auth'])->name('Statistics.index');
 
 
+/* Order Routes */
+Route::get('/order',[OrderController::class, 'order'])->name('product.order');
+Route::get('/order_payment', [OrderController::class, 'instamojo_return'])->name('product.order_return');
+Route::post('/order_payment', 'Core\OrderController@instamojo_return');
 
 
 
