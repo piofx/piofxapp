@@ -5,7 +5,7 @@ $(function(){
     if($("form").length){
         $url = $("form").attr('action');
         //general form submission
-        if($("form").data('api')==1){
+        if($("form").data('api')==1 ){
             console.log('api');
             $(document).on("click",".contact_button", function(e){
                 console.log('clicked');

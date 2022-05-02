@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login or Register to proceed further...</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Login  to proceed further...</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,13 +18,15 @@
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
               </div>
-              <button type="button" class="btn btn-primary login_button">Login</button>
-              <a href="/register?redirect={{url()->full()}}" class="btn btn-outline-dark ">Register</a>
-              <hr>
+              <button type="button" class="btn btn-primary login_button mb-3">Login</button><br>
               @if(client('phone_otp_login'))
-
-              <a href="/login_phone?redirect={{url()->full()}}" class="my-2 ">Login via SMS OTP</a>
+              Dont remember the password? <a href="/login_phone?redirect={{url()->full()}}" class="my-2 ">Login via SMS OTP</a>
+              @else
+              Dont remember the password? <a href="{{ route('password.request') }}" class=" text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a> 
               @endif
+             
+              <hr>
+               Dont have an account? <a href="/register?redirect={{url()->full()}}" class="">Register Now</a>
               <div class="alert alert-success mt-4 login_message" style="display: none;"></div>
             </form>
       </div>

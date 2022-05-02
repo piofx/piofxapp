@@ -5,9 +5,10 @@ $(function(){
     if($("form").length){
         $url = $("form").attr('action');
         //general form submission
-       
+        console.log('login js');
         //login form submission
-        if($("form").data('register')==1){
+        if($("form").data('register')==1 || $(".registerform").data('register')==1){
+            console.log('login register 1');
             $(document).on("click",".generate_otp", function(e){
                 e.preventDefault();
                 var formValues= $("form").serialize();
@@ -50,6 +51,7 @@ $(function(){
             });
 
             $(document).on("click",".register", function(e){
+                 console.log('clicked register');
                 e.preventDefault();
                 var formValues= $("form").serialize();
                 var otp = parseInt($('input[name=otp]').val());
@@ -66,6 +68,9 @@ $(function(){
                     alert('Given password and re-password dint match!');
                 if(!password)
                     password = phone;
+
+                if($(".registerform").data('register'))
+                    $url = $(".registerform").attr('action');
 
                 if(name && phone && email ){
                     if(otp!=otp_server){
@@ -105,6 +110,8 @@ $(function(){
                
             });
 
+        }else{
+            console.log('no register '+ $("form").data('register'));
         }
 
         // login form via otp
@@ -145,13 +152,16 @@ $(function(){
 
         // register form via otp
          //form submission with otp verification
-        if($("form").data('register_otp')==1){
+        if($("form").data('register_otp')==1 || $(".registerform").data('register')==1){
+
+            if($(".registerform").data('register'))
+                $url = $(".registerform").attr('action');
             console.log('register form otp');
             $(document).on("click",".generate_phone_otp", function(e){
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
                 var phone = $(this).closest("form").find("input[name=phone]").val();
-                console.log('phone - '+phone);
+                console.log('phone - '+phone+ ' - '+formValues);
                 if(phone ){
                     $.get('/contact/api',function(data){
                     var token = JSON.parse(data).token;
@@ -163,7 +173,10 @@ $(function(){
                         if(typeof(d.code) != "undefined" && d.code !== null){
                             alert('OTP has been sent to your phone number! Kidly wait for 2min before retrying.');
                             return false; 
-                        }else{
+                        }else if(d.error =="undefined"){
+                            alert("Invalid Phone number");
+                        }
+                        else{
                              alert(d.error);
                         }
                        

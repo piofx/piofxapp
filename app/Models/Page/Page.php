@@ -131,6 +131,13 @@ class Page extends Model
         //get client id
         $client_id = request()->get('client.id');
 
+        if(!request()->session()->get('code')){
+            $code = mt_rand(1000, 9999);
+            request()->session()->put('code',$code);
+        }else{
+            $code = request()->session()->get('code');
+        }
+
         $this->auth = 1;
         //auth variavle
         if(preg_match_all('/@guest+(.*?)@endguest/', $content, $regs))
@@ -169,21 +176,50 @@ class Page extends Model
                     $pieces = explode('@else',$variable);
                     if(!\Auth::user()){
                         $content = str_replace('@loginpopup'.$reg.'@endloginpopup', '<a href="#" class="btn  btn-loginpopup" data-toggle="modal" data-target="#loginModal">'.$pieces[0].'</a><form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
-                        $this->auth = 0;
+                        $this->auth = 1;
                     }else{
                         $content = str_replace('@loginpopup'.$reg.'@endloginpopup', $pieces[1] , $content);  
-                        $this->auth = 1;
+                        $this->auth = 0;
                     }
                 }else{
                     if(!\Auth::user()){
                         $content = str_replace('@auth'.$reg.'@endauth', $reg , $content);
-                        $this->auth = 0;
+                        $this->auth = 1;
                     }else{
                         $content = str_replace('@auth'.$reg.'@endauth', '' , $content); 
-                        $this->auth = 1; 
+                        $this->auth = 0; 
                     }
                 }
             }
+            
+        }
+
+
+        if(preg_match_all('/@registerpopup+(.*?)@endregisterpopup/', $content, $regs))
+        {
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@else') !== false) {
+                    $pieces = explode('@else',$variable);
+                    if(!\Auth::user()){
+                        $content = str_replace('@registerpopup'.$reg.'@endregisterpopup', '<a href="#" class="btn  btn-loginpopup" data-toggle="modal" data-target="#loginModal">'.$pieces[0].'</a><form class="mt-3" action="/user/apilogin" data-login="1"></form>' , $content);
+                        $this->auth = 2;
+                    }else{
+                        $content = str_replace('@registerpopup'.$reg.'@endregisterpopup', $pieces[1] , $content);  
+                        $this->auth = 0;
+                    }
+                }else{
+                    if(!\Auth::user()){
+                        $content = str_replace('@registerpopup'.$reg.'@endregisterpopup', $reg , $content);
+                        $this->auth = 2;
+                    }else{
+                        $content = str_replace('@registerpopup'.$reg.'@endregisterpopup', '' , $content); 
+                        $this->auth = 0; 
+                    }
+                }
+            }
+
+
             
         }
 
