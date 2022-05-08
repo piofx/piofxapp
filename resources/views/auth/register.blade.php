@@ -143,6 +143,8 @@
                 <input type="hidden" name="settings_utm_medium" value="{{ request()->get('utm_medium') }}">
                 <input type="hidden" name="settings_utm_content" value="{{ request()->get('utm_content') }}">
                 <input type="hidden" name="settings_utm_term" value="{{ request()->get('utm_term') }}">
+                <input type="hidden" name="settings_utm_referral" value="{{ request()->get('utm_referral') }}">
+                <input type="hidden" name="curr_url" value="{{ url()->current() }}">
                 <input type="hidden" name="code" value="{{ $code }}">
 
                     <!--begin::Action-->
@@ -154,9 +156,9 @@
                     </button>
                     </div>
                     <div class="pb-lg-0 pb-5 ml-3">
-                                         <div class="spinner-border spinner-border-sm ml-2 mt-1 login_spinner" role="status" style="display: none;">
-  <span class="sr-only">Loading...</span>
-</div><br>
+                        <div class="spinner-border spinner-border-sm ml-2 mt-1 login_spinner" role="status" style="display: none;">
+                          <span class="sr-only">Loading...</span>
+                        </div><br>
                     <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a> &nbsp;&nbsp;&nbsp;     
 
                     <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>

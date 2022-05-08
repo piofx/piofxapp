@@ -148,6 +148,8 @@
                 <input type="hidden" name="settings_utm_medium" value="{{ request()->get('utm_medium') }}">
                 <input type="hidden" name="settings_utm_content" value="{{ request()->get('utm_content') }}">
                 <input type="hidden" name="settings_utm_term" value="{{ request()->get('utm_term') }}">
+                <input type="hidden" name="settings_utm_referral" value="{{ request()->get('utm_referral') }}">
+                <input type="hidden" name="curr_url" value="{{ url()->current() }}">
         <input type="hidden" name="code" value="{{ $code }}">
 
                     

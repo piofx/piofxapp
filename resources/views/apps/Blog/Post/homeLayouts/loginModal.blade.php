@@ -27,6 +27,7 @@
              
               <hr>
                Dont have an account? <a href="/register?redirect={{url()->full()}}" class="">Register Now</a>
+               <input type="hidden" name="curr_url" value="{{ url()->current() }}">
               <div class="alert alert-success mt-4 login_message" style="display: none;"></div>
             </form>
       </div>

@@ -47,7 +47,7 @@
                 </div>
                 </div>
             <!--end::Action-->
-            
+            <input type="hidden" name="curr_url" value="{{ url()->current() }}">
              
         </form>
      <!--end::Form-->

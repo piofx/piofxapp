@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User as Obj;
 use App\Models\Core\Client;
+use App\Models\Core\Referral;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -199,9 +200,20 @@ class UserController extends Controller
                     
                 }
             }
+
+            
             $user->data = $data;
             $user->json = $json;
             $user->save();
+
+            if($request->get('settings_utm_referral')){
+                $referral_id = $request->get('settings_utm_referral');
+                $redirect = $request->get('redirect');
+                if(!$redirect)
+                    $redirect = $request->get('curr_url');
+                
+                Referral::insert($referral_id,$user,$redirect);
+            }
 
             Auth::attempt(['email' => $email, 'password' => $password,'client_id'=>$client_id]);
             $message['login']="1";

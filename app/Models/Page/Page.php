@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Core\Client;
+use App\Models\Core\Referral;
 use App\Models\Core\Contact;
 use App\Models\Page\Module;
 use App\Models\Page\Theme;
@@ -252,6 +253,42 @@ class Page extends Model
             
         }
 
+        if(preg_match_all('/@referral+(.*?)@endreferral/', $content, $regs))
+        {
+            $referral_id = \Auth::user()->id;
+
+ 
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@referralelse') !== false) {
+                    $pieces = explode('@referralelse',$variable);
+                    if(preg_match_all('/@rcount+(.*?)@endrcount/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $rcount = trim($reg2);
+                        }
+                        $referrals = Page::referralCheck($referral_id,$rcount);
+                        $pieces[0] = str_replace('@rcount'.$reg2.'@endrcount', '' , $pieces[0]);
+                    }
+                    $k=0;
+                    if(count($referrals) < $rcount){
+                       foreach($referrals as $k=>$rf){
+                            $pieces[0] = str_replace("@rf".($k+1),$rf->user_name,$pieces[0]);
+                       }
+
+                       for($m=$k;$m<10;$m++){
+                            $pieces[0] = str_replace("@rf".($m+1),'-',$pieces[0]);
+                       }
+                        
+                       $content = str_replace('@referral'.$reg.'@endreferral', $pieces[0] , $content);
+                    }else{
+                       $content = str_replace('@referral'.$reg.'@endreferral', $pieces[1] , $content);  
+                    }
+                }
+            }
+            
+        }
+
 
          if(preg_match_all('/@testapi+(.*?)@endtestapi/', $content, $regs))
         {
@@ -319,6 +356,21 @@ class Page extends Model
             return $url;
         }else
          return null;
+        
+    }
+
+     /**
+     * Function to check if referrals are satisfied
+     *
+     */
+    public static function referralCheck($referral_id,$rcount){
+
+        $client_id=request()->get('client.id');
+        $url = url()->current();
+
+        $referrals = Referral::where('client_id',$client_id)->where('referral_id',$referral_id)->where('url',$url)->get();
+
+        return $referrals;
         
     }
 

@@ -271,6 +271,12 @@ class RegisteredUserController extends Controller
         }else if($request->get('utm_content')){
             request()->session()->put('settings_utm_content',$request->get('utm_content'));
         }
+
+        if($request->get('settings_utm_referral')){
+             request()->session()->put('settings_utm_referral',$request->get('settings_utm_referral'));
+        }else if($request->get('utm_referral')){
+            request()->session()->put('settings_utm_referral',$request->get('utm_referral'));
+        }
     }
     
     

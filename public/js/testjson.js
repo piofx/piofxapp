@@ -140,6 +140,7 @@ $(function(){
                 }else{
                     $uans = $("input[name="+set+"_"+qno+"]").val();
                     $ans = $('.'+set+'_'+qno).data('answer');
+                    
                     $each_ans = $ans.split("/");
 
                     if(match_answers($uans,$each_ans)){
