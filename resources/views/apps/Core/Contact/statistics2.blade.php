@@ -25,6 +25,7 @@
 
 	<div class="row">
 		@foreach($data as $a=>$b)
+		
 		<div class="col-6 col-md-2">
 			<!--begin::Stats Widget 31-->
 			<div class="card card-custom bg-light border border-light-info card-stretch gutter-b">

@@ -164,14 +164,19 @@ class ContactController extends Controller
      */
     public function statistics(Obj $obj,Request $request)
     {   
-        
-
-        if($request->get('search')){
-            $settings_data = null;
+         $settings_data = null;
             $client_id = request()->get('client.id');
             $client_name = request()->get('client.name');
             $search = $request->get('search');
-            
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
+                    $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+            $category = null;
+            if(isset($settings_data->statistics_category)){
+                $category = $settings_data->statistics_category;
+            }
+
+        if($request->get('search')){
+           
           
             $data = [];
             $d = Obj::where('message','like','%'.$search.'%')->get(); 
@@ -183,6 +188,9 @@ class ContactController extends Controller
             }
 
             foreach($colleges as $c){
+                if($category)
+                $data[$c] = Obj::where('message','like','%'.$c.'%')->where('category',$category)->count(); 
+                else
                 $data[$c] = Obj::where('message','like','%'.$c.'%')->count(); 
             }
 
@@ -195,16 +203,15 @@ class ContactController extends Controller
 
         }else{
 
-            $settings_data = null;
-            $client_id = request()->get('client.id');
-            $client_name = request()->get('client.name');
-            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
-                    $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+            
           
             $data = [];
             if(isset($settings_data->statistics)){
                 $tags = explode(",",$settings_data->statistics);
                 foreach($tags as $tg){
+                    if($category)
+                    $data[$tg] = Obj::where('message','like','%'.$tg.'%')->where('category',$category)->count(); 
+                    else
                     $data[$tg] = Obj::where('message','like','%'.$tg.'%')->count();       
                 }
             }
