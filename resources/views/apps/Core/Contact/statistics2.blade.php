@@ -17,6 +17,8 @@
 
 	<div class="card p-4 mb-5">
 		<h1 class="mb-0 d-inline"><i class="fa fa-chart-bar"></i> Form Statistics 
+		</h1>
+		<a href="{{ route('Contact.admin.statistics') }}">back to stats</a>
 	</div>
 
 	@if(isset($data))
@@ -41,8 +43,7 @@
 						</svg>
 						<!--end::Svg Icon-->
 					</span>
-					<a href="{{ route('Contact.admin.statistics') }}?search={{$a}}">
-						<span class="card-title font-weight-bolder text-dark font-size-h2 mb-0 mt-6 d-block">{{$b}}</span></a>
+					<span class="card-title font-weight-bolder text-dark font-size-h2 mb-0 mt-6 d-block">{{$b}}</span>
 					<span class="font-weight-bold text-success ">{{$a}}</span>
 				</div>
 				<!--end::Body-->

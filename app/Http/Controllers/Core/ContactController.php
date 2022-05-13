@@ -164,24 +164,58 @@ class ContactController extends Controller
      */
     public function statistics(Obj $obj,Request $request)
     {   
-        $settings_data = null;
-        $client_id = request()->get('client.id');
-            $client_name = request()->get('client.name');
-            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
-                $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
-      
-        $data = [];
-        if(isset($settings_data->statistics)){
-            $tags = explode(",",$settings_data->statistics);
-            foreach($tags as $tg){
-                $data[$tg] = Obj::where('message','like','%'.$tg.'%')->count();       
-            }
-        }
+        
 
-        return view('apps.'.$this->app.'.'.$this->module.'.statistics')
+        if($request->get('search')){
+            $settings_data = null;
+            $client_id = request()->get('client.id');
+            $client_name = request()->get('client.name');
+            $search = $request->get('search');
+            
+          
+            $data = [];
+            $d = Obj::where('message','like','%'.$search.'%')->get(); 
+            
+            foreach($d as $item){
+                $json = json_decode(strtolower($item->json));
+                if(isset( $json->college_name))
+                $colleges[$json->college_name] = $json->college_name;
+            }
+
+            foreach($colleges as $c){
+                $data[$c] = Obj::where('message','like','%'.$c.'%')->count(); 
+            }
+
+           
+
+            return view('apps.'.$this->app.'.'.$this->module.'.statistics2')
                 ->with('data',$data)
                 ->with('editor',true)
                 ->with('app',$this);
+
+        }else{
+
+            $settings_data = null;
+            $client_id = request()->get('client.id');
+            $client_name = request()->get('client.name');
+            if(Storage::disk('s3')->exists('settings/contact/'.$client_id.'.json'))
+                    $settings_data = json_decode(Storage::disk('s3')->get('settings/contact/'.$client_id.'.json' ));
+          
+            $data = [];
+            if(isset($settings_data->statistics)){
+                $tags = explode(",",$settings_data->statistics);
+                foreach($tags as $tg){
+                    $data[$tg] = Obj::where('message','like','%'.$tg.'%')->count();       
+                }
+            }
+
+            return view('apps.'.$this->app.'.'.$this->module.'.statistics')
+                ->with('data',$data)
+                ->with('editor',true)
+                ->with('app',$this);
+        }
+
+        
 
     }
 
