@@ -50,12 +50,72 @@ $(function(){
                
             });
 
+            $(document).on("click",".register_otp", function(e){
+                console.log('form sms otp');
+                e.preventDefault();
+                var formValues= $(this).closest("form").serialize();
+                var phone = $(this).closest("form").find("input[name=phone]").val();
+                var name = $(this).closest("form").find("input[name=name]").val();
+                var email= $(this).closest("form").find("input[name=email]").val();
+                console.log('phone - '+email);
+
+                if(!name && !email && !phone){
+                    $(".alert_message").html("Enter name, email and phone number!");
+                    $(".alert_block").show();
+                    return false;
+
+                }
+                if(!email){
+                    $(".alert_message").html("Enter email address!");
+                    $(".alert_block").show();
+                    return false;
+                    
+                }
+                if(!phone){
+                    $(".alert_message").html("Enter phone number!");
+                    $(".alert_block").show();
+                    return false;
+                    
+                }
+
+                $(".error").hide();
+                if(phone ){
+                    $.get('/contact/api',function(data){
+                    var token = JSON.parse(data).token;
+                    var d = formValues+'&_token='+token+'&generate_otp=1';
+                    $.post($url, d, function(data){
+                        console.log(data);
+                        var d = JSON.parse(data);
+                        console.log(d);
+
+                        if(typeof(d.code) != "undefined" && d.code !== null){
+                            $(".otp_block").show();
+                            $(".register_block").hide();
+                            $(".alert_block").hide();
+                            return false; 
+                        }else{
+                            $(".alert_message").html(d.error);
+                            $(".alert_block").show();
+                           
+                        }
+                    });
+                });
+                }else{
+                    $(".alert_message").html("Enter a valid phone number");
+                    $(".alert_block").show();
+                }
+            });
+
+
             $(document).on("click",".register", function(e){
                  console.log('clicked register');
                 e.preventDefault();
                 var formValues= $("form").serialize();
                 var otp = parseInt($('input[name=otp]').val());
                 var otp_server = parseInt($('.validate_otp').data('otp'));
+               
+                if(!otp_server)
+                    otp_server = parseInt($('.v_otp').data('otp'));
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
@@ -74,7 +134,8 @@ $(function(){
 
                 if(name && phone && email ){
                     if(otp!=otp_server){
-                        alert('Invalid OTP');
+                         $(".alert_message").html("Invalid OTP!");
+                                            $(".alert_block").show();
                     }else{
                         $('.login_spinner').show();
                         $.get('/contact/api',function(data){
@@ -89,16 +150,20 @@ $(function(){
                                     d='email='+email+'&password='+password+'&_token='+_token;
                                     console.log(d);
                                      $.get('user/apilogin', d, function(data){
+                                        
+                                            $(".alert_message").html("Registration Successful! The page will reload in few seconds!");
+                                            $(".alert_block").show();
                                         setTimeout(function(){
                                             $('.login_spinner').hide();
+                                            
                                         window.location.replace(redirect);
-                                        },2000);
+                                        },3000);
                                      });
                                      
                                 }else{
                                     $('.login_spinner').hide();
-                                    alert(d.message);
-                                   
+                                    $(".alert_message").html(d.message);
+                                    $(".alert_block").show();
                                 }
                             return false;  
                         });
@@ -117,7 +182,7 @@ $(function(){
         // login form via otp
          //form submission with otp verification
         if($("form").data('otp')==1){
-            console.log('form sms otp');
+            
             $(document).on("click",".generate_phone_otp", function(e){
                 e.preventDefault();
                 var formValues= $(this).closest("form").serialize();
@@ -133,7 +198,7 @@ $(function(){
                         console.log(d);
 
                         if(typeof(d.code) != "undefined" && d.code !== null){
-                            alert('OTP has been sent to your phone number! Kidly wait for 2min before retrying.');
+                            alert('OTP has been sent to your phone number! Kindly wait for 2min before retrying.');
                       
                             return false; 
                         }else{
@@ -148,6 +213,8 @@ $(function(){
                 }
                 
             });
+
+
         }
 
         // register form via otp
