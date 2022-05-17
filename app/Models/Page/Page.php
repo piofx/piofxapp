@@ -139,6 +139,7 @@ class Page extends Model
             $code = request()->session()->get('code');
         }
 
+
         $this->auth = 1;
         //auth variavle
         if(preg_match_all('/@guest+(.*?)@endguest/', $content, $regs))
@@ -168,6 +169,12 @@ class Page extends Model
             
         }
 
+        if(\Auth::user()){
+            $content = str_replace('@myname',  \Auth::user()->name , $content);
+            $rurl = url()->current()."?refresh=1&utm_source=userref&utm_referral=".\Auth::user()->id;
+            $content = str_replace('@rurl',  $rurl , $content);
+        }
+        
 
         if(preg_match_all('/@loginpopup+(.*?)@endloginpopup/', $content, $regs))
         {
@@ -316,11 +323,19 @@ class Page extends Model
                     if(!$test_attempt){
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
                     }else{
-                        $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
+
+                        if(isset($test_attempt->exam_2)){
+
+                            if(!$test_attempt->attempt_2)
+                                $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
+                        }else{
+                             $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
                         $pieces[1] = str_replace("@max",$test_attempt->attempt->max,$pieces[1]);
 
                         $html = "<div class='alert alert-primary alert-testapi'>".$pieces[1]."</div>";
-                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[1] , $content);  
+                        $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[1] , $content); 
+                        }
+                        
                     }
                 }
             }
@@ -393,6 +408,7 @@ class Page extends Model
             }
 
 
+
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -408,7 +424,7 @@ class Page extends Model
 
             $resp = curl_exec($curl);
             curl_close($curl);
-
+            dd($url);
 
             // Will dump a beauty json :3
             return json_decode($resp); 

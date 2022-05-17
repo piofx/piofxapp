@@ -8,6 +8,7 @@ use App\Http\Controllers\Core\ContactController;
 use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Core\StatisticsController;
 use App\Http\Controllers\Core\OrderController;
+use App\Http\Controllers\Core\ReferralController;
 
 /* Admin routes */
 Route::get('/admin', [AdminController::class, 'index'])
@@ -154,6 +155,12 @@ Route::get('/profile/{user}/', [UserController::class, 'profile_show'])->name('p
 // Statistic Routes
 Route::get('/admin/statistics', [StatisticsController::class, 'index'])
 		->middleware(['auth'])->name('Statistics.index');
+
+// Referral Routes
+Route::get('/myreferrals', [ReferralController::class, 'index'])
+		->middleware(['auth'])->name('Referral.index');
+Route::get('/allreferrals', [ReferralController::class, 'all'])
+		->middleware(['auth'])->name('Referral.all');
 
 
 /* Order Routes */
