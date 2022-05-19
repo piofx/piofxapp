@@ -322,6 +322,7 @@ class PostController extends Controller
      */
     public function show($slug, $blog_url=null)
     {
+
         $route = null;
         $client_settings = json_decode(request()->get('client.settings'));
 
@@ -506,6 +507,8 @@ class PostController extends Controller
         $description = $obj->meta_description;
         if($description)
             updateMetaDescription($description);
+
+       
 
         // change meta image
         $image = $obj->image;
