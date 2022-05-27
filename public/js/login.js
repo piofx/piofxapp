@@ -164,7 +164,7 @@ $(function(){
                                      });
                                      
                                 }else{
-                                    //$('.login_spinner').hide();
+                                    $('.login_spinner').hide();
                                     //$(".alert_message").html();
                                     alert(d.message);
                                     //$(".alert_block").show();
