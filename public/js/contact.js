@@ -48,6 +48,9 @@ $(function(){
                         $('.alert_message').html(data);
                         $('.alert_block').show();
                         $('.spinner-border').hide();
+                        $('html, body').animate({
+                            scrollTop: $("form").offset().top
+                        }, 2000);
                         return false;  
                     });
                 });
