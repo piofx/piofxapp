@@ -146,11 +146,12 @@ $(function(){
                         $.post($url, d, function(data){
                              // Display the returned data in browser
                              d = JSON.parse(data);
+                             console.log(d);
                                 if(d.login==1){
                                     d='email='+email+'&password='+password+'&_token='+_token;
                                     console.log(d);
                                      $.get('user/apilogin', d, function(data){
-                                        
+
                                             $(".alert_message").html("Registration Successful! The page will reload in few seconds!");
                                             $(".alert_block").show();
                                         setTimeout(function(){
