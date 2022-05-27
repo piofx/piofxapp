@@ -22,11 +22,13 @@
               @if(client('phone_otp_login'))
               Dont remember the password? <a href="/login_phone?redirect={{url()->full()}}" class="my-2 ">Login via SMS OTP</a>
               @else
-              Dont remember the password? <a href="{{ route('password.request') }}" class=" text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a> 
+
+               Dont have an account? <a href="/register?redirect={{url()->full()}}" class="">Register Now</a>
+              
               @endif
              
               <hr>
-               Dont have an account? <a href="/register?redirect={{url()->full()}}" class="">Register Now</a>
+              Dont remember the password? <a href="{{ route('password.request') }}" class=" text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a> 
                <input type="hidden" name="curr_url" value="{{ url()->current() }}">
               <div class="alert alert-success mt-4 login_message" style="display: none;"></div>
             </form>
