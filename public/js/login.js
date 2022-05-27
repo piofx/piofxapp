@@ -134,8 +134,9 @@ $(function(){
 
                 if(name && phone && email ){
                     if(otp!=otp_server){
-                         $(".alert_message").html("Invalid OTP!");
-                                            $(".alert_block").show();
+                        alert('Invalid OTP!');
+                         //$(".alert_message").html("Invalid OTP!");
+                                          //  $(".alert_block").show();
                     }else{
                         $('.login_spinner').show();
                         $.get('/contact/api',function(data){
@@ -152,8 +153,9 @@ $(function(){
                                     console.log(d);
                                      $.get('user/apilogin', d, function(data){
 
-                                            $(".alert_message").html("Registration Successful! The page will reload in few seconds!");
-                                            $(".alert_block").show();
+                                            //$(".alert_message").html("Registration Successful! The page will reload in few seconds!");
+                                            //$(".alert_block").show();
+                                            alert('Registration Successful! The page will reload in few seconds!');
                                         setTimeout(function(){
                                             $('.login_spinner').hide();
                                             
@@ -162,9 +164,10 @@ $(function(){
                                      });
                                      
                                 }else{
-                                    $('.login_spinner').hide();
-                                    $(".alert_message").html(d.message);
-                                    $(".alert_block").show();
+                                    //$('.login_spinner').hide();
+                                    //$(".alert_message").html();
+                                    alert(d.message);
+                                    //$(".alert_block").show();
                                 }
                             return false;  
                         });
