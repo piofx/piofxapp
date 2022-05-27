@@ -49,8 +49,8 @@ $(function(){
                         $('.alert_block').show();
                         $('.spinner-border').hide();
                         $('html, body').animate({
-                            scrollTop: $("form").offset().top
-                        }, 2000);
+                            scrollTop: ($("form").offset().top - 100)
+                        }, 500);
                         return false;  
                     });
                 });
