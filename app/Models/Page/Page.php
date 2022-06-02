@@ -499,7 +499,7 @@ class Page extends Model
 
             $resp = curl_exec($curl);
             curl_close($curl);
-            dd($url);
+           
 
             // Will dump a beauty json :3
             return json_decode($resp); 
