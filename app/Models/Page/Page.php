@@ -309,7 +309,7 @@ class Page extends Model
                         $pieces[0] = str_replace("@buyurl",$buyurl,$pieces[0]);
                         if($order->status==1)
                         {
-                            $pieces[1] = str_replace("@buyalert",'<div class="alert alert-success mb-3">Your product is activated!</div>',$pieces[1]);
+                            $pieces[1] = str_replace("@buyalert",'<div class="alert alert-success mb-3">Your product('.$purpose.') is activated!</div>',$pieces[1]);
                             $pieces[1] = str_replace("@buyurl",'',$pieces[1]);
                             $content = str_replace('@buy'.$reg.'@endbuy', $pieces[1] , $content);
                         }else if($order->status == 0){
