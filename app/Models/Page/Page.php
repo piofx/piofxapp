@@ -405,17 +405,18 @@ class Page extends Model
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
                     }else{
 
-                        if(isset($test_attempt->exam_2)){
-
-                            if(!$test_attempt->attempt_2)
-                                $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
-                        }else{
-                             $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
+                        $pieces[1] = str_replace("@score",$test_attempt->attempt->score,$pieces[1]);
                         $pieces[1] = str_replace("@max",$test_attempt->attempt->max,$pieces[1]);
 
                         $html = "<div class='alert alert-primary alert-testapi'>".$pieces[1]."</div>";
                         $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[1] , $content); 
-                        }
+                        // if(isset($test_attempt->exam_2)){
+
+                        //     if(!$test_attempt->attempt_2)
+                        //         $content = str_replace('@testapi'.$reg.'@endtestapi', $pieces[0] , $content);
+                        // }else{
+                             
+                        //}
                         
                     }
                 }
