@@ -389,12 +389,14 @@ class Page extends Model
                             // remove the @testslug block
                             $pieces[0] = str_replace('@testurl'.$reg2.'@endtesturl', Page::testUrl($email,$slug) , $pieces[0]);
                             if(request()->get('dump2'))
-                            dd(Page::testUrl($email,$slug));
+                             dd(Page::testUrl($email,$slug));
                         }
 
-                        if(request()->get('dump'))
+                        if(request()->get('dump3'))
                             dd($slug);
                         $test_attempt = Page::testAttemptCheck($email,$slug);
+                        if(request()->get('dump4'))
+                            dd($test_attempt);
                     }
 
 
