@@ -385,10 +385,11 @@ class Page extends Model
                     {
                         foreach ($regs2[1] as $reg2){
                             $slug = trim($reg2);
-                            if(request()->get('dump2'))
-                            dd($slug);
+
                             // remove the @testslug block
                             $pieces[0] = str_replace('@testurl'.$reg2.'@endtesturl', Page::testUrl($email,$slug) , $pieces[0]);
+                            if(request()->get('dump2'))
+                            dd(Page::testUrl($email,$slug));
                         }
 
                         if(request()->get('dump'))
