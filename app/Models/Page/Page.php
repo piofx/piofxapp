@@ -389,7 +389,7 @@ class Page extends Model
                             $pieces[0] = str_replace('@testurl'.$reg2.'@endtesturl', Page::testUrl($email,$slug) , $pieces[0]);
                         }
 
-                        if($request->get('dump'))
+                        if(request()->get('dump'))
                             dd($slug);
                         $test_attempt = Page::testAttemptCheck($email,$slug);
                     }
