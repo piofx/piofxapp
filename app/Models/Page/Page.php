@@ -226,9 +226,6 @@ class Page extends Model
                     }
                 }
             }
-
-
-            
         }
 
         if(preg_match_all('/@uniqueform+(.*?)@enduniqueform/', $content, $regs))
@@ -372,7 +369,8 @@ class Page extends Model
         }
 
 
-         if(preg_match_all('/@testapi+(.*?)@endtestapi/', $content, $regs))
+
+        if(preg_match_all('/@testapi+(.*?)@endtestapi/', $content, $regs))
         {
             $email = \Auth::user()->email;
 
@@ -390,6 +388,9 @@ class Page extends Model
                             // remove the @testslug block
                             $pieces[0] = str_replace('@testurl'.$reg2.'@endtesturl', Page::testUrl($email,$slug) , $pieces[0]);
                         }
+
+                        if($request->get('dump'))
+                            dd($slug);
                         $test_attempt = Page::testAttemptCheck($email,$slug);
                     }
 
