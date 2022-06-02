@@ -30,7 +30,7 @@ class OrderController extends Controller
 
         if($order){
             if ($payment_status=='Credit') {
-            $order->status = 1;
+                $order->status = 1;
             }else{
                 $order->status = 2;
             }

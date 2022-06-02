@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Core\Client;
 use App\Models\Core\Referral;
 use App\Models\Core\Contact;
+use App\Models\Core\Order;
 use App\Models\Page\Module;
 use App\Models\Page\Theme;
 use App\Models\Page\Asset;
@@ -58,7 +59,6 @@ class Page extends Model
      * Refresh the cache data
      *
      */
-
     public function refreshCache($theme_id){
 
         $page = $this;
@@ -255,6 +255,81 @@ class Page extends Model
                         $content = str_replace('@uniqueform'.$reg.'@enduniqueform', $pieces[1] , $content);  
                 
                     }
+                }
+            }
+            
+        }
+
+        if(preg_match_all('/@buy+(.*?)@endbuy/', $content, $regs))
+        {
+            $user_id = \Auth::user()->id;
+
+ 
+            foreach ($regs[1] as $reg){
+                $variable = trim($reg);
+                if (strpos($variable, '@buyelse') !== false) {
+                    $pieces = explode('@buyelse',$variable);
+                    $price = 0;
+                    $validity = 12;
+                    $purpose = '';
+                    $product='default';
+                    if(preg_match_all('/@price+(.*?)@endprice/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $price = trim($reg2);
+                        }
+                        $pieces[0] = str_replace('@price'.$reg2.'@endprice', '' , $pieces[0]);
+                    }
+
+                    if(preg_match_all('/@validity+(.*?)@endvalidity/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $validity = trim($reg2);
+                        }
+                        $pieces[0] = str_replace('@validity'.$reg2.'@endvalidity', '' , $pieces[0]);
+                    }
+
+                    if(preg_match_all('/@purpose+(.*?)@endpurpose/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $purpose = trim($reg2);
+                        }
+                        $pieces[0] = str_replace('@purpose'.$reg2.'@endpurpose', '' , $pieces[0]);
+                    }
+
+                    if(preg_match_all('/@product+(.*?)@endproduct/', $pieces[0], $regs2))
+                    {
+                        foreach ($regs2[1] as $reg2){
+                            $product = trim($reg2);
+                        }
+                        $pieces[0] = str_replace('@product'.$reg2.'@endproduct', '' , $pieces[0]);
+                    }
+
+                    $order = Order::where('user_id',$user_id)->where('product',$product)->orderBy('id','desc')->first();
+
+                    $buyurl = route('product.order').'?purpose='.$purpose.'&txn_amount='.$price.'&validity='.$validity.'&product='.$product.'&redirect_url='.url()->current();
+                    if($order){
+                        $pieces[0] = str_replace("@buyurl",$buyurl,$pieces[0]);
+                        if($order->status==1)
+                        {
+                            $pieces[1] = str_replace("@buyalert",'<div class="alert alert-success mb-3">Your product is activated!</div>',$pieces[1]);
+                            $pieces[1] = str_replace("@buyurl",'',$pieces[1]);
+                            $content = str_replace('@buy'.$reg.'@endbuy', $pieces[1] , $content);
+                        }else if($order->status == 0){
+                            $pieces[0] = str_replace("@buyalert",'<div class="alert alert-danger mb-3">Your payment is not completed! Retry!</div>',$pieces[0]);
+                            $content = str_replace('@buy'.$reg.'@endbuy', $pieces[0] , $content);
+                        }else if($order->status==2){
+                            $pieces[0] = str_replace("@buyalert",'<div class="alert alert-warning mb-3">Your payment failed! Retry!</div>',$pieces[0]);
+                            $content = str_replace('@buy'.$reg.'@endbuy', $pieces[0] , $content);
+                        }
+                        
+                    }else{
+                        $pieces[0] = str_replace("@buyalert",'',$pieces[0]);
+                        $pieces[0] = str_replace("@buyurl",$buyurl,$pieces[0]);
+                        $content = str_replace('@buy'.$reg.'@endbuy', $pieces[0] , $content);
+                    }
+
+                    
                 }
             }
             
