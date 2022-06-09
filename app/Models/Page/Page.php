@@ -175,6 +175,7 @@ class Page extends Model
             $content = str_replace('@rurl',  $rurl , $content);
         }
         
+       
 
         if(preg_match_all('/@loginpopup+(.*?)@endloginpopup/', $content, $regs))
         {
@@ -226,6 +227,14 @@ class Page extends Model
                     }
                 }
             }
+
+             if(preg_match_all('/@redirect+(.*?)@endredirect/', $content, $regs))
+                {
+                    foreach ($regs[1] as $reg){
+                        $this->redirected = trim($reg);
+                        return $this;
+                    }
+                }
         }
 
         if(preg_match_all('/@uniqueform+(.*?)@enduniqueform/', $content, $regs))
