@@ -285,6 +285,10 @@ class AdminController extends Controller
                         
         }
 
+        // only admin can access
+        \Auth::user()->onlyAdminAccess();
+
+
         return view('apps.Core.Admin.settings')
             ->with('componentName',$this->componentName);
     }

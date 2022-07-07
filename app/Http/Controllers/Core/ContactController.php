@@ -56,7 +56,9 @@ class ContactController extends Controller
         adminMetaTitle('Contact Form');
 
         // authorize the app
-        $this->authorize('viewAny', $obj);
+         // only admin can access
+        \Auth::user()->onlyAdminAccess();
+        
         //load user for personal listing
         $user = Auth::user();
         //remove html data in request params (as its clashing with pagination)

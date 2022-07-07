@@ -147,9 +147,11 @@
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
                   <a href="{{ route('Theme.show',request()->get('client.theme.id'))}}"  class="btn btn-primary "><i class="la la-eye"></i> view</a>
+                  @if(\Auth::user()->isAdmin())
                   <a href="{{ route('Theme.edit',request()->get('client.theme.id'))}}"  class="btn btn-success "><i class="la la-gear"></i> Settings</a>
 
                   <button type="button" class="btn btn-warning "><i class="la la-files-o"></i> Data</button>
+                  @endif
                 </div>
               </div>
 

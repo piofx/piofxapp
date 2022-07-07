@@ -18,6 +18,7 @@
    </a>
    @endif
 
+   @if(\Auth::user()->isAdmin())
    @if($appid)
    <a href="{{ route($module.'.edit',[$appid,$id]) }}" class="btn btn-warning"  >
     	<i class="flaticon-edit"></i> Edit
@@ -28,9 +29,12 @@
    </a>
    @endif
 
+   
    <a href="#" class="btn btn-danger"  data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" >
     	<i class="flaticon-delete"></i> Delete
 	 </a>
+    @endif
+
 	 @endcan
    </div>
   </div>

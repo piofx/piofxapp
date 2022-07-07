@@ -98,7 +98,9 @@
         <a href="{{ route('Asset.index',$app->id)}}?filter=images" class="list-group-item list-group-item-action @if(request()->get('filter') =='images') active @endif">Images</a>
         <a href="{{ route('Asset.index',$app->id)}}?filter=fonts" class="list-group-item list-group-item-action @if(request()->get('filter') =='fonts') active @endif">fonts</a>
       </div>
+      @if(\Auth::user()->isAdmin())
       <a href="" class="btn btn-warning  w-100 my-3" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-cloud"></i> Upload</a>
+      @endif
     </div>
   </div>
   

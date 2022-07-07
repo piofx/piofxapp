@@ -46,7 +46,8 @@ class UserController extends Controller
         adminMetaTitle('Users');
 
         // authorize the app
-        $this->authorize('viewAny', $obj);
+         // only admin can access
+        \Auth::user()->onlyAdminAccess();
         //load user for personal listing
         $user = Auth::user();
         // retrive the listing

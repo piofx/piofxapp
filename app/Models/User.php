@@ -134,6 +134,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function onlyAdminAccess(){
+        if(\Auth::user())
+        {
+            if(\Auth::user()->role != 'superadmin' &&  \Auth::user()->role != 'agencyadmin' && \Auth::user()->role != 'clientadmin')
+                abort('403','Only Admin can access this page!');
+        }else{
+            abort('403','Login to view the page');
+        }
+    }
+
     public function processForm($data){
         $d = [];
         $form = explode(',',$data);

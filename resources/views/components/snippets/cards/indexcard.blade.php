@@ -20,6 +20,7 @@
            <span><i class="flaticon2-search-1 icon-md"></i></span>
          </div>
        </div>
+       @if(\Auth::user()->isAdmin())
          <div class="col-12 col-md-6">
           @if($appid)
           <a href="{{ route($module.'.create',$appid) }}" class="btn btn-primary mt-1 mt-md-0"  >
@@ -31,6 +32,7 @@
           </a>
           @endif
         </div>
+        @endif
       </div>
     </form>
     <!--end::Form-->

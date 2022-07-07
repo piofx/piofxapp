@@ -46,6 +46,8 @@
            <span><i class="flaticon2-search-1 icon-md"></i></span>
          </div>
        </form>
+
+       @if(\Auth::user()->isAdmin())
                       <a href="{{ route('Page.create',$app->id)}}" class="btn btn-outline-success font-weight-bolder font-size-sm">
                       <span class="svg-icon "><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -53,6 +55,7 @@
         <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"/>
     </g>
 </svg><!--end::Svg Icon--></span>New</a>
+    @endif
                     </div>
                   </div>
                   <!--end::Header-->
@@ -104,11 +107,15 @@
 
                             <td class="text-right pr-0">
                               <div class="d-flex  float-right">
+
+
                          <!-- View Button -->
                         <form action="{{ route('Page.show',[$app->id,$obj->id]) }}">
                             <button type="submit" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-eye m-0"></i></button>
                         </form>
                         <!-- End View Button -->
+
+                        @if(\Auth::user()->isAdmin())
                         <!-- Edit Button -->
                         <form action="{{ route('Page.edit',[$app->id,$obj->id]) }}">
                             <button type="submit" class="btn btn-sm btn-default btn-text-primary btn-hover-success btn-icon mr-2"><i class="fas fa-edit m-0"></i></button>
@@ -118,6 +125,8 @@
                         <!-- Confirm Delete Modal Trigger -->
                         <a href="#" data-toggle="modal" class="btn btn-sm btn-default btn-text-primary btn-hover-danger btn-icon mr-2" data-target="#staticBackdrop-{{$obj->id}}"><i class="fas fa-trash-alt m-0"></i></a>
                         <!-- End Confirm Delete Modal Trigger -->
+
+                        @endif
 
                         <!-- Confirm Delete Modal -->
                         <div class="modal fade" id="staticBackdrop-{{$obj->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">

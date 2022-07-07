@@ -42,6 +42,9 @@ class StatisticsController extends Controller
         $pagesData = null;
         $selector = "3Months";
 
+         // only admin can access
+        \Auth::user()->onlyAdminAccess();
+        
         if($request->input('selector')){
             $selector = $request->input('selector');
         }

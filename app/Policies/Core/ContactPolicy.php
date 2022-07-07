@@ -28,7 +28,7 @@ class ContactPolicy
      public function viewAny(User $user,Contact $contact)
     {
 
-         if($user->checkRole(['superadmin','superdeveloper','agencyadmin','agencydev','clientadmin','clientdeveloper','clientmanager','clientmoderator']))
+         if($user->checkRole(['superadmin','superdeveloper','agencyadmin','agencydev','clientadmin','clientmanager','clientmoderator']))
             return true;
 
         return false;
@@ -42,7 +42,7 @@ class ContactPolicy
      public function view(User $user,Contact $contact)
     {
 
-        if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientdeveloper','clientmanager','clientmoderator'])))
+        if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientmanager','clientmoderator'])))
             return true;
         elseif(($contact->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydev','agencymanager','agencymoderator'])))
             return true;
@@ -75,7 +75,7 @@ class ContactPolicy
      */
     public function edit(User $user,Contact $contact)
     { 
-       if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientdeveloper','clientmanager','clientmoderator']))){
+       if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientmanager','clientmoderator']))){
 
             if($user->checkRole(['clientadmin','clientmanager','clientmoderator']) && $user->id == $contact->user_id)
                 return true;
@@ -102,7 +102,7 @@ class ContactPolicy
     public function update(User $user,Contact $contact)
     { 
 
-        if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientdeveloper','clientmanager','clientmoderator']))){
+        if(($contact->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientmanager','clientmoderator']))){
 
             if($user->checkRole(['clientadmin','clientmanager','clientmoderator']) && $user->id == $contact->user_id)
                 return true;

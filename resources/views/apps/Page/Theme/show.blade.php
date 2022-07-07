@@ -54,8 +54,10 @@
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
                   <a href="{{ route('Theme.page',$obj->id)}}"  class="btn btn-primary "><i class="la la-eye"></i> preview</a>
+                   @if(\Auth::user()->isAdmin())
                   <a href="{{ route('Theme.edit',$obj->id)}}"  class="btn btn-success "><i class="la la-gear"></i> Settings</a>
                   	 <a href="#"  class="btn btn-danger " data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete"><i class="la la-trash"></i> Delete</a>
+                  	@endif
 
                 </div>
               </div>
@@ -118,6 +120,8 @@
 				  </div>
 				</div>
 
+				 @if(\Auth::user()->isAdmin())
+
 					<div class="row">
         			<div class="col-12 col-md-6">
         				 <!--begin::upload element-->
@@ -170,6 +174,8 @@
         			</div>
         		</div>
         	</div>
+
+
         	@env('local')
         	<div class="col-12 col-md-4">
         		<div class="card mb-0">
@@ -291,7 +297,9 @@
         	</div>
         	@endenv
         	
+        	@endif
         </div>
+
 
 
     	</div>
