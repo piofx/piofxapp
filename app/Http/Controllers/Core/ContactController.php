@@ -57,8 +57,14 @@ class ContactController extends Controller
 
         // authorize the app
          // only admin can access
-        \Auth::user()->onlyAdminAccess();
-        
+        if(\Auth::user())
+        {
+            if(\Auth::user()->role != 'superadmin' &&  \Auth::user()->role != 'agencyadmin' && \Auth::user()->role != 'clientadmin' && \Auth::user()->role != 'clientmoderator')
+                abort('403','Only Admin can access this page!');
+        }else{
+            abort('403','Login to view the page');
+        }
+
         //load user for personal listing
         $user = Auth::user();
         //remove html data in request params (as its clashing with pagination)
