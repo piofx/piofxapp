@@ -22,7 +22,7 @@
 	<!--end::Alert-->
 
 	<!--begin::Titlecard-->
-	<x-snippets.cards.titlecard :title="$obj->name" :id="$obj->id" :module="$app->module" :obj="$obj" />
+	<x-snippets.cards.titlecardcontact :title="$obj->name" :id="$obj->id" :module="$app->module" :obj="$obj" />
 	<!--end::Titlecard-->
 
 
