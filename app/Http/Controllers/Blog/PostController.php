@@ -79,7 +79,8 @@ class PostController extends Controller
             $objs = Cache::get('posts_'.request()->get('client.id'));
             if(!$objs){
                 // Retrieve all posts
-                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('15');
+                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("created_at", 'desc')->paginate('15');
+                
                 Cache::forever('posts_'.request()->get('client.id'), $objs);
             }
         }
@@ -284,6 +285,12 @@ class PostController extends Controller
         // Store the records
         $obj = $obj->create($request->all() + ['client_id' => request()->get('client.id'), 'agency_id' => request()->get('agency.id'), 'user_id' => auth()->user()->id]);
         
+        if(!empty($request->input('published_at'))){
+            $published_at = Carbon::parse($request->input('published_at'));
+            $obj->created_at = $published_at;
+            $obj->save();
+        }
+
         if($request->input('tag_ids')){
             foreach($request->input('tag_ids') as $tag_id){
                 if(is_numeric($tag_id)){
@@ -682,6 +689,13 @@ class PostController extends Controller
 
         //update the resource
         $obj->update($request->all() + ['client_id' => request()->get('client.id'), 'agency_id' => request()->get('agency.id'), 'user_id' => auth()->user()->id]);
+
+        if(!empty($request->input('published_at'))){
+            $published_at = Carbon::parse($request->input('published_at'));
+            $obj->created_at = $published_at;
+            $obj->save();
+        }
+
         Cache::forget('post_'.request()->get('client.id').'_'.$obj->slug);
 
         $obj->tags()->detach();
