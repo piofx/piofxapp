@@ -777,6 +777,7 @@ class Page extends Model
 
         $obj = json_decode(Storage::disk('public')->get('devmode/'.$theme_id.'/data/page_'.$page_slug.'.json'));
         $content = Storage::disk('public')->get('devmode/'.$theme_id.'/code/pages/'.$page_slug.'.php');
+        
 
 
         $settings = json_decode(Storage::disk('public')->get('devmode/'.$theme_id.'/code/settings/page_'.$page_slug.'.json'));
