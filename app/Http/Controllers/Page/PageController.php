@@ -136,7 +136,7 @@ class PageController extends Controller
         $this->authorize('view', $obj);
 
          //save settings if any
-        $obj->saveSettings();
+        $obj->saveSettings($theme_id);
 
         //load settings
         $settings = json_decode($obj->settings);
@@ -425,6 +425,8 @@ class PageController extends Controller
                 echo "1";
                 dd();
             }
+
+
 
             //open preview
             if($request->get('preview')){

@@ -744,7 +744,7 @@ class Page extends Model
    * Get the user that owns the page.
    *
    */
-      public function saveSettings()
+      public function saveSettings($id=null)
       {
           $data = request()->all();
           $settings = new Module;
@@ -761,6 +761,8 @@ class Page extends Model
             $this->save();
             $this->processHtml();
           }
+
+          $this->refreshCache($id);
           
       }
 
