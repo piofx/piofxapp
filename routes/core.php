@@ -25,6 +25,10 @@ Route::get('/admin/apps', [AdminController::class, 'apps'])
 Route::get('/admin/email', [AdminController::class, 'sampletestemail'])
 		->middleware(['auth']);
 
+//whatsapp messages
+Route::get('/admin/whatsapp', [AdminController::class, 'whatsapp'])
+		->middleware(['auth'])->name('whatsapp');
+
 // Settings Routes
 Route::get('/admin/gsettings', [AdminController::class, 'gsettings'])
 		->middleware(['auth'])->name('gsettings');

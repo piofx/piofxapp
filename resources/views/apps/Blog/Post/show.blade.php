@@ -220,7 +220,9 @@
 
                         @if(!empty($obj->excerpt))
                         <div style="font-size: 1.2rem; line-height: 2rem;" >
+                            <div class="blog_class">
                            <p class="mt-3"> {{ $obj->excerpt }}</p>
+                       </div>
                         </div>
                         @endif
 
@@ -359,6 +361,7 @@
                     @endphp
 
                     <div style="font-size: 1.2rem; line-height: 2rem;">
+                        <div class="blog_class">
                         @if($obj->visibility == "private")
                             @if(auth()->user())
                                 @php
@@ -387,6 +390,7 @@
                                 {!! $obj->content !!}
                             @endif
                         @endif
+                    </div>
                     </div>
 
                     <!-- Link -->

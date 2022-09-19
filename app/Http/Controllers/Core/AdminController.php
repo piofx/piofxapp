@@ -37,6 +37,56 @@ class AdminController extends Controller
     }
 
 
+    //whatsapp message
+    public function whatsapp(){
+
+        if(request()->get('send')==1){
+            
+
+            $url = "https://graph.facebook.com/v13.0/108028075368724/messages";
+            $token = 'EAAK0BmKuQgcBAOfXT8HX7DRqZBZAG6UcacZA9GlzjVUBSdRif3oVMVJUMYyo53ZAWjd2n31N76D9ET3HvVJ51GaeMNFzs0FGmSjOhz4uxgLfh1AzI3CnKmIb5gnrt46beZAfnkuM1RoP24P9dUcLwpDYZCxLHPZAj0cQkT52rku4KxHHtG0woB1BF2HriJVf4rQwqZBwFxAMqNc55ZAbbxDVUpI9vMvnH5Y8ZD';
+            $phone = '918688079590';
+            $template = 'ielts_kt_2';
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => $url,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS =>'{
+                "messaging_product": "whatsapp",
+                "to": '.$phone.',
+                "type": "template",
+                "template": {
+                    "name": "'.$template.'",
+                    "language": {
+                        "code": "en_US"
+                    }
+                }
+            }',
+              CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer '.$token
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            echo $response;
+            dd(request()->all());
+
+        }
+        return view('apps.Core.Admin.whatsapp')
+            ->with('app',$this)
+            ->with('componentName',$this->componentName);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
