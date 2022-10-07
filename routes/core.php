@@ -15,6 +15,10 @@ Route::get('/admin', [AdminController::class, 'index'])
 		->middleware(['auth'])->name('dashboard');
 Route::get('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
+
+Route::get('/calltrigger', [AdminController::class, 'trigger'])
+		->name('trigger');
+
 Route::post('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
 Route::get('/admin/tracker/user/{user}', [AdminController::class, 'user'])

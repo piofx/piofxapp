@@ -36,6 +36,22 @@ class AdminController extends Controller
             ->send(new EmailForQueuing($details));
     }
 
+    // capture call trigger
+    public function trigger(){
+        $filename = 'samplecall.json';
+        if(request()->get('data')){
+            
+            Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+        }else{
+            if(Storage::disk('s3')->exists('calltrigger/'.$filename)){
+                $data = Storage::disk('s3')->get('calltrigger/'.$filename);
+                dd($data);
+            }else{
+                echo "no data yet";
+                dd(' ');
+            }
+        }
+    }
 
     //whatsapp message
     public function whatsapp(){
