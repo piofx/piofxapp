@@ -41,7 +41,7 @@ class AdminController extends Controller
         $filename = 'samplecall.json';
         if(request()->get('data')){
             $obj = request()->get('data');
-            Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
             
         }else{
             if(Storage::disk('s3')->exists('calltrigger/'.$filename)){
