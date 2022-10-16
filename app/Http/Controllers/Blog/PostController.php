@@ -506,6 +506,8 @@ class PostController extends Controller
 
         // change meta title
         $title = $obj->meta_title;
+
+        //dd($obj->meta_title);
        
         if($title)
             updateMetaTitle($title.' | '.request()->get('client.name'));
