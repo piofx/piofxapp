@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         /* core policies */
         'App\Models\Core\Admin' => 'App\Policies\Core\AdminPolicy',
         'App\Models\Core\Agency' => 'App\Policies\Core\AgencyPolicy',
+        'App\Models\Core\Call' => 'App\Policies\Core\CallPolicy',
         'App\Models\Core\Client' => 'App\Policies\Core\ClientPolicy',
         'App\Models\Core\Contact' => 'App\Policies\Core\ContactPolicy',
         'App\Models\User' => 'App\Policies\Core\UserPolicy',

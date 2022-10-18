@@ -39,19 +39,18 @@ class AdminController extends Controller
     // capture call trigger
     public function trigger(){
         $filename = 'samplecall.json';
-        if(request()->get('data')){
-            $obj = request()->get('data');
-            Storage::disk('s3')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
-            
-        }else{
-            if(Storage::disk('s3')->exists('calltrigger/'.$filename)){
+        $obj = request()->all();
+        Storage::disk('s3')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+        
+    }
+
+    // capture call trigger
+    public function triggerview(){
+        $filename = 'samplecall.json';
+        if(Storage::disk('s3')->exists('calltrigger/'.$filename)){
                 $data = Storage::disk('s3')->get('calltrigger/'.$filename);
                 dd($data);
-            }else{
-                echo "no data yet";
-                dd(' ');
             }
-        }
     }
 
     //whatsapp message
@@ -60,10 +59,10 @@ class AdminController extends Controller
         if(request()->get('send')==1){
             
 
-            $url = "https://graph.facebook.com/v13.0/108028075368724/messages";
-            $token = 'EAAK0BmKuQgcBAOfXT8HX7DRqZBZAG6UcacZA9GlzjVUBSdRif3oVMVJUMYyo53ZAWjd2n31N76D9ET3HvVJ51GaeMNFzs0FGmSjOhz4uxgLfh1AzI3CnKmIb5gnrt46beZAfnkuM1RoP24P9dUcLwpDYZCxLHPZAj0cQkT52rku4KxHHtG0woB1BF2HriJVf4rQwqZBwFxAMqNc55ZAbbxDVUpI9vMvnH5Y8ZD';
-            $phone = '918688079590';
-            $template = 'ielts_kt_2';
+            $url = "https://graph.facebook.com/v13.0/102903359277453/messages";
+            $token = 'EAAK0BmKuQgcBAAnGj9qbUZANSZAQMmp1ocnDWpNdqDqFWe0PIuCiFcZALygZBwiDgat9N0kfDv2ohAcVByhR01bjFmStzzXaLnjK6w5yZAVChxjv0JvNmYUP1gZCDRIpfXYN3X4JUOMpxtBPzsMtK6HL20r14UQzH1pZAVQ8uZA2wAQNz1eiWoYp8ZA2HrNSMFkKFF2ZACvxuMIgZDZD';
+            $phone = '919515125110';
+            $template = 'hello_world';
             $curl = curl_init();
             curl_setopt_array($curl, array(
               CURLOPT_URL => $url,
@@ -82,7 +81,18 @@ class AdminController extends Controller
                     "name": "'.$template.'",
                     "language": {
                         "code": "en_US"
-                    }
+                    },
+                     "components": [
+                      {
+                        "type": "body",
+                        "parameters": [
+                          {
+                            "type": "text",
+                            "text": "34567"
+                          }
+                        ]
+                      }
+                    ]
                 }
             }',
               CURLOPT_HTTPHEADER => array(

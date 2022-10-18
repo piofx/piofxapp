@@ -9,6 +9,7 @@ use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Core\StatisticsController;
 use App\Http\Controllers\Core\OrderController;
 use App\Http\Controllers\Core\ReferralController;
+use App\Http\Controllers\Core\CallController;
 
 /* Admin routes */
 Route::get('/admin', [AdminController::class, 'index'])
@@ -16,7 +17,7 @@ Route::get('/admin', [AdminController::class, 'index'])
 Route::get('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
 
-Route::get('/calltrigger', [AdminController::class, 'trigger'])
+Route::get('/calltrigger', [AdminController::class, 'triggerview'])
 		->name('trigger');
 Route::post('/calltrigger', [AdminController::class, 'trigger'])
 		->name('trigger');
@@ -81,6 +82,26 @@ Route::delete('/admin/client/{client}', [ClientController::class, 'destroy'])
 		->middleware(['auth'])->name('Client.destroy');
 Route::get('/admin/settings', [ClientController::class, 'edit'])
 		->middleware(['auth'])->name('Client.settings');
+
+/* Call App routes */
+Route::get('/admin/call', [CallController::class, 'index'])
+		->middleware(['auth'])->name('Call.index');
+Route::get('/admin/call/create', [CallController::class, 'create'])
+		->middleware(['auth'])->name('Call.create');
+Route::get('/admin/call/upload', [CallController::class, 'upload'])
+		->middleware(['auth'])->name('Call.upload');
+Route::post('/admin/call/upload', [CallController::class, 'upload'])
+		->middleware(['auth'])->name('Call.upload');
+Route::get('/admin/call/{call}', [CallController::class, 'show'])
+		->middleware(['auth'])->name('Call.show');
+Route::get('/admin/call/{call}/edit', [CallController::class, 'edit'])
+		->middleware(['auth'])->name('Call.edit');
+Route::post('/admin/call', [CallController::class, 'store'])
+		->middleware(['auth'])->name('Call.store');
+Route::put('/admin/call/{call}', [CallController::class, 'update'])
+		->middleware(['auth'])->name('Call.update');
+Route::delete('/admin/call/{call}', [CallController::class, 'destroy'])
+		->middleware(['auth'])->name('Call.destroy');
 
 
 /* Contacts routes */
