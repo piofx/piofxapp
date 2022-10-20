@@ -40,22 +40,62 @@ class CallController extends Controller
         $caller_role = client('caller_role');
         $caller_center = client('caller_center');
 
-        foreach($caller_role as $c=>$role){
-            if(isset($adata[$c])){
-            $cdata['role'][$role][$c] = $adata[$c];
-            $cdata['all'][$c] = $adata[$c]; 
+    
+
+        foreach($caller_center as $c=>$center){
+
+            if(isset($cdata['center'][$center])){
+                foreach($adata as $a=>$b){
+                    
+                    if($a==$c){
+                        if(isset($b['contacted']))
+                    $cdata['center'][$center]["contacted"] +=$b['contacted'];
+                    if(isset($b['answered']))
+                    $cdata['center'][$center]["answered"] +=$b['answered'];
+                    if(isset($b['status']['Interested']))
+                    $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
+                    if(isset($b['avg_talktime']))
+                    $cdata['center'][$center]["avg_talktime"] +=intval($b['avg_talktime']);
+                    if(isset($b['total_talktime']))
+                    $cdata['center'][$center]["total_talktime"] +=intval($b['total_talktime']);
+                    }
+                    
+                }
+                
             }else{
-            $cdata['role'][$role][$c] = ["contacted"=>0,"answered"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];;
-            $cdata['all'][$c] = ["contacted"=>0,"answered"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];
+                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];
+                 foreach($adata as $a=>$b){
+                        
+                    if($a==$c){
+                        if(isset($b['contacted']))
+                    $cdata['center'][$center]["contacted"] +=$b['contacted'];
+                    if(isset($b['answered']))
+                    $cdata['center'][$center]["answered"] +=$b['answered'];
+                    if(isset($b['status']['Interested']))
+                    $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
+                    if(isset($b['avg_talktime']))
+                    $cdata['center'][$center]["avg_talktime"] +=intval($b['avg_talktime']);
+                    if(isset($b['total_talktime']))
+                    $cdata['center'][$center]["total_talktime"] +=intval($b['total_talktime']);
+                    }
+                    
+                }
+            }
+
+            if(isset($adata[$c])){
+                $cdata['all'][$c] = $adata[$c]; 
+            }else{
+                $cdata['all'][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];
             }
             
         }
+
 
         foreach($caller_center as $c=>$center){
             if(isset($adata[$c]))
             $cdata['center'][$center][$c] = $adata[$c];
             else
-            $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];
+            $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null];
         }
 
 
@@ -63,6 +103,42 @@ class CallController extends Controller
                 ->with('app',$this)
                 ->with('alert',$alert)
                 ->with('data',$cdata);
+    }
+
+     // capture call trigger
+    public function trigger(){
+        $filename = 'samplecall.json';
+        $r = request();
+        $obj = request()->all();
+        $call_center = client('caller_center');
+                $call_phone = client('caller_phone');
+                $call_role = client('caller_role');
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+        $call = new Obj();
+        $call->name = $r->get('name');
+        $call->phone = $r->get('phoneNumber');
+        $call->call_start_date =  date('Y-m-d h:m:s',$r->get('startTime'));
+        $call->duration = $r->get('duration');
+        $call->call_type=$r->get('type');
+        $call->call_tag=$r->get('tag');
+        $call->caller_name = $r->get('calledBy');
+        $cname = $call->caller_name;
+                    if(isset($call_center->$cname))
+                        $call->caller_center = $call_center->$cname;
+                    if(isset($call_phone->$cname))
+                        $call->caller_phone = $call_phone->$cname;
+                    if(isset($call_role->$cname))
+                        $call->caller_role = $call_role->$cname;
+        $call->save();
+    }
+
+    // capture call trigger
+    public function triggerview(){
+        $filename = 'samplecall.json';
+        if(Storage::disk('public')->exists('calltrigger/'.$filename)){
+                $data = Storage::disk('public')->get('calltrigger/'.$filename);
+                dd($data);
+            }
     }
 
     /**
@@ -98,8 +174,12 @@ class CallController extends Controller
                 
                 $last = Obj::orderBy('id','desc')->first();
 
+                $last_time = 0;
                 if($last){
                     $last_time = strtotime($last->call_start_date);
+                }else{
+                    $last = new obj();
+                    $last->phone = '00';
                 }
                 if (($handle = fopen($fpath, "r")) !== FALSE) {
                   while (($data = fgetcsv($handle, 9000, ",")) !== FALSE) {

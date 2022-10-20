@@ -31,17 +31,18 @@
   <x-snippets.cards.basic>
     
         <h3>All Callers</h3>
-        <div class="table-responsive">
+
+        <div class="table-responsive mb-5">
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Contacted</th>
-                <th scope="col">Answered</th>
+                <th scope="col">Outgoing <br>Answered</th>
+                <th scope="col">Incoming <br>Answered</th>
+                <th scope="col">Interested</th>
                 <th scope="col">Avg Talktime</th>
                 <th scope="col">Total Talktime</th>
-                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody class="{{$k=1}}">
@@ -51,10 +52,42 @@
                 <th scope="row">{{ $k++ }}</th>
                 <td>{{ $user }}</td>
                 <td>{{ $d['contacted'] }}</td>
-                <td>{{ $d['answered'] }}</td>
+                <td>@if(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
+                <td>@if(isset($d['status']['Interested'])) {{ $d['status']['Interested'] }} @else 0 @endif</td>
                 <td>{{ $d['avg_talktime'] }}</td>
                 <td>{{ $d['total_talktime'] }}</td>
-                <td>{!! $d['status_str'] !!}</td>
+              </tr>
+              @endforeach      
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Centers</h3>
+
+        <div class="table-responsive mb-5">
+          <table class="table table-bordered mb-0">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Outgoing <br>Answered</th>
+                <th scope="col">Incoming <br>Answered</th>
+                <th scope="col">Interested</th>
+                <th scope="col">Avg Talktime</th>
+                <th scope="col">Total Talktime</th>
+              </tr>
+            </thead>
+            <tbody class="{{$k=1}}">
+              @foreach($data['center'] as $user=>$d) 
+
+              <tr>
+                <th scope="row">{{ $k++ }}</th>
+                <td>{{ $user }}</td>
+                <td>{{ $d['contacted'] }}</td>
+                <td>@if(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
+                <td>@if(isset($d['Interested'])) {{ $d['Interested'] }} @else 0 @endif</td>
+                <td>{{ $d['avg_talktime'] }}</td>
+                <td>{{ $d['total_talktime'] }}</td>
               </tr>
               @endforeach      
             </tbody>

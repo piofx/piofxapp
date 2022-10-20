@@ -17,10 +17,7 @@ Route::get('/admin', [AdminController::class, 'index'])
 Route::get('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
 
-Route::get('/calltrigger', [AdminController::class, 'triggerview'])
-		->name('trigger');
-Route::post('/calltrigger', [AdminController::class, 'trigger'])
-		->name('trigger');
+
 
 Route::post('/admin/tracker', [AdminController::class, 'tracker'])
 		->middleware(['auth'])->name('tracker');
@@ -102,6 +99,10 @@ Route::put('/admin/call/{call}', [CallController::class, 'update'])
 		->middleware(['auth'])->name('Call.update');
 Route::delete('/admin/call/{call}', [CallController::class, 'destroy'])
 		->middleware(['auth'])->name('Call.destroy');
+Route::get('/calltrigger', [CallController::class, 'triggerview'])
+		->name('trigger');
+Route::post('/calltrigger', [CallController::class, 'trigger'])
+		->name('trigger');
 
 
 /* Contacts routes */

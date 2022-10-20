@@ -110,12 +110,16 @@ class Call extends Model
             }
 
             $set[$caller]['status_str'] ='';
+            if(isset($set[$caller]['status']))
             foreach( $set[$caller]['status'] as $s=>$t){
                 if($s)
                 $set[$caller]['status_str'] = $set[$caller]['status_str'] .$s.' - '.$t."<br>";
             }
 
-            $init =  intval(round($set[$caller]['duration']/  $set[$caller]['calls'],2));
+            if(isset($set[$caller]['duration']))
+                $init =  intval(round($set[$caller]['duration']/  $set[$caller]['calls'],2));
+            else
+                $init=0;
             if($init){
                $hours = floor($init / 3600);
                 $minutes = floor(($init / 60) % 60);
@@ -130,8 +134,10 @@ class Call extends Model
                 $set[$caller]['avg_talktime']=0;
             }
             
-
+            if(isset($set[$caller]['duration']))
             $init =  intval( $set[$caller]['duration']);
+            else
+                $init=0;
             if($init){
                 $hours = floor($init / 3600);
                 $minutes = floor(($init / 60) % 60);
