@@ -119,24 +119,25 @@ class CallController extends Controller
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $call = new Obj();
         $call->name = $r->get('name');
+         $call->client_id = $r->get('client.id');
+        $call->agency_id = $r->get('agency.id');
         $call->phone = $r->get('phoneNumber');
         $call->call_start_date =  date('Y-m-d h:m:s',$r->get('startTime'));
         $call->duration = $r->get('duration');
         $call->call_type=$r->get('type');
         $call->call_tag=$r->get('tag');
         $call->caller_name = $r->get('calledBy');
-        $cname = $call->caller_name;
 
         $data = json_decode(json_encode($obj),true);
         $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
-        
-                    // if(isset($call_center->$cname))
-                    //     $call->caller_center = $call_center->$cname;
-                    // if(isset($call_phone->$cname))
-                    //     $call->caller_phone = $call_phone->$cname;
-                    // if(isset($call_role->$cname))
-                    //     $call->caller_role = $call_role->$cname;
+         $cname =  $r->get('calledBy');
+                    if(isset($call_center->$cname))
+                        $call->caller_center = $call_center->$cname;
+                    if(isset($call_phone->$cname))
+                        $call->caller_phone = $call_phone->$cname;
+                    if(isset($call_role->$cname))
+                        $call->caller_role = $call_role->$cname;
         $call->save();
 
         $data = json_decode(json_encode($obj),true);
@@ -149,10 +150,50 @@ class CallController extends Controller
     // capture call trigger
     public function triggerview(){
         $filename = 'samplecall.json';
-        if(Storage::disk('public')->exists('calltrigger/'.$filename)){
+        if(Storage::disk('public')->exists('calltrigger/'.$filename) &request()->get('data')!=1){
                 $data = Storage::disk('public')->get('calltrigger/'.$filename);
                 dd($data);
+        }else{
+            if(request('data')==1){
+                $filename = 'samplecall.json';
+        $r = request();
+        $obj = request()->all();
+        $call_center = client('caller_center');
+                $call_phone = client('caller_phone');
+                $call_role = client('caller_role');
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 0;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+        $call = new Obj();
+        $call->client_id = $r->get('client.id');
+        $call->agency_id = $r->get('agency.id');
+        $call->name = $r->get('name');
+        $call->phone = $r->get('phoneNumber');
+        $call->call_start_date =  date('Y-m-d h:m:s',$r->get('startTime'));
+        $call->duration = $r->get('duration');
+        $call->call_type=$r->get('type');
+        $call->call_tag=$r->get('tag');
+        $call->caller_name = $r->get('calledBy');
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 1;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+        $cname =  $r->get('calledBy');
+                    if(isset($call_center->$cname))
+                        $call->caller_center = $call_center->$cname;
+                    if(isset($call_phone->$cname))
+                        $call->caller_phone = $call_phone->$cname;
+                    if(isset($call_role->$cname))
+                        $call->caller_role = $call_role->$cname;
+        $call->save();
+     
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 2;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+       
             }
+        }
     }
 
     /**
