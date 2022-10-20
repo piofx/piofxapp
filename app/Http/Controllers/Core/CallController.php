@@ -113,7 +113,10 @@ class CallController extends Controller
         $call_center = client('caller_center');
                 $call_phone = client('caller_phone');
                 $call_role = client('caller_role');
-        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 0;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $call = new Obj();
         $call->name = $r->get('name');
         $call->phone = $r->get('phoneNumber');
@@ -123,6 +126,11 @@ class CallController extends Controller
         $call->call_tag=$r->get('tag');
         $call->caller_name = $r->get('calledBy');
         $cname = $call->caller_name;
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 1;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+        
                     // if(isset($call_center->$cname))
                     //     $call->caller_center = $call_center->$cname;
                     // if(isset($call_phone->$cname))
@@ -131,8 +139,11 @@ class CallController extends Controller
                     //     $call->caller_role = $call_role->$cname;
         $call->save();
 
-        $obj['completed'] = 1;
-        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 2;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+        
+        //Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
     }
 
     // capture call trigger
