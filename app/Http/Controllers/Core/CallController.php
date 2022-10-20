@@ -123,13 +123,16 @@ class CallController extends Controller
         $call->call_tag=$r->get('tag');
         $call->caller_name = $r->get('calledBy');
         $cname = $call->caller_name;
-                    if(isset($call_center->$cname))
-                        $call->caller_center = $call_center->$cname;
-                    if(isset($call_phone->$cname))
-                        $call->caller_phone = $call_phone->$cname;
-                    if(isset($call_role->$cname))
-                        $call->caller_role = $call_role->$cname;
+                    // if(isset($call_center->$cname))
+                    //     $call->caller_center = $call_center->$cname;
+                    // if(isset($call_phone->$cname))
+                    //     $call->caller_phone = $call_phone->$cname;
+                    // if(isset($call_role->$cname))
+                    //     $call->caller_role = $call_role->$cname;
         $call->save();
+
+        $obj['completed'] = 1;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
     }
 
     // capture call trigger
