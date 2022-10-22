@@ -24,9 +24,17 @@
   <!--end::Indexcard-->
 
 
-        Filters: <a href="{{ route('Call.index')}}"><span class="badge badge-light">This Month</span></a> <a href="{{ route('Call.index')}}?filter=lastmonth"><span class="badge badge-light">Last Month</span></a> <a href="{{ route('Call.index')}}?filter=overall"><span class="badge badge-light">Over All</span></a>
+        Filters: 
+        <a href="{{ route('Call.index')}}?filter=today"><span class="badge badge-light">Today</span></a> 
+          <a href="{{ route('Call.index')}}?filter=yesterday"><span class="badge badge-light">Yesterday</span></a> 
+          <a href="{{ route('Call.index')}}?filter=thismonth"><span class="badge badge-light">This Month</span></a> 
+          <a href="{{ route('Call.index')}}?filter=lastmonth"><span class="badge badge-light">Last Month</span></a> 
+          
+          <a href="{{ route('Call.index')}}?filter=last7days"><span class="badge badge-light">Last 7 days</span></a> 
+          <a href="{{ route('Call.index')}}?filter=last30days"><span class="badge badge-light">Last 30 days</span></a> 
+          <a href="{{ route('Call.index')}}?filter=overall"><span class="badge badge-light">Over All</span></a>
         <hr>
-        <h3>All Callers <span class="badge badge-primary">@if(request()->get('filter')) {{request()->get('filter') }} @else thismonth @endif</span></h3>
+        <h3>All Callers <span class="badge badge-primary">@if(request()->get('filter')) {{request()->get('filter') }} @else Today @endif</span></h3>
 
         <div class="table-responsive mb-5">
           <table class="table table-bordered mb-0">
@@ -53,8 +61,10 @@
                       {{ ($d['contacted']+$d['answered'] )}} 
                     @elseif(isset($d['answered'])) 
                       {{$d['answered']}} 
-                    @else 
+                    @elseif(isset($d['contacted'])) 
                       {{$d['contacted']}} 
+                    @else
+                      0
                     @endif
                 </td>
                 <td>{{ $d['avg_talktime'] }}</td>

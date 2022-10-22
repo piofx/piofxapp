@@ -42,10 +42,19 @@ class Call extends Model
 
         if($start && $end){
             $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
-        }else if($filter=='thismonth' || $filter==null){
+        }else if($filter=='thismonth' ){
             $data = $this->whereMonth('call_start_date', Carbon::now()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
         }else if($filter=='lastmonth' ){
                $data = $this->whereMonth('call_start_date', '=', Carbon::now()->subMonth()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
+        }else if($filter=='last7days' ){
+               $data = $this->whereDate('call_start_date', Carbon::now()->subDays(7))->get();
+         }else if($filter=='last30days' ){
+               $data = $this->where('call_start_date','>', Carbon::now()->subDays(30))->get();
+        
+        }else if($filter=='today' || $filter==null){
+               $data = $this->whereDay('call_start_date', '=', Carbon::now()->day)->whereMonth('call_start_date', '=', Carbon::now()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
+        }else if($filter=='yesterday' ){
+               $data = $this->whereDay('call_start_date', '=', Carbon::now()->subDay()->day)->whereMonth('call_start_date', '=', Carbon::now()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
         }else if($filter=='overall'){
             $data = $this->get();
         }
