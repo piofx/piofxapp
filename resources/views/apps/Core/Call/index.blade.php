@@ -8,6 +8,8 @@
   @endif
   <!--end::Alert-->
 
+<div class="row">
+  <div class="col-12 col-md-10">
   <!--begin::Indexcard-->
   <div class="card mb-4">
   <div class="card-body bg-light">
@@ -16,13 +18,12 @@
       <a href="/admin/call/upload" class="btn btn-primary float-right">Upload Data</a>
       @endif
     @endif
-    <h2 class="card-title mb-0">Call Statistics</h2>
+    <h2 class="card-title mb-0">Counsellors Dashboard</h2>
   </div>
 </div>
   <!--end::Indexcard-->
 
-  <!--begin::basic card-->
-  <x-snippets.cards.basic>
+
         Filters: <a href="{{ route('Call.index')}}"><span class="badge badge-light">This Month</span></a> <a href="{{ route('Call.index')}}?filter=lastmonth"><span class="badge badge-light">Last Month</span></a> <a href="{{ route('Call.index')}}?filter=overall"><span class="badge badge-light">Over All</span></a>
         <hr>
         <h3>All Callers <span class="badge badge-primary">@if(request()->get('filter')) {{request()->get('filter') }} @else thismonth @endif</span></h3>
@@ -102,10 +103,20 @@
           <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (admissions * 100)</span>
         </div>
 
-        
+    </div>
+    <div class="col-12 col-md-2">
+      <h3 class="mt-5 mt-md-0">Menu</h3>
+      <div class="list-group">
+        <div class="list-group">
+        <a href="{{ route('Call.index')}}" class="list-group-item list-group-item-action active">
+          Dashboard
+        </a>
+        <a href="{{ route('Call.documents')}}" class="list-group-item list-group-item-action">Documents</a>
+        <a href="{{ route('Call.tutorials')}}" class="list-group-item list-group-item-action ">Tutorials</a>
+      </div>
+    </div>
+  </div>
        
-     
-  </x-snippets.cards.basic>
-  <!--end::basic card-->
+
 
 </x-dynamic-component>

@@ -82,6 +82,8 @@ Route::get('/admin/settings', [ClientController::class, 'edit'])
 
 /* Call App routes */
 Route::get('/calls', [CallController::class, 'index'])->name('Call.index');
+Route::get('/calls/documents', [CallController::class, 'documents'])->name('Call.documents');
+Route::get('/calls/tutorials', [CallController::class, 'tutorials'])->name('Call.tutorials');
 Route::get('/admin/call/create', [CallController::class, 'create'])
 		->middleware(['auth'])->name('Call.create');
 Route::get('/admin/call/upload', [CallController::class, 'upload'])

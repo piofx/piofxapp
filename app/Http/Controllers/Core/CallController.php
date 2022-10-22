@@ -137,6 +137,15 @@ class CallController extends Controller
                 ->with('data',$sdata);
     }
 
+    public function documents(){
+        return view('apps.'.$this->app.'.'.$this->module.'.documents')->with('app',$this);
+    }
+
+     public function tutorials(){
+       
+        return view('apps.'.$this->app.'.'.$this->module.'.tutorials')->with('app',$this);
+    }
+
      // capture call trigger
     public function trigger(){
         $filename = 'samplecall.json';
