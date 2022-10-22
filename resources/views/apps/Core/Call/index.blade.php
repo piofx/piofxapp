@@ -59,11 +59,11 @@
             </tbody>
           </table>
         </div>
-
-        <h3>Centers</h3>
+        
+        <h3 class="mt-4">Centers</h3>
 
         <div class="table-responsive mb-5">
-          <table class="table table-bordered mb-0">
+          <table class="table table-bordered mb-5">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -92,6 +92,8 @@
               @endforeach      
             </tbody>
           </table>
+
+          <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (admissions * 100)</span>
         </div>
 
         
