@@ -74,7 +74,7 @@ class Call extends Model
 
 
         foreach($data_callers as $caller=>$callerdata){
-            $set[$caller]['users'] = $callerdata->where('call_tag','!=','unanswered')->unique('phone')->count();
+            $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
      
             foreach($callerdata as $cdata){
 
