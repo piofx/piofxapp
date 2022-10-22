@@ -48,13 +48,7 @@
                 <th scope="row">{{ $k++ }}</th>
                 <td><b>{{ $user }}</b> @if($k<5) <span class="badge badge-warning">Top Performer</span>@endif</td>
                   <td>{{ $d['users'] }}</td>
-                <td>@if(isset($d['answered']) && isset($d['contacted'])) 
-                      {{ ($d['contacted']+$d['answered'] )}} 
-                    @elseif(isset($d['answered'])) 
-                      {{$d['answered']}} 
-                    @else 
-                      {{$d['contacted']}} 
-                    @endif
+                <td>
                 </td>
                 <td>{{ $d['avg_talktime'] }}</td>
                 <td>{{ $d['total_talktime'] }}</td>
