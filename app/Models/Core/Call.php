@@ -74,7 +74,7 @@ class Call extends Model
 
 
         foreach($data_callers as $caller=>$callerdata){
-            $set[$caller]['users'] = $callerdata->where('call_tag','answered')->unique('phone')->count();
+            $set[$caller]['users'] = $callerdata->where('call_tag','!=','unanswered')->unique('phone')->count();
      
             foreach($callerdata as $cdata){
 
@@ -86,7 +86,7 @@ class Call extends Model
                 }
 
                 if($cdata['call_type']=='outgoing'){
-                    if($cdata['call_tag']=='answered'){
+                    if($cdata['duration']!=0){
                         if(isset($set[$caller]['contacted']))
                             $set[$caller]['contacted']++;
                         else
@@ -111,7 +111,7 @@ class Call extends Model
                 }
 
                  if($cdata['call_type']=='incoming'){
-                    if($cdata['call_tag']=='answered'){
+                    if($cdata['duration']!=0){
                         if(isset($set[$caller]['answered']))
                             $set[$caller]['answered']++;
                         else
