@@ -4,6 +4,7 @@ namespace App\Models\Core;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use carbon\carbon;
 
 class Call extends Model
 {
@@ -41,22 +42,49 @@ class Call extends Model
 
         if($start && $end){
             $data = $this->where('created_at','>=',$start)->where('created_at','<=',$end)->get();
-        }else if($filter=='thismonth'){
+        }else if($filter=='thismonth' || $filter==null){
             $data = $this->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', '=', Carbon::now()->year)->get();
-        }else if($filter=='lastmonth'){
+        }else if($filter=='lastmonth' ){
                $data = $this->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->whereYear('created_at', '=', Carbon::now()->year)->get();
-        }else{
+        }else if($filter=='overall'){
             $data = $this->get();
         }
         return $data;
+    }
+
+
+    public function getTime($init){
+        $hours = floor($init / 3600);
+        $minutes = floor(($init / 60) % 60);
+        $seconds = $init % 60;
+        if($hours)
+            $t = $hours.'h '.$minutes.'m '.$seconds.'s';
+        else if($minutes)
+            $t = $minutes.'m '.$seconds.'s';
+        else
+            $t = $seconds.'s'; 
+
+        return $t;
     }
 
     public function analyzeRecords($data){
 
         $set = [];
         $data_callers = $data->groupBy('caller_name');
+
+
         foreach($data_callers as $caller=>$callerdata){
+            $set[$caller]['users'] = $callerdata->where('call_tag','answered')->unique('phone')->count();
+     
             foreach($callerdata as $cdata){
+
+                if(!isset($set[$caller]['Admission']))
+                        $set[$caller]['admission']=0;
+
+                if($cdata['status']=='Admission'){
+                        $set[$caller]['admission']++;
+                }
+
                 if($cdata['call_type']=='outgoing'){
                     if($cdata['call_tag']=='answered'){
                         if(isset($set[$caller]['contacted']))
@@ -94,6 +122,8 @@ class Call extends Model
                         else
                             $set[$caller]['calls'] =1;
 
+                        
+
                         if(isset($set[$caller]['duration']))
                             $set[$caller]['duration'] +=$cdata['duration'];
                         else
@@ -109,6 +139,7 @@ class Call extends Model
 
             }
 
+           
             $set[$caller]['status_str'] ='';
             if(isset($set[$caller]['status']))
             foreach( $set[$caller]['status'] as $s=>$t){
@@ -116,10 +147,16 @@ class Call extends Model
                 $set[$caller]['status_str'] = $set[$caller]['status_str'] .$s.' - '.$t."<br>";
             }
 
-            if(isset($set[$caller]['duration']))
+            $init=0;
+            $set[$caller]['avg_duration']= $avg_minutes  = 0;
+            if(isset($set[$caller]['duration'])){
                 $init =  intval(round($set[$caller]['duration']/  $set[$caller]['calls'],2));
-            else
-                $init=0;
+                $avg_minutes = round($set[$caller]['duration']/  $set[$caller]['calls'],2)/60;
+                $set[$caller]['avg_duration']=$init;
+            }
+
+             $set[$caller]['score'] = intval($set[$caller]['users'] * $avg_minutes) + $set[$caller]['admission'] * 100;
+               
             if($init){
                $hours = floor($init / 3600);
                 $minutes = floor(($init / 60) % 60);
@@ -134,10 +171,13 @@ class Call extends Model
                 $set[$caller]['avg_talktime']=0;
             }
             
-            if(isset($set[$caller]['duration']))
-            $init =  intval( $set[$caller]['duration']);
-            else
-                $init=0;
+            $init=0;
+            $set[$caller]['total_duration']=0;
+            if(isset($set[$caller]['duration'])){
+                $init =  intval( $set[$caller]['duration']);
+                $set[$caller]['total_duration']=$init;
+            }
+         
             if($init){
                 $hours = floor($init / 3600);
                 $minutes = floor(($init / 60) % 60);
