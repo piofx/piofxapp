@@ -18,7 +18,7 @@
       <a href="/admin/call/upload" class="btn btn-primary float-right">Upload Data</a>
       @endif
     @endif
-    <h2 class="card-title mb-0">Counsellors Dashboard</h2>
+    <h2 class="card-title mb-0"><i class="flaticon2-bell-4 text-success"></i> Counsellors Dashboard</h2>
   </div>
 </div>
   <!--end::Indexcard-->
