@@ -41,11 +41,11 @@ class Call extends Model
         $filter = $request->get('filter');
 
         if($start && $end){
-            $data = $this->where('created_at','>=',$start)->where('created_at','<=',$end)->get();
+            $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
         }else if($filter=='thismonth' || $filter==null){
-            $data = $this->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', '=', Carbon::now()->year)->get();
+            $data = $this->whereMonth('call_start_date', Carbon::now()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
         }else if($filter=='lastmonth' ){
-               $data = $this->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->whereYear('created_at', '=', Carbon::now()->year)->get();
+               $data = $this->whereMonth('call_start_date', '=', Carbon::now()->subMonth()->month)->whereYear('call_start_date', '=', Carbon::now()->year)->get();
         }else if($filter=='overall'){
             $data = $this->get();
         }
