@@ -128,6 +128,8 @@ class CallController extends Controller
         foreach($center as $a=>$b){
             $sdata['center'][$a] = $cdata['center'][$a];
         }
+        //update page meta title
+        adminMetaTitle('Counsellors Dashboard');
 
 
         return view('apps.'.$this->app.'.'.$this->module.'.index')
@@ -142,7 +144,7 @@ class CallController extends Controller
     }
 
      public function tutorials(){
-       
+
         return view('apps.'.$this->app.'.'.$this->module.'.tutorials')->with('app',$this);
     }
 
