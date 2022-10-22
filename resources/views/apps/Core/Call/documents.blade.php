@@ -30,6 +30,11 @@
                 <td> PacketPrep Brochure </td>
                 <td> <a href="https://drive.google.com/file/d/1sWL6T9JdGAPfIjfztlXVFyXyCnhKtvE2/view?usp=sharing" class="btn btn-success" target="_blank">View Document</a></td>
               </tr>
+               <tr>
+                <td>3</td>
+                <td> Liquiloans - Student Loan Eligibility </td>
+                <td> <a href="https://drive.google.com/file/d/1BOG5NdwQddEj4VGO8gTwvQEb_rfJOA-M/view?usp=sharing" class="btn btn-success" target="_blank">View Document</a></td>
+              </tr>
             </tbody>
           </table>
         </div>
