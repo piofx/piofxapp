@@ -1,15 +1,6 @@
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
 
-  <!--begin::Breadcrumb-->
-  <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-4 font-size-sm ">
-    <li class="breadcrumb-item">
-      <a href="{{ route('dashboard')}}" class="text-muted">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href=""  class="text-muted">{{ ucfirst($app->module) }}</a>
-    </li>
-  </ul>
-  <!--end::Breadcrumb-->
+  
 
   <!--begin::Alert-->
   @if($alert)
@@ -20,9 +11,12 @@
   <!--begin::Indexcard-->
   <div class="card mb-4">
   <div class="card-body bg-light">
-
-    <a href="/admin/call/upload" class="btn btn-primary float-right">Upload Data</a>
-    <h5 class="card-title mb-0">Call Statistics</h5>
+    @if(\Auth::user())
+      @if(\Auth::user()->isAdmin())
+      <a href="/admin/call/upload" class="btn btn-primary float-right">Upload Data</a>
+      @endif
+    @endif
+    <h2 class="card-title mb-0">Call Statistics</h2>
   </div>
 </div>
   <!--end::Indexcard-->

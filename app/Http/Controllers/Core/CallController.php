@@ -17,7 +17,7 @@ class CallController extends Controller
         // load the app, module and component name to object params
         $this->app      =   'Core';
         $this->module   =   'Call';
-        $this->componentName = componentName('agency');
+        $this->componentName = componentName('agency','plain');
     }
 
     /**
