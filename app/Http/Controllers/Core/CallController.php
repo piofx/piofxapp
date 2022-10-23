@@ -35,99 +35,18 @@ class CallController extends Controller
         // retrive the listing
         $data = $obj->getRecords($request);
 
-        $adata = $obj->analyzeRecords($data);
+        
 
-        $caller_role = client('caller_role');
-        $caller_center = client('caller_center');
 
-        foreach($caller_center as $c=>$center){
-            if(isset($cdata['center'][$center])){
-                foreach($adata as $a=>$b){
-                     if($a==$c){
-                        if(isset($b['contacted']))
-                            $cdata['center'][$center]["contacted"] +=$b['contacted'];
-                        if(isset($b['answered']))
-                            $cdata['center'][$center]["answered"] +=$b['answered'];
-                        if(isset($b['score']))
-                            $cdata['center'][$center]["score"] +=$b['score'];
-                        if(isset($b['users']))
-                            $cdata['center'][$center]["users"] +=$b['users'];
-                        if(isset($b['status']['Interested']))
-                            $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
-                        if(isset($b['avg_duration']))
-                            $cdata['center'][$center]["avg_duration"] +=intval($b['avg_duration']);
-                        if(isset($b['total_duration']))
-                            $cdata['center'][$center]["total_duration"] +=intval($b['total_duration']);
-                         $cdata['center'][$center]["employees"]++;
-                    }
-                }
-                
-            }else{
-                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"users"=>0];
-                 foreach($adata as $a=>$b){
-                        
-                    if($a==$c){
-                        if(isset($b['contacted']))
-                            $cdata['center'][$center]["contacted"] +=$b['contacted'];
-                        if(isset($b['answered']))
-                            $cdata['center'][$center]["answered"] +=$b['answered'];
-                        if(isset($b['score']))
-                            $cdata['center'][$center]["score"] +=$b['score'];
-                        if(isset($b['users']))
-                            $cdata['center'][$center]["users"] +=$b['users'];
-                        if(isset($b['status']['Interested']))
-                            $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
-                        if(isset($b['avg_duration'])){
-                            $cdata['center'][$center]["avg_duration"] +=intval($b['avg_duration']);
-                        }
-                        $cdata['center'][$center]["employees"]++;
-                        if(isset($b['total_duration']))
-                            $cdata['center'][$center]["total_duration"] +=intval($b['total_duration']);
-                    }
-                    
-                }
-
-            }
-
-            if(isset($cdata['center'][$center]["employees"]) && $cdata['center'][$center]["employees"]!=0)
-            $cdata['center'][$center]["score"] = intval($cdata['center'][$center]["score"] / $cdata['center'][$center]["employees"]);
-            else
-                 $cdata['center'][$center]["score"] =0;
-            if(isset($adata[$c])){
-                $cdata['all'][$c] = $adata[$c]; 
-            }else{
-                $cdata['all'][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"score"=>0,"users"=>0];
-            }
-            
+        if(request()->get('entity')){
+            $adata = $obj->analyzeRecordsEntity($data);
+            $sdata = $obj->formulateDataEntity($adata);
+        }
+        else{
+            $adata = $obj->analyzeRecords($data);
+            $sdata = $obj->formulateDataOverall($adata);
         }
 
-
-        foreach($caller_center as $c=>$center){
-            if(isset($adata[$c]))
-            $cdata['center'][$center][$c] = $adata[$c];
-            else
-            $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"score"=>0,"users"=>0];
-        }
-
-        //sorted data
-        $sdata =[]; $center =[]; $all =[];
-        foreach($cdata['center'] as $a=>$b){
-            $center[$a] = $b['score'];
-        }
-        foreach($cdata['all'] as $a=>$b){
-            if(isset($b['score']))
-                $all[$a] = $b['score'];
-            else
-                $all[$a] = 0;
-        }
-        arsort($all);
-        arsort($center);
-        foreach($all as $a=>$b){
-            $sdata['all'][$a] = $cdata['all'][$a];
-        }
-        foreach($center as $a=>$b){
-            $sdata['center'][$a] = $cdata['center'][$a];
-        }
         //update page meta title
         adminMetaTitle('Counsellors Dashboard');
 
