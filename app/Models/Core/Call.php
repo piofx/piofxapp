@@ -401,6 +401,23 @@ class Call extends Model
               
                 $sdata['all'][$date]['score'] = intval($sdata['all'][$date]['score']/$sdata['all'][$date]['employees']);
 
+                if(isset($d['duration'])){
+                   $init = intval(round($d['duration']/  $d['calls'],2));
+                    $hours = floor($init / 3600);
+                    $minutes = floor(($init / 60) % 60);
+                    $seconds = $init % 60;
+                    if($hours)
+                        $t = $hours.'h '.$minutes.'m '.$seconds.'s';
+                    else if($minutes)
+                        $t= $minutes.'m '.$seconds.'s';
+                    else
+                        $t = $seconds.'s'; 
+
+                    $sdata['all'][$date]['avg_talktime'] = $t; 
+                }else{
+                    $sdata['all'][$date]['avg_talktime'] =0;
+                }
+                
             }
 
             $sdata['entity'] = 1;
