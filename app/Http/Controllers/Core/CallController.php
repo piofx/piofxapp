@@ -77,6 +77,9 @@ class CallController extends Controller
         $call_role = client('caller_role');
 
         $data = json_decode(json_encode($obj),true);
+        $data['user'] = $data['assigned']['from'];
+        $data['status'] = $data['userFields']['value'];
+
         $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         
@@ -95,10 +98,13 @@ class CallController extends Controller
         $r = request();
         $obj = request()->all();
         $call_center = client('caller_center');
-                $call_phone = client('caller_phone');
+        $call_phone = client('caller_phone');
                 $call_role = client('caller_role');
 
-        $data = json_decode(json_encode($obj),true);
+        
+
+        $data = json_decode($obj,true);
+        dd($data);
         $data['completed'] = 0;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
       
