@@ -67,6 +67,47 @@ class CallController extends Controller
         return view('apps.'.$this->app.'.'.$this->module.'.tutorials')->with('app',$this);
     }
 
+        // capture call trigger
+    public function itrigger(){
+        $filename = 'isamplecall.json';
+        $r = request();
+        $obj = request()->all();
+        $call_center = client('caller_center');
+        $call_phone = client('caller_phone');
+        $call_role = client('caller_role');
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 1;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+        
+        //Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+    }
+
+        // capture call trigger
+    public function itriggerview(){
+        $filename = 'isamplecall.json';
+        if(Storage::disk('public')->exists('calltrigger/'.$filename) &request()->get('data')!=1){
+                $data = Storage::disk('public')->get('calltrigger/'.$filename);
+                dd($data);
+        }else{
+            if(request('data')==1){
+                $filename = 'isamplecall.json';
+        $r = request();
+        $obj = request()->all();
+        $call_center = client('caller_center');
+                $call_phone = client('caller_phone');
+                $call_role = client('caller_role');
+
+        $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 0;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
+      
+     
+       
+            }
+        }
+    }
+
      // capture call trigger
     public function trigger(){
         $filename = 'samplecall.json';
