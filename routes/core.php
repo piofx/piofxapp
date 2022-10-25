@@ -105,9 +105,9 @@ Route::get('/calltrigger', [CallController::class, 'triggerview'])
 Route::post('/calltrigger', [CallController::class, 'trigger'])
 		->name('trigger');
 Route::get('/icalltrigger', [CallController::class, 'itriggerview'])
-		->name('trigger');
+		->name('itrigger');
 Route::post('/icalltrigger', [CallController::class, 'itrigger'])
-		->name('trigger');
+		->name('itrigger');
 
 
 /* Contacts routes */
