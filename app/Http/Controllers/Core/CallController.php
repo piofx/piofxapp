@@ -77,6 +77,8 @@ class CallController extends Controller
         $call_role = client('caller_role');
 
         $data = json_decode(json_encode($obj),true);
+        $data['completed'] = 3;
+        Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $data['user'] = $data['assigned']['from'];
         $data['status'] = $data['userFields']['value'];
 
