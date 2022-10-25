@@ -84,6 +84,10 @@ class CallController extends Controller
         $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
         $data['interaction_at'] = date('Y-m-d h:m:s',$data['createdAt']);
+
+        $call = Obj::where('phone',$data['phone'])->where('caller_name',$data['caller_name'])->orderBy('id','desc')->first();
+        $call->status = $data['status'];
+        $call->save();
         $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         
