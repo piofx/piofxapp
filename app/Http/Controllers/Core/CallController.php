@@ -79,7 +79,7 @@ class CallController extends Controller
         $data = json_decode(json_encode($obj),true);
         $data['completed'] = 3;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
-        $data['user'] = $data['assigned'][0]['from'];
+        $data['user'] = $data['assigned']['from'];
         $data['status'] = $data['userFields'][0]['value'];
 
         $data['completed'] = 1;
