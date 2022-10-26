@@ -449,9 +449,13 @@ class Call extends Model
 
         $caller_role = client('caller_role');
         $caller_center = client('caller_center');
+        $centers = [];
         foreach($caller_center as $c=>$center){
             if(isset($cdata['center'][$center])){
+                
                 foreach($adata as $a=>$b){
+                    if(!in_array($center, $centers))
+                        array_push($centers,$center);
                      if($a==$c){
                         if(isset($b['contacted']))
                             $cdata['center'][$center]["contacted"] +=$b['contacted'];
@@ -473,8 +477,10 @@ class Call extends Model
                 
             }else{
                 $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"users"=>0];
+                
                  foreach($adata as $a=>$b){
-                        
+                        if(!in_array($center, $centers))
+                        array_push($centers,$center);
                     if($a==$c){
                         if(isset($b['contacted']))
                             $cdata['center'][$center]["contacted"] +=$b['contacted'];
@@ -497,10 +503,7 @@ class Call extends Model
                 }
 
             }
-            if(isset($cdata['center'][$center]["employees"]) && $cdata['center'][$center]["employees"]!=0)
-            $cdata['center'][$center]["score"] = intval($cdata['center'][$center]["score"] / $cdata['center'][$center]["employees"]);
-            else
-                 $cdata['center'][$center]["score"] =0;
+           
             if(isset($adata[$c])){
                 $cdata['all'][$c] = $adata[$c]; 
             }else{
@@ -508,12 +511,24 @@ class Call extends Model
             }
             
         }
-        foreach($caller_center as $c=>$center){
-            if(isset($adata[$c]))
-            $cdata['center'][$center][$c] = $adata[$c];
+
+        foreach($centers as $center){
+            if(isset($cdata['center'][$center]["employees"]) && $cdata['center'][$center]["employees"]!=0)
+            $cdata['center'][$center]["score"] = intval($cdata['center'][$center]["score"] / $cdata['center'][$center]["employees"]);
             else
-            $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"score"=>0,"users"=>0];
+                 $cdata['center'][$center]["score"] =0;
         }
+
+        
+         
+        // foreach($caller_center as $c=>$center){
+        //     if(isset($adata[$c]))
+        //     $cdata['center'][$center][$c] = $adata[$c];
+        //     else
+        //     $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"score"=>0,"users"=>0];
+        // }
+
+       // dd($cdata);
         //sorted data
         $sdata =[]; $center =[]; $all =[];
         foreach($cdata['center'] as $a=>$b){

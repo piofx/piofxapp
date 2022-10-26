@@ -210,7 +210,7 @@
 
                  @if($k<3 && $d['score']>30) <span class="badge badge-info">Top Performer</span>@endif</td>
                 <td>{{ $d['users'] }}</td>
-                <td>@if(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
+                <td>@if(isset($d['answered']) && isset($d['contacted'])) {{ ($d['contacted']+$d['answered'] )}}  @elseif(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
                 <td>@if(isset($d['employees']) && $d['employees']!=0) {{ $obj->getTime(round($d['avg_duration']/$d['employees'],2)) }} @else 0 @endif </td>
                 <td>{{ $obj->getTime($d['total_duration']) }}</td>
                 <td>{{ $d['admission'] }}</td>
