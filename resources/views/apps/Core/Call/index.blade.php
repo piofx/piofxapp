@@ -39,11 +39,12 @@
 
             @if(!request()->get('entity'))
               All Callers 
-              <span class="badge badge-primary">
+              <span class="badge badge-primary {{date_default_timezone_set("Asia/Kolkata")}}">
               @if(request()->get('filter')) {{request()->get('filter') }} 
-              @else Today 
+              @else Today  
               @endif
               </span>
+              <small class="float-right d-none d-md-block">{{date("l jS \of F Y h:i:s A")}}</small>
             @else
               @if(isset($data['entity_center']))
                 Center Performance
