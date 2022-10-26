@@ -101,7 +101,7 @@ class Call extends Model
 
 
         if($item=='caller')
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->where('caller_name',$entity)->get()->groupBy('date');
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->where('call_start_date','>', Carbon::now()->subDays(30))->where('caller_name',$entity)->get()->groupBy('date');
         else{
 
             
@@ -110,7 +110,7 @@ class Call extends Model
                     array_push($callers,$caller);
                 }
             }
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->whereIn('caller_name',$callers)->get()->groupBy('date');
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->where('call_start_date','>', Carbon::now()->subDays(30))->whereIn('caller_name',$callers)->get()->groupBy('date');
             
         }
         

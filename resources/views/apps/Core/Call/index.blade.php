@@ -55,7 +55,7 @@
               {{request()->get('entity')}} 
               </span>
               <span class="badge badge-warning">
-                {{\carbon\Carbon::parse($data['date'])->format('M')}}
+                Last 30 days
               </span>
             @endif
 
