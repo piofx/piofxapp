@@ -367,6 +367,7 @@ class Call extends Model
                 $set[$caller]['total_talktime']=0;
             }
         }
+
         return $set;
     }
 
@@ -380,7 +381,6 @@ class Call extends Model
                 $item ='caller';
                 break;
             }
-
             if($entity ==$center){
                 $item='center';
                 break;
@@ -390,17 +390,11 @@ class Call extends Model
         $sdata['all'] = $adata;
         $sdata['center'] = [];
         if($item=='caller'){
-            
-            
             $sdata['entity'] = 1;
-
-            
         }else{
             //center
             foreach($sdata['all'] as $date=>$d){
-              
                 $sdata['all'][$date]['score'] = intval($sdata['all'][$date]['score']/$sdata['all'][$date]['employees']);
-
                 if(isset($d['duration'])){
                    $init = intval(round($d['duration']/  $d['calls'],2));
                     $hours = floor($init / 3600);
@@ -417,12 +411,9 @@ class Call extends Model
                 }else{
                     $sdata['all'][$date]['avg_talktime'] =0;
                 }
-                
             }
-
             $sdata['entity'] = 1;
             $sdata['entity_center'] = 1;
-
         }
 
         $counter = array("high"=>0,"low"=>0,"excellent"=>0,"decent"=>0);
@@ -439,9 +430,6 @@ class Call extends Model
                 }
             }
             $sdata['counter'] =$counter; 
-
-       
-        
         return $sdata;
     }
 
@@ -465,6 +453,8 @@ class Call extends Model
                             $cdata['center'][$center]["score"] +=$b['score'];
                         if(isset($b['users']))
                             $cdata['center'][$center]["users"] +=$b['users'];
+                        if(isset($b['admission']))
+                            $cdata['center'][$center]["admission"] +=$b['admission'];
                         if(isset($b['status']['Interested']))
                             $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
                         if(isset($b['avg_duration']))
@@ -490,6 +480,8 @@ class Call extends Model
                             $cdata['center'][$center]["score"] +=$b['score'];
                         if(isset($b['users']))
                             $cdata['center'][$center]["users"] +=$b['users'];
+                        if(isset($b['admission']))
+                            $cdata['center'][$center]["admission"] +=$b['admission'];
                         if(isset($b['status']['Interested']))
                             $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
                         if(isset($b['avg_duration'])){
@@ -528,7 +520,7 @@ class Call extends Model
         //     $cdata['center'][$center][$c] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"score"=>0,"users"=>0];
         // }
 
-       // dd($cdata);
+        //dd($cdata);
         //sorted data
         $sdata =[]; $center =[]; $all =[];
         foreach($cdata['center'] as $a=>$b){
@@ -540,6 +532,8 @@ class Call extends Model
             else
                 $all[$a] = 0;
         }
+
+
         arsort($all);
         arsort($center);
         foreach($all as $a=>$b){
@@ -548,6 +542,8 @@ class Call extends Model
         foreach($center as $a=>$b){
             $sdata['center'][$a] = $cdata['center'][$a];
         }
+
+
 
         $sdata['overall'] = 1;
 
