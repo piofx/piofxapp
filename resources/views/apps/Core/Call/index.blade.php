@@ -221,16 +221,23 @@
             </tbody>
           </table>
 
-          <h3 class="mt-4">Overall</h3>
-          <div class="row">
+          </div>
+
+          <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (admissions * 100)</span><br>
+          @if(request()->get('entity'))
+          <span class="text-primary">Performance Days are calculated from monday to friday only </span>
+          @endif
+
+          <h3 class="mt-5">Overall</h3>
+          <div class="row mb-4">
             <div class="col-6 col-md-3">
-              <div class="border rounded p-4">
+              <div class="border rounded p-4 mb-3">
                 <h5>Unique Users</h5>
                 <div class="h2 text-primary">{{ $data['overall']['users']}}</div>
               </div>
             </div>
             <div class="col-6 col-md-3">
-              <div class="border rounded p-4">
+              <div class="border rounded p-4 mb-3">
                 <h5>Interacted Calls</h5>
                 <div class="h2 text-danger">{{ $data['overall']['interacted']}}</div>
               </div>
@@ -251,12 +258,9 @@
           </div>
 
           
-        </div>
+        
         @endif
-        <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (admissions * 100)</span><br>
-          @if(request()->get('entity'))
-          <span class="text-primary">Performance Days are calculated from monday to friday only </span>
-          @endif
+        
     </div>
     <div class="col-12 col-md-2">
       <h3 class="mt-5 mt-md-0">Menu</h3>
