@@ -28,6 +28,8 @@ class PageController extends Controller
         $this->module   =   'Page';
         $this->componentName = componentName('agency');
 
+        if($this->id)
+        $this->theme = Theme::where('id',$this->id)->first();
 
     }
 
@@ -38,6 +40,7 @@ class PageController extends Controller
      */
     public function index($theme_id,Obj $obj,Request $request)
     {
+
 
         //update page meta title
         adminMetaTitle('Pages - '.$this->theme->name);
@@ -174,6 +177,7 @@ class PageController extends Controller
         $client_settings = json_decode(request()->get('client.settings'));
 
 
+
         //$post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
         $post = Cache::get('post_'.request()->get('client.id').'_'.$page);
        // dd($page);
@@ -189,7 +193,9 @@ class PageController extends Controller
             
         }
 
-        
+
+
+
         //if requested for edit, redirect to admin theme page
         if(request()->get('edit')){
             if(auth::user() && auth::user()->role=='clientadmin'){
@@ -274,10 +280,14 @@ class PageController extends Controller
 
         }
 
+
+
         if(!$obj){
                 $obj = Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug, function () use($slug,$client_id,$theme_id){
                 return Obj::where('slug',$slug)->where('client_id',$client_id)->where('theme_id',$theme_id)->first();
             });
+                Cache::forever('page_'.$domain.'_'.$theme_id.'_'.$slug,$obj);
+               // dd(Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug));
         }
 
         // check for authbased replacement
