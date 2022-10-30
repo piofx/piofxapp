@@ -533,7 +533,7 @@ class Call extends Model
                 $all[$a] = 0;
         }
 
-
+        $sdata['overall'] =array("users"=>0,"interacted"=>0,"total_duration"=>0,"admission"=>0,"talktime"=>0);
         arsort($all);
         arsort($center);
         foreach($all as $a=>$b){
@@ -541,11 +541,30 @@ class Call extends Model
         }
         foreach($center as $a=>$b){
             $sdata['center'][$a] = $cdata['center'][$a];
+            $sdata['overall']["users"]+=$cdata['center'][$a]["users"];
+            if(!isset($cdata['center'][$a]["contacted"]))
+                $cdata['center'][$a]["contacted"]=0;
+            if(!isset($cdata['center'][$a]["answered"]))
+                $cdata['center'][$a]["answered"]=0;
+            $sdata['overall']["interacted"]+=($cdata['center'][$a]["contacted"]+$cdata['center'][$a]["answered"]);
+            $sdata['overall']["total_duration"]+=$cdata['center'][$a]["total_duration"];
+            $sdata['overall']["admission"]+=$cdata['center'][$a]["admission"];
+
         }
 
+        $init = intval($sdata['overall']["total_duration"]);
+        $hours = floor($init / 3600);
+        $minutes = floor(($init / 60) % 60);
+        $seconds = $init % 60;
+        if($hours)
+            $t = $hours.'h '.$minutes.'m '.$seconds.'s';
+        else if($minutes)
+            $t= $minutes.'m '.$seconds.'s';
+        else
+            $t = $seconds.'s'; 
 
-
-        $sdata['overall'] = 1;
+        $sdata['overall']['talktime'] = $t;
+        $sdata['over_all'] = 1;
 
         return $sdata;
     }

@@ -221,6 +221,35 @@
             </tbody>
           </table>
 
+          <h3 class="mt-4">Overall</h3>
+          <div class="row">
+            <div class="col-6 col-md-3">
+              <div class="border rounded p-4">
+                <h5>Unique Users</h5>
+                <div class="h2 text-primary">{{ $data['overall']['users']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="border rounded p-4">
+                <h5>Interacted Calls</h5>
+                <div class="h2 text-danger">{{ $data['overall']['interacted']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="border rounded p-4">
+                <h5>Talktime</h5>
+                <div class="h2 text-success">{{ $data['overall']['talktime']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="border rounded p-4">
+                <h5>Admissions</h5>
+                <div class="h2 text-warning">{{ $data['overall']['admission']}}</div>
+              </div>
+            </div>
+
+          </div>
+
           
         </div>
         @endif
