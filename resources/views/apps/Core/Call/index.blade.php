@@ -262,7 +262,7 @@
         @endif
         
     </div>
-    <div class="col-12 col-md-2">
+    <div class="col-12 col-md-2 d-print-none">
       <h3 class="mt-5 mt-md-0">Menu</h3>
       <div class="list-group">
         <div class="list-group">
