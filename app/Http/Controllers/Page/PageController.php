@@ -178,8 +178,9 @@ class PageController extends Controller
         $post = Cache::get('post_'.request()->get('client.id').'_'.$page);
        // dd($page);
         if(!$post){
-            $post = Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug);
-            if(!$post){
+            $pag = Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug);
+
+            if(!$pag){
               $post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
                 if($post){
                     Cache::put('post_'.request()->get('client.id').'_'.$page,$post);
@@ -187,6 +188,8 @@ class PageController extends Controller
             }
             
         }
+
+        
         //if requested for edit, redirect to admin theme page
         if(request()->get('edit')){
             if(auth::user() && auth::user()->role=='clientadmin'){
