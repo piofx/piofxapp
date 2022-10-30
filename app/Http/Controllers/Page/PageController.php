@@ -27,7 +27,8 @@ class PageController extends Controller
         $this->app      =   'Page';
         $this->module   =   'Page';
         $this->componentName = componentName('agency');
-        $this->theme = Theme::where('id',$this->id)->first();
+
+
     }
 
     /**
@@ -175,10 +176,16 @@ class PageController extends Controller
 
         //$post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
         $post = Cache::get('post_'.request()->get('client.id').'_'.$page);
+       // dd($page);
         if(!$post){
-            $post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
-            if($post)
-                Cache::put('post_'.request()->get('client.id').'_'.$page,$post);
+            $post = Cache::get('page_'.$domain.'_'.$theme_id.'_'.$slug);
+            if(!$post){
+              $post = Post::where("slug", $page)->where('client_id',request()->get('client.id'))->first();
+                if($post){
+                    Cache::put('post_'.request()->get('client.id').'_'.$page,$post);
+                }  
+            }
+            
         }
         //if requested for edit, redirect to admin theme page
         if(request()->get('edit')){
