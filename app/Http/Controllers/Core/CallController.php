@@ -84,7 +84,7 @@ class CallController extends Controller
         $data['caller_name'] = $data['assigned']['from'];
         foreach($data['userFields'] as $d){
             if($d['name']=='Admission date'){
-                $data['call_start_date'] = date('Y-m-d h:m:s',$d['value']);
+                $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
             }
             elseif($d['name']=='Status'){
                 $data['status'] = $d['value'];

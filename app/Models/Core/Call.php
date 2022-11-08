@@ -20,6 +20,7 @@ class Call extends Model
         'name',
         'phone',
         'call_start_date',
+        'admission_date',
         'call_tag',
         'call_type',
         'duration',
