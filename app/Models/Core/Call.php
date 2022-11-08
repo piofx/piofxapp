@@ -115,18 +115,23 @@ class Call extends Model
             
         }
         
-
-
         foreach($data_dates as $caller=>$callerdata){
 
             $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
             foreach($callerdata as $cdata){
             
-                if(!isset($set[$caller]['Admission']))
-                        $set[$caller]['admission']=0;
+                if(!isset($set[$caller]['admission'])){
+                     $set[$caller]['admission']=0;
+                      $set[$caller]['admitted']=array();
+                }
+                       
 
                 if($cdata['status']=='Admission'){
+                    if($cdata['admission_date']){
                         $set[$caller]['admission']++;
+                        array_push($set[$caller]['admitted'],$cdata['name']);
+                    }
+                        
                 }
 
                 if($cdata['call_type']=='outgoing'){
@@ -260,11 +265,17 @@ class Call extends Model
             $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
      
             foreach($callerdata as $cdata){
-                if(!isset($set[$caller]['admission']))
-                        $set[$caller]['admission']=0;
+                if(!isset($set[$caller]['admission'])){
+                     $set[$caller]['admission']=0;
+                      $set[$caller]['admitted']=array();
+                }
+                       
 
                 if($cdata['status']=='Admission'){
+                    if($cdata['admission_date']){
                         $set[$caller]['admission']++;
+                        array_push($set[$caller]['admitted'],$cdata['name']);
+                    }
                         
                 }
 
@@ -375,6 +386,7 @@ class Call extends Model
             }
         }
 
+
         return $set;
     }
 
@@ -460,8 +472,17 @@ class Call extends Model
                             $cdata['center'][$center]["score"] +=$b['score'];
                         if(isset($b['users']))
                             $cdata['center'][$center]["users"] +=$b['users'];
-                        if(isset($b['admission']))
+                        if(isset($b['admission'])){
                             $cdata['center'][$center]["admission"] +=$b['admission'];
+                            $dd=null;
+                            foreach($b['admitted'] as $name){
+                                $dd['name'] = $name;
+                                $dd['caller'] = $a;
+                                array_push($cdata['center'][$center]["admitted"],$dd); 
+                            }
+                            
+                         
+                        }
                         if(isset($b['status']['Interested']))
                             $cdata['center'][$center]["Interested"] +=intval($b['status']['Interested']);
                         if(isset($b['avg_duration']))
@@ -473,7 +494,7 @@ class Call extends Model
                 }
                 
             }else{
-                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"users"=>0];
+                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"users"=>0,"admitted"=>[]];
                 
                  foreach($adata as $a=>$b){
                         if(!in_array($center, $centers))
@@ -572,6 +593,8 @@ class Call extends Model
 
         $sdata['overall']['talktime'] = $t;
         $sdata['over_all'] = 1;
+
+   
 
         return $sdata;
     }

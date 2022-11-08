@@ -35,9 +35,6 @@ class CallController extends Controller
         // retrive the listing
         $data = $obj->getRecords($request);
 
-        
-
-
         if(request()->get('entity')){
             $adata = $obj->analyzeRecordsEntity($data);
             $sdata = $obj->formulateDataEntity($adata);
@@ -48,11 +45,22 @@ class CallController extends Controller
         }
 
 
+        $admitted = 0;
+        if(request()->get('admitted')){
+            $admitted = 1;
+        }
 
         //update page meta title
         adminMetaTitle('Counsellors Dashboard');
 
+        if($admitted)
+        return view('apps.'.$this->app.'.'.$this->module.'.admitted')
+                ->with('app',$this)
+                ->with('obj',$obj)
+                ->with('alert',$alert)
+                ->with('data',$sdata);
 
+        else
         return view('apps.'.$this->app.'.'.$this->module.'.index')
                 ->with('app',$this)
                 ->with('obj',$obj)
