@@ -442,7 +442,6 @@
 
                     @if(isset($settings->comments))
                         @if($settings->comments=='true')
-                        {{$settings->comments}}
                             <script defer src="https://cdn.commento.io/js/commento.js"></script>
                             <div id="commento"></div>
                         @endif
