@@ -284,6 +284,10 @@
                                 </div>
                             </div>
                         </div>
+
+
+                       
+
                     @endif
                     @endif
                     <!-- End Author and share -->
@@ -434,6 +438,15 @@
                             </a>
                         </div>
                     </div>
+
+
+                    @if(isset($settings->comments))
+                        @if($settings->comments=='true')
+                        {{$settings->comments}}
+                            <script defer src="https://cdn.commento.io/js/commento.js"></script>
+                            <div id="commento"></div>
+                        @endif
+                    @endif
                     <!-- End Share -->
 
                     <!-- Ad -->
