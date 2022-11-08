@@ -82,9 +82,11 @@ class CallController extends Controller
         $data['completed'] = 3;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $data['caller_name'] = $data['assigned']['from'];
+        $data['admission_date'] = null;
         foreach($data['userFields'] as $d){
             if($d['name']=='Admission date'){
                 $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
+                $data['completed'] = $data['admission_date'];
             }
             elseif($d['name']=='Status'){
                 $data['status'] = $d['value'];
@@ -96,8 +98,10 @@ class CallController extends Controller
 
         $call = Obj::where('phone',$data['phone'])->where('caller_name',$data['caller_name'])->orderBy('id','desc')->first();
         $call->status = $data['status'];
+        if($data['admission_date'])
+        $call->admission_date =  $data['admission_date'];
         $call->save();
-        $data['completed'] = 1;
+       // $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         
         //Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
