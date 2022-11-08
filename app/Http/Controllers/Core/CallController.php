@@ -104,7 +104,7 @@ class CallController extends Controller
         $data['phone'] = $data['customer']['phoneNumber'];
         $data['interaction_at'] = date('Y-m-d h:m:s',$data['createdAt']);
 
-        $call = Obj::where('phone',$data['phone'])->where('caller_name',$data['caller_name'])->orderBy('id','desc')->first();
+        $call = Obj::where('phone',$data['phone'])->where('caller_name',$data['caller_name'])->orderBy('admission_date','desc')->first();
         $call->status = $data['status'];
         if($data['admission_date'])
         $call->admission_date =  $data['admission_date'];
