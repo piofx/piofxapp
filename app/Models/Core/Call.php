@@ -247,17 +247,24 @@ class Call extends Model
         $set = [];
         $data_callers = $data->groupBy('caller_name');
 
+        $admit=0;
+        foreach($data as $d){
+            //echo $d['phone'].' - '.$d['status']."<br>";
 
+            if($d['status']=='Admission')
+                $admit++;
+        }
+        
         foreach($data_callers as $caller=>$callerdata){
             $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
      
             foreach($callerdata as $cdata){
-
-                if(!isset($set[$caller]['Admission']))
+                if(!isset($set[$caller]['admission']))
                         $set[$caller]['admission']=0;
 
                 if($cdata['status']=='Admission'){
                         $set[$caller]['admission']++;
+                        
                 }
 
                 if($cdata['call_type']=='outgoing'){
@@ -313,7 +320,6 @@ class Call extends Model
                 }
 
             }
-
            
             $set[$caller]['status_str'] ='';
             if(isset($set[$caller]['status']))

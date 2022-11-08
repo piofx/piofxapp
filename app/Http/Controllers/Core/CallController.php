@@ -47,6 +47,8 @@ class CallController extends Controller
             $sdata = $obj->formulateDataOverall($adata);
         }
 
+
+
         //update page meta title
         adminMetaTitle('Counsellors Dashboard');
 
@@ -80,7 +82,14 @@ class CallController extends Controller
         $data['completed'] = 3;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $data['caller_name'] = $data['assigned']['from'];
-        $data['status'] = $data['userFields'][0]['value'];
+        foreach($data['userFields'] as $d){
+            if($d['name']=='Admission date'){
+                $data['call_start_date'] = date('Y-m-d h:m:s',$d['value']);
+            }
+            elseif($d['name']=='Status'){
+                $data['status'] = $d['value'];
+            }
+        }
         $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
         $data['interaction_at'] = date('Y-m-d h:m:s',$data['createdAt']);
