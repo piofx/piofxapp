@@ -106,8 +106,11 @@ class CallController extends Controller
 
         $call = Obj::where('phone',$data['phone'])->where('caller_name',$data['caller_name'])->orderBy('admission_date','desc')->first();
         $call->status = $data['status'];
-        if($data['admission_date'])
-        $call->admission_date =  $data['admission_date'];
+        if($data['admission_date']){
+            $call->admission_date =  $data['admission_date'];
+            $call->call_start_date = $data['admission_date'];
+        }
+        
         $call->save();
        // $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
