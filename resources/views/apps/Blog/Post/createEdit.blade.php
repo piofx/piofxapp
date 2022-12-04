@@ -339,7 +339,8 @@
                 <input type="text" class="form-control mb-3" name="top_head" placeholder="Top Head Content" value="@if($stub == 'update'){{$obj ? $obj->top_head : null }}@else{{ Request::old('top_head') ? Request::old('top_head') : null }}@endif">
                 <textarea type="text"
                     class="form-control border h-auto px-3 py-3 mb-3 font-size-h6"
-                    name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update'){{$obj ? $obj->excerpt : null }}@else{{ Request::old('excerpt') ? Request::old('excerpt') : null }}@endif</textarea>
+                    name="excerpt" placeholder="Give a Description" style="min-height: 140px;"/>@if($stub == 'update') {{$obj ? $obj->excerpt : null }}@else @if(!empty($template_excerpt)) {!! $template_excerpt !!} @else {{ Request::old('excerpt') ? Request::old('excerpt') : null }} @endif
+                    @endif</textarea>
 
                 <!-- Content -->
                 <textarea name="content" hidden id="post_content"></textarea>
@@ -349,6 +350,8 @@
                 @else
                     @if(!empty($template))
                         <textarea id="post_editor">{!! $template !!}</textarea>
+                    @elseif(!empty($template_body))
+                        <textarea id="post_editor">{!! $template_body !!}</textarea>
                     @else
                         <textarea id="post_editor">{{ Request::old('content') ? Request::old('content') : null }}</textarea>
                     @endif

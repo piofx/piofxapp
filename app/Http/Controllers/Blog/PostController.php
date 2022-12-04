@@ -207,9 +207,25 @@ class PostController extends Controller
 
         $template_name = $request->input("template");
 
+
+
         $template = '';
+        $template_body='';
+        $template_excerpt = '';
         if($template_name != 'none'){
-            $template = stripslashes(json_decode($settings->$template_name));
+            $body = $template_name."_body";
+            $excerpt = $template_name."_excerpt";
+            if(isset($settings->$template_name))
+                $template = $settings->$template_name;
+            //else
+            //$template = stripslashes(json_decode($settings->$template_name));
+
+            if(isset($settings->$body))
+                $template_body = $settings->$body;
+
+            if(isset($settings->$excerpt))
+                $template_excerpt = $settings->$excerpt;
+             
         }
 
         // Get users search console data
@@ -225,6 +241,8 @@ class PostController extends Controller
                 ->with("categories", $categories)
                 ->with("tags", $tags)
                 ->with("template", $template)
+                ->with("template_body", $template_body)
+                ->with("template_excerpt", $template_excerpt)
                 ->with("searchConsoleData", $searchConsoleData);
     }
 
