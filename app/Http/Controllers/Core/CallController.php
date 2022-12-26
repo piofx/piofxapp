@@ -175,6 +175,7 @@ class CallController extends Controller
         //Storage::disk('public')->put('calltrigger/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
     }
 
+
         // capture call trigger
     public function itriggerview(){
         $filename = 'isamplecall.json';
