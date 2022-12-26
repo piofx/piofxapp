@@ -21,6 +21,8 @@ class Call extends Model
         'phone',
         'call_start_date',
         'admission_date',
+        'demo_date',
+        'walkin_date',
         'call_tag',
         'call_type',
         'duration',
@@ -268,13 +270,16 @@ class Call extends Model
                 if(!isset($set[$caller]['admission'])){
                      $set[$caller]['admission']=0;
                       $set[$caller]['admitted']=array();
+                      $set[$caller]['admitted_phone']=array();
                 }
                        
-
+                
                 if($cdata['status']=='Admission'){
                     if($cdata['admission_date']){
                         $set[$caller]['admission']++;
+
                         array_push($set[$caller]['admitted'],$cdata['name']);
+                        array_push($set[$caller]['admitted_phone'],$cdata['phone']);
                     }
                         
                 }
@@ -386,6 +391,7 @@ class Call extends Model
             }
         }
 
+    dd($set);
 
         return $set;
     }

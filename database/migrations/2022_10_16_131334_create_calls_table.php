@@ -21,6 +21,8 @@ class CreateCallsTable extends Migration
             $table->string('phone')->nullable();
             $table->datetime('call_start_date')->nullable();
             $table->datetime('admission_date')->nullable();
+            $table->datetime('walkin_date')->nullable();
+            $table->datetime('demo_date')->nullable();
             $table->string('call_type')->nullable();
             $table->string('call_tag')->nullable();
             $table->integer('duration')->nullable();

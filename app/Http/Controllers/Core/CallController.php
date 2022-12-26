@@ -68,6 +68,55 @@ class CallController extends Controller
                 ->with('data',$sdata);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminIndex(Obj $obj,Request $request)
+    {
+
+        $this->componentName = componentName('agency');
+        // check for search string
+        $item = $request->item;
+        // load alerts if any
+        $alert = session()->get('alert');
+        // retrive the listing
+        $data = $obj->getRecords($request);
+
+        if(request()->get('entity')){
+            $adata = $obj->analyzeRecordsEntity($data);
+            $sdata = $obj->formulateDataEntity($adata);
+        }
+        else{
+            $adata = $obj->analyzeRecords($data);
+            $sdata = $obj->formulateDataOverall($adata);
+        }
+
+
+        $admitted = 0;
+        if(request()->get('admitted')){
+            $admitted = 1;
+        }
+
+        //update page meta title
+        adminMetaTitle('Counsellors Dashboard');
+
+        if($admitted)
+        return view('apps.'.$this->app.'.'.$this->module.'.admitted')
+                ->with('app',$this)
+                ->with('obj',$obj)
+                ->with('alert',$alert)
+                ->with('data',$sdata);
+
+        else
+        return view('apps.'.$this->app.'.'.$this->module.'.adminindex')
+                ->with('app',$this)
+                ->with('obj',$obj)
+                ->with('alert',$alert)
+                ->with('data',$sdata);
+    }
+
     public function documents(){
         return view('apps.'.$this->app.'.'.$this->module.'.documents')->with('app',$this);
     }
@@ -95,6 +144,14 @@ class CallController extends Controller
             if($d['name']=='Admission date'){
                 $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
                 $data['completed'] = $data['admission_date'];
+            }
+            elseif($d['name']=='Demo date'){
+                $data['demo_date'] = date('Y-m-d h:m:s',$d['value']);
+                $data['completed'] = $data['demo_date'];
+            }
+            elseif($d['name']=='Walkin date'){
+                $data['walkin_date'] = date('Y-m-d h:m:s',$d['value']);
+                $data['completed'] = $data['walkin_date'];
             }
             elseif($d['name']=='Status'){
                 $data['status'] = $d['value'];
