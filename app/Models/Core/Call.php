@@ -391,7 +391,7 @@ class Call extends Model
             }
         }
 
-    dd($set);
+
 
         return $set;
     }

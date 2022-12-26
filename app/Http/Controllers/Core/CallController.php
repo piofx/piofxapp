@@ -140,6 +140,8 @@ class CallController extends Controller
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $data['caller_name'] = $data['assigned']['from'];
         $data['admission_date'] = null;
+        $data['walkin_date'] = null;
+        $data['demo_date'] = null;
         foreach($data['userFields'] as $d){
             if($d['name']=='Admission date'){
                 $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
@@ -166,6 +168,12 @@ class CallController extends Controller
         if($data['admission_date']){
             $call->admission_date =  $data['admission_date'];
             $call->call_start_date = $data['admission_date'];
+        }
+        if($data['walkin_date']){
+            $call->walkin_date =  $data['walkin_date'];
+        }
+        if($data['demo_date']){
+            $call->demo_date =  $data['demo_date'];
         }
         
         $call->save();
