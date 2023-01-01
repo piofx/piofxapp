@@ -141,36 +141,37 @@ class CallController extends Controller
         $data['completed'] = 3;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
         $data['caller_name'] = $data['assigned']['from'];
-        $data['admission_date'] = null;
-        $data['walkin_date'] = null;
-        $data['demo_date'] = null;
+        $dd = array();
+        $dd['admission_date']=$data['admission_date'] = null;
+        $dd['walkin_date']=$data['walkin_date'] = null;
+        $dd['demo_date']=$data['demo_date'] = null;
         foreach($data['userFields'] as $d){
-            if($d['name']=='Admission date'){
-                $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
+            if($d['name']=='Admission Date'){
+                $dd['admission_date'] = $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
                 $data['completed'] = $data['admission_date'];
             }
-            elseif($d['name']=='Demo date'){
-                $data['demo_date'] = date('Y-m-d h:m:s',$d['value']);
+            elseif($d['name']=='Demo Date'){
+                $dd['demo_date'] =$data['demo_date'] = date('Y-m-d h:m:s',$d['value']);
                 $data['completed'] = $data['demo_date'];
             }
-            elseif($d['name']=='Walkin date'){
-                $data['walkin_date'] = date('Y-m-d h:m:s',$d['value']);
+            elseif($d['name']=='Walkin Date'){
+                $dd['walkin_date'] = $data['walkin_date'] = date('Y-m-d h:m:s',$d['value']);
                 $data['completed'] = $data['walkin_date'];
             }
             elseif($d['name']=='Status'){
-                $data['status'] = $d['value'];
+                $dd['status'] = $data['status'] = $d['value'];
             }
             elseif($d['name']=='Year Of Passing'){
-                $data['year_of_passing'] = $d['value'];
+                $dd['year_of_passing'] = $data['year_of_passing'] = $d['value'];
             }
             elseif($d['name']=='Branch'){
-                $data['branch'] = $d['value'];
+                $dd['branch'] = $data['branch'] = $d['value'];
             }
             elseif($d['name']=='Graduation Percentage'){
-                $data['graduation_percentage'] = $d['value'];
+                $dd['graduation_percentage']= $data['graduation_percentage'] = $d['value'];
             }
             elseif($d['name']=='Backlogs'){
-                $data['backlogs'] = $d['value'];
+                $dd['backlogs'] = $data['backlogs'] = $d['value'];
             }
         }
         $data['name'] = $data['customer']['name'];
@@ -189,7 +190,7 @@ class CallController extends Controller
         if($data['demo_date']){
             $call->demo_date =  $data['demo_date'];
         }
-        $call->data =json_encode($data,JSON_PRETTY_PRINT);
+        $call->data =json_encode($dd,JSON_PRETTY_PRINT);
         
         $call->save();
        // $data['completed'] = 1;
