@@ -180,6 +180,10 @@ class CallController extends Controller
                 $dd['remarks'] = $data['remarks'] = $d['value'];
             }
         }
+
+        if(isset($data['notes']))
+            $dd['remarks'] = $data['remarks'] = $data['notes'];
+        
         $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
         $data['interaction_at'] = date('Y-m-d h:m:s',$data['createdAt']);
