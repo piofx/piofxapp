@@ -196,7 +196,7 @@ class CallController extends Controller
         if($data['demo_date']){
             $call->demo_date =  $data['demo_date'];
         }
-        $call->data =json_encode($dd,JSON_PRETTY_PRINT);
+        $call->data =json_encode($data,JSON_PRETTY_PRINT);
         
         $call->save();
        // $data['completed'] = 1;
