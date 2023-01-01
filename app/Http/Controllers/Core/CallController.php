@@ -173,6 +173,12 @@ class CallController extends Controller
             elseif($d['name']=='Backlogs'){
                 $dd['backlogs'] = $data['backlogs'] = $d['value'];
             }
+            elseif($d['name']=='Source'){
+                $dd['source'] = $data['source'] = $d['value'];
+            }
+            elseif($d['name']=='Remarks'){
+                $dd['remarks'] = $data['remarks'] = $d['value'];
+            }
         }
         $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
