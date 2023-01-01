@@ -1,7 +1,7 @@
 <x-dynamic-component :component="$componentName" class="mt-4" >
 
 	<div class="row">
-		<div class="col-12 col-md-8">
+		<div class="col-12 col-md-12">
 
 			<h4 class="mb-6"><span class="svg-icon svg-icon-dark svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Mask.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 				<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -12,7 +12,7 @@
 			</svg><!--end::Svg Icon--></span> Core Modules</h4>
 			<div class="row">
 				@if(Auth::user()->role == 'superadmin')
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom gutter-b" style="max-height: 150px;background:#ec65c8;">
 						<div class="card-body">
@@ -34,7 +34,7 @@
 					<!--end::Tiles Widget 11-->
 				</div>
 
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#9a7b70">
 						<div class="card-body">
@@ -64,7 +64,7 @@
 				@endphp
 				
 				@if(!in_array(Auth::user()->role, $blocked_roles))
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom bg-primary gutter-b" style="max-height: 150px;">
 						<div class="card-body">
@@ -87,7 +87,7 @@
 				</div>
 				@endif
 
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom bg-info gutter-b" style="max-height: 150px;">
 						<div class="card-body">
@@ -108,29 +108,9 @@
 					<!--end::Tiles Widget 11-->
 				</div>
 
-				<div class='col-6 col-md-4 d-none'>
-					<!--begin::Tiles Widget 11-->
-					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#4b9c77">
-						<div class="card-body">
-							<span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
-								<span class="svg-icon svg-icon-white svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Shopping/Wallet.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-										<rect x="0" y="0" width="24" height="24"/>
-										<circle fill="#000000" opacity="0.3" cx="20.5" cy="12.5" r="1.5"/>
-										<rect fill="#000000" opacity="0.3" transform="translate(12.000000, 6.500000) rotate(-15.000000) translate(-12.000000, -6.500000) " x="3" y="3" width="18" height="7" rx="1"/>
-										<path d="M22,9.33681558 C21.5453723,9.12084552 21.0367986,9 20.5,9 C18.5670034,9 17,10.5670034 17,12.5 C17,14.4329966 18.5670034,16 20.5,16 C21.0367986,16 21.5453723,15.8791545 22,15.6631844 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,9.33681558 Z" fill="#000000"/>
-									</g>
-								</svg><!--end::Svg Icon--></span> 
-							</span>
-							<div>
-								<a href="{{ url('admin/billing')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Billing</a>
-							</div>
-						</div>
-					</div>
-					<!--end::Tiles Widget 11-->
-				</div>
+				
 
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#3f51b5">
 						<div class="card-body">
@@ -146,14 +126,14 @@
 								</svg><!--end::Svg Icon--></span> 
 							</span>
 							<div>
-								<a href="{{ url('admin/statistics')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Statistics</a>
+								<a href="{{ url('admin/user/statistics')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Statistics</a>
 							</div>
 						</div>
 					</div>
 					<!--end::Tiles Widget 11-->
 				</div>
 
-				<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 					<!--begin::Tiles Widget 11-->
 					<div class="card card-custom bg-danger gutter-b" style="max-height: 150px;">
 						<div class="card-body">
@@ -175,22 +155,7 @@
 					<!--end::Tiles Widget 11-->
 				</div>
 
-
-
-			</div>
-
-			<h4 class="mb-6">
-
-				<span class="svg-icon svg-icon-dark svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Color-profile.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-						<rect x="0" y="0" width="24" height="24"/>
-						<path d="M12,10.9996338 C12.8356605,10.3719448 13.8743941,10 15,10 C17.7614237,10 20,12.2385763 20,15 C20,17.7614237 17.7614237,20 15,20 C13.8743941,20 12.8356605,19.6280552 12,19.0003662 C11.1643395,19.6280552 10.1256059,20 9,20 C6.23857625,20 4,17.7614237 4,15 C4,12.2385763 6.23857625,10 9,10 C10.1256059,10 11.1643395,10.3719448 12,10.9996338 Z M13.3336047,12.504354 C13.757474,13.2388026 14,14.0910788 14,15 C14,15.9088933 13.7574889,16.761145 13.3336438,17.4955783 C13.8188886,17.8206693 14.3938466,18 15,18 C16.6568542,18 18,16.6568542 18,15 C18,13.3431458 16.6568542,12 15,12 C14.3930587,12 13.8175971,12.18044 13.3336047,12.504354 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
-						<circle fill="#000000" cx="12" cy="9" r="5"/>
-					</g>
-				</svg><!--end::Svg Icon--></span> Applications</h4>
-				<div class="row">
-
-					<div class='col-6 col-md-4'>
+				<div class='col-6 col-md-3'>
 						<!--begin::Tiles Widget 11-->
 						<div class="card card-custom   gutter-b" style="max-height: 150px;background:#ff5500;">
 							<div class="card-body">
@@ -210,7 +175,14 @@
 						</div>
 						<!--end::Tiles Widget 11-->
 					</div>
-					<div class='col-6 col-md-4'>
+
+			</div>
+
+			
+				<div class="row">
+
+					
+					<div class='col-6 col-md-3'>
 						<!--begin::Tiles Widget 11-->
 						<div class="card card-custom  gutter-b" style="max-height: 150px;background:#4bc350;">
 							<div class="card-body">
@@ -231,7 +203,7 @@
 						<!--end::Tiles Widget 11-->
 					</div>
 					@if(Auth::user()->role == 'superadmin')
-					<div class='col-6 col-md-4'>
+					<div class='col-6 col-md-3'>
 						<!--begin::Tiles Widget 11-->
 						<div class="card card-custom bg-success gutter-b" style="max-height: 150px;">
 							<div class="card-body">
@@ -257,7 +229,7 @@
 						<!--end::Tiles Widget 11-->
 					</div>
 
-					<div class='col-6 col-md-4'>
+					<div class='col-6 col-md-3'>
 						<!--begin::Tiles Widget 11-->
 						<div class="card card-custom bg-dark gutter-b" style="max-height: 150px;">
 							<div class="card-body">
@@ -279,100 +251,52 @@
 
 					@endif
 
-					<div class='col-6 col-md-4'>
+					<div class='col-6 col-md-3'>
 						<!--begin::Tiles Widget 11-->
 						<div class="card card-custom bg-warning gutter-b" style="max-height: 150px;">
 							<div class="card-body">
 								<span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
-									<span class="svg-icon svg-icon-white svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Communication/Chat5.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-										<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-											<rect x="0" y="0" width="24" height="24"/>
-											<path d="M21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L6,18 C4.34314575,18 3,16.6568542 3,15 L3,6 C3,4.34314575 4.34314575,3 6,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 Z" fill="#000000" opacity="0.3"/>
-											<path d="M7.5,12 C6.67157288,12 6,11.3284271 6,10.5 C6,9.67157288 6.67157288,9 7.5,9 C8.32842712,9 9,9.67157288 9,10.5 C9,11.3284271 8.32842712,12 7.5,12 Z M12.5,12 C11.6715729,12 11,11.3284271 11,10.5 C11,9.67157288 11.6715729,9 12.5,9 C13.3284271,9 14,9.67157288 14,10.5 C14,11.3284271 13.3284271,12 12.5,12 Z M17.5,12 C16.6715729,12 16,11.3284271 16,10.5 C16,9.67157288 16.6715729,9 17.5,9 C18.3284271,9 19,9.67157288 19,10.5 C19,11.3284271 18.3284271,12 17.5,12 Z" fill="#000000" opacity="0.3"/>
-										</g>
-									</svg><!--end::Svg Icon--></span>
+									<span class="svg-icon svg-icon-white svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Communication\Sending mail.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <path d="M4,16 L5,16 C5.55228475,16 6,16.4477153 6,17 C6,17.5522847 5.55228475,18 5,18 L4,18 C3.44771525,18 3,17.5522847 3,17 C3,16.4477153 3.44771525,16 4,16 Z M1,11 L5,11 C5.55228475,11 6,11.4477153 6,12 C6,12.5522847 5.55228475,13 5,13 L1,13 C0.44771525,13 6.76353751e-17,12.5522847 0,12 C-6.76353751e-17,11.4477153 0.44771525,11 1,11 Z M3,6 L5,6 C5.55228475,6 6,6.44771525 6,7 C6,7.55228475 5.55228475,8 5,8 L3,8 C2.44771525,8 2,7.55228475 2,7 C2,6.44771525 2.44771525,6 3,6 Z" fill="#000000" opacity="0.3"/>
+        <path d="M10,6 L22,6 C23.1045695,6 24,6.8954305 24,8 L24,16 C24,17.1045695 23.1045695,18 22,18 L10,18 C8.8954305,18 8,17.1045695 8,16 L8,8 C8,6.8954305 8.8954305,6 10,6 Z M21.0849395,8.0718316 L16,10.7185839 L10.9150605,8.0718316 C10.6132433,7.91473331 10.2368262,8.02389331 10.0743092,8.31564728 C9.91179228,8.60740125 10.0247174,8.9712679 10.3265346,9.12836619 L15.705737,11.9282847 C15.8894428,12.0239051 16.1105572,12.0239051 16.294263,11.9282847 L21.6734654,9.12836619 C21.9752826,8.9712679 22.0882077,8.60740125 21.9256908,8.31564728 C21.7631738,8.02389331 21.3867567,7.91473331 21.0849395,8.0718316 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
 								</span>
 								<div>
-									<a href="{{ url('admin/contact')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Contact</a>
+									<a href="{{ url('admin/contact')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Contact Form</a>
 								</div>
 							</div>
 						</div>
 						<!--end::Tiles Widget 11-->
 					</div>
+					<div class='col-6 col-md-3 '>
+					<!--begin::Tiles Widget 11-->
+					<div class="card card-custom  gutter-b" style="max-height: 150px;background:#4b9c77">
+						<div class="card-body">
+							<span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+								<span class="svg-icon svg-icon-white svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Communication\Outgoing-call.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <path d="M7.14296018,11.6653622 C7.06267828,11.7456441 6.95746388,11.7962128 6.84462255,11.8087507 C6.57016914,11.8392455 6.32295974,11.641478 6.29246492,11.3670246 L5.76926113,6.65819047 C5.76518362,6.62149288 5.76518362,6.58445654 5.76926113,6.54775895 C5.79975595,6.27330553 6.04696535,6.07553802 6.32141876,6.10603284 L11.0302529,6.62923663 C11.1430942,6.64177456 11.2483086,6.69234321 11.3285905,6.77262511 C11.5238526,6.96788726 11.5238526,7.28446974 11.3285905,7.47973189 L9.94288211,8.86544026 L11.4443443,10.3669024 C11.6396064,10.5621646 11.6396064,10.8787471 11.4443443,11.0740092 L10.7372375,11.781116 C10.5419754,11.9763782 10.2253929,11.9763782 10.0301307,11.781116 L8.52866855,10.2796538 L7.14296018,11.6653622 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+        <path d="M12.0799676,14.7839934 L14.2839934,12.5799676 C14.8927139,11.9712471 15.0436229,11.0413042 14.6586342,10.2713269 L14.5337539,10.0215663 C14.1487653,9.25158901 14.2996742,8.3216461 14.9083948,7.71292558 L17.6411989,4.98012149 C17.836461,4.78485934 18.1530435,4.78485934 18.3483056,4.98012149 C18.3863063,5.01812215 18.4179321,5.06200062 18.4419658,5.11006808 L19.5459415,7.31801948 C20.3904962,9.0071287 20.0594452,11.0471565 18.7240871,12.3825146 L12.7252616,18.3813401 C11.2717221,19.8348796 9.12170075,20.3424308 7.17157288,19.6923882 L4.75709327,18.8875616 C4.49512161,18.8002377 4.35354162,18.5170777 4.4408655,18.2551061 C4.46541191,18.1814669 4.50676633,18.114554 4.56165376,18.0596666 L7.21292558,15.4083948 C7.8216461,14.7996742 8.75158901,14.6487653 9.52156634,15.0337539 L9.77132688,15.1586342 C10.5413042,15.5436229 11.4712471,15.3927139 12.0799676,14.7839934 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
+							</span>
+							<div>
+								<a href="{{ url('admin/call')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Telecallers</a>
+							</div>
+						</div>
+					</div>
+					<!--end::Tiles Widget 11-->
+				</div>
 
 					
 				</div>
 
 			</div>
-			<div class="col-12 col-md-4">
-				<h4 class="mb-6"><span class="svg-icon svg-icon-dark svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Media/Equalizer.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-						<rect x="0" y="0" width="24" height="24"/>
-						<rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"/>
-						<rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"/>
-						<rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"/>
-						<rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"/>
-					</g>
-				</svg><!--end::Svg Icon--></span> Statistics</h4>
-				<div class="row">
-					<div class="col-12">
-						<!--begin::Tiles Widget 5-->
-						<div class="card card-custom bg-info gutter-b" style="height: 150px">
-							<!--begin::Body-->
-							@if(!empty(json_decode($oneMonthDateData)))
-								<div class="card-body d-flex flex-column p-0">
-									<!--begin::Stats-->
-									<div class="flex-grow-1 card-spacer-x pt-6">
-										<div class="text-inverse-info font-weight-bold">Total Clicks <small class='text-light-info'>this month</small></div>
-										<div class="text-inverse-info font-weight-bolder font-size-h3">{{ $total_clicks }}</div>
-									</div>
-									<!--end::Stats-->
-									<!--begin::Chart-->
-									<div id="admin_page_chart" data-value="{{ $oneMonthDateData }}" class="card-rounded-bottom" style="height: 50px"></div>
-									<!--end::Chart-->
-								</div>
-							@else
-								<div class="card-body">
-									<h2 class="text-white font-weight-bolder">No Data Available</h2>
-									<h6 class="text-muted w-75"><span class="text-warning">!!</span> Please add your search console details in statistics page</h6>
-								</div>
-							@endif
-							<!--end::Body-->
-						</div>
-						<!--end::Tiles Widget 5-->
-					</div>	
-
-					<div class="col-12">
-						<!--begin::Engage Widget 2-->
-							<div class="d-flex p-0">
-								<div class="flex-grow-1 p-8 card-rounded bgi-no-repeat" style="background-color: #663259;background-position: calc(100% + 0.5rem) bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-3.svg') }})">
-									@if(!empty($average_ctr))
-										<h3 class="text-inverse-danger mt-2 font-weight-bolder" style="cursor:pointer;"><a href="" class="text-inverse-danger">Average CTR</a> <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average CTR is the percentage of impressions that resulted in a click"></i></h3>
-										<h1 class="text-white" style="font-size: 3rem;">{{ $average_ctr }}%</h1>
-									@else
-										<h2 class="text-white font-weight-bolder">No Data Available</h2>
-										<h6 class="text-muted w-75"><span class="text-warning">!!</span> Please add your search console details in statistics page</h6>
-									@endif
-								</div>
-							</div>
-							<!--end::Engage Widget 2-->
-							<!--begin::Engage Widget 3-->
-							<div class="d-flex p-0 mt-4">
-								<div class="flex-grow-1 p-8 bg-danger card-rounded flex-grow-1 bgi-no-repeat" style="background-position: 100% bottom; background-size: auto 90%; background-image: url({{ asset('themes/metronic/media/svg/humans/custom-4.svg') }})">
-									@if(!empty($average_position))
-										<h3 class="text-inverse-danger mt-2 font-weight-bolder"><a href="" class="text-inverse-danger">Average Position <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Average Position is the position of your site in the search results"></i></a></h3>
-										<h1 class="text-white" style="font-size: 3rem;">{{ $average_position }}</h1>
-									@else
-										<h2 class="text-white font-weight-bolder">No Data Available</h2>
-										<h6 class="text-muted w-75"><span class="text-warning">!!</span> Please add your search console details in statistics page</h6>
-									@endif
-								</div>
-							</div>
-						<!--end::Engage Widget 3-->
-					</div>
-				</div>
-
-			</div>
+			
 		</div>
 
 

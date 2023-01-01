@@ -31,6 +31,7 @@ class CreateCallsTable extends Migration
             $table->string('caller_center')->nullable();
             $table->string('caller_phone')->nullable();
             $table->string('status')->nullable();
+            $table->longText('data')->nullable();
             $table->timestamps();
         });
     }

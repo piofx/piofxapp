@@ -102,8 +102,10 @@ class CallController extends Controller
         //update page meta title
         adminMetaTitle('Counsellors Dashboard');
 
+     
+
         if($admitted)
-        return view('apps.'.$this->app.'.'.$this->module.'.admitted')
+        return view('apps.'.$this->app.'.'.$this->module.'.admindata')
                 ->with('app',$this)
                 ->with('obj',$obj)
                 ->with('alert',$alert)
@@ -158,6 +160,18 @@ class CallController extends Controller
             elseif($d['name']=='Status'){
                 $data['status'] = $d['value'];
             }
+            elseif($d['name']=='Year Of Passing'){
+                $data['year_of_passing'] = $d['value'];
+            }
+            elseif($d['name']=='Branch'){
+                $data['branch'] = $d['value'];
+            }
+            elseif($d['name']=='Graduation Percentage'){
+                $data['graduation_percentage'] = $d['value'];
+            }
+            elseif($d['name']=='Backlogs'){
+                $data['backlogs'] = $d['value'];
+            }
         }
         $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
@@ -175,6 +189,7 @@ class CallController extends Controller
         if($data['demo_date']){
             $call->demo_date =  $data['demo_date'];
         }
+        $call->data =json_encode($data,JSON_PRETTY_PRINT);
         
         $call->save();
        // $data['completed'] = 1;

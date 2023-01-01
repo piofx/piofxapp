@@ -18,46 +18,67 @@
 
     <div class="col-12 ">
      
-      @if(!request()->get('entity'))
+        @if(!request()->get('entity'))
         Filters: 
-        <a href="{{ route('Call.index')}}?filter=today"><span class="badge badge-success">Today</span></a> 
-          <a href="{{ route('Call.index')}}?filter=yesterday"><span class="badge badge-success">Yesterday</span></a> 
-          <a href="{{ route('Call.index')}}?filter=thismonth"><span class="badge badge-success">This Month</span></a> 
-          <a href="{{ route('Call.index')}}?filter=lastmonth"><span class="badge badge-success">Last Month</span></a> 
-          
-          <a href="{{ route('Call.index')}}?filter=last7days"><span class="badge badge-success">Last 7 days</span></a> 
-          <a href="{{ route('Call.index')}}?filter=last30days"><span class="badge badge-success">Last 30 days</span></a> 
-          <a href="{{ route('Call.index')}}?filter=overall"><span class="badge badge-success">Over All</span></a>
+        <a href="{{ route('Call.adminindex')}}?filter=today"><span class="badge badge-success">Today</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=yesterday"><span class="badge badge-success">Yesterday</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thismonth"><span class="badge badge-success">This Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastmonth"><span class="badge badge-success">Last Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thisyear"><span class="badge badge-success">This Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastyear"><span class="badge badge-success">Last Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last7days"><span class="badge badge-success">Last 7 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last30days"><span class="badge badge-success">Last 30 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=overall"><span class="badge badge-success">Over All</span></a>
+
+        <form>
+        
+        <div class="row mt-4">
+          <div class="col-6 col-md-5">
+            <input id="datetimepicker" type="text" class="form-control mb-3" name="start" placeholder="choose start date" value="{{ request()->get('start')}}">
+          </div>
+          <div class="col-6 col-md-6">
+               <input id="datetimepicker2" type="text" class="form-control mb-3" name="end" placeholder="choose end date" value="{{ request()->get('end')}}">
+          </div>
+          <div class="col-6 col-md-1">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
   
         @endif
+
+
+
         <!--begin::Advance Table Widget 3-->
         <div class="card card-custom gutter-b p-5 mt-4">
-        
 
+        <!--begin::Alert-->
+        @if($alert)
+          <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
+        @endif
+        <!--end::Alert-->
 
-
-  <!--begin::Alert-->
-  @if($alert)
-    <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
-  @endif
-  <!--end::Alert-->
-
-
-
-       
         <h3>
-
             @if(!request()->get('entity'))
               All Callers 
               <span class="badge badge-primary {{date_default_timezone_set("Asia/Kolkata")}}">
               @if(request()->get('filter')) {{request()->get('filter') }} 
+              @elseif(request()->get('start'))
+              Custom Date
               @else Today  
               @endif
               </span>
-              <small class="float-right d-none d-md-block">{{date("l jS \of F Y h:i:s A")}}</small>
+              <span class="badge badge-info">
+              @if(request()->get('start'))
+              {{ \carbon\carbon::parse(request()->get('start'))->format('d M Y')}} to 
+              {{ \carbon\carbon::parse(request()->get('end'))->format('d M Y')}} 
+             @endif
+           </span>
+
+              <small class="float-right d-none d-md-block"><span class="text-primary">Now:</span> {{date("l jS \of F Y h:i:s A")}}</small>
             @else
               @if(isset($data['entity_center']))
-                Center Performance
+                Branch Performance
               @else
                  Counsellor Performance
               @endif
@@ -69,10 +90,9 @@
                 Last 30 days
               </span>
             @endif
-
-            
         </h3>
 
+        
         @if(request()->get('entity'))
           <a href="{{ route('Call.index')}}" class="mb-4">back to dashboard</a>
 
@@ -181,9 +201,9 @@
                 </td>
                 <td>{{ $d['avg_talktime'] }}</td>
                 <td>{{ $d['total_talktime'] }}</td>
-                <td>{{ $d['score'] }}</td>
-                <td>{{ $d['score'] }}</td>
-                <td><a href="{{ route('Call.index')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['admission'] }}</a></td>
+                <td>{{ count($d['walkin']) }}</td>
+                <td>{{ count($d['demo'])  }}</td>
+                <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['admit']) }}</a></td>
                 <td>{{ $d['score'] }}</td>
               </tr>
               @endforeach      
@@ -192,7 +212,7 @@
         </div>
         
         @if(count($data['center'] ))
-        <h3 class="mt-4">Centers</h3>
+        <h3 class="mt-4">Branches</h3>
 
         <div class="table-responsive mb-5">
           <table class="table table-bordered mb-5">
@@ -230,9 +250,9 @@
                 <td>@if(isset($d['answered']) && isset($d['contacted'])) {{ ($d['contacted']+$d['answered'] )}}  @elseif(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
                 <td>@if(isset($d['employees']) && $d['employees']!=0) {{ $obj->getTime(round($d['avg_duration']/$d['employees'],2)) }} @else 0 @endif </td>
                 <td>{{ $obj->getTime($d['total_duration']) }}</td>
-                 <td>{{ $d['score'] }}</td>
-                  <td>{{ $d['score'] }}</td>
-                <td><a href="{{ route('Call.index')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['admission'] }}</a></td>
+                 <td>{{ $d['walkin'] }}</td>
+                  <td>{{ $d['demo'] }}</td>
+                <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['admit'] }}</a></td>
                 <td>{{ $d['score'] }}</td>
               </tr>
               @endforeach      
@@ -241,7 +261,7 @@
 
           </div>
 
-          <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (admissions * 100)</span><br>
+          <span class="text-primary">Performance Score = (Unique Customers * Avg Talktime in minutes) + (walkin * 10) + (demo * 20) + (admission * 70)</span><br>
           @if(request()->get('entity'))
           <span class="text-primary">Performance Days are calculated from monday to friday only </span>
           @endif
@@ -269,13 +289,13 @@
              <div class="col-6 col-md-2">
               <div class="border rounded p-4">
                 <h5>Walkin</h5>
-                <div class="h2 text-warning">{{ $data['overall']['admission']}}</div>
+                <div class="h2 text-warning">{{ $data['overall']['walkin']}}</div>
               </div>
             </div>
              <div class="col-6 col-md-2">
               <div class="border rounded p-4">
                 <h5>Demo</h5>
-                <div class="h2 text-warning">{{ $data['overall']['admission']}}</div>
+                <div class="h2 text-warning">{{ $data['overall']['demo']}}</div>
               </div>
             </div>
             <div class="col-6 col-md-2">
