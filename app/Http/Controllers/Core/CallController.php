@@ -188,7 +188,7 @@ class CallController extends Controller
         if(isset($data['notes']))
             $dd['remarks'] = $data['remarks'] = $data['notes'];
 
-        $call->name = $data['name'] = $data['customer']['name'];
+        $data['name'] = $data['customer']['name'];
         $data['phone'] = $data['customer']['phoneNumber'];
         $data['interaction_at'] = date('Y-m-d h:m:s',$data['createdAt']);
 
@@ -205,7 +205,7 @@ class CallController extends Controller
             $call->demo_date =  $data['demo_date'];
         }
         $call->data =json_encode($dd,JSON_PRETTY_PRINT);
-        
+        $call->name = $data['name'];
         $call->save();
        // $data['completed'] = 1;
         Storage::disk('public')->put('calltrigger/'.$filename, json_encode($data,JSON_PRETTY_PRINT));
