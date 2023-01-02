@@ -73,8 +73,19 @@ class Call extends Model
             $end  = Carbon::now()->subDay()->endOfDay();
         }
 
-        if($filter!='overall')
-            $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
+        if($filter!='overall'){
+            if(request()->get('admitted')){
+
+                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('admission_date','asc')->get();
+
+            }
+            elseif(request()->get('demo'))
+                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('demo_date')->get();
+            elseif(request()->get('walkin'))
+                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('walkin_date')->get();
+            else
+                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
+        }
         else
             $data = $this->get();
 
@@ -322,7 +333,6 @@ class Call extends Model
                 $walkin = $uq->where('walkin_date','!=',NULL);
                 $demo = $uq->where('demo_date','!=',NULL);
                 
-                
                 if($admitted->first()){
                     array_push($set[$caller]['admit'],$admitted->first());
                 }
@@ -334,15 +344,14 @@ class Call extends Model
                 }
             }
          
-             
-     
+            
+            
             foreach($callerdata as $cdata){
                 if(!isset($set[$caller]['admission'])){
                      $set[$caller]['admission']=0;
                       $set[$caller]['admitted']=array();
                 }
                        
-                
                 if($cdata['status']=='Admission'){
                     if($cdata['admission_date']){
                         $set[$caller]['admission']++;
@@ -389,7 +398,6 @@ class Call extends Model
                             $set[$caller]['calls'] =1;
 
                         
-
                         if(isset($set[$caller]['duration']))
                             $set[$caller]['duration'] +=$cdata['duration'];
                         else
@@ -405,6 +413,17 @@ class Call extends Model
 
             }
            
+            if(request()->get('admitted')){
+
+               $set[$caller]['admit'] = Call::sortArray($set[$caller]['admit'],"admission_date"); 
+
+            }
+            
+            if(request()->get('demo'))
+            $set[$caller]['demo'] = Call::sortArray($set[$caller]['demo'],"demo_date");
+            if(request()->get('walkin'))
+            $set[$caller]['walkin'] = Call::sortArray($set[$caller]['walkin'],"walkin_date");
+
             $set[$caller]['status_str'] ='';
             if(isset($set[$caller]['status']))
             foreach( $set[$caller]['status'] as $s=>$t){
@@ -458,7 +477,24 @@ class Call extends Model
             }
         }
 
+
         return $set;
+    }
+
+
+    public static function sortArray($d,$filter){
+
+        $nd = array();
+        foreach($d as $a=>$b){
+            $nd[$a] = $b->$filter;
+            
+        }
+        asort($nd);
+        $nnd =array();
+        foreach($nd as $a=>$b){
+            array_push($nnd,$d[$a]);
+        }
+        return $nnd;
     }
 
     public function formulateDataEntity($adata){
@@ -549,13 +585,20 @@ class Call extends Model
                             $cdata['center'][$center]["score"] +=$b['score'];
                         if(isset($b['admit'])){
                             $cdata['center'][$center]["admit"] +=count($b['admit']);
+                     
                             foreach($b['admit'] as $item)
                             array_push($cdata['center'][$center]["admit_list"],$item);
                         }
-                        if(isset($b['demo']))
+                        if(isset($b['demo'])){
                             $cdata['center'][$center]["demo"] +=count($b['demo']);
-                        if(isset($b['walkin']))
+                            foreach($b['demo'] as $item)
+                            array_push($cdata['center'][$center]["demo_list"],$item);
+                        }
+                        if(isset($b['walkin'])){
                             $cdata['center'][$center]["walkin"] +=count($b['walkin']);
+                            foreach($b['walkin'] as $item)
+                            array_push($cdata['center'][$center]["walkin_list"],$item);
+                        }
                         if(isset($b['users']))
                             $cdata['center'][$center]["users"] +=$b['users'];
                         if(isset($b['admission'])){
@@ -580,7 +623,7 @@ class Call extends Model
                 }
                 
             }else{
-                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"admit"=>0,"demo"=>0,"walkin"=>0,"users"=>0,"admitted"=>[],"admit_list"=>[]];
+                $cdata['center'][$center] = ["contacted"=>0,"answered"=>0,"Interested"=>0,"admission"=>0,"avg_talktime"=>0,"total_talktime"=>0,"status_str"=>null,"avg_duration"=>0,"total_duration"=>0,"employees"=>0,"score"=>0,"admit"=>0,"demo"=>0,"walkin"=>0,"users"=>0,"admitted"=>[],"admit_list"=>[],"demo_list"=>[],"walkin_list"=>[]];
                 
                  foreach($adata as $a=>$b){
                         if(!in_array($center, $centers))
@@ -592,12 +635,22 @@ class Call extends Model
                             $cdata['center'][$center]["answered"] +=$b['answered'];
                         if(isset($b['score']))
                             $cdata['center'][$center]["score"] +=$b['score'];
-                        if(isset($b['admit']))
+                        if(isset($b['admit'])){
                             $cdata['center'][$center]["admit"] +=count($b['admit']);
-                        if(isset($b['demo']))
+                            
+                            foreach($b['admit'] as $item)
+                            array_push($cdata['center'][$center]["admit_list"],$item);
+                        }
+                        if(isset($b['demo'])){
                             $cdata['center'][$center]["demo"] +=count($b['demo']);
-                        if(isset($b['walkin']))
+                            foreach($b['demo'] as $item)
+                            array_push($cdata['center'][$center]["demo_list"],$item);
+                        }
+                        if(isset($b['walkin'])){
                             $cdata['center'][$center]["walkin"] +=count($b['walkin']);
+                            foreach($b['walkin'] as $item)
+                            array_push($cdata['center'][$center]["walkin_list"],$item);
+                        }
                         if(isset($b['users']))
                             $cdata['center'][$center]["users"] +=$b['users'];
                         if(isset($b['admission']))
@@ -629,9 +682,19 @@ class Call extends Model
             $cdata['center'][$center]["score"] = intval($cdata['center'][$center]["score"] / $cdata['center'][$center]["employees"]);
             else
                  $cdata['center'][$center]["score"] =0;
+
+             if(request()->get('admitted'))
+               $cdata['center'][$center]["admit_list"]= Call::sortArray($cdata['center'][$center]["admit_list"],"admission_date"); 
+
+            
+            if(request()->get('demo'))
+            $cdata['center'][$center]["demo_list"] = Call::sortArray($cdata['center'][$center]["demo_list"],"demo_date");
+            if(request()->get('walkin'))
+            $cdata['center'][$center]["walkin_list"] = Call::sortArray($cdata['center'][$center]["walkin_list"],"walkin_date");
+             
         }
 
-        
+       
          
         // foreach($caller_center as $c=>$center){
         //     if(isset($adata[$c]))

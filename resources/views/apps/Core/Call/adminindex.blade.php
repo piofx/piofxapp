@@ -171,7 +171,7 @@
                     @if(request()->get('entity'))
                     <b>{{ $user }}</b> 
                     @else
-                    <a href="{{ route('Call.index')}}?entity={{$user}}">
+                    <a href="{{ route('Call.adminindex')}}?entity={{$user}}">
                     <b>{{ $user }}</b> 
                     </a>
                     @endif
@@ -201,8 +201,8 @@
                 </td>
                 <td>{{ $d['avg_talktime'] }}</td>
                 <td>{{ $d['total_talktime'] }}</td>
-                <td>{{ count($d['walkin']) }}</td>
-                <td>{{ count($d['demo'])  }}</td>
+                <td><a href="{{ route('Call.adminindex')}}?walkin={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['walkin']) }}</a></td>
+                <td><a href="{{ route('Call.adminindex')}}?demo={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['demo'])  }}</a></td>
                 <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['admit']) }}</a></td>
                 <td>{{ $d['score'] }}</td>
               </tr>
@@ -240,7 +240,7 @@
                   @if(request()->get('entity'))
                     <b>{{ $user }}</b> 
                     @else
-                    <a href="{{ route('Call.index')}}?entity={{$user}}">
+                    <a href="{{ route('Call.adminindex')}}?entity={{$user}}">
                     <b>{{ $user }}</b> 
                     </a>
                   @endif
@@ -250,8 +250,8 @@
                 <td>@if(isset($d['answered']) && isset($d['contacted'])) {{ ($d['contacted']+$d['answered'] )}}  @elseif(isset($d['answered'])) {{ $d['answered'] }} @else 0 @endif</td>
                 <td>@if(isset($d['employees']) && $d['employees']!=0) {{ $obj->getTime(round($d['avg_duration']/$d['employees'],2)) }} @else 0 @endif </td>
                 <td>{{ $obj->getTime($d['total_duration']) }}</td>
-                 <td>{{ $d['walkin'] }}</td>
-                  <td>{{ $d['demo'] }}</td>
+                 <td><a href="{{ route('Call.adminindex')}}?walkin={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['walkin'] }}</a></td>
+                  <td><a href="{{ route('Call.adminindex')}}?demo={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['demo'] }}</a></td>
                 <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ $d['admit'] }}</a></td>
                 <td>{{ $d['score'] }}</td>
               </tr>

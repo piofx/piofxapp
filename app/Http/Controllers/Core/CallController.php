@@ -51,7 +51,7 @@ class CallController extends Controller
         }
 
         //update page meta title
-        adminMetaTitle('Counsellors Dashboard');
+        adminMetaTitle('Telecaller Dashboard');
 
         if($admitted)
         return view('apps.'.$this->app.'.'.$this->module.'.admitted')
@@ -77,6 +77,10 @@ class CallController extends Controller
     {
 
         $this->componentName = componentName('agency');
+        //pre-process the request
+        if(request()->get('caller') && request()->get('list')){
+            request()->merge([request()->get('list')=>request()->get('caller')]); 
+        }
         // check for search string
         $item = $request->item;
         // load alerts if any
@@ -91,18 +95,18 @@ class CallController extends Controller
         else{
             $adata = $obj->analyzeRecords($data);
             $sdata = $obj->formulateDataOverall($adata);
+
         }
 
-
         $admitted = 0;
-        if(request()->get('admitted')){
+        if(request()->get('admitted') || request()->get('demo') || request()->get('walkin')){
             $admitted = 1;
+
+
         }
 
         //update page meta title
-        adminMetaTitle('Counsellors Dashboard');
-
-     
+        adminMetaTitle('Telecaller Dashboard');
 
         if($admitted)
         return view('apps.'.$this->app.'.'.$this->module.'.admindata')
@@ -200,7 +204,7 @@ class CallController extends Controller
         if($data['demo_date']){
             $call->demo_date =  $data['demo_date'];
         }
-        $call->data =json_encode($dd,JSON_PRETTY_PRINT);
+        $call->data =json_encode($data,JSON_PRETTY_PRINT);
         
         $call->save();
        // $data['completed'] = 1;
