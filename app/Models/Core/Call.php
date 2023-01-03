@@ -34,6 +34,8 @@ class Call extends Model
         'data',
     ];
 
+
+
      /**
      * Get the list of records from database
      *
@@ -76,13 +78,13 @@ class Call extends Model
         if($filter!='overall'){
             if(request()->get('admitted')){
 
-                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('admission_date','asc')->get();
+                $data = $this->where('admission_date','>=',$start)->where('admission_date','<=',$end)->orderBy('admission_date','asc')->get();
 
             }
             elseif(request()->get('demo'))
-                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('demo_date')->get();
+                $data = $this->where('demo_date','>=',$start)->where('demo_date','<=',$end)->orderBy('demo_date')->get();
             elseif(request()->get('walkin'))
-                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->orderBy('walkin_date')->get();
+                $data = $this->where('walkin_date','>=',$start)->where('walkin_date','<=',$end)->orderBy('walkin_date')->get();
             else
                 $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
         }
@@ -152,9 +154,11 @@ class Call extends Model
             $unique_customers = $callerdata->groupBy('phone');
            // dd($unique_customers['+918247413967']);
             foreach($unique_customers as $p=>$uq){
-                $admitted= $uq->where('admission_date','!=',NULL);
-                $walkin = $uq->where('walkin_date','!=',NULL);
-                $demo = $uq->where('demo_date','!=',NULL);
+                $admitted= $uq->where('admission_date','!=',NULL)->where('admission_date','>=',$start)->where('admission_date','<=',$end);
+                $walkin = $uq->where('walkin_date','!=',NULL)->where('walkin_date','>=',$start)->where('walkin_date','<=',$end);
+                $demo = $uq->where('demo_date','!=',NULL)->where('demo_date','>=',$start)->where('demo_date','<=',$end);
+
+
                 
                 if(!isset($set[$caller]['admit']))
                         $set[$caller]['admit'] = array();
@@ -316,6 +320,39 @@ class Call extends Model
             if($d['status']=='Admission')
                 $admit++;
         }
+
+        $request = request();
+          $start = $request->get('start');
+        $end = $request->get('end');
+        $filter = $request->get('filter');
+
+        if($start && $end){
+            
+        }else if($filter=='thismonth' ){
+            $start = Carbon::now()->startOfMonth();
+            $end  = Carbon::now();
+        }else if($filter=='lastmonth' ){
+            $start = Carbon::now()->subMonth(1)->startOfDay();
+            $end  = Carbon::now()->subMonth(1)->endOfMonth()->endOfDay();
+        }else if($filter=='thisyear' ){
+            $start = Carbon::now()->startOfYear()->startOfMonth()->startOfDay();
+            $end  = Carbon::now();
+        }else if($filter=='lastyear' ){
+              $start = Carbon::now()->subYear(1)->startOfYear()->startOfMonth()->startOfDay();
+            $end  = Carbon::now()->subYear(1)->endOfYear()->endOfMonth()->endOfDay();  
+        }else if($filter=='last7days' ){
+            $start = Carbon::now()->subDays(7)->startOfDay();
+            $end  = Carbon::now()->subDays(1)->endOfDay();
+         }else if($filter=='last30days' ){
+            $start = Carbon::now()->subDays(30)->startOfDay();
+            $end  = Carbon::now()->subDays(1)->endOfDay();
+        }else if($filter=='today' || $filter==null){
+            $start = Carbon::now()->startOfDay();
+            $end  = Carbon::now();
+        }else if($filter=='yesterday' ){
+            $start = Carbon::now()->subDay()->startOfDay();
+            $end  = Carbon::now()->subDay()->endOfDay();
+        }
         
         foreach($data_callers as $caller=>$callerdata){
             $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
@@ -329,9 +366,9 @@ class Call extends Model
                         $set[$caller]['walkin'] = array();
            // dd($unique_customers['+918247413967']);
             foreach($unique_customers as $p=>$uq){
-                $admitted= $uq->where('admission_date','!=',NULL);
-                $walkin = $uq->where('walkin_date','!=',NULL);
-                $demo = $uq->where('demo_date','!=',NULL);
+                 $admitted= $uq->where('admission_date','!=',NULL)->where('admission_date','>=',$start)->where('admission_date','<=',$end);
+                $walkin = $uq->where('walkin_date','!=',NULL)->where('walkin_date','>=',$start)->where('walkin_date','<=',$end);
+                $demo = $uq->where('demo_date','!=',NULL)->where('demo_date','>=',$start)->where('demo_date','<=',$end);
                 
                 if($admitted->first()){
                     array_push($set[$caller]['admit'],$admitted->first());
