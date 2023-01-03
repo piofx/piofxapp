@@ -91,7 +91,10 @@
         @elseif(request()->get('demo'))
           Demo List - {{ request()->get('demo')}}
         @elseif(request()->get('walkin'))
-          Walkin  List - {{ request()->get('walkin')}}
+          Walkin  List - {{ request()->get('walkin')}} 
+            @if(request()->get('walkin')==strtoupper(request()->get('walkin')))
+              <a href="{{ route('Call.adminindex')}}?walkin={{request()->get('walkin')}}&start={{request()->get('start')}}&end={{request()->get('end')}}&download=1" class="btn btn-primary btn-sm">Download</a>
+            @endif
         @endif
 
        </h2>
@@ -116,6 +119,10 @@
                     @endif
                     <br>Date
                 </th>
+                @if(request()->get('walkin'))
+                <th scope="col">Demo</th>
+                <th scope="col">Admission</th>
+                @endif
                 <th scope="col">Caller <br>Name</th>
                 <th scope="col">YOP</th>
                 <th scope="col">Branch</th>
@@ -205,6 +212,8 @@
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
                     <td>{{$e->walkin_date}}</td>
+                    <td>@if($e->demo_date) yes @endif</td>
+                    <td>@if($e->admission_date) yes @endif</td>
                     <td>{{$user}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
                     <td>{{json_decode($e->data)->year_of_passing}}</td>
@@ -316,6 +325,8 @@
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
                     <td>{{$e->walkin_date}}</td>
+                    <td>@if($e->demo_date) yes @else - @endif</td>
+                    <td>@if($e->admission_date) yes @else - @endif</td>
                     <td>{{$e->caller_name}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
                     <td>{{json_decode($e->data)->year_of_passing}}</td>

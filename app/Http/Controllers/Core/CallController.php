@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Core\Call as Obj;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use App\Exports\CallExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CallController extends Controller
 {
@@ -49,6 +52,8 @@ class CallController extends Controller
         if(request()->get('admitted')){
             $admitted = 1;
         }
+
+
 
         //update page meta title
         adminMetaTitle('Telecaller Dashboard');
@@ -103,6 +108,21 @@ class CallController extends Controller
             $admitted = 1;
 
 
+        }
+
+        if(request()->get('download')){
+            request()->session()->put('data',$sdata);
+
+            ob_end_clean(); // this
+            ob_start(); 
+            $dt = Carbon::now()->toDateString();
+            $start = request()->get('start');
+            $end = request()->get('end');
+            $dts = Carbon::parse($start)->format('Y-m-d');
+             $dte = Carbon::parse($end)->format('Y-m-d');
+            $filename = request()->get('walkin')."_Walkins_".$dts."_to_".$dte.".xlsx";
+          
+            return Excel::download(new CallExport, $filename);
         }
 
         //update page meta title
