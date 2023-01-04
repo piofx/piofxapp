@@ -80,7 +80,7 @@
               @if(isset($data['entity_center']))
                 Branch Performance
               @else
-                 Counsellor Performance
+                 Caller Performance
               @endif
 
               <span class="badge badge-primary">
@@ -94,7 +94,7 @@
 
         
         @if(request()->get('entity'))
-          <a href="{{ route('Call.index')}}" class="mb-4">back to dashboard</a>
+          <a href="{{ route('Call.adminindex')}}" class="mb-4">back to dashboard</a>
 
           <div class="row my-4">
             <div class="col-6 col-md-3">

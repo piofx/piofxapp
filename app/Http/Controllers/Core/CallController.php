@@ -106,8 +106,6 @@ class CallController extends Controller
         $admitted = 0;
         if(request()->get('admitted') || request()->get('demo') || request()->get('walkin')){
             $admitted = 1;
-
-
         }
 
         if(request()->get('download')){

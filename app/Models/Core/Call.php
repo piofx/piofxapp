@@ -122,7 +122,6 @@ class Call extends Model
                 $item ='caller';
                 break;
             }
-
             if($entity ==$center){
                 $item='center';
                 break;
@@ -132,40 +131,74 @@ class Call extends Model
         if($item==null)
             abort('403','entity not found');
 
-
         if($item=='caller')
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->where('call_start_date','>', Carbon::now()->subDays(30))->where('caller_name',$entity)->get()->groupBy('date');
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', Carbon::now()->subDays(30))->where('caller_name',$entity)->get()->groupBy('date');
         else{
 
-            
             foreach($caller_center as $caller =>$center){
                 if($entity==$center){
                     array_push($callers,$caller);
                 }
             }
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'))->where('call_start_date','>', Carbon::now()->subDays(30))->whereIn('caller_name',$callers)->get()->groupBy('date');
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', Carbon::now()->subDays(30))->whereIn('caller_name',$callers)->get()->groupBy('date');
             
+        }
+
+        $request = request();
+        $start = $request->get('start');
+        $end = $request->get('end');
+        $filter = $request->get('filter');
+
+        if($start && $end){
+            
+        }else if($filter=='thismonth' ){
+            $start = Carbon::now()->startOfMonth();
+            $end  = Carbon::now();
+        }else if($filter=='lastmonth' ){
+            $start = Carbon::now()->subMonth(1)->startOfDay();
+            $end  = Carbon::now()->subMonth(1)->endOfMonth()->endOfDay();
+        }else if($filter=='thisyear' ){
+            $start = Carbon::now()->startOfYear()->startOfMonth()->startOfDay();
+            $end  = Carbon::now();
+        }else if($filter=='lastyear' ){
+              $start = Carbon::now()->subYear(1)->startOfYear()->startOfMonth()->startOfDay();
+            $end  = Carbon::now()->subYear(1)->endOfYear()->endOfMonth()->endOfDay();  
+        }else if($filter=='last7days' ){
+            $start = Carbon::now()->subDays(7)->startOfDay();
+            $end  = Carbon::now()->subDays(1)->endOfDay();
+         }else if($filter=='last30days' ){
+            $start = Carbon::now()->subDays(30)->startOfDay();
+            $end  = Carbon::now()->subDays(1)->endOfDay();
+        }else if($filter=='today' || $filter==null){
+            $start = Carbon::now()->startOfDay();
+            $end  = Carbon::now();
+        }else if($filter=='yesterday' ){
+            $start = Carbon::now()->subDay()->startOfDay();
+            $end  = Carbon::now()->subDay()->endOfDay();
+        }else{
+            $start = Carbon::now()->subDays(30)->startOfDay();
+            $end  = Carbon::now()->subDays(1)->endOfDay();
         }
         
         foreach($data_dates as $caller=>$callerdata){
 
             $set[$caller]['users'] = $callerdata->where('duration','!=',0)->unique('phone')->count();
-            
             $unique_customers = $callerdata->groupBy('phone');
-           // dd($unique_customers['+918247413967']);
+            
             foreach($unique_customers as $p=>$uq){
                 $admitted= $uq->where('admission_date','!=',NULL)->where('admission_date','>=',$start)->where('admission_date','<=',$end);
                 $walkin = $uq->where('walkin_date','!=',NULL)->where('walkin_date','>=',$start)->where('walkin_date','<=',$end);
                 $demo = $uq->where('demo_date','!=',NULL)->where('demo_date','>=',$start)->where('demo_date','<=',$end);
 
-
-                
+                // if($caller=='2023-01-03' && $p=="+919705014049")
+                //     dd($uq);
                 if(!isset($set[$caller]['admit']))
                         $set[$caller]['admit'] = array();
                 if(!isset($set[$caller]['demo']))
                         $set[$caller]['demo'] = array();
                 if(!isset($set[$caller]['walkin']))
                         $set[$caller]['walkin'] = array();
+
                 if($admitted->first()){
                     array_push($set[$caller]['admit'],$admitted->first());
                 }
@@ -177,20 +210,22 @@ class Call extends Model
                 }
             }
 
+
+
+
+
             foreach($callerdata as $cdata){
             
                 if(!isset($set[$caller]['admission'])){
-                     $set[$caller]['admission']=0;
-                      $set[$caller]['admitted']=array();
+                    $set[$caller]['admission']=0;
+                    $set[$caller]['admitted']=array();
                 }
                        
-
                 if($cdata['status']=='Admission'){
                     if($cdata['admission_date']){
                         $set[$caller]['admission']++;
                         array_push($set[$caller]['admitted'],$cdata['name']);
                     }
-                        
                 }
 
                 if($cdata['call_type']=='outgoing'){
@@ -230,18 +265,15 @@ class Call extends Model
                         else
                             $set[$caller]['calls'] =1;
 
-                        
-
                         if(isset($set[$caller]['duration']))
                             $set[$caller]['duration'] +=$cdata['duration'];
                         else
                             $set[$caller]['duration'] =$cdata['duration'];
 
-                        if(isset($set[$caller]['status'][$cdata['status']])){
+                        if(isset($set[$caller]['status'][$cdata['status']]))
                             $set[$caller]['status'][$cdata['status']]++;
-                        }else{
+                        else
                             $set[$caller]['status'][$cdata['status']]=1;
-                        }
                     }
                 }
 
@@ -258,13 +290,12 @@ class Call extends Model
             $init=0;
             $set[$caller]['avg_duration']= $avg_minutes  = 0;
             if(isset($set[$caller]['duration'])){
-                $init =  intval(round($set[$caller]['duration']/  $set[$caller]['calls'],2));
-                $avg_minutes = round($set[$caller]['duration']/  $set[$caller]['calls'],2)/60;
+                $init =  intval(round($set[$caller]['duration'] /  $set[$caller]['calls'],2));
+                $avg_minutes = round($set[$caller]['duration'] /  $set[$caller]['calls'],2)/60;
                 $set[$caller]['avg_duration']=$init;
             }
 
-
-             $set[$caller]['score'] = intval($set[$caller]['users'] * $avg_minutes) + count($set[$caller]['admit']) * 100;
+            $set[$caller]['score'] = intval($set[$caller]['users'] * $avg_minutes) + count($set[$caller]['admit']) * 100;
                
             if($init){
                 $hours = floor($init / 3600);
@@ -304,7 +335,7 @@ class Call extends Model
             $set[$caller]['employees'] = count($callers);
         }
 
-       
+   
         return $set;
     }
 
@@ -322,7 +353,7 @@ class Call extends Model
         }
 
         $request = request();
-          $start = $request->get('start');
+        $start = $request->get('start');
         $end = $request->get('end');
         $filter = $request->get('filter');
 
@@ -549,6 +580,8 @@ class Call extends Model
                 break;
             }
         }
+
+
 
         $sdata['all'] = $adata;
         $sdata['center'] = [];
