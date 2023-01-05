@@ -93,6 +93,15 @@ class CallController extends Controller
         // retrive the listing
         $data = $obj->getRecords($request);
 
+        if(request()->get('del')){
+            $e = Obj::where('id',request()->get('id'))->first();
+            $e->admission_date = null;
+            $e->walkin_date = null;
+            $e->demo_date = null;
+            $e->save();
+            return redirect()->route('Call.adminindex');
+        }
+
         if(request()->get('entity')){
             $adata = $obj->analyzeRecordsEntity($data);
             $sdata = $obj->formulateDataEntity($adata);

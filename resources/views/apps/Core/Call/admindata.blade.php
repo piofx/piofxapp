@@ -139,7 +139,8 @@
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
-                    <td>{{$e->admission_date}}</td>
+                    <td>{{$e->admission_date}} 
+                      @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>{{$user}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
                     <td>{{json_decode($e->data)->year_of_passing}}</td>
@@ -175,7 +176,7 @@
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
-                    <td>{{$e->demo_date}}</td>
+                    <td>{{$e->demo_date}} @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>{{$user}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
                     <td>{{json_decode($e->data)->year_of_passing}}</td>
@@ -211,7 +212,7 @@
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
-                    <td>{{$e->walkin_date}}</td>
+                    <td>{{$e->walkin_date}} @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>@if($e->demo_date) yes @endif</td>
                     <td>@if($e->admission_date) yes @endif</td>
                     <td>{{$user}}</td>
@@ -252,7 +253,7 @@
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
                     <td>{{$e->phone}}</td>
-                    <td>{{$e->admission_date}}</td>
+                    <td>{{$e->admission_date}} </td>
                     <td>{{$e->caller_name}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
                     <td>{{json_decode($e->data)->year_of_passing}}</td>
