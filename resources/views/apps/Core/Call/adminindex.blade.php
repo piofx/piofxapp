@@ -305,7 +305,9 @@
                 <tr class="" style="background-color: #f6d1b0;">
                   <th scope="col">#</th>
                   <th scope="col">Candidate <br>Name</th>
+                  @if(Auth::user()->role=='clientadmin')
                   <th scope="col">Candidate <br> Phone</th>
+                  @endif
                   <th scope="col">Walkin <br> Date</th>
                   <th scope="col">Demo </th>
                   <th scope="col">Admission </th>
@@ -326,7 +328,9 @@
                   <tr data-value="" style="@if($m%2==1) background-color: #fff8f1; @endif" >
                     <td>{{$k++}}</td>
                     <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{ \carbon\carbon::parse($e->walkin_date)->format('d/m/Y')}} </td>
                     <td>@if($e->demo_date) yes @else -@endif </td>
                     <td>@if($e->admission_date) yes @else -@endif </td>
@@ -374,7 +378,9 @@
                 <tr class="" style="background-color: #cbfffc;">
                   <th scope="col">#</th>
                   <th scope="col">Candidate <br>Name</th>
+                  @if(Auth::user()->role=='clientadmin')
                   <th scope="col">Candidate <br> Phone</th>
+                  @endif
                   <th scope="col">Demo <br> Date</th>
                   <th scope="col">Admission </th>
                   <th scope="col">Center</th>
@@ -394,7 +400,9 @@
                   <tr data-value="" style="@if($m%2==1) background-color: #f1fffe; @endif" >
                     <td>{{$k++}}</td>
                     <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{ \carbon\carbon::parse($e->demo_date)->format('d/m/Y')}} </td>
                    
                     <td>@if($e->admission_date) yes @else -@endif </td>
@@ -441,7 +449,9 @@
                 <tr class="" style="background-color: #f6f3b0;">
                   <th scope="col">#</th>
                   <th scope="col">Candidate <br>Name</th>
+                  @if(Auth::user()->role=='clientadmin')
                   <th scope="col">Candidate <br> Phone</th>
+                  @endif
                   <th scope="col">Admission <br> Date</th>
                   <th scope="col">Center</th>
                   <th scope="col">Caller <br>Name</th>
@@ -460,7 +470,9 @@
                   <tr data-value="" style="@if($m%2==1) background-color: #fffef1; @endif" >
                     <td>{{$k++}}</td>
                     <td style="width:12%">{{$e->name}} </td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{ \carbon\carbon::parse($e->admission_date)->format('d/m/Y')}} </td>
                   
                     <td>{{$user}}</td>
