@@ -61,13 +61,13 @@ class Call extends Model
         }else if($filter=='lastyear' ){
               $start = Carbon::now()->subYear(1)->startOfYear()->startOfMonth()->startOfDay();
             $end  = Carbon::now()->subYear(1)->endOfYear()->endOfMonth()->endOfDay();  
-        }else if($filter=='last7days' ){
+        }else if($filter=='last7days' || $filter==null){
             $start = Carbon::now()->subDays(7)->startOfDay();
             $end  = Carbon::now()->subDays(1)->endOfDay();
          }else if($filter=='last30days' ){
             $start = Carbon::now()->subDays(30)->startOfDay();
             $end  = Carbon::now()->subDays(1)->endOfDay();
-        }else if($filter=='today' || $filter==null){
+        }else if($filter=='today' ){
             $start = Carbon::now()->startOfDay();
             $end  = Carbon::now();
         }else if($filter=='yesterday' ){
@@ -77,16 +77,29 @@ class Call extends Model
 
         if($filter!='overall'){
             if(request()->get('admitted')){
-
                 $data = $this->where('admission_date','>=',$start)->where('admission_date','<=',$end)->orderBy('admission_date','asc')->get();
-
             }
             elseif(request()->get('demo'))
                 $data = $this->where('demo_date','>=',$start)->where('demo_date','<=',$end)->orderBy('demo_date')->get();
             elseif(request()->get('walkin'))
                 $data = $this->where('walkin_date','>=',$start)->where('walkin_date','<=',$end)->orderBy('walkin_date')->get();
-            else
-                $data = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->get();
+            else{
+                $ids=[];
+                $id = $this->where('admission_date','>=',$start)->where('admission_date','<=',$end)->pluck('id')->toArray();
+                foreach($id as $d)
+                    array_push($ids,$d);
+                $id = $this->where('demo_date','>=',$start)->where('demo_date','<=',$end)->pluck('id')->toArray();
+                foreach($id as $d)
+                    array_push($ids,$d);
+                $id = $this->where('walkin_date','>=',$start)->where('walkin_date','<=',$end)->pluck('id')->toArray();
+                foreach($id as $d)
+                    array_push($ids,$d);
+                $id = $this->where('call_start_date','>=',$start)->where('call_start_date','<=',$end)->pluck('id')->toArray();
+                foreach($id as $d)
+                    array_push($ids,$d);
+             
+                $data = $this->whereIn('id',$ids)->get();
+            }
         }
         else
             $data = $this->get();
@@ -190,8 +203,7 @@ class Call extends Model
                 $walkin = $uq->where('walkin_date','!=',NULL)->where('walkin_date','>=',$start)->where('walkin_date','<=',$end);
                 $demo = $uq->where('demo_date','!=',NULL)->where('demo_date','>=',$start)->where('demo_date','<=',$end);
 
-                // if($caller=='2023-01-03' && $p=="+919705014049")
-                //     dd($uq);
+                 
                 if(!isset($set[$caller]['admit']))
                         $set[$caller]['admit'] = array();
                 if(!isset($set[$caller]['demo']))
@@ -341,6 +353,8 @@ class Call extends Model
 
     public function analyzeRecords($data){
 
+
+
         $set = [];
         $data_callers = $data->groupBy('caller_name');
 
@@ -396,6 +410,8 @@ class Call extends Model
                 if(!isset($set[$caller]['walkin']))
                         $set[$caller]['walkin'] = array();
            // dd($unique_customers['+918247413967']);
+
+
             foreach($unique_customers as $p=>$uq){
                  $admitted= $uq->where('admission_date','!=',NULL)->where('admission_date','>=',$start)->where('admission_date','<=',$end);
                 $walkin = $uq->where('walkin_date','!=',NULL)->where('walkin_date','>=',$start)->where('walkin_date','<=',$end);
@@ -410,8 +426,11 @@ class Call extends Model
                 if($walkin->first()){
                     array_push($set[$caller]['walkin'],$walkin->first());
                 }
+
+
             }
          
+
             
             
             foreach($callerdata as $cdata){
@@ -480,6 +499,8 @@ class Call extends Model
                 }
 
             }
+
+
            
             if(request()->get('admitted')){
 

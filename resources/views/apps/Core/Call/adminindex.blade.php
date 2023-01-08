@@ -20,15 +20,15 @@
      
         @if(!request()->get('entity'))
         Filters: 
-        <a href="{{ route('Call.adminindex')}}?filter=today"><span class="badge badge-success">Today</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=yesterday"><span class="badge badge-success">Yesterday</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=thismonth"><span class="badge badge-success">This Month</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=lastmonth"><span class="badge badge-success">Last Month</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=thisyear"><span class="badge badge-success">This Year</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=lastyear"><span class="badge badge-success">Last Year</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=last7days"><span class="badge badge-success">Last 7 days</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=last30days"><span class="badge badge-success">Last 30 days</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=overall"><span class="badge badge-success">Over All</span></a>
+        <a href="{{ route('Call.adminindex')}}?filter=today"><span class="badge @if(request()->get('filter')=='today') badge-dark @else badge-success @endif">Today</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=yesterday"><span class="badge @if(request()->get('filter')=='yesterday') badge-dark @else badge-success @endif">Yesterday</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thismonth"><span class="badge @if(request()->get('filter')=='thismonth') badge-dark @else badge-success @endif">This Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastmonth"><span class="badge @if(request()->get('filter')=='lastmonth') badge-dark @else badge-success @endif">Last Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thisyear"><span class="badge @if(request()->get('filter')=='thisyear') badge-dark @else badge-success @endif">This Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastyear"><span class="badge @if(request()->get('filter')=='lastyear') badge-dark @else badge-success @endif">Last Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last7days"><span class="badge @if(request()->get('filter')=='last7days') badge-dark @else badge-success @endif">Last 7 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last30days"><span class="badge @if(request()->get('filter')=='last30days') badge-dark @else badge-success @endif">Last 30 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=overall"><span class="badge @if(request()->get('filter')=='overall') badge-dark @else badge-success @endif">Over All</span></a>
 
         <form>
         
@@ -315,6 +315,84 @@
                 
         </div>
         <!--end::Advance Table Widget 3-->
+        @if(!request()->get('entity'))
+        <div class="card my-3 p-4">
+          
+         
+
+           <h3 class="mt-4">Walkin List &nbsp;
+
+
+              <a href="{{ route('Call.adminindex')}}?walkin={{\Auth::user()->group}}&start={{request()->get('start')}}&end={{request()->get('end')}}&download=1" class="btn btn-primary btn-sm">Download</a>
+      
+           </h3>
+           <div class="table-responsive mb-5">
+            <table class="table table-bordered mb-0">
+              <thead>
+                <tr class="" style="background-color: #f6d1b0;">
+                  <th scope="col">#</th>
+                  <th scope="col">Candidate <br>Name</th>
+                  <th scope="col">Candidate <br> Phone</th>
+                  <th scope="col">Walkin <br> Date</th>
+                  <th scope="col">Demo </th>
+                  <th scope="col">Admission </th>
+                  <th scope="col">Center</th>
+                  <th scope="col">Caller <br>Name</th>
+                  <th scope="col">YOP</th>
+                  <th scope="col">Branch</th>
+                  <th scope="col">Percent</th>
+                  <th scope="col">Backlogs</th>
+                  <th scope="col"> Remarks</th>
+                </tr>
+              </thead>
+              <tbody class="{{$k=1}} {{$m=0}}">
+                @foreach($data['center'] as $user=>$d) 
+                <tr style="display: :none;" class="{{$m++}}"></tr>
+                @if($d['walkin_list'])
+                  @foreach($d['walkin_list'] as $e)
+                  <tr data-value="" style="@if($m%2==1) background-color: #fff8f1; @endif" >
+                    <td>{{$k++}}</td>
+                    <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    <td>{{$e->phone}}</td>
+                    <td>{{ \carbon\carbon::parse($e->walkin_date)->format('d/m/Y')}} </td>
+                    <td>@if($e->demo_date) yes @else -@endif </td>
+                    <td>@if($e->admission_date) yes @else -@endif </td>
+                    <td>{{$user}}</td>
+                    <td>{{$e->caller_name}}</td>
+                    @if(isset(json_decode($e->data)->year_of_passing))
+                    <td>{{json_decode($e->data)->year_of_passing}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->branch))
+                    <td>{{json_decode($e->data)->branch}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->graduation_percentage))
+                    <td>{{json_decode($e->data)->graduation_percentage}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->backlogs))
+                    <td>{{json_decode($e->data)->backlogs}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->remarks))
+                    <td>{{json_decode($e->data)->remarks}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                  </tr>
+                  @endforeach
+                @endif
+                @endforeach      
+              </tbody>
+            </table>
+          </div>
+        </div>
+        @endif
 
     </div>
   </div>

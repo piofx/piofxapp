@@ -86,6 +86,11 @@ class CallController extends Controller
         if(request()->get('caller') && request()->get('list')){
             request()->merge([request()->get('list')=>request()->get('caller')]); 
         }
+
+        if(!request()->get('filter'))
+        {
+            request()->merge(["filter"=>"last7days"]);
+        }
         // check for search string
         $item = $request->item;
         // load alerts if any
@@ -132,6 +137,8 @@ class CallController extends Controller
             return Excel::download(new CallExport, $filename);
         }
 
+      
+
         //update page meta title
         adminMetaTitle('Telecaller Dashboard');
 
@@ -176,18 +183,27 @@ class CallController extends Controller
         $dd['admission_date']=$data['admission_date'] = null;
         $dd['walkin_date']=$data['walkin_date'] = null;
         $dd['demo_date']=$data['demo_date'] = null;
+
         foreach($data['userFields'] as $d){
+            $year = date('Y', strtotime($d['value']));
             if($d['name']=='Admission Date'){
-                $dd['admission_date'] = $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
-                $data['completed'] = $data['admission_date'];
+                if($year<2022){
+                    $dd['admission_date'] = $data['admission_date'] = date('Y-m-d h:m:s',$d['value']);
+                    $data['completed'] = $data['admission_date'];
+                }
+                
             }
             elseif($d['name']=='Demo Date'){
-                $dd['demo_date'] =$data['demo_date'] = date('Y-m-d h:m:s',$d['value']);
-                $data['completed'] = $data['demo_date'];
+                if($year<2022){
+                    $dd['demo_date'] =$data['demo_date'] = date('Y-m-d h:m:s',$d['value']);
+                    $data['completed'] = $data['demo_date'];
+                }
             }
             elseif($d['name']=='Walkin Date'){
-                $dd['walkin_date'] = $data['walkin_date'] = date('Y-m-d h:m:s',$d['value']);
-                $data['completed'] = $data['walkin_date'];
+                if($year<2022){
+                    $dd['walkin_date'] = $data['walkin_date'] = date('Y-m-d h:m:s',$d['value']);
+                    $data['completed'] = $data['walkin_date'];
+                }
             }
             elseif($d['name']=='Status'){
                 $dd['status'] = $data['status'] = $d['value'];
@@ -224,12 +240,18 @@ class CallController extends Controller
         if($data['admission_date']){
             $call->admission_date =  $data['admission_date'];
             $call->call_start_date = $data['admission_date'];
+        }else{
+            $call->admission_date = null;
         }
         if($data['walkin_date']){
             $call->walkin_date =  $data['walkin_date'];
+        }else{
+            $call->walkin_date =null;
         }
         if($data['demo_date']){
             $call->demo_date =  $data['demo_date'];
+        }else{
+            $call->demo_date =null;
         }
         $call->data =json_encode($dd,JSON_PRETTY_PRINT);
         $call->name = $data['name'];

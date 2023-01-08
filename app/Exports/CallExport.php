@@ -13,13 +13,26 @@ class CallExport implements FromCollection
     public function collection()
     {
         $data = request()->session()->get('data');
-        
-        $walkins = $data['center'][request()->get('walkin')]['walkin_list'];
-
         $wids = [];
-        foreach($walkins as $w){
-            array_push($wids,$w->id);
+        if(request()->get('walkin')){
+            $walkins = $data['center'][request()->get('walkin')]['walkin_list'];
+            foreach($walkins as $w){
+                array_push($wids,$w->id);
+            }
         }
+        else
+        {
+            foreach($data['center'] as $k){
+                $walkins = $k['walkin_list'];
+               foreach($walkins as $w){
+                    array_push($wids,$w->id);
+                } 
+            }
+            
+        }
+
+        
+        
         $wdata = Call::whereIn('id',$wids)->get();
 
         foreach($wdata as $a=>$b){
