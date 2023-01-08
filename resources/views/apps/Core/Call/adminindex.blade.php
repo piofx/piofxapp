@@ -391,6 +391,72 @@
               </tbody>
             </table>
           </div>
+
+           <h3 class="mt-4">Admission List &nbsp;      
+           </h3>
+           <div class="table-responsive mb-5">
+            <table class="table table-bordered mb-0">
+              <thead>
+                <tr class="" style="background-color: #f6f3b0;">
+                  <th scope="col">#</th>
+                  <th scope="col">Candidate <br>Name</th>
+                  <th scope="col">Candidate <br> Phone</th>
+                  <th scope="col">Admission <br> Date</th>
+                  <th scope="col">Center</th>
+                  <th scope="col">Caller <br>Name</th>
+                  <th scope="col">YOP</th>
+                  <th scope="col">Branch</th>
+                  <th scope="col">Percent</th>
+                  <th scope="col">Backlogs</th>
+                  <th scope="col"> Remarks</th>
+                </tr>
+              </thead>
+              <tbody class="{{$k=1}} {{$m=0}}">
+                @foreach($data['center'] as $user=>$d) 
+                <tr style="display: :none;" class="{{$m++}}"></tr>
+                @if($d['admit_list'])
+                  @foreach($d['admit_list'] as $e)
+                  <tr data-value="" style="@if($m%2==1) background-color: #fffef1; @endif" >
+                    <td>{{$k++}}</td>
+                    <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    <td>{{$e->phone}}</td>
+                    <td>{{ \carbon\carbon::parse($e->admission_date)->format('d/m/Y')}} </td>
+                  
+                    <td>{{$user}}</td>
+                    <td>{{$e->caller_name}}</td>
+                    @if(isset(json_decode($e->data)->year_of_passing))
+                    <td>{{json_decode($e->data)->year_of_passing}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->branch))
+                    <td>{{json_decode($e->data)->branch}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->graduation_percentage))
+                    <td>{{json_decode($e->data)->graduation_percentage}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->backlogs))
+                    <td>{{json_decode($e->data)->backlogs}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->remarks))
+                    <td>{{json_decode($e->data)->remarks}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                  </tr>
+                  @endforeach
+                @endif
+                @endforeach      
+              </tbody>
+            </table>
+          </div>
+
         </div>
         @endif
 
