@@ -108,7 +108,9 @@
               <tr>
                 <th scope="col">Sno</th>
                 <th scope="col">Cadidate <br>Name</th>
+                @if(Auth::user()->role=='clientadmin')
                 <th scope="col">Cadidate <br>Phone</th>
+                @endif
                 <th scope="col">
                     @if(request()->get('admitted'))
                       Admission 
@@ -138,7 +140,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->admission_date}} 
                       @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>{{$user}}</td>
@@ -175,7 +179,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->demo_date}} @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>{{$user}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
@@ -211,7 +217,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->walkin_date}} @if(Auth::user()->role=='clientadmin')<a href="{{ url()->full()}}&del=1&id={{$e->id}}">remove</a> @endif</td>
                     <td>@if($e->demo_date) yes @endif</td>
                     <td>@if($e->admission_date) yes @endif</td>
@@ -252,7 +260,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->admission_date}} </td>
                     <td>{{$e->caller_name}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
@@ -288,7 +298,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->demo_date}}</td>
                     <td>{{$e->caller_name}}</td>
                     @if(isset(json_decode($e->data)->year_of_passing))
@@ -324,7 +336,9 @@
                   <tr data-value="">
                     <td>{{$k++}}</td>
                     <td>{{$e->name}}</td>
+                    @if(Auth::user()->role=='clientadmin')
                     <td>{{$e->phone}}</td>
+                    @endif
                     <td>{{$e->walkin_date}}</td>
                     <td>@if($e->demo_date) yes @else - @endif</td>
                     <td>@if($e->admission_date) yes @else - @endif</td>
