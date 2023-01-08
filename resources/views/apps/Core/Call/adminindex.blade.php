@@ -266,46 +266,7 @@
           <span class="text-primary">Performance Days are calculated from monday to friday only </span>
           @endif
 
-          <h3 class="mt-5">Overall</h3>
-          <div class="row mb-4">
-            <div class="col-6 col-md-2">
-              <div class="border rounded p-4 mb-3">
-                <h5>Unique Users</h5>
-                <div class="h2 text-primary">{{ $data['overall']['users']}}</div>
-              </div>
-            </div>
-            <div class="col-6 col-md-2">
-              <div class="border rounded p-4 mb-3">
-                <h5>Total Calls</h5>
-                <div class="h2 text-danger">{{ $data['overall']['interacted']}}</div>
-              </div>
-            </div>
-            <div class="col-6 col-md-2">
-              <div class="border rounded p-4">
-                <h5>Talktime</h5>
-                <div class="h3 text-success">{{ $data['overall']['talktime']}}</div>
-              </div>
-            </div>
-             <div class="col-6 col-md-2">
-              <div class="border rounded p-4">
-                <h5>Walkin</h5>
-                <div class="h2 text-warning">{{ $data['overall']['walkin']}}</div>
-              </div>
-            </div>
-             <div class="col-6 col-md-2">
-              <div class="border rounded p-4">
-                <h5>Demo</h5>
-                <div class="h2 text-warning">{{ $data['overall']['demo']}}</div>
-              </div>
-            </div>
-            <div class="col-6 col-md-2">
-              <div class="border rounded p-4">
-                <h5>Admissions</h5>
-                <div class="h2 text-warning">{{ $data['overall']['admission']}}</div>
-              </div>
-            </div>
-
-          </div>
+          
 
           
         
@@ -392,6 +353,74 @@
             </table>
           </div>
 
+            <h3 class="mt-4">Demo List &nbsp;
+      
+           </h3>
+           <div class="table-responsive mb-5">
+            <table class="table table-bordered mb-0">
+              <thead>
+                <tr class="" style="background-color: #cbfffc;">
+                  <th scope="col">#</th>
+                  <th scope="col">Candidate <br>Name</th>
+                  <th scope="col">Candidate <br> Phone</th>
+                  <th scope="col">Demo <br> Date</th>
+                  <th scope="col">Admission </th>
+                  <th scope="col">Center</th>
+                  <th scope="col">Caller <br>Name</th>
+                  <th scope="col">YOP</th>
+                  <th scope="col">Branch</th>
+                  <th scope="col">Percent</th>
+                  <th scope="col">Backlogs</th>
+                  <th scope="col"> Remarks</th>
+                </tr>
+              </thead>
+              <tbody class="{{$k=1}} {{$m=0}}">
+                @foreach($data['center'] as $user=>$d) 
+                <tr style="display: :none;" class="{{$m++}}"></tr>
+                @if($d['demo_list'])
+                  @foreach($d['demo_list'] as $e)
+                  <tr data-value="" style="@if($m%2==1) background-color: #f1fffe; @endif" >
+                    <td>{{$k++}}</td>
+                    <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    <td>{{$e->phone}}</td>
+                    <td>{{ \carbon\carbon::parse($e->demo_date)->format('d/m/Y')}} </td>
+                   
+                    <td>@if($e->admission_date) yes @else -@endif </td>
+                    <td>{{$user}}</td>
+                    <td>{{$e->caller_name}}</td>
+                    @if(isset(json_decode($e->data)->year_of_passing))
+                    <td>{{json_decode($e->data)->year_of_passing}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->branch))
+                    <td>{{json_decode($e->data)->branch}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->graduation_percentage))
+                    <td>{{json_decode($e->data)->graduation_percentage}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->backlogs))
+                    <td>{{json_decode($e->data)->backlogs}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @if(isset(json_decode($e->data)->remarks))
+                    <td>{{json_decode($e->data)->remarks}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                  </tr>
+                  @endforeach
+                @endif
+                @endforeach      
+              </tbody>
+            </table>
+          </div>
+
            <h3 class="mt-4">Admission List &nbsp;      
            </h3>
            <div class="table-responsive mb-5">
@@ -418,7 +447,7 @@
                   @foreach($d['admit_list'] as $e)
                   <tr data-value="" style="@if($m%2==1) background-color: #fffef1; @endif" >
                     <td>{{$k++}}</td>
-                    <td style="width:12%">{{$e->name}} @if($e->admission_date)  <span class="icon"> <i class="fa fa-check-circle text-success"></i></span>@endif</td>
+                    <td style="width:12%">{{$e->name}} </td>
                     <td>{{$e->phone}}</td>
                     <td>{{ \carbon\carbon::parse($e->admission_date)->format('d/m/Y')}} </td>
                   
@@ -460,7 +489,54 @@
         </div>
         @endif
 
+        @if(!request()->get('entity'))
+        <div class="card px-4">
+          <h3 class="mt-5">Overall Metrics</h3>
+          <div class="row mb-4">
+            <div class="col-6 col-md-2">
+              <div class="border rounded p-4 mb-3">
+                <h5>Unique Users</h5>
+                <div class="h2 text-primary">{{ $data['overall']['users']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="border rounded p-4 mb-3">
+                <h5>Total Calls</h5>
+                <div class="h2 text-danger">{{ $data['overall']['interacted']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="border rounded p-4">
+                <h5>Talktime</h5>
+                <div class="h3 text-success">{{ $data['overall']['talktime']}}</div>
+              </div>
+            </div>
+             <div class="col-6 col-md-2">
+              <div class="border rounded p-4">
+                <h5>Walkin</h5>
+                <div class="h2 text-warning">{{ $data['overall']['walkin']}}</div>
+              </div>
+            </div>
+             <div class="col-6 col-md-2">
+              <div class="border rounded p-4">
+                <h5>Demo</h5>
+                <div class="h2 text-warning">{{ $data['overall']['demo']}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="border rounded p-4">
+                <h5>Admissions</h5>
+                <div class="h2 text-warning">{{ $data['overall']['admission']}}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        @endif
+
     </div>
+
+
   </div>
 
 

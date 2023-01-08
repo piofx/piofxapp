@@ -53,7 +53,7 @@ class Call extends Model
             $start = Carbon::now()->startOfMonth();
             $end  = Carbon::now();
         }else if($filter=='lastmonth' ){
-            $start = Carbon::now()->subMonth(1)->startOfDay();
+            $start = Carbon::now()->subMonth(1)->startOfMonth()->startOfDay();
             $end  = Carbon::now()->subMonth(1)->endOfMonth()->endOfDay();
         }else if($filter=='thisyear' ){
             $start = Carbon::now()->startOfYear()->startOfMonth()->startOfDay();
@@ -168,7 +168,7 @@ class Call extends Model
             $start = Carbon::now()->startOfMonth();
             $end  = Carbon::now();
         }else if($filter=='lastmonth' ){
-            $start = Carbon::now()->subMonth(1)->startOfDay();
+            $start = Carbon::now()->subMonth(1)->startOfMonth()->startOfDay();
             $end  = Carbon::now()->subMonth(1)->endOfMonth()->endOfDay();
         }else if($filter=='thisyear' ){
             $start = Carbon::now()->startOfYear()->startOfMonth()->startOfDay();
@@ -377,7 +377,7 @@ class Call extends Model
             $start = Carbon::now()->startOfMonth();
             $end  = Carbon::now();
         }else if($filter=='lastmonth' ){
-            $start = Carbon::now()->subMonth(1)->startOfDay();
+            $start = Carbon::now()->subMonth(1)->startOfMonth()->startOfDay();
             $end  = Carbon::now()->subMonth(1)->endOfMonth()->endOfDay();
         }else if($filter=='thisyear' ){
             $start = Carbon::now()->startOfYear()->startOfMonth()->startOfDay();
