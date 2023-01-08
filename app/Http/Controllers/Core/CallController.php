@@ -137,7 +137,7 @@ class CallController extends Controller
             return Excel::download(new CallExport, $filename);
         }
 
-      
+     
 
         //update page meta title
         adminMetaTitle('Telecaller Dashboard');

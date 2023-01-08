@@ -18,17 +18,16 @@
 
     <div class="col-12 ">
      
-        @if(!request()->get('entity'))
         Filters: 
-        <a href="{{ route('Call.adminindex')}}?filter=today"><span class="badge @if(request()->get('filter')=='today') badge-dark @else badge-success @endif">Today</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=yesterday"><span class="badge @if(request()->get('filter')=='yesterday') badge-dark @else badge-success @endif">Yesterday</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=thismonth"><span class="badge @if(request()->get('filter')=='thismonth') badge-dark @else badge-success @endif">This Month</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=lastmonth"><span class="badge @if(request()->get('filter')=='lastmonth') badge-dark @else badge-success @endif">Last Month</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=thisyear"><span class="badge @if(request()->get('filter')=='thisyear') badge-dark @else badge-success @endif">This Year</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=lastyear"><span class="badge @if(request()->get('filter')=='lastyear') badge-dark @else badge-success @endif">Last Year</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=last7days"><span class="badge @if(request()->get('filter')=='last7days') badge-dark @else badge-success @endif">Last 7 days</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=last30days"><span class="badge @if(request()->get('filter')=='last30days') badge-dark @else badge-success @endif">Last 30 days</span></a> 
-          <a href="{{ route('Call.adminindex')}}?filter=overall"><span class="badge @if(request()->get('filter')=='overall') badge-dark @else badge-success @endif">Over All</span></a>
+        <a href="{{ route('Call.adminindex')}}?filter=today @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='today') badge-dark @else badge-success @endif">Today</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=yesterday @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='yesterday') badge-dark @else badge-success @endif">Yesterday</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thismonth @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='thismonth') badge-dark @else badge-success @endif">This Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastmonth @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='lastmonth') badge-dark @else badge-success @endif">Last Month</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=thisyear @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='thisyear') badge-dark @else badge-success @endif">This Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=lastyear @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='lastyear') badge-dark @else badge-success @endif">Last Year</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last7days @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='last7days') badge-dark @else badge-success @endif">Last 7 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=last30days @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='last30days') badge-dark @else badge-success @endif">Last 30 days</span></a> 
+          <a href="{{ route('Call.adminindex')}}?filter=overall @if(request()->get('entity')) &entity={{request()->get('entity')}} @endif"><span class="badge @if(request()->get('filter')=='overall') badge-dark @else badge-success @endif">Over All</span></a>
 
         <form>
         
@@ -45,10 +44,6 @@
         </div>
       </form>
   
-        @endif
-
-
-
         <!--begin::Advance Table Widget 3-->
         <div class="card card-custom gutter-b p-5 mt-4">
 
@@ -83,11 +78,21 @@
                  Caller Performance
               @endif
 
-              <span class="badge badge-primary">
+              <span class="badge badge-warning">
               {{request()->get('entity')}} 
               </span>
-              <span class="badge badge-warning">
-                Last 30 days
+              <span class="badge badge-primary {{date_default_timezone_set("Asia/Kolkata")}}">
+              @if(request()->get('filter')) {{request()->get('filter') }} 
+              @elseif(request()->get('start'))
+              Custom Date
+              @else Today  
+              @endif
+              </span>
+              <span class="badge badge-info">
+              @if(request()->get('start'))
+              {{ \carbon\carbon::parse(request()->get('start'))->format('d M Y')}} to 
+              {{ \carbon\carbon::parse(request()->get('end'))->format('d M Y')}} 
+              @endif
               </span>
             @endif
         </h3>
@@ -201,9 +206,15 @@
                 </td>
                 <td>{{ $d['avg_talktime'] }}</td>
                 <td>{{ $d['total_talktime'] }}</td>
-                <td><a href="{{ route('Call.adminindex')}}?walkin={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['walkin']) }}</a></td>
-                <td><a href="{{ route('Call.adminindex')}}?demo={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['demo'])  }}</a></td>
-                <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['admit']) }}</a></td>
+                @if(request()->get('entity'))
+                  <td><a href="{{ route('Call.adminindex')}}?walkin={{request()->get('entity')}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['walkin']) }}</a></td>
+                  <td><a href="{{ route('Call.adminindex')}}?demo={{request()->get('entity')}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['demo'])  }}</a></td>
+                  <td><a href="{{ route('Call.adminindex')}}?admitted={{request()->get('entity')}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['admit']) }}</a></td>
+                @else
+                  <td><a href="{{ route('Call.adminindex')}}?walkin={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['walkin']) }}</a></td>
+                  <td><a href="{{ route('Call.adminindex')}}?demo={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['demo'])  }}</a></td>
+                  <td><a href="{{ route('Call.adminindex')}}?admitted={{$user}} @if(request()->get('filter'))&filter={{request()->get('filter')}} @endif">{{ count($d['admit']) }}</a></td>
+                @endif
                 <td>{{ $d['score'] }}</td>
               </tr>
               @endforeach      
@@ -211,7 +222,7 @@
           </table>
         </div>
         
-        @if(count($data['center'] ))
+        @if(count($data['center'] ) && !request()->get('entity'))
         <h3 class="mt-4">Branches</h3>
 
         <div class="table-responsive mb-5">
@@ -276,15 +287,16 @@
                 
         </div>
         <!--end::Advance Table Widget 3-->
-        @if(!request()->get('entity'))
+        @if(!request()->get('entity') || request()->get('entity') )
         <div class="card my-3 p-4">
           
          
 
            <h3 class="mt-4">Walkin List &nbsp;
 
-
+            @if(!request()->get('entity'))
               <a href="{{ route('Call.adminindex')}}?walkin={{\Auth::user()->group}}&start={{request()->get('start')}}&end={{request()->get('end')}}&download=1" class="btn btn-primary btn-sm">Download</a>
+            @endif
       
            </h3>
            <div class="table-responsive mb-5">
@@ -489,7 +501,7 @@
         </div>
         @endif
 
-        @if(!request()->get('entity'))
+       
         <div class="card px-4">
           <h3 class="mt-5">Overall Metrics</h3>
           <div class="row mb-4">
@@ -532,7 +544,7 @@
 
           </div>
         </div>
-        @endif
+    
 
     </div>
 

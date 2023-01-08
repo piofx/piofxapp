@@ -141,22 +141,6 @@ class Call extends Model
             }
         }
 
-        if($item==null)
-            abort('403','entity not found');
-
-        if($item=='caller')
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', Carbon::now()->subDays(30))->where('caller_name',$entity)->get()->groupBy('date');
-        else{
-
-            foreach($caller_center as $caller =>$center){
-                if($entity==$center){
-                    array_push($callers,$caller);
-                }
-            }
-            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', Carbon::now()->subDays(30))->whereIn('caller_name',$callers)->get()->groupBy('date');
-            
-        }
-
         $request = request();
         $start = $request->get('start');
         $end = $request->get('end');
@@ -192,6 +176,24 @@ class Call extends Model
             $start = Carbon::now()->subDays(30)->startOfDay();
             $end  = Carbon::now()->subDays(1)->endOfDay();
         }
+
+        if($item==null)
+            abort('403','entity not found');
+
+        if($item=='caller')
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', $start)->where('call_start_date','<', $end)->where('caller_name',$entity)->get()->groupBy('date');
+        else{
+
+            foreach($caller_center as $caller =>$center){
+                if($entity==$center){
+                    array_push($callers,$caller);
+                }
+            }
+            $data_dates= Call::select('id','name','caller_name','call_type','call_tag','status','phone','caller_name','caller_phone','caller_center','duration', DB::raw('DATE(call_start_date) as date'),'admission_date','walkin_date','demo_date')->where('call_start_date','>', $start)->where('call_start_date','<', $end)->whereIn('caller_name',$callers)->get()->groupBy('date');
+            
+        }
+
+       
         
         foreach($data_dates as $caller=>$callerdata){
 
@@ -567,6 +569,7 @@ class Call extends Model
         }
 
 
+
         return $set;
     }
 
@@ -603,7 +606,6 @@ class Call extends Model
         }
 
 
-
         $sdata['all'] = $adata;
         $sdata['center'] = [];
         if($item=='caller'){
@@ -628,6 +630,8 @@ class Call extends Model
                 }else{
                     $sdata['all'][$date]['avg_talktime'] =0;
                 }
+
+
             }
             $sdata['entity'] = 1;
             $sdata['entity_center'] = 1;
@@ -645,9 +649,67 @@ class Call extends Model
                 }elseif($d['score']>=200){
                     $counter['excellent']++;
                 }
+
+                $b = $d;
+                
+                if(isset($b['admit'])){
+                    //$sdata['all'][$date]["admit_list"] +=count($b['admit']);
+                    if(!isset($sdata['all'][$date]["admit_list"]))
+                        $sdata['all'][$date]["admit_list"] = [];
+                    foreach($b['admit'] as $item)
+                        array_push($sdata['all'][$date]["admit_list"],$item);
+                }
+                if(isset($b['demo'])){
+                    if(!isset($sdata['all'][$date]["demo_list"]))
+                        $sdata['all'][$date]["demo_list"] = [];
+                    foreach($b['demo'] as $item)
+                        array_push($sdata['all'][$date]["demo_list"],$item);
+                }
+                if(isset($b['walkin'])){
+                    if(!isset($sdata['all'][$date]["walkin_list"]))
+                        $sdata['all'][$date]["walkin_list"] = [];
+                    foreach($b['walkin'] as $item)
+                            array_push($sdata['all'][$date]["walkin_list"],$item);
+                }
             }
             $sdata['counter'] =$counter; 
 
+        $all = $sdata['all'];
+        $sdata['overall'] =array("users"=>0,"interacted"=>0,"total_duration"=>0,"admission"=>0,"talktime"=>0,"walkin"=>0,"demo"=>0);
+
+  
+        arsort($all);
+        
+        foreach($all as $a=>$b){
+            $sdata['overall']["users"]+=$b["users"];
+            if(!isset($b["contacted"]))
+                $b["contacted"]=0;
+            if(!isset($b["answered"]))
+                $b["answered"]=0;
+            $sdata['overall']["interacted"]+=($b["contacted"]+$b["answered"]);
+            $sdata['overall']["total_duration"]+=$b["total_duration"];
+            $sdata['overall']["admission"]+=count($b["admit"]);
+            $sdata['overall']["walkin"]+= count($b["walkin"]);
+            $sdata['overall']["demo"]+=count($b["demo"]);
+
+        }
+
+        $init = intval($sdata['overall']["total_duration"]);
+        $hours = floor($init / 3600);
+        $minutes = floor(($init / 60) % 60);
+        $seconds = $init % 60;
+        if($hours)
+            $t = $hours.'h '.$minutes.'m '.$seconds.'s';
+        else if($minutes)
+            $t= $minutes.'m '.$seconds.'s';
+        else
+            $t = $seconds.'s'; 
+
+        $sdata['overall']['talktime'] = $t;
+        $sdata['over_all'] = 1;
+
+        $sdata['center'] = $sdata['all'];
+        
 
         return $sdata;
     }
