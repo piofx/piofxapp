@@ -28,6 +28,12 @@ class WhatsappController extends Controller
             
             $phone = '919515125110';
             $template = 'requestotp';
+            $rem_str = 'rem_'.$phone.'_status';
+
+            Cache::remember($rem_str, 1800, function () {
+                return 1;
+            });
+
             sendWhatsApp($phone,$template,[]);
 
         }
@@ -83,7 +89,6 @@ class WhatsappController extends Controller
         }
         else if($phone){
             $status['rem_str'] = Cache::get('rem_'.$phone.'_status');
-            $status['rem'] = Cache::get('rem');
             dd($status);
         }
 
