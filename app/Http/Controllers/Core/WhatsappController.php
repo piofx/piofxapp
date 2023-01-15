@@ -118,10 +118,13 @@ class WhatsappController extends Controller
         if(isset($d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']))
         $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'];
         $d['otp'] = -1;
-        $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+        $d['text'] = $text;
 
         $rem_str = 'rem_'.$phone.'_status';
         $status_str = Cache::get($rem_str);
+        $d['str'] = $status_str;
+        $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+
         if($text =='Generate OTP' && $status_str){
             $template = 'otp';
             $otp = substr($phone,-4);
