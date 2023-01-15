@@ -266,6 +266,8 @@ class UserController extends Controller
         }
         if($phone && $whatsapp){
             $template = 'requestotp';
+            if(strlen($phone)==10)
+                    $phone = '91'.$phone;
             $otp = $data['code'];
             request()->session()->put('code_'.$phone,$otp);
             $rem_str = 'rem_'.$phone.'_status';
