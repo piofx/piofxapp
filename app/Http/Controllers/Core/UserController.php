@@ -269,10 +269,12 @@ class UserController extends Controller
             if(strlen($phone)==10)
                     $phone = '91'.$phone;
             $otp = $data['code'];
-            request()->session()->put('code_'.$phone,$otp);
             $rem_str = 'rem_'.$phone.'_status';
             Cache::remember($rem_str, 1800, function () {
                 return 1;
+            });
+            Cache::remember('code_'.$phone, 1800, function () use ($otp) {
+                return $otp;
             });
             sendWhatsApp($phone,$template,[]);
         }
