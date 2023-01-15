@@ -7,7 +7,20 @@ use Illuminate\Http\Request;
 
 class WhatsappController extends Controller
 {
-     //whatsapp message
+    /*
+     * Create the component instance.
+     *
+     * @param  string  $type
+     * @param  string  $message
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->app      =   'Core';
+        $this->module   =   'Whatsapp';
+        $this->componentName = componentName('agency');
+    }
+
     public function whatsapp(){
 
         if(request()->get('send')==1){
