@@ -91,13 +91,12 @@ class WhatsappController extends Controller
 
      public function webhookpost(Request $r){
 
-
         $file = 'sample.json';
         $data = $r->all();
         $show = $r->get('show');
         $show_2 = $r->get('show_2');
 
-        $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
+       $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
        if($show){
         $d = Storage::disk('public')->get('wadata/sample.json');
 
