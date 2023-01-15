@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Core\AdminController;
+use App\Http\Controllers\Core\WhatsappController;
 use App\Http\Controllers\Core\AgencyController;
 use App\Http\Controllers\Core\ClientController;
 use App\Http\Controllers\Core\ContactController;
@@ -28,8 +29,10 @@ Route::get('/admin/email', [AdminController::class, 'sampletestemail'])
 		->middleware(['auth']);
 
 //whatsapp messages
-Route::get('/admin/whatsapp', [AdminController::class, 'whatsapp'])
+Route::get('/admin/whatsapp', [WhatsappController::class, 'whatsapp'])
 		->middleware(['auth'])->name('whatsapp');
+Route::get('admin/whatsapp/webhook', [WhatsappController::class, 'webhookget']);
+Route::post('admin/whatsapp/webhook', [WhatsappController::class, 'webhookpost']);
 
 // Settings Routes
 Route::get('/admin/gsettings', [AdminController::class, 'gsettings'])

@@ -144,6 +144,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+
     public function processForm($data){
         $d = [];
         $form = explode(',',$data);

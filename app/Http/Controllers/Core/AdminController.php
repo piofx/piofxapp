@@ -38,65 +38,7 @@ class AdminController extends Controller
 
    
 
-    //whatsapp message
-    public function whatsapp(){
-
-        if(request()->get('send')==1){
-            
-
-            $url = "https://graph.facebook.com/v13.0/102903359277453/messages";
-            $token = 'EAAK0BmKuQgcBAAnGj9qbUZANSZAQMmp1ocnDWpNdqDqFWe0PIuCiFcZALygZBwiDgat9N0kfDv2ohAcVByhR01bjFmStzzXaLnjK6w5yZAVChxjv0JvNmYUP1gZCDRIpfXYN3X4JUOMpxtBPzsMtK6HL20r14UQzH1pZAVQ8uZA2wAQNz1eiWoYp8ZA2HrNSMFkKFF2ZACvxuMIgZDZD';
-            $phone = '919515125110';
-            $template = 'hello_world';
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => $url,
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => '',
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS =>'{
-                "messaging_product": "whatsapp",
-                "to": '.$phone.',
-                "type": "template",
-                "template": {
-                    "name": "'.$template.'",
-                    "language": {
-                        "code": "en_US"
-                    },
-                     "components": [
-                      {
-                        "type": "body",
-                        "parameters": [
-                          {
-                            "type": "text",
-                            "text": "34567"
-                          }
-                        ]
-                      }
-                    ]
-                }
-            }',
-              CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Authorization: Bearer '.$token
-              ),
-            ));
-
-            $response = curl_exec($curl);
-
-            curl_close($curl);
-            echo $response;
-            dd(request()->all());
-
-        }
-        return view('apps.Core.Admin.whatsapp')
-            ->with('app',$this)
-            ->with('componentName',$this->componentName);
-    }
+   
 
 
     /**
