@@ -156,6 +156,7 @@ class WhatsappController extends Controller
             $d['status_str'] = $status_str;
         }
         Cache::forget($rem_str);
+        Cache::forget("code_".$phone);
         $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
        }
 
