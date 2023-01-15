@@ -140,6 +140,7 @@ class Page extends Model
         }
 
 
+
         $this->auth = 1;
         //auth variavle
         if(preg_match_all('/@guest+(.*?)@endguest/', $content, $regs))
@@ -206,6 +207,8 @@ class Page extends Model
 
         if(preg_match_all('/@registerpopup+(.*?)@endregisterpopup/', $content, $regs))
         {
+
+           
             foreach ($regs[1] as $reg){
                 $variable = trim($reg);
                 if (strpos($variable, '@else') !== false) {
@@ -237,6 +240,7 @@ class Page extends Model
                 }
         }
 
+       
         if(preg_match_all('/@uniqueform+(.*?)@enduniqueform/', $content, $regs))
         {
             foreach ($regs[1] as $reg){

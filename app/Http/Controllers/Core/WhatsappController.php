@@ -135,7 +135,10 @@ class WhatsappController extends Controller
         $text = strtolower(str_replace(" ","",$text));
         if($text =='generateotp' && $status_str){
             $template = 'otp';
-            $otp = substr($phone,-4);
+            if(request()->session()->get('code_'.$phone))
+                $otp = request()->session()->get('code_'.$phone);
+            else
+                $otp = substr($phone,-4);
             sendWhatsApp($phone,$template,[$otp]);
             $d['otp'] = 1;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));

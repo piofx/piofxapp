@@ -43,8 +43,15 @@
                             <div class="">
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
                                 <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
+
+                                
+                                @if(client('whatsapp_otp_register'))
+                                <small>Kindly enter valid phone number for OTP generation via Whatsapp</small><br>
+                                <button type="button" class="btn btn-outline-dark btn-sm mt-3 generate_whatsapp_otp">Generate OTP</button>
+                                @else
                                 <small>Kindly enter valid phone number for OTP verification</small><br>
-                                <button class="btn btn-outline-dark btn-sm mt-3 generate_phone_otp">Generate OTP</button>
+                                <button type="button" class="btn btn-outline-dark btn-sm mt-3 generate_phone_otp">Generate OTP</button>
+                                @endif
                                  <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
                                   <span class="sr-only">Loading...</span>
                                 </div><br>

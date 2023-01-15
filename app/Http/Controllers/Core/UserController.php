@@ -249,6 +249,7 @@ class UserController extends Controller
         $client_id = request()->get('client.id');
         // get the user phone number
         $phone = request()->get('phone');
+        $whatsapp = request()->get('whatsapp');
 
         // load the token
         $data['code'] = request()->session()->get('code');
@@ -263,7 +264,13 @@ class UserController extends Controller
             $message['error'] = 'User account exists with phone ('.$u1->phone.') Kindly use forgot password to login.';
             return json_encode($message);
         }
-        if($phone){
+        if($phone && $whatsapp){
+            $template = 'requestotp';
+            $otp = $data['code'];
+            request()->session()->put('code_'.$phone,$otp);
+            sendWhatsApp($phone,$template,[]);
+        }
+        elseif($phone){
             
             //validate data
             if (strpos($phone, '+') !== false){

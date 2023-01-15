@@ -291,6 +291,7 @@ class PageController extends Controller
         }
 
         // check for authbased replacement
+
         if($obj){
             $obj = $obj->checkAuthBasedReplacement();
             if(isset($obj->redirected))

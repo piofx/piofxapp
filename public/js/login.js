@@ -218,6 +218,7 @@ $(function(){
                 
             });
 
+         
 
         }
 
@@ -259,6 +260,40 @@ $(function(){
                 }
                 
             });
+
+            console.log('here');
+               $(document).on("click",".generate_whatsapp_otp", function(e){
+                console.log('clicked');
+                e.preventDefault();
+                var formValues= $(this).closest("form").serialize();
+                var phone = $(this).closest("form").find("input[name=phone]").val();
+                console.log('phone - '+phone);
+                if(phone ){
+                    $.get('/contact/api',function(data){
+                    var token = JSON.parse(data).token;
+                    var d = formValues+'&_token='+token+'&generate_otp=1&whatsapp=1';
+                    $.post($url, d, function(data){
+                        console.log(data);
+                        var d = JSON.parse(data);
+                        console.log(d);
+
+                        if(typeof(d.code) != "undefined" && d.code !== null){
+                            alert('OTP Generator send via whatsapp! Kindly wait for 2min before retrying.');
+                      
+                            return false; 
+                        }else{
+                             alert(d.error);
+                        }
+                       
+                        
+                    });
+                });
+                }else{
+                    alert('Kindly enter a valid phone number!');
+                }
+                
+            });
+
         }
 
     
