@@ -91,11 +91,13 @@ class WhatsappController extends Controller
 
      public function webhookpost(Request $r){
 
+
         $file = 'sample.json';
         $data = $r->all();
         $show = $r->get('show');
         $show_2 = $r->get('show_2');
 
+        $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
        if($show){
         $d = Storage::disk('public')->get('wadata/sample.json');
 
@@ -116,7 +118,7 @@ class WhatsappController extends Controller
         $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['button']['text'];
         if(isset($d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']))
         $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'];
-        $d['accactivation'] = -1;
+        $d['otp'] = -1;
         $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
 
         $rem_str = 'rem_'.$phone.'_status';
@@ -130,12 +132,12 @@ class WhatsappController extends Controller
         
         }else if($text =='hello' && $status_str){
             $template = 'hello_world';
-            Admin::sendWhatsapp($phone,$template,[]);
-            $d['accactivation'] = 2;
+            sendWhatsApp($phone,$template,[]);
+            $d['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
         }
         else{
-            $d['accactivation'] = 0;
+            $d['otp'] = 0;
             $d['rem_Str'] = $rem_str;
             $d['status_str'] = $status_str;
         }
