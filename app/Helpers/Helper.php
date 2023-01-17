@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 
 // function to minify css
@@ -604,6 +605,86 @@ if (! function_exists('blog_image_upload')) {
 	    }
 	}
 
+	if(!function_exists("colleges")){
+		function colleges(){
+			$colleges = Cache::get('colleges');
+			if(!$colleges)
+				return [];
+	        return $colleges;
+		}
+	}
+
+	if(!function_exists("branches")){
+		function branches(){
+			$branches = ["Aeronautical Engineering","Civil Engineering","Computer Science and Engineering (CSE)","CSE (AI & ML)","CSE (Cyber Security)","CSE (Data Science)","CSE (Internet of Things)","CSE (Networks)","CSE (Software Engineering)","Electrical and Electronics Engineering","Electronics and Communication Engineering","Electronics and Instrumentation Engineering","Electronics and Telematics Engineering","Information Technology","Mechanical Engineering (Mechatronics)","Mechanical Engineering","Metallurgy and Materials Engineering","Mining Engineering","Bachelor of Business Administration (BBA)","Bachelor of Computer Applications (BCA)","Bachelor of Science Computers(BSC - CS)","Bachelor of Science (BSC Regular)","Bachelor of Commerce Computers (BCOM - CS)","Bachelor of Commerce (BCOM Regular)","Bachelor of Pharmacy (BPharma)","Masters of Business Administration (MBA)","Master of Computer Applications (MCA)","Master of Technology (MTECH)","Master of Science Computers (MSCS)","Master of Science Regular (MSC)","Master of Pharma (MPharma)","OTHER"];
+	        return $branches;
+		}
+	}
+
+	if(!function_exists("yop")){
+		function yop(){
+			$yop = ["2020","2021","2022","2023","2024","2026","2027","2028","2029","2030","OTHER"];
+	        return $yop;
+		}
+	}
+
+	if(!function_exists("districts")){
+		function districts(){
+			$data = json_decode(file_get_contents('districts.json'),true);
+	        $states = $districts = [];
+	        foreach($data as $a =>$b){
+	            foreach($b as $m=>$n)
+	            {
+	                foreach($n as $p=>$q)
+	                    if($p=='state'){
+	                        array_push($states,$q);
+	                    }else{
+	                        foreach($q as $r=>$s)
+	                            array_push($districts,$s);
+	                    }
+	            }
+	        }
+	        sort($districts);
+	        return $districts;
+		}
+	}
+
+	if(!function_exists("states")){
+		function states(){
+			$data = json_decode(file_get_contents('districts.json'),true);
+	        $states = $districts = [];
+	        foreach($data as $a =>$b){
+	            foreach($b as $m=>$n)
+	            {
+	                foreach($n as $p=>$q)
+	                    if($p=='state'){
+	                        array_push($states,$q);
+	                    }else{
+	                        foreach($q as $r=>$s)
+	                            array_push($districts,$s);
+	                    }
+	            }
+	        }
+	        sort($states);
+	        return $states;
+		}
+	}
+
+	if(!function_exists("zones")){
+		function zones(){
+			$data = ["Vijayawada","Visakhapatnam","Tirupati","Warangal","Guntur","Kakinada","Anantapur","Karimnagar","Khammam","Dilshuknagar","Secunderabad","Ameerpet","Kukatpally","Mehdipatnam","Narayanguda","Kompally","Uppal-Ghatkesar","Filmcity","Chevella","Ibrahimpatnam","Shamshabad","Vizianagaram","Kurnool","Eluru","Nellore","Rajamundry","Rajamundry","Bhimavaram","Ongole","Kadapa"];
+	        sort($data);
+	        return $data;
+		}
+	}
+
+	if(!function_exists("designations")){
+		function designations(){
+			$data = ["TPO","Principal","Receptionist","Faculty","HOD","Coordinator"];
+	        sort($data);
+	        return $data;
+		}
+	}
 
 	if(!function_exists("processForm")){
 		function processForm($data){

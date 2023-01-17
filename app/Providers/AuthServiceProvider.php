@@ -52,6 +52,9 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Page\Theme' => 'App\Policies\Page\ThemePolicy',
         'App\Models\Page\Module' => 'App\Policies\Page\ModulePolicy',
         'App\Models\Page\Asset' => 'App\Policies\Page\AssetPolicy',
+
+        /* college policies */
+        'App\Models\College\College' => 'App\Policies\College\CollegePolicy',
         
 
     ];

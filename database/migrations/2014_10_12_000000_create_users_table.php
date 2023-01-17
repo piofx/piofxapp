@@ -28,6 +28,18 @@ class CreateUsersTable extends Migration
             $table->longText('data')->nullable();
             $table->longText('json')->nullable();
             $table->integer('status')->default(1);
+            $table->string('c1')->nullable();
+            $table->string('c2')->nullable();
+            $table->string('c3')->nullable();
+            $table->string('c4')->nullable();
+            $table->string('c5')->nullable();
+            $table->string('c6')->nullable();
+            $table->string('c7')->nullable();
+            $table->string('c8')->nullable();
+            $table->string('c9')->nullable();
+            $table->string('c10')->nullable();
+            $table->integer('subscribe_phone')->nullable();
+            $table->integer('subscribe_email')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

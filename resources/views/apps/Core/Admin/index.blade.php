@@ -169,7 +169,7 @@
 									</svg><!--end::Svg Icon--></span>
 								</span>
 								<div>
-									<a href="{{ url('admin/theme')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Theme</a>
+									<a href="{{ url('admin/theme')}}" class="text-inverse-success font-weight-bolder font-size-h4 mt-3">Webpages</a>
 								</div>
 							</div>
 						</div>

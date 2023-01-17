@@ -27,7 +27,7 @@
               </g>
             </svg><!--end::Svg Icon--></span>
           </span>
-          <div class="text-inverse-danger font-weight-bolder font-size-h2 mb-2 mt-5">Themes</div>
+          <div class="text-inverse-danger font-weight-bolder font-size-h2 mb-2 mt-5">Webpages</div>
           <div class="font-weight-bold text-inverse-danger font-size-sm">Simple, Modular & Developer Friendly</div>
         </div>
         <!--end::Body-->

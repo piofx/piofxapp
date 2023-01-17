@@ -67,7 +67,12 @@ class RegisteredUserController extends Controller
         else
             $data = '';
 
-        return view('auth.register_phone')->with('app',$this)->with('code',$code)->with('form',$form);
+        $domain = str_replace(".","_",request()->get('domain.name'));
+        if(view()->exists('auth.domains.'.$domain))
+            return view('auth.domains.'.$domain)
+                    ->with('app',$this)->with('code',$code);
+        else
+            return view('auth.register_phone')->with('app',$this)->with('code',$code)->with('form',$form);
 
     }
 
