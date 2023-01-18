@@ -192,6 +192,7 @@ class CollegeController extends Controller
             // load the resource
             $obj = Obj::where('id',$id)->first();
 
+  
             // authorize the app
             $this->authorize('update', $obj);
             //update the resource

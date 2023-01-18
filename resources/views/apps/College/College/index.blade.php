@@ -89,7 +89,7 @@
                     <td>
                       @if($obj->type=="engineering")
                         <span class="badge badge-primary">Engineering</span>
-                        @elseif($obj->status=="degree")
+                        @elseif($obj->type=="degree")
                         <span class="badge badge-success">Degree</span>
                         @else
                         <span class="badge badge-warning">Other</span>
