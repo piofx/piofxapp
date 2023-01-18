@@ -146,6 +146,16 @@ class UserController extends Controller
         $agency_id = request()->get('agency.id');
         $generate_otp = request()->get('generate_otp');
 
+        $c1= request()->get('c1');
+        $c2= request()->get('c2');
+        $c3= request()->get('c3');
+        $c4= request()->get('c4');
+        $c5= request()->get('c5');
+        $c6= request()->get('c6');
+        $c7= request()->get('c7');
+        $c8= request()->get('c8');
+        $c9= request()->get('c9');
+        $c10= request()->get('c10');
 
         $u = Obj::where('email',$email)->where('client_id',$client_id)->first();
         $u1 = Obj::where('phone',$phone)->where('client_id',$client_id)->first();
@@ -205,6 +215,28 @@ class UserController extends Controller
             
             $user->data = $data;
             $user->json = $json;
+            if($c1)
+            $user->c1 = $c1;
+            if($c2)
+            $user->c2 = $c2;
+            if($c3)
+            $user->c3 = $c3;
+            if($c4)
+            $user->c4 = $c4;
+            if($c5)
+            $user->c5 = $c5;
+            if($c6)
+            $user->c6 = $c6;
+            if($c7)
+            $user->c7 = $c7;
+            if($c8)
+            $user->c8 = $c8;
+            if($c9)
+            $user->c9 = $c9;
+            if($c10)
+            $user->c10 = $c10;
+            $user->subscribe_phone=1;
+            $user->subscribe_email=1;
             $user->save();
 
             if($request->get('settings_utm_referral')){

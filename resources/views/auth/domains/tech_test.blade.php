@@ -144,7 +144,13 @@
                    
                     <div class='col-12 col-md-3'>
                         <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >Current City</label>
-                        <input class="form-control" name="c5" value="">
+                        <input class="form-control" list="datalistCities" name="c5" id="exampleDataList" placeholder="Type to search..."
+                        >
+                        <datalist id="datalistCities">
+                          @foreach(cities() as $d)
+                            <option value="{{$d}}">
+                          @endforeach
+                        </datalist>
                     </div>
                     <div class='col-12 col-md-3'>
                         <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >District</label>

@@ -92,7 +92,6 @@ class CollegeController extends Controller
         $data['districts'] = districts();
         $data['zones'] = zones();
         $data['designations'] = designations();
-
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)

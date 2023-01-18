@@ -628,6 +628,16 @@ if (! function_exists('blog_image_upload')) {
 		}
 	}
 
+	if(!function_exists("cities")){
+		function cities(){
+			$data = file_get_contents('cities.json');
+			$data = str_replace("\"","",$data);
+			$data = str_replace("\n","",$data);
+			$cities = explode(",",$data);
+	        return $cities;
+		}
+	}
+
 	if(!function_exists("districts")){
 		function districts(){
 			$data = json_decode(file_get_contents('districts.json'),true);
