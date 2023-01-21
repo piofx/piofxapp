@@ -65,7 +65,7 @@
                             <div class="">
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="otp" :value="__('OTP')">Enter OTP Verification code</label>
                                 <input id="otp" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="text" name="otp" value="{{ old('otp') }}" required autofocus autocomplete="off" />
-                                    <small>Kindly wait for 2mins for OTP via sms, before retrying.</small><br>
+                                    <small>Kindly wait for 2mins for OTP, before retrying.</small><br>
                                 <button class="btn btn-outline-dark btn-sm mt-3 validate_otp" data-otp="{{$code}}">Validate OTP 
                                 </button><span class="text-dark ml-3 otp_success" style="display: none;"><i class="fa fa-check-circle text-dark"></i> Success</span>
                             </div>
