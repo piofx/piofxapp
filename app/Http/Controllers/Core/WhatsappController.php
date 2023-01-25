@@ -144,7 +144,15 @@ class WhatsappController extends Controller
             $d['otp'] = 1;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
         
-        }else if($text =='hello' && $status_str){
+        }else if($text =='activateyouraccount' && $status_str){
+            $template = 'activateyouraccount';
+            sendWhatsApp($phone,$template);
+            $d['wactivate'] = 1;
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+        
+        }
+
+        else if($text =='hello' && $status_str){
             $template = 'hello_world';
             sendWhatsApp($phone,$template,[]);
             $d['otp'] = 2;

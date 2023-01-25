@@ -235,7 +235,8 @@ class UserController extends Controller
             $user->c9 = $c9;
             if($c10)
             $user->c10 = $c10;
-            $user->subscribe_phone=1;
+            $user->subscribe_phone=0;
+            if($request->get('email_subscribe'))
             $user->subscribe_email=1;
             $user->save();
 
