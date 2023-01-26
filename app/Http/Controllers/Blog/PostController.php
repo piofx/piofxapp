@@ -86,7 +86,7 @@ class PostController extends Controller
                 // Retrieve all posts
                 $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->whereDate('created_at', '<=', $date)->orderBy("created_at", 'desc')->paginate('15');
 
-                
+
 
                 Cache::remember('posts_'.request()->get('client.id'),60, function() use($objs){
                     return $objs;
@@ -180,6 +180,9 @@ class PostController extends Controller
         else{
             $ext = 'jpg';
         }
+
+        $title = 'Blog';
+        updateMetaTitle($title.' | '.request()->get('client.name'));
 
         // change the componentname from admin to client 
         $this->componentName = componentName('client');
