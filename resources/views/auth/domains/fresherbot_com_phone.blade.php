@@ -1,9 +1,8 @@
-
 <x-dynamic-component :component="$app->componentName" class="mt-4" >
         <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
         <!--begin::Form-->
-        <form method="POST" action="{{ route('User.apiregister') }}" data-register="1">
+        <form method="POST" action="{{ route('User.apiregister') }}" data-register="1" data-register_otp="1">
             @csrf
                     <!--begin::Title-->
                     <div class="pb-13 pt-lg-0 pt-5">
@@ -22,9 +21,11 @@
                         </div>
                         <div class='col-12 col-md-6'>
                              <!-- Phone number -->
+
                             <div class="form-group">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
-                                <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
+                                <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
+                                
                             </div>
                         </div>
                     </div>
@@ -40,13 +41,20 @@
                             <div class="rounded mb-4 p-4" style="background: #d6edf7">
                              <!-- Email Address -->
                             <div class="">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
-                                <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
-                                <small>Kindly enter valid email id for OTP verification</small><br>
-                                <button class="btn btn-outline-dark btn-sm mt-3 generate_otp">Generate OTP</button>
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
+                                <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
+
+                                
+                                @if(client('whatsapp_otp_register'))
+                                <small>Kindly enter valid phone number for OTP generation via Whatsapp</small><br>
+                                <button type="button" class="btn btn-outline-dark btn-sm mt-3 generate_whatsapp_otp">Generate OTP</button>
+                                @else
+                                <small>Kindly enter valid phone number for OTP verification</small><br>
+                                <button type="button" class="btn btn-outline-dark btn-sm mt-3 generate_phone_otp">Generate OTP</button>
+                                @endif
                                  <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
-  <span class="sr-only">Loading...</span>
-</div><br>
+                                  <span class="sr-only">Loading...</span>
+                                </div><br>
                             </div>
                             </div>
 
@@ -55,9 +63,9 @@
                              <div class="rounded mb-4 p-4" style="background: #d6edf7">
                              <!-- Email Address -->
                             <div class="">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="otp" :value="__('OTP')">OTP Verification</label>
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="otp" :value="__('OTP')">Enter OTP Verification code</label>
                                 <input id="otp" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="text" name="otp" value="{{ old('otp') }}" required autofocus autocomplete="off" />
-                                    <small>Kindly check SPAM & Promotions folder for otp email</small><br>
+                                    <small>Kindly wait for 2mins for OTP, before retrying.</small><br>
                                 <button class="btn btn-outline-dark btn-sm mt-3 validate_otp" data-otp="{{$code}}">Validate OTP 
                                 </button><span class="text-dark ml-3 otp_success" style="display: none;"><i class="fa fa-check-circle text-dark"></i> Success</span>
                             </div>
@@ -67,7 +75,7 @@
                     </div>
 
                    
-
+                    @if(request()->get('password'))
                     <div class="row">
                         <div class='col-12 col-md-6'>
                             <!-- Password -->
@@ -85,6 +93,7 @@
                                     
                         </div>
                     </div>
+                    @endif
 
                 <div class="row">
                     <div class='col-12 col-md-3'>
@@ -197,12 +206,12 @@
                     </div>
                 </div>
                 </div>
+
                     
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
                 <input type="hidden" name="client_id" value="{{ request()->get('client.id') }}">
                 <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
-                <input type="hidden" name="email_subscribe" value="1">
                 <input type="hidden" name="settings_utm_source" value="{{ request()->get('utm_source') }}">
                 <input type="hidden" name="settings_utm_campaign" value="{{ request()->get('utm_campaign') }}">
                 <input type="hidden" name="settings_utm_medium" value="{{ request()->get('utm_medium') }}">
@@ -212,6 +221,8 @@
                 <input type="hidden" name="curr_url" value="{{ url()->current() }}">
                 <input type="hidden" name="code" value="{{ $code }}">
 
+                    
+                    
                     <!--begin::Action-->
                     <div class="pb-lg-4 pb-5 d-flex align-items-center ">
                     <div>
@@ -224,10 +235,8 @@
                         <div class="spinner-border spinner-border-sm ml-2 mt-1 login_spinner" role="status" style="display: none;">
                           <span class="sr-only">Loading...</span>
                         </div><br>
-                    <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a> &nbsp;&nbsp;&nbsp;     
-
-                    <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>
-                       
+                        <a href="{{ route('login')}}"  class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5">Already registered?</a>  &nbsp;&nbsp;
+                        <a href="{{ route('password.request') }}" class="text-muted font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a>              
                     </div>
                     </div>
                     <!--end::Action-->

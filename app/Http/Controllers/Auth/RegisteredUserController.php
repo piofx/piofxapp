@@ -67,9 +67,18 @@ class RegisteredUserController extends Controller
         else
             $data = '';
 
+        //client settings
+        $settings = json_decode(request()->get('client.settings'));
         $domain = str_replace(".","_",request()->get('domain.name'));
-        if(view()->exists('auth.domains.'.$domain))
-            return view('auth.domains.'.$domain)
+        $view  = $domain;
+        if(isset($settings->whatsapp_otp_register))
+            if($settings->whatsapp_otp_register)
+                $view = $domain.'_phone';
+
+     
+
+        if(view()->exists('auth.domains.'.$view))
+            return view('auth.domains.'.$view)
                     ->with('app',$this)->with('code',$code);
         else
             return view('auth.register_phone')->with('app',$this)->with('code',$code)->with('form',$form);
@@ -126,7 +135,16 @@ class RegisteredUserController extends Controller
         else
             $data = '';
 
-        return view('auth.register')->with('app',$this)->with('code',$code)->with('form',$form);
+           //client settings
+        $settings = json_decode(request()->get('client.settings'));
+        $domain = str_replace(".","_",request()->get('domain.name'));
+        $view  = $domain;
+
+        if(view()->exists('auth.domains.'.$view))
+            return view('auth.domains.'.$view)
+                    ->with('app',$this)->with('code',$code)->with('form',$form);
+        else
+            return view('auth.register')->with('app',$this)->with('code',$code)->with('form',$form);
     }
 
 
