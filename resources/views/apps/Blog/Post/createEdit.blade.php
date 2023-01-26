@@ -372,6 +372,16 @@
                     </div>
                     <!-- End Featured -->
 
+                     <!-- Featured -->
+                    <div class="p-3 bg-white my-3 rounded-lg shadow-sm">
+                        <label class="checkbox">
+                            <input type="checkbox" name="image_post_hide" @if($stub == 'update'){{$obj->image_post_hide == 'on' ? 'checked' : null }}@endif/>
+                            <span class="mr-2"></span>
+                                Hide image in post
+                        </label>
+                    </div>
+                    <!-- End Featured -->
+
                     <!-- Public or Priovate -->
                     <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
                         <div class="card border rounded-lg mt-5">

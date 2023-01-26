@@ -293,6 +293,7 @@
                     <!-- End Author and share -->
 
                     <!-- Featured Image -->
+                    @if($obj->image_post_hide!="on")
                     @if(!empty($obj->image) && strlen($obj->image) > 5)
                         @if(Storage::disk('s3')->exists($obj->image))
                             <div class="text-center mb-5">
@@ -316,6 +317,7 @@
                                 @endif
                             </div>
                         @endif
+                    @endif
                     @endif
                     <!-- End Featured Image -->
 

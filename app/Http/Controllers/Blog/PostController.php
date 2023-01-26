@@ -46,6 +46,7 @@ class PostController extends Controller
         $user = new User();
         $blogSettings = new BlogSettings();
        
+
         //update page meta title
         adminMetaTitle('Blog');
 
@@ -71,17 +72,25 @@ class PostController extends Controller
             }
         }
 
+        $current_date = Carbon::now();
+        $date = Carbon::parse($current_date)->format('Y-m-d');
+
         // Check if pagination is clicked 
         if(!empty($request->query()['page']) && $request->query()['page'] > 1){
             // Retrieve all posts
             $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("id", 'desc')->paginate('15');
         }else{
             $objs = Cache::get('posts_'.request()->get('client.id'));
+
             if(!$objs){
                 // Retrieve all posts
-                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->orderBy("created_at", 'desc')->paginate('15');
+                $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->with("category")->with("tags")->with("user")->whereDate('created_at', '<=', $date)->orderBy("created_at", 'desc')->paginate('15');
+
                 
-                Cache::forever('posts_'.request()->get('client.id'), $objs);
+
+                Cache::remember('posts_'.request()->get('client.id'),60, function() use($objs){
+                    return $objs;
+                });
             }
         }
 
@@ -306,6 +315,7 @@ class PostController extends Controller
         if(!empty($request->input('published_at'))){
             $published_at = Carbon::parse($request->input('published_at'));
             $obj->created_at = $published_at;
+            $obj->updated_at = $published_at;
             $obj->save();
         }
 
@@ -635,6 +645,9 @@ class PostController extends Controller
             if($published_at->isPast()){
                 $request->merge(["status" => 1]);
             }
+            $obj->created_at = $published_at;
+            $obj->updated_at = $published_at;
+            $obj->save();
         }
         else{
             if($request->input('publish') == "save_as_draft"){
@@ -645,6 +658,9 @@ class PostController extends Controller
             }  
         }   
         
+
+       
+
         // Check if visibility is private and group is not empty
         if($request->visibility == "private"){
             if(empty($request->group)){
@@ -713,8 +729,11 @@ class PostController extends Controller
         if(!empty($request->input('published_at'))){
             $published_at = Carbon::parse($request->input('published_at'));
             $obj->created_at = $published_at;
+            $obj->updated_at = $published_at;
             $obj->save();
         }
+
+       
 
         Cache::forget('post_'.request()->get('client.id').'_'.$obj->slug);
 
