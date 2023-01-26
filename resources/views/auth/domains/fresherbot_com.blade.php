@@ -88,7 +88,7 @@
                     </div>
                     @endif
 
-                <div class="row">
+                 <div class="row">
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >College Name</label>
                     <input class="form-control" list="datalistColleges" name="c1" id="exampleDataList" placeholder="Type to search..."
@@ -124,7 +124,7 @@
                     </div>
                     <div class='col-12 col-md-3'>
                         <label for="formGroupExampleInput " class="font-size-h6 font-weight-bolder text-dark">Any Backlogs? </label>
-                        <select class="form-control" name="c4">
+                        <select class="form-control" name="settings_backlog">
                           <option value="None" >None</option>
                           <option value="One"  >One</option>
                            <option value="One"  >Two</option>
@@ -136,8 +136,8 @@
                  <div class="row my-2">
                    
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >Current City</label>
-                        <input class="form-control" list="datalistCities" name="c5" id="exampleDataList" placeholder="Type to search..."
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c4" >Current City</label>
+                        <input class="form-control" list="datalistCities" name="c4" id="exampleDataList" placeholder="Type to search..."
                         >
                         <datalist id="datalistCities">
                           @foreach(cities() as $d)
@@ -146,8 +146,8 @@
                         </datalist>
                     </div>
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >District</label>
-                        <input class="form-control" list="datalistDistrict" name="c6" id="exampleDataList" placeholder="Type to search..."
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >District</label>
+                        <input class="form-control" list="datalistDistrict" name="c5" id="exampleDataList" placeholder="Type to search..."
                         >
                         <datalist id="datalistDistrict">
                           @foreach(districts() as $d)
@@ -157,8 +157,8 @@
                    
                     </div>
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c7" >State</label>
-                        <input class="form-control" list="datalistState" name="c7" id="exampleDataList" placeholder="Type to search..."
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >State</label>
+                        <input class="form-control" list="datalistState" name="c6" id="exampleDataList" placeholder="Type to search..."
                         >
                         <datalist id="datalistState">
                           @foreach(states() as $d)
@@ -167,10 +167,26 @@
                         </datalist>
                     </div>
                 </div>
+                 <div class="row my-2">
+                    <div class='col-12'>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="" >I already have a job offer?</label>
+                    <div class="form-check">           
+                        <input class=" mb-2" name="settings_joboffer[]" type="checkbox" value="YES" id="defaultCheck33">
+                        <label class="form-check-label mb-2" for="defaultCheck33">
+                            YES &nbsp;&nbsp;
+                        </label>
+                         <input class="" name="settings_joboffer[]" type="checkbox" value="NO" id="defaultCheck44"> 
+                        <label class="form-check-label" for="defaultCheck44">
+                            NO &nbsp;&nbsp;
+                        </label>
+                        
+                    </div>
+                </div>
+                </div>
 
                 <div class="row my-2">
                     <div class='col-12'>
-                    <label class="font-size-h6 font-weight-bolder text-dark" for="c7" >Career Plan</label>
+                    <label class="font-size-h6 font-weight-bolder text-dark"  >Career Plan</label>
                     <div class="form-check">           
                         <input class=" mb-2" name="settings_interests[]" type="checkbox" value="govtjob" id="defaultCheck1">
                         <label class="form-check-label mb-2" for="defaultCheck1">
