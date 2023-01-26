@@ -182,8 +182,9 @@
                         </label>
                         <input class="" name="settings_interests[]" type="checkbox" value="msinus" id="defaultCheck3">
                         <label class="form-check-label" for="defaultCheck3">
-                            MS in US &nbsp;&nbsp;<br class="d-block d-md-none"/>
+                            MS in US &nbsp;&nbsp;
                         </label> 
+                        <br class="d-block d-md-none"/>
                         <input class="" name="settings_interests[]" type="checkbox" value="mtech" id="defaultCheck4">
                         <label class="form-check-label" for="defaultCheck4">
                             MTECH &nbsp;&nbsp;
