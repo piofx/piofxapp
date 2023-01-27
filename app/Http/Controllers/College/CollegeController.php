@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Models\College\College as Obj;
+use Illuminate\Support\Facades\Storage;
 
 class CollegeController extends Controller
 {
@@ -98,6 +99,113 @@ class CollegeController extends Controller
                 ->with('data',$data)
                 ->with('editor',true)
                 ->with('app',$this);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Obj $obj,Request $request)
+    {
+        // authorize the app
+        $this->authorize('create', $obj);
+        // load alerts if any
+        $alert = session()->get('alert');
+
+        try{
+            
+            if(isset($request->all()['file'])){
+                
+                $file      = $request->all()['file'];
+                $fname = 'college_'.str_replace(' ','_',strtolower($file->getClientOriginalName()));
+                $extension = strtolower($file->getClientOriginalExtension());
+
+                if(!in_array($extension, ['csv'])){
+                    
+                    $alert = 'Only CSV files are allowed!';
+                    return redirect()->route('College.upload')->with('alert',$alert);
+                }
+
+                $row = 0;
+                 $file_path = Storage::disk('public')->putFileAs('excels', $request->file('file'),$fname,'public');
+                 $fpath = Storage::disk('public')->path($file_path);
+                if (($handle = fopen($fpath, "r")) !== FALSE) {
+                  while (($data = fgetcsv($handle, 9000, ",")) !== FALSE) {
+                    if($row==0){
+                        $row++;
+                        continue;
+                    }
+                    $row++;
+                    $var = array("","","","","","","","","","","","");
+                    foreach($data as $a=>$b){
+                        if($b!="" && $a!=0)
+                            $var[$a-1]=$b;
+
+                    }
+
+                    $entry = Obj::where('name',$var[0])->first();
+                    if($entry){
+                        $entry->name = $var[0];
+                        $entry->code = $var[1];
+                        $entry->type = $var[2];
+                        $entry->location = $var[3];
+                        $entry->zone = $var[4];
+                        $entry->district = $var[5];
+                        $entry->state = $var[6];
+                        $entry->contact_person = $var[7];
+                        $entry->contact_designation = $var[8];
+                        $entry->contact_phone = $var[9];
+                        $entry->contact_email = $var[10];
+                        $entry->data_volume = $var[11];
+                        $entry->status=1;
+                        $entry->save();
+                    }else{
+                        $entry = new Obj();
+                        $entry->name = $var[0];
+                        $entry->code = ($var[1])?$var[1]:'';
+                        $entry->type = ($var[2])?$var[2]:'';
+                        $entry->location = ($var[3])?$var[3]:'';
+                        $entry->zone = ($var[4])?$var[4]:'';
+                        $entry->district = ($var[5])?$var[5]:'';
+                        $entry->state = ($var[6])?$var[6]:'';
+                        $entry->contact_person = ($var[7])?$var[7]:'';
+                        $entry->contact_designation = ($var[8])?$var[8]:'';
+                        $entry->contact_phone = ($var[9])?$var[9]:'';
+                        $entry->contact_email = ($var[10])?$var[10]:'';
+                        $entry->data_volume = ($var[11])?$var[11]:'';
+                        $entry->client_id = request()->get('client.id');
+                        $entry->agency_id = request()->get('agency.id');
+                        $entry->status=1;
+                        $entry->save();
+                    }
+                    
+                   
+                  }
+                  fclose($handle);
+                }
+
+                $alert = 'College data uploaded  ('.($row-1).')';
+                return redirect()->route('College.index')->with('alert',$alert);
+
+            }
+            else{
+                return view('apps.'.$this->app.'.'.$this->module.'.upload')
+                    ->with('obj',$obj)
+                    ->with('alert',$alert)
+                    ->with('app',$this);
+
+            }
+        }catch (QueryException $e){
+           $error_code = $e->errorInfo[1];
+            if($error_code == 1062){
+                $alert = 'Some error in updating the record';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
+        }
+        
+
+        
     }
 
     /**

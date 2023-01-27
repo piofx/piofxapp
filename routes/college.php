@@ -8,6 +8,10 @@ Route::get('/admin/college', [CollegeController::class, 'index'])
 		->middleware(['auth'])->name('College.index');
 Route::get('/admin/college/{college}/edit', [CollegeController::class, 'edit'])
 		->middleware(['auth'])->name('College.edit');
+Route::get('/admin/college/upload', [CollegeController::class, 'upload'])
+		->middleware(['auth'])->name('College.upload');
+Route::post('/admin/college/upload', [CollegeController::class, 'upload'])
+		->middleware(['auth'])->name('College.upload');
 Route::get('/admin/college/create', [CollegeController::class, 'create'])
 		->middleware(['auth'])->name('College.create');
 Route::post('/admin/college', [CollegeController::class, 'store'])

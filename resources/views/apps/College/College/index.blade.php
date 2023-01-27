@@ -120,6 +120,9 @@
     </div>
     <div class="col-12 col-md-3">
 
+      <div class="py-3">
+        <a  href="{{route('College.upload')}}" class="btn btn-info w-100">Upload CVS file</a>
+      </div>
       <!--begin::List Widget 7-->
       <div class="card card-custom gutter-b">
           <!--begin::Header-->

@@ -20,12 +20,10 @@
                             </div>
                         </div>
                         <div class='col-12 col-md-6'>
-                             <!-- Phone number -->
-
+                              <!-- Phone number -->
                             <div class="form-group">
-                                <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
-                                <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
-                                
+                                <label class="font-size-h6 font-weight-bolder text-dark" for="phone" :value="__('Phone')">Phone Number</label>
+                                <input id="phone" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="phone" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="off" />
                             </div>
                         </div>
                     </div>
