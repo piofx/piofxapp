@@ -101,6 +101,7 @@ class WhatsappController extends Controller
         $data = $r->all();
         $show = $r->get('show');
         $show_2 = $r->get('show_2');
+        $client_settings = json_decode(request()->get('client.settings'));
 
        $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
        if($show){
@@ -161,6 +162,20 @@ class WhatsappController extends Controller
         else if($text =='hi'){
             $template = 'welcome';
             sendWhatsApp($phone,$template,['student']);
+            $d['otp'] = 2;
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+        }
+        else if($text =='instagram'){
+            $template = 'social';
+            if(isset($client_settings->instagram_url))
+                sendWhatsApp($phone,$template,['student',$client_settings->instagram_url]);
+            $d['otp'] = 2;
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+        }
+        else if($text =='youtube'){
+            $template = 'social';
+            if(isset($client_settings->youtube_url))
+                sendWhatsApp($phone,$template,['student',$client_settings->youtube_url]);
             $d['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
         }
