@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+use App\Mail\EmailForQueuing;
+use App\Mail\Welcome;
+use Mail;
 
 class WhatsappController extends Controller
 {
@@ -166,6 +169,11 @@ class WhatsappController extends Controller
         else if(strpos($text, "@") !== false){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
+            $emaildata = Cache::remember($phone'_email',60, function(){
+                return 1;
+            });
+            //send email
+            $this->sendEmail($text);
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if($text =='register'){
@@ -196,5 +204,24 @@ class WhatsappController extends Controller
        // $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
        }
 
+    }
+
+    public function sendEmail($email){
+        //client settings
+        if(isset($settings->mailgunfrom))
+            $details['from'] = $settings->mailgunfrom;
+        else
+           $details['from'] = 'noreply@customerka.com';
+       $client_name = request()->get('client.name');
+       $subject = 'Welcome to '.$client_name;
+       $details = array('email' => $email , 'count'=>$code, 'content' => $template->message,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject);
+
+        if(isset($settings->mailgunclient)){
+             Mail::mailer($settings->mailgunclient)->to($email)->send(new welcome($details));
+        }
+        else
+        {
+             Mail::to($email)->send(new welcome($details));
+        }
     }
 }
