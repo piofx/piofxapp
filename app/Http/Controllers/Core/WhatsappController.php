@@ -158,14 +158,14 @@ class WhatsappController extends Controller
         }
 
         else if($text =='hi'){
-            $template = 'getemail';
-            sendWhatsApp($phone,$template,['student']);
+            $template = 'mail';
+            sendWhatsApp($phone,$template);
             $d['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if(strpos($text, "@") !== false){
             $template = 'getname';
-            sendWhatsApp($phone,$template,['student']);
+            sendWhatsApp($phone,$template);
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if($text =='register'){
