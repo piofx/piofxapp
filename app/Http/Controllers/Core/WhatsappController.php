@@ -86,7 +86,7 @@ class WhatsappController extends Controller
             
         }else if($show_2){
             $d = Storage::disk('public')->get('wadata/sample_2.json');
-            $d = json_encode($d, JSON_PRETTY_PRINT);
+            $d = json_encode(json_decode($d),JSON_PRETTY_PRINT);
             echo "<pre><code>";
             echo $d;
             echo "</code></pre>";
