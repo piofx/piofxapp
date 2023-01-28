@@ -169,7 +169,7 @@ class WhatsappController extends Controller
         else if(strpos($text, "@") !== false){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
-            $emaildata = Cache::remember($phone'_email',60, function(){
+            $emaildata = Cache::remember($phone.'_email',60, function(){
                 return 1;
             });
             //send email
