@@ -187,7 +187,8 @@ class WhatsappController extends Controller
         else{
             $template = 'welcome';
             sendWhatsApp($phone,$template,['student']);
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+            $d['otp'] = 2;
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
         }
         Cache::forget($rem_str);
         Cache::forget("code_".$phone);
