@@ -111,17 +111,7 @@ class WhatsappController extends Controller
         $client_settings = json_decode(request()->get('client.settings'));
 
        $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
-       if($show){
-        $d = Storage::disk('public')->get('wadata/sample.json');
-
-        dd($d);
-       }else  if($show_2){
-        $d = Storage::disk('public')->get('wadata/sample_2.json');
-
-        dd($d);
-       }else{
-        $path = Storage::disk('public')->put('wadata/sample.json', json_encode($data));
-        $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($data));
+       
         $d = json_decode(json_encode($data),true);
       
         $phone=$text=null;
@@ -166,7 +156,7 @@ class WhatsappController extends Controller
             $d['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
-        else if(strpos($text, "@") !== false){
+        else if (filter_var($text, FILTER_VALIDATE_EMAIL)) {
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
             $emaildata = Cache::remember($phone.'_email',60, function(){
@@ -174,7 +164,7 @@ class WhatsappController extends Controller
             });
             //send email
             $this->sendEmail($text);
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
         else if($text =='register'){
             $template = 'welcome';
