@@ -89,7 +89,7 @@ class WhatsappController extends Controller
             echo "<pre><code>";
             echo $d;
             echo "</code></pre>";
-            dd("");
+            return exit();
         }
         else if($phone){
             $status['rem_str'] = Cache::get('rem_'.$phone.'_status');
