@@ -86,7 +86,10 @@ class WhatsappController extends Controller
             
         }else if($show_2){
             $d = Storage::disk('public')->get('wadata/sample_2.json');
-            dd($d);
+            echo "<pre><code>";
+            echo $d;
+            echo "</code></pre>";
+            dd("");
         }
         else if($phone){
             $status['rem_str'] = Cache::get('rem_'.$phone.'_status');
@@ -153,40 +156,43 @@ class WhatsappController extends Controller
         
         }
 
-        else if($text =='hello' && $status_str){
-            $template = 'hello_world';
-            sendWhatsApp($phone,$template,[]);
-            $d['otp'] = 2;
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
-        }
         else if($text =='hi'){
-            $template = 'welcome';
+            $template = 'getemail';
             sendWhatsApp($phone,$template,['student']);
             $d['otp'] = 2;
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+        }
+        else if(strpos($text, "@") !== false){
+            $template = 'getname';
+            sendWhatsApp($phone,$template,['student']);
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+        }
+        else if($text =='register'){
+            $template = 'welcome';
+            sendWhatsApp($phone,$template,['student']);
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if($text =='instagram'){
             $template = 'social';
             if(isset($client_settings->instagram_url))
                 sendWhatsApp($phone,$template,['student',$client_settings->instagram_url]);
-            $d['otp'] = 2;
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if($text =='youtube'){
             $template = 'social';
             if(isset($client_settings->youtube_url))
                 sendWhatsApp($phone,$template,['student',$client_settings->youtube_url]);
             $d['otp'] = 2;
-            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else{
-            $d['otp'] = 0;
-            $d['rem_Str'] = $rem_str;
-            $d['status_str'] = $status_str;
+            $template = 'welcome';
+            sendWhatsApp($phone,$template,['student']);
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         Cache::forget($rem_str);
         Cache::forget("code_".$phone);
-        $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+       // $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
        }
 
     }
