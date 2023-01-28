@@ -153,7 +153,7 @@ class WhatsappController extends Controller
         else if($text =='hi'){
             $template = 'mail';
             sendWhatsApp($phone,$template,[]);
-            $d['otp'] = 2;
+            $d['entry']['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if(isValidEmail($text)){
@@ -187,7 +187,7 @@ class WhatsappController extends Controller
         else{
             $template = 'welcome';
             sendWhatsApp($phone,$template,['student']);
-            $d['otp'] = 2;
+            $d['entry']['otp'] = 3;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
         }
         Cache::forget($rem_str);
