@@ -156,16 +156,7 @@ class WhatsappController extends Controller
             $d['entry']['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
-        else if(isValidEmail($text)){
-            $template = 'getname';
-            sendWhatsApp($phone,$template,[]);
-            $emaildata = Cache::remember($phone.'_email',60, function(){
-                return 1;
-            });
-            //send email
-            $this->sendEmail($text);
-            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
-        }
+        
         else if($text =='register'){
             $template = 'welcome';
             sendWhatsApp($phone,$template,['student']);
@@ -183,6 +174,16 @@ class WhatsappController extends Controller
                 sendWhatsApp($phone,$template,['student',$client_settings->youtube_url]);
             $d['otp'] = 2;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+        }
+        else if(isValidEmail($text)){
+            $template = 'getname';
+            sendWhatsApp($phone,$template,[]);
+            $emaildata = Cache::remember($phone.'_email',60, function(){
+                return 1;
+            });
+            //send email
+            $this->sendEmail($text);
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
         else{
             $template = 'welcome';
