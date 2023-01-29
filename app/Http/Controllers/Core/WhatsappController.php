@@ -130,7 +130,9 @@ class WhatsappController extends Controller
         if(isset($d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']))
         $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'];
         $d['otp'] = -1;
-        $d['text'] = $text;
+        $d['entry'][0]['text'] = $text;
+        $d['entry'][0]['name'] = $name;
+
 
         $rem_str = 'rem_'.$phone.'_status';
         $status_str = Cache::get($rem_str);
