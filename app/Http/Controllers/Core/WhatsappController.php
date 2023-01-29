@@ -137,7 +137,10 @@ class WhatsappController extends Controller
         $d['entry'][0]['email'] = -1;
         if($text)
         $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
-            
+        
+        if($text){
+            isValidMail($text,$d);
+        }
 
         $text = strtolower(str_replace(" ","",$text));
         if($text =='generateotp' && $status_str){
