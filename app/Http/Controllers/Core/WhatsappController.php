@@ -175,6 +175,10 @@ class WhatsappController extends Controller
             if(isset($client_settings->instagram_url))
                 sendWhatsApp($phone,$template,['student',$client_settings->instagram_url]);
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+
+             $d['entry'][0]['email'] = 10;
+             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+            
         }
         else if($text =='youtube'){
             $template = 'social';
