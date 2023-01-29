@@ -237,15 +237,17 @@ class WhatsappController extends Controller
     public static function sendEmail($email,$name){
         //client settings
         $settings = json_decode(request()->get('client.settings'));
-        $details = array('name'=>$name,'email' => $email , 'count'=>$code, 'content' => "hi",'client_name'=>$client_name,'subject'=>$subject);
+        $client_name = request()->get('client.name');
+        $subject = 'Welcome to '.$client_name;
+        $details = array('name'=>$name,'email' => $email , 'count'=>1, 'content' => "hi",'client_name'=>$client_name,'subject'=>$subject);
        
         if(isset($settings->mailgunfrom))
             $details['from'] = $settings->mailgunfrom;
         else
            $details['from'] = 'noreply@customerka.com';
-        $client_name = request()->get('client.name');
-        $subject = 'Welcome to '.$client_name;
-        $code =1;
+        
+        
+     
        
         if(isset($settings->mailgunclient)){
              Mail::mailer($settings->mailgunclient)->to($email)->send(new welcome($details));
