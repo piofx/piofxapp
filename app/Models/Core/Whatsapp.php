@@ -93,6 +93,12 @@ class Whatsapp extends Model
     	$this->branch = $branch;
     	$this->zone = $collegezone;
 
+    	if(request()->get('code'))
+    	{
+    		dd($this);
+    		exit();
+    	}
+
     	$this->code = $code;
     	$this->save();
     }

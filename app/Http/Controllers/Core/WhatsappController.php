@@ -48,7 +48,8 @@ class WhatsappController extends Controller
         $text = "packetcode@gmail.com";
        // $this->sendEmail($text,'Teja');
         //$entry->setPhone($phone,$name);
-        //$entry->setCode('22301');
+        if(request()->get('code'))
+        $entry->setCode('22301');
 
         return view('apps.Core.Admin.whatsapp')
             ->with('app',$this)
