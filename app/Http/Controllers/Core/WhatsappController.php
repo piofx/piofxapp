@@ -135,6 +135,10 @@ class WhatsappController extends Controller
         $d['str'] = $status_str;
         $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
 
+        $d['entry'][0]['email'] = -1;
+        $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+            
+
         $text = strtolower(str_replace(" ","",$text));
         if($text =='generateotp' && $status_str){
             $template = 'otp';
@@ -157,7 +161,7 @@ class WhatsappController extends Controller
         else if($text =='hi'){
             $template = 'mail';
             sendWhatsApp($phone,$template,[]);
-            $d['entry']['otp'] = 2;
+            $d['entry'][0]['otp'] = 'hi';
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         
@@ -176,22 +180,22 @@ class WhatsappController extends Controller
             $template = 'social';
             if(isset($client_settings->youtube_url))
                 sendWhatsApp($phone,$template,['student',$client_settings->youtube_url]);
-            $d['otp'] = 2;
+            $d['entry'][0]['otp'] = "youtube";
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
         else if(isValidEmail($text)){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
-            $d['entry']['email'] = 1;
+            $d['entry'][0]['email'] = 1;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $emaildata = Cache::remember($phone.'_email',60, function(){
                 return 1;
             });
             //send email
-            $d['entry']['email'] = 2;
+            $d['entry'][0]['email'] = 2;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $this->sendEmail($text);
-            $d['entry']['email'] = 3;
+            $d['entry'][0]['email'] = 3;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
