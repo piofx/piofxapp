@@ -200,6 +200,8 @@ class WhatsappController extends Controller
 
     public static function sendEmail($email){
         //client settings
+        $settings = json_decode(request()->get('client.settings'));
+        //client settings
         if(isset($settings->mailgunfrom))
             $details['from'] = $settings->mailgunfrom;
         else
@@ -218,6 +220,9 @@ class WhatsappController extends Controller
     }
 
     public static function isValidEmail($email){ 
-        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+        if((strpos($email, '@') !== false) && (strpos($email, '.') !== false))
+            return true;
+        else
+            return false;
     }
 }
