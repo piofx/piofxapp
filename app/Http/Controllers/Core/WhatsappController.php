@@ -41,6 +41,9 @@ class WhatsappController extends Controller
             sendWhatsApp($phone,$template,[]);
 
         }
+        $text = "packetcode@gmail.com";
+        $this->sendEmail($text,'Teja');
+
         return view('apps.Core.Admin.whatsapp')
             ->with('app',$this)
             ->with('componentName',$this->componentName);
@@ -117,9 +120,11 @@ class WhatsappController extends Controller
        
         $d = json_decode(json_encode($data),true);
       
-        $phone=$text=null;
+        $phone=$text=$name=null;
         if(isset($d['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id']))
         $phone = $d['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id'];
+        if(isset($d['entry'][0]['changes'][0]['value']['contacts'][0]['profile']['name']))
+        $name = $d['entry'][0]['changes'][0]['value']['contacts'][0]['profile']['name'];
         if(isset($d['entry'][0]['changes'][0]['value']['messages'][0]['button']['text']))
         $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['button']['text'];
         if(isset($d['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']))
@@ -140,6 +145,7 @@ class WhatsappController extends Controller
         
         if($text){
             $d['entry'][0]['email'] = 6;
+            $this->sendEmail('krishnatejags@gmail.com','Teja');
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
 
         }
@@ -203,7 +209,7 @@ class WhatsappController extends Controller
             //send email
             $d['entry'][0]['email'] = 2;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
-            $this->sendEmail($text);
+            $this->sendEmail($text,);
             $d['entry'][0]['email'] = 3;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
            
@@ -223,7 +229,7 @@ class WhatsappController extends Controller
 
     
 
-    public static function sendEmail($email){
+    public static function sendEmail($email,$name){
         //client settings
         $settings = json_decode(request()->get('client.settings'));
         //client settings
@@ -233,7 +239,9 @@ class WhatsappController extends Controller
            $details['from'] = 'noreply@customerka.com';
        $client_name = request()->get('client.name');
        $subject = 'Welcome to '.$client_name;
-       $details = array('email' => $email , 'count'=>$code, 'content' => $template->message,'log_id' => $maillog->id,'client_name'=>$client_name,'subject'=>$subject);
+       $code =1;
+       $details = array('name'=>$name,'email' => $email , 'count'=>$code, 'content' => "hi",'client_name'=>$client_name,'subject'=>$subject);
+
 
         if(isset($settings->mailgunclient)){
              Mail::mailer($settings->mailgunclient)->to($email)->send(new welcome($details));

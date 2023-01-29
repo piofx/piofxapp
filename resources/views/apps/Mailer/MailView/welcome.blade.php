@@ -11,4 +11,6 @@ Get started now !
 
 Thanks,<br>
 {{ $details['client_name'] }}
+<br>
+<a href="/">Unsubscribe to updates</a>
 @endcomponent
