@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Core;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Core\Whatsapp as Obj;
 use Illuminate\Http\Request;
 use App\Mail\EmailForQueuing;
 use App\Mail\Welcome;
@@ -132,6 +133,7 @@ class WhatsappController extends Controller
         $d['otp'] = -1;
         $d['entry'][0]['text'] = $text;
         $d['entry'][0]['name'] = $name;
+        $entry = Obj::getEntry($phone);
 
 
         $rem_str = 'rem_'.$phone.'_status';
@@ -176,6 +178,7 @@ class WhatsappController extends Controller
             sendWhatsApp($phone,$template,[]);
             $d['entry'][0]['otp'] = 'hi';
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+            $entry->setPhone($phone,$name);
         }
         
         else if($text =='register'){
@@ -245,10 +248,7 @@ class WhatsappController extends Controller
             $details['from'] = $settings->mailgunfrom;
         else
            $details['from'] = 'noreply@customerka.com';
-        
-        
-     
-       
+          
         if(isset($settings->mailgunclient)){
              Mail::mailer($settings->mailgunclient)->to($email)->send(new welcome($details));
         }
