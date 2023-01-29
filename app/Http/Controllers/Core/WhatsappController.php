@@ -197,17 +197,19 @@ class WhatsappController extends Controller
             $this->sendEmail($text);
             $d['entry'][0]['email'] = 3;
              $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
-            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+           
         }
         else{
-            $template = 'welcome';
-            sendWhatsApp($phone,$template,['student']);
+            //$template = 'welcome';
+            //sendWhatsApp($phone,$template,['student']);
             $d['entry']['otp'] = 3;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
         Cache::forget($rem_str);
         Cache::forget("code_".$phone);
-        $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
+        //$d['entry'][0]['email'] = -1;
+        //$path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
        }
 
     
