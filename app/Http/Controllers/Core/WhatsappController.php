@@ -243,6 +243,8 @@ class WhatsappController extends Controller
     public static function isValidEmail($email,$d){ 
         $d['entry'][0]['email'] = 6;
         $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
+
+        return true;
         if((strpos($email, '@') !== false) && (strpos($email, '.') !== false))
             return true;
         else
