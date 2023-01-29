@@ -114,7 +114,6 @@ class WhatsappController extends Controller
         $show_2 = $r->get('show_2');
         $client_settings = json_decode(request()->get('client.settings'));
 
-       $path = Storage::disk('public')->put('wadata/samplea.json', json_encode($data));
        
         $d = json_decode(json_encode($data),true);
       
@@ -188,7 +187,7 @@ class WhatsappController extends Controller
             $d['entry'][0]['otp'] = "youtube";
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
-        else if(isValidEmail($text,$d)){
+        else if($this->isValidMail($text,$d)){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
             $d['entry'][0]['email'] = 1;
@@ -215,7 +214,7 @@ class WhatsappController extends Controller
         Cache::forget("code_".$phone);
        // $d['entry'][0]['email'] = 5;
         //$path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
-       }
+    }
 
     
 
@@ -240,14 +239,14 @@ class WhatsappController extends Controller
         }
     }
 
-    public static function isValidEmail($email,$d){ 
+    public static function isValidMail($email,$d){ 
         $d['entry'][0]['email'] = 6;
         $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
 
         return true;
-        if((strpos($email, '@') !== false) && (strpos($email, '.') !== false))
-            return true;
-        else
-            return false;
+        // if((strpos($email, '@') !== false) && (strpos($email, '.') !== false))
+        //     return true;
+        // else
+        //     return false;
     }
 }
