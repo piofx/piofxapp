@@ -29,6 +29,9 @@ class WhatsappController extends Controller
 
     public function whatsapp(){
 
+        $phone = "7032309797";
+        $name ="Teja";
+        $entry = Obj::getEntry($phone);
         if(request()->get('send')==1){
             
             $phone = '919515125110';
@@ -44,6 +47,7 @@ class WhatsappController extends Controller
         }
         $text = "packetcode@gmail.com";
         $this->sendEmail($text,'Teja');
+        $entry->setPhone($phone,$name);
 
         return view('apps.Core.Admin.whatsapp')
             ->with('app',$this)

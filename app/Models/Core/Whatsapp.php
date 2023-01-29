@@ -37,13 +37,19 @@ class Whatsapp extends Model
     protected $table = 'whatsapptracker';
 
 
-    public function getEntry($phone){
-    	$entry = $this->where('phone',$phone)->first();
+    public static function getEntry($phone){
+    	$entry = Whatsapp::where('phone',$phone)->first();
 
     	if($entry)
     		return $entry;
-    	else
-    		return new Whatsapp();
+    	else{
+    		$entry = new Whatsapp();
+    		$entry->user_id = '0';
+    		$entry->agency_id = request()->get('agency.id');
+    		$entry->client_id = request()->get('client.id');
+    		$entry->status =0;
+    		return $entry;
+    	}
 
     }
 
