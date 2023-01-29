@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use App\Models\College\College;
 
 
 // function to minify css
@@ -608,8 +609,12 @@ if (! function_exists('blog_image_upload')) {
 	if(!function_exists("colleges")){
 		function colleges(){
 			$colleges = Cache::get('colleges');
-			if(!$colleges)
-				return [];
+			if(!$colleges){
+				$colleges = College::get();
+				Cache::forever('colleges',$colleges);
+				return $colleges;
+				
+			}
 	        return $colleges;
 		}
 	}
