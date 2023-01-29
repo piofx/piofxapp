@@ -207,7 +207,7 @@ class WhatsappController extends Controller
         }
         Cache::forget($rem_str);
         Cache::forget("code_".$phone);
-       // $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
+        $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
        }
 
     
