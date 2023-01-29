@@ -196,8 +196,8 @@ class WhatsappController extends Controller
                 sendWhatsApp($phone,$template,[$name,$client_settings->instagram_url]);
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
 
-             $d['entry'][0]['email'] = 10;
-             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+            $d['entry'][0]['email'] = 10;
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             
         }
         else if($text =='youtube'){
@@ -224,6 +224,8 @@ class WhatsappController extends Controller
             
             //send email
             $this->sendEmail($text,$name);
+
+            $entry->setEmail($email);
             
         }
         else{
