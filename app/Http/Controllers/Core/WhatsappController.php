@@ -183,7 +183,7 @@ class WhatsappController extends Controller
             $d['entry'][0]['otp'] = "youtube";
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
-        else if(isValidEmail($text)){
+        else if(isValidEmail($text,$d)){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
             $d['entry'][0]['email'] = 1;
@@ -235,7 +235,9 @@ class WhatsappController extends Controller
         }
     }
 
-    public static function isValidEmail($email){ 
+    public static function isValidEmail($email,$d){ 
+        $d['entry'][0]['email'] = 6;
+        $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
         if((strpos($email, '@') !== false) && (strpos($email, '.') !== false))
             return true;
         else
