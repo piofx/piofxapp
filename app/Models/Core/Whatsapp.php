@@ -4,6 +4,7 @@ namespace App\Models\Core;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\College\College;
 
 class Whatsapp extends Model
 {
@@ -65,6 +66,33 @@ class Whatsapp extends Model
     }
 
     public function setCode($code){
+    	$code = intval($code);
+    	//branch
+    	$bcode = $code%100;
+    	$code = substr($code,0,-2);
+    	$branches = branches();
+    	$branch = $branches[$bcode];
+
+    	//year
+    	$year = '20'.($code%100);
+    	$code = substr($code,0,-2);
+
+    	//college
+    	$ccode = $code;
+    	$colleges = colleges();
+    	$college =$colleges->where('id',$ccode)->first();
+    	$collegename = null;
+    	$collegezone = null;
+    	if($college){
+    		$collegename = $college->name;
+    		$collegezone = $college->zone;
+    	}
+    	
+    	$this->college = $collegename;
+    	$this->yop = $year;
+    	$this->branch = $branch;
+    	$this->zone = $collegezone;
+
     	$this->code = $code;
     	$this->save();
     }

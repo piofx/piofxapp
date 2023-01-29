@@ -83,6 +83,7 @@
 				
 			</div>
 		</div>
+		
 		<div class="row mb-2">
 			<div class="col-md-4"><b>Status</b></div>
 			<div class="col-md-8">@if($obj->status==0)
@@ -97,5 +98,16 @@
 		</div>
 	</x-snippets.cards.basic>
 	<!--end::basic card-->   
+
+	<div class="card border my-4 p-4">
+			<h3>AccessCodes (CollegeCode.YOP.BranchCode)</h3>
+			@foreach(branches() as $a=>$b)
+				@if(strlen($a)==1)
+					<div>{{$obj->id.'230'.$a}} - {{$b}}</div>
+				@else
+					<div>{{$obj->id.'23'.$a}} - {{$b}}</div>
+				@endif
+			@endforeach
+		</div>
 
 </x-dynamic-component>

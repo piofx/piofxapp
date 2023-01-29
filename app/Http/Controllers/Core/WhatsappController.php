@@ -46,8 +46,9 @@ class WhatsappController extends Controller
 
         }
         $text = "packetcode@gmail.com";
-        $this->sendEmail($text,'Teja');
-        $entry->setPhone($phone,$name);
+       // $this->sendEmail($text,'Teja');
+        //$entry->setPhone($phone,$name);
+        //$entry->setCode('22301');
 
         return view('apps.Core.Admin.whatsapp')
             ->with('app',$this)
@@ -198,7 +199,7 @@ class WhatsappController extends Controller
 
             $d['entry'][0]['email'] = 10;
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
-            
+            $entry->setInstagram(1);
         }
         else if($text =='youtube'){
             $template = 'social';
@@ -206,6 +207,22 @@ class WhatsappController extends Controller
                 sendWhatsApp($phone,$template,[$name,$client_settings->youtube_url]);
             $d['entry'][0]['otp'] = "youtube";
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+
+            $entry->setYoutube(1);
+        }
+        else if($text =='accesscode'){
+            $template = 'getcode';
+            sendWhatsApp($phone,$template,[$name]);
+            $d['entry'][0]['otp'] = "youtube";
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+        }
+        else if(is_numeric($text)){
+            $template = 'autoresponse';
+            sendWhatsApp($phone,$template,[]);
+            $d['entry'][0]['otp'] = "youtube";
+            $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
+
+            $entry->setCode($text);
         }
         else if($this->isValidMail($text,$d)){
             
