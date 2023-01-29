@@ -209,11 +209,11 @@ class WhatsappController extends Controller
                 return 1;
             });
             //send email
-            $d['entry'][0]['email'] = 2;
-             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+            $d['entry'][0]['email'] = 9;
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $this->sendEmail($text,$name);
-            $d['entry'][0]['email'] = 3;
-             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
+            $d['entry'][0]['email'] = 10;
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
            
         }
         else{
