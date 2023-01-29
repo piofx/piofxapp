@@ -136,6 +136,7 @@ class WhatsappController extends Controller
         $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
 
         $d['entry'][0]['email'] = -1;
+        if($text)
         $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             
 
@@ -206,7 +207,7 @@ class WhatsappController extends Controller
         else{
             //$template = 'welcome';
             //sendWhatsApp($phone,$template,['student']);
-            $d['entry']['otp'] = 3;
+            $d['entry'][0]['otp'] = 3;
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d));
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
