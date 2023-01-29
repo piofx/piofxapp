@@ -186,7 +186,7 @@ class WhatsappController extends Controller
         else if($text =='instagram'){
             $template = 'social';
             if(isset($client_settings->instagram_url))
-                sendWhatsApp($phone,$template,['student',$client_settings->instagram_url]);
+                sendWhatsApp($phone,$template,[$name,$client_settings->instagram_url]);
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
 
              $d['entry'][0]['email'] = 10;
@@ -196,7 +196,7 @@ class WhatsappController extends Controller
         else if($text =='youtube'){
             $template = 'social';
             if(isset($client_settings->youtube_url))
-                sendWhatsApp($phone,$template,['student',$client_settings->youtube_url]);
+                sendWhatsApp($phone,$template,[$name,$client_settings->youtube_url]);
             $d['entry'][0]['otp'] = "youtube";
             $path = Storage::disk('public')->put('wadata/sample_2.json', json_encode($d['entry']));
         }
