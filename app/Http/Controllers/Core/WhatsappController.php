@@ -83,7 +83,11 @@ class WhatsappController extends Controller
             dd($path);
         }else if($show){
             $d = Storage::disk('public')->get('wadata/sample.json');
-            dd($d);
+            $d = json_encode(json_decode($d),JSON_PRETTY_PRINT);
+            echo "<pre><code>";
+            echo $d;
+            echo "</code></pre>";
+            return exit();
             $phone = $d['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id'];
             $text = $d['entry'][0]['changes'][0]['value']['messages'][0]['button']['text'];
             
@@ -178,11 +182,17 @@ class WhatsappController extends Controller
         else if(isValidEmail($text)){
             $template = 'getname';
             sendWhatsApp($phone,$template,[]);
+            $d['entry']['email'] = 1;
+             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $emaildata = Cache::remember($phone.'_email',60, function(){
                 return 1;
             });
             //send email
+            $d['entry']['email'] = 2;
+             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $this->sendEmail($text);
+            $d['entry']['email'] = 3;
+             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         }
         else{
