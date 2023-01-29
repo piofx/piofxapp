@@ -208,10 +208,10 @@ class WhatsappController extends Controller
             else
                 $ecounter = intval($ecounter);
 
-            $template = 'getname';
+            $template = 'welcome';
             if($ecounter==1)
-            sendWhatsApp($phone,$template,[]);
-            Cache::put($phone.'_email', $ecounter+1, 180);
+            sendWhatsApp($phone,$template,[$name]);
+            Cache::put($phone.'_email', $ecounter+1, 1200);
             $d['entry'][0]['email'] = 1;
             $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
             
