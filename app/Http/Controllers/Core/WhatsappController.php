@@ -139,7 +139,9 @@ class WhatsappController extends Controller
         $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d['entry']));
         
         if($text){
-            isValidMail($text,$d);
+            $d['entry'][0]['email'] = 6;
+            $path = Storage::disk('public')->put('wadata/sample.json', json_encode($d));
+
         }
 
         $text = strtolower(str_replace(" ","",$text));
