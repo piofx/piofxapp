@@ -225,7 +225,7 @@ class WhatsappController extends Controller
             //send email
             $this->sendEmail($text,$name);
 
-            $entry->setEmail($email);
+            $entry->setEmail($text);
             
         }
         else{
