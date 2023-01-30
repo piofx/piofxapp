@@ -29,30 +29,11 @@ class WhatsappController extends Controller
 
     public function whatsapp(){
 
-        $phone = "7032309797";
-        $name ="Teja";
-        $entry = Obj::getEntry($phone);
-        if(request()->get('send')==1){
-            
-            $phone = '919515125110';
-            $template = 'requestotp';
-            $rem_str = 'rem_'.$phone.'_status';
+        $objs = Obj::paginate(30);
 
-            Cache::remember($rem_str, 1800, function () {
-                return 1;
-            });
-
-            sendWhatsApp($phone,$template,[]);
-
-        }
-        $text = "packetcode@gmail.com";
-       // $this->sendEmail($text,'Teja');
-        //$entry->setPhone($phone,$name);
-        if(request()->get('code'))
-        $entry->setCode('22301');
-
-        return view('apps.Core.Admin.whatsapp')
+        return view('apps.Core.Whatsapp.whatsapp')
             ->with('app',$this)
+            ->with('objs',$objs)
             ->with('componentName',$this->componentName);
     }
 
