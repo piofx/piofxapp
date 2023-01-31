@@ -96,7 +96,7 @@
                       @endif
                     </td>
                     <td>
-                     -
+                     {{$obj->registered}}
                     </td>
                     <td>{{ $obj->data_volume }}</td>
                     <td>{{ $obj->location }}</td>

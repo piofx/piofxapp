@@ -100,16 +100,37 @@
 	<!--end::basic card-->   
 
 	<div class="card border my-4 p-4">
-			<h3>AccessCodes ({{$obj->name}}) <span class="float-right">(CollegeCode.YOP.BranchCode)</span></h3>
+			<h3>AccessCodes ({{$obj->name}}) </h3>
+			<div class="table-responsive">
+              <table class="table table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col"> Branches({{count(branches())}})</th>
+                    <th scope="col">Registered ({{$students['count']}})</th>
+                  </tr>
+                </thead>
+                <tbody>
+					@foreach(branches() as $a=>$b)
+					<tr>
+						@if(strlen($a)==1)
+							<td><div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'230'.$a}} - {{$b}}</div></td>
+						@else
 
-			@foreach(branches() as $a=>$b)
-				@if(strlen($a)==1)
-					<div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'230'.$a}} - {{$b}}</div>
-				@else
+							<td><div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'23'.$a}} - {{$b}}</div></td>
+						@endif
 
-					<div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'23'.$a}} - {{$b}}</div>
-				@endif
-			@endforeach
+						@if(isset($students['branches'][$b]))
+						<td>{{ count($students['branches'][$b])}}</td>
+						@else
+						<td>0</td>
+						@endif
+					</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
+			<hr>
+			<span class="text-muted">(CollegeCode.YOP.BranchCode)</span>
 		</div>
 
 </x-dynamic-component>

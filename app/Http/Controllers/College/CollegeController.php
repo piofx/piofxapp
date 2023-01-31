@@ -44,7 +44,8 @@ class CollegeController extends Controller
         }
         
         $allcolleges = Cache::remember('allcolleges',600,function() use($obj){
-                return $obj->all();
+            $colleges = $obj->all();
+            return $colleges;
         });
 
         
@@ -245,6 +246,7 @@ class CollegeController extends Controller
     {
         // load the resource
         $obj = Obj::where('id',$id)->first();
+        $students = $obj->students();
         // load alerts if any
         $alert = session()->get('alert');
         // authorize the app
@@ -252,6 +254,7 @@ class CollegeController extends Controller
 
         if($obj)
             return view('apps.'.$this->app.'.'.$this->module.'.show')
+                    ->with('students',$students)
                     ->with('obj',$obj)->with('app',$this)->with('alert',$alert);
         else
             abort(404);
