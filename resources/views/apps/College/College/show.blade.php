@@ -104,7 +104,7 @@
 
 			@foreach(branches() as $a=>$b)
 				@if(strlen($a)==1)
-					<div>{{$obj->id.'230'.$a}} - {{$b}}</div>
+					<div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'230'.$a}} - {{$b}}</div>
 				@else
 
 					<div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'23'.$a}} - {{$b}}</div>
