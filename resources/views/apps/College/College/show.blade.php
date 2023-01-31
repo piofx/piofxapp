@@ -111,7 +111,7 @@
                 </thead>
                 <tbody>
 					@foreach(branches() as $a=>$b)
-					<tr>
+					<tr @if(isset($students['branches'][$b])) style="background: #fff387;" @endif>
 						@if(strlen($a)==1)
 							<td><div @if($a%2==0)class="text-primary"@endif>{{$obj->id.'230'.$a}} - {{$b}}</div></td>
 						@else
