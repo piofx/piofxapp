@@ -100,7 +100,8 @@
 	<!--end::basic card-->   
 
 	<div class="card border my-4 p-4">
-			<h3>AccessCodes (CollegeCode.YOP.BranchCode)</h3>
+			<h3>AccessCodes ({{$obj->name}}) <span class="float-right">(CollegeCode.YOP.BranchCode)</span></h3>
+
 			@foreach(branches() as $a=>$b)
 				@if(strlen($a)==1)
 					<div>{{$obj->id.'230'.$a}} - {{$b}}</div>
