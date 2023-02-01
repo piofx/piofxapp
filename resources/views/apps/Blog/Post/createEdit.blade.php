@@ -326,7 +326,7 @@
     <div class="mt-5">
         <div class="row container m-0 p-0 my-5">
             <div class="col-12 col-lg-9 bg-white p-5 rounded-lg">
-                <textarea type="text" id="title" onkeyup="createSlugAndMetaTitle()" required
+                <textarea type="text" id="title" @if($stub != 'update') onkeyup="createSlugAndMetaTitle()"@endif required
                     class="form-control p-0 display-3 text-wrap" rows="1    " style="border: none; background: transparent;"
                     placeholder="Type your title here"
                     name="title">@if($stub == 'update'){{$obj ? $obj->title : 'Title'}}@else{{ Request::old('title') ? Request::old('title') : null }}@endif</textarea>

@@ -129,7 +129,7 @@
 					</tbody>
 				</table>
 			</div>
-			<hr>
+			
 			<span class="text-muted">(CollegeCode.YOP.BranchCode)</span>
 		</div>
 
