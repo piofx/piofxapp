@@ -29,7 +29,7 @@ class WhatsappController extends Controller
 
     public function whatsapp(){
 
-        $objs = Obj::paginate(30);
+        $objs = Obj::orderBy('id','desc')->paginate(30);
 
         return view('apps.Core.Whatsapp.whatsapp')
             ->with('app',$this)
