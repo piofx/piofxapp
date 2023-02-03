@@ -53,7 +53,7 @@ class CollegePolicy
      */
     public function update(User $user, College $college)
     {
-        if(($college->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientdeveloper','clientmoderator'])))
+        if(($college->client_id == $user->client_id) && ($user->checkRole(['clientadmin','clientdeveloper','clientmoderator','clientmanager'])))
             return true;
         elseif(($college->agency_id == $user->agency_id) && ($user->checkRole(['agencyadmin','agencydeveloper'])))
             return true;
