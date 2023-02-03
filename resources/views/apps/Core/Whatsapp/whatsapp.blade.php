@@ -19,7 +19,12 @@
               <tr>
                 <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  {{ $obj->name }}
+                	<h5>{{ $obj->name }}</h5>
+                  {{ $obj->college }}
+                 <br> 
+                 {{ $obj->branch }}
+                 <br> 
+                 {{ $obj->yop }}
                  <br> 
                   {{$obj->phone}}<br>
                     {{ $obj->email }} 
