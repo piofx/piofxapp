@@ -1001,8 +1001,11 @@ class PostController extends Controller
         // Initialize Object
         $obj = new Obj();
 
+        $current_date = Carbon::now();
+        $date = Carbon::parse($current_date)->format('Y-m-d');
+
         // Retrieve the post
-        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->where('status', '1')->orderBy('id', 'desc')->first();
+        $post = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->whereDate('created_at', '<=', $date)->where('status', '1')->orderBy('id', 'desc')->first();
 
         $client_settings = json_decode(request()->get('client.settings'));
         if(isset($client_settings->blog_url) && $client_settings->blog_url == 'direct'){

@@ -76,7 +76,7 @@
                                                 @endphp
                                                 <p>{{ $content }}...</p>
                                             @endif
-                                            <div class="mb-3">
+                                            <div class="mb-3 d-none" >
                                                 @if($obj->tags)
                                                 @foreach($obj->tags as $tag)
                                                     <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
@@ -108,7 +108,7 @@
                                         @endphp
                                         <p>{{ $content }}...</p>
                                     @endif
-                                    <div class="mb-3">
+                                    <div class="mb-3 d-none">
                                         @if($obj->tags)
                                         @foreach($obj->tags as $tag)
                                             <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
@@ -163,7 +163,7 @@
                                                 @endphp
                                                 <p>{{ $content }}...</p>
                                             @endif
-                                            <div class="mb-3">
+                                            <div class="mb-3 d-none">
                                                 @if($obj->tags)
                                                 @foreach($obj->tags as $tag)
                                                     <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
@@ -195,7 +195,7 @@
                                         @endphp
                                         <p>{{ $content }}...</p>
                                     @endif
-                                    <div class="mb-3">
+                                    <div class="mb-3 d-none">
                                         @if($obj->tags)
                                         @foreach($obj->tags as $tag)
                                             <a href="{{ route('Tag.show', $tag->slug) }}" class="badge rounded-badge bg-soft-primary px-2 py-1">{{ $tag->name }}</a>
