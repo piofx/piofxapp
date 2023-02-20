@@ -182,6 +182,8 @@ Route::get('/admin/user/{id}', [UserController::class, 'show'])
 Route::post('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
 Route::get('/user/apilogin', [UserController::class, 'api_login'])->name('User.apilogin');
 Route::get('/user/apiuser', [UserController::class, 'api_user'])->name('User.apiuser');
+
+Route::get('/user/apiregister', [UserController::class, 'api_register'])->name('User.apiregister');
 Route::post('/user/apiregister', [UserController::class, 'api_register'])->name('User.apiregister');
 
 /* User Profile Routes*/ 

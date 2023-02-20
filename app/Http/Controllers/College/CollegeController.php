@@ -49,7 +49,7 @@ class CollegeController extends Controller
         $allcolleges = Cache::remember('allcolleges_'.$client_id,600,function() use($obj,$client_id){
             $colleges = $obj->where('client_id', $client_id)->get();
             foreach($colleges as $key=>$c){
-                $colleges[$key]->registered = Cache::remember('wu_'.$c,600,function() use($c,$client_id){return Whatsapp::where('client_id',$client_id)->where('college',$c->name)->count();
+                $colleges[$key]->wa = Cache::remember('wu_'.$c,600,function() use($c,$client_id){return Whatsapp::where('client_id',$client_id)->where('college',$c->name)->count();
                 });
             }
             return $colleges;
@@ -69,14 +69,15 @@ class CollegeController extends Controller
             $allcollegetypes = $obj->where('zone',$zone)->where('client_id', request()->get('client.id'))->get()->groupBy('type');
         else
             $allcollegetypes = $allcolleges->groupBy('type');
+
         $data['types'] = ["all"=>0,"engineering"=>0,"degree"=>0,"other"=>0];
         $data['students'] = ["all"=>0,"engineering"=>0,"degree"=>0,"other"=>0];
         foreach($data['types'] as $a=>$b){
             if(isset($allcollegetypes[$a])){
                 $data['types'][$a] = count($allcollegetypes[$a]);
                 foreach($allcollegetypes[$a] as $c){
-                    $data['students'][$a] += $c->registered;
-                    $data['students']["all"] += $c->registered;
+                    $data['students'][$a] += $c->wa;
+                    $data['students']["all"] += $c->wa;
                 }
                 $data['types']["all"] += count($allcollegetypes[$a]);
                  

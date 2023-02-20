@@ -15,6 +15,8 @@ $(function(){
                 var name = $('input[name=name]').val();
                 var phone = $('input[name=phone]').val();
                 var email = $('input[name=email]').val();
+
+               
                 if(name && phone && email){
                 $('.otp_spinner').show();
                 $.get('/contact/api',function(data){
@@ -32,7 +34,7 @@ $(function(){
                     });
                 });
                 }else{
-                    alert('Kindly fill name,phone and email.');
+                    alert('Kindly fill name,phone, email and all required fields.');
                 }
             });
 
@@ -123,7 +125,20 @@ $(function(){
                 var repassword = $('input[name=password_confirmation]').val();
                 var redirect = $('input[name=redirect]').val();
                 var _token = $('input[name=_token]').val();
-                
+
+                 if($('.c1').length )
+                    var c1 = $('.c1').val();
+                else
+                    var c1 = true;
+                if($('.c2').length )
+                    var c2 = $('.c2').val();
+                else
+                    var c2 = true;
+                if($('.c3').length )
+                    var c3 = $('.c3').val();
+                else
+                    var c3 = true;
+                 console.log(c1+ " "+c2+" "+c3);
                 if(password !=repassword)
                     alert('Given password and re-password dint match!');
                 if(!password)
@@ -132,7 +147,7 @@ $(function(){
                 if($(".registerform").data('register'))
                     $url = $(".registerform").attr('action');
 
-                if(name && phone && email ){
+                if(name && phone && email && c1 && c2 && c3){
                     if(otp!=otp_server){
                         alert('Invalid OTP!');
                          //$(".alert_message").html("Invalid OTP!");
@@ -174,7 +189,7 @@ $(function(){
                     });
                     }
                 }else{
-                    alert('Kindly fill name,phone,email and password.');
+                    alert('Kindly fill name,phone,email,password and all required fields.');
                 }
                
             });

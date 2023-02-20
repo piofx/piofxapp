@@ -98,7 +98,7 @@
                 <div class="row">
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >College Name</label>
-                    <input class="form-control" list="datalistColleges" name="c1" id="exampleDataList" placeholder="Type to search..."
+                    <input class="form-control c1" list="datalistColleges" name="c1" id="exampleDataList" placeholder="Type to search..."
                     >
                     <datalist id="datalistColleges">
                        @foreach(colleges() as $d)
@@ -109,7 +109,7 @@
                     </div>
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c2" >Branch</label>
-                    <input class="form-control" list="datalistBranches" name="c2" id="exampleDataList" placeholder="Type to search..."
+                    <input class="form-control c2" list="datalistBranches" name="c2" id="exampleDataList" placeholder="Type to search..."
                     >
                     <datalist id="datalistBranches">
                        @foreach(branches() as $d)
@@ -120,7 +120,7 @@
                     </div>
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c3" >Year of Passing</label>
-                    <input class="form-control" list="datalistYOP" name="c3" id="exampleDataList" placeholder="Type to search..."
+                    <input class="form-control c3" list="datalistYOP" name="c3" id="exampleDataList" placeholder="Type to search..."
                     >
                     <datalist id="datalistYOP">
                        @foreach(yop() as $d)
@@ -211,6 +211,8 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
                 <input type="hidden" name="client_id" value="{{ request()->get('client.id') }}">
+                <input type="hidden" name="wa_tracker" value="1">
+                <input type="hidden" name="phone_subscribe" value="1">
                 <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
                 <input type="hidden" name="settings_utm_source" value="{{ request()->get('utm_source') }}">
                 <input type="hidden" name="settings_utm_campaign" value="{{ request()->get('utm_campaign') }}">

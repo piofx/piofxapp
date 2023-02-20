@@ -63,7 +63,7 @@ class College extends Model
 
         
         foreach($colleges as $key=>$c){
-            $colleges[$key]->registered = Cache::remember('wu_'.$c,600,function() use($c,$client_id){return Whatsapp::where('client_id',$client_id)->where('college',$c->name)->count();
+            $colleges[$key]->wa = Cache::remember('wu_'.$c,600,function() use($c,$client_id){return Whatsapp::where('client_id',$client_id)->where('college',$c->name)->count();
             });
         }
         return $colleges;

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User as Obj;
 use App\Models\Core\Client;
 use App\Models\Core\Referral;
+use App\Models\Core\Whatsapp;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -235,9 +236,15 @@ class UserController extends Controller
             $user->c9 = $c9;
             if($c10)
             $user->c10 = $c10;
+
             $user->subscribe_phone=0;
+            $user->subscribe_email =0;
+
+
+            if($request->get('phone_subscribe'))
+               $user->subscribe_phone=1; 
             if($request->get('email_subscribe'))
-            $user->subscribe_email=1;
+                $user->subscribe_email=1;
             $user->save();
 
             if($request->get('settings_utm_referral')){
@@ -247,6 +254,26 @@ class UserController extends Controller
                     $redirect = $request->get('curr_url');
                 
                 Referral::insert($referral_id,$user,$redirect);
+            }
+
+            if($request->get('wa_tracker')){
+
+                $wa = new Whatsapp();
+                $wa->name = $user->name;
+                $wa->phone = $user->phone;
+                $wa->email = $user->email;
+                if($c1)
+                $wa->college = $user->c1;
+                if($c2)
+                $wa->branch = $user->c2;
+                if($c3)
+                $wa->yop = $user->c3;
+                $wa->user_id = 0;
+                $wa->agency_id = request()->get('agency.id');
+                $wa->client_id = request()->get('client.id');
+                $wa->status =1;
+                $wa->save();
+                
             }
 
             Auth::attempt(['email' => $email, 'password' => $password,'client_id'=>$client_id]);
