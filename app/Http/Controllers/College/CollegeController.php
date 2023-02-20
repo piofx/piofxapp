@@ -48,8 +48,13 @@ class CollegeController extends Controller
         
         $allcolleges = Cache::remember('allcolleges_'.$client_id,600,function() use($obj,$client_id){
             $colleges = $obj->where('client_id', $client_id)->get();
+            foreach($colleges as $key=>$c){
+                $colleges[$key]->registered = Cache::remember('wu_'.$c,600,function() use($c,$client_id){return Whatsapp::where('client_id',$client_id)->where('college',$c->name)->count();
+                });
+            }
             return $colleges;
         });
+
 
         $allcollegezones = $allcolleges->groupBy('zone');
         $data['zones'] = [];
@@ -69,9 +74,12 @@ class CollegeController extends Controller
         foreach($data['types'] as $a=>$b){
             if(isset($allcollegetypes[$a])){
                 $data['types'][$a] = count($allcollegetypes[$a]);
-                $data['students'][$a] += count($allcollegetypes[$a]);
+                foreach($allcollegetypes[$a] as $c){
+                    $data['students'][$a] += $c->registered;
+                    $data['students']["all"] += $c->registered;
+                }
                 $data['types']["all"] += count($allcollegetypes[$a]);
-                $data['students']["all"] += count($allcollegetypes[$a]);
+                 
             }
             
         }
