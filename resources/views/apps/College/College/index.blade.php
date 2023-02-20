@@ -66,33 +66,33 @@
       <div class="row">
         <div class="col-6 col-md-3">
           <x-snippets.cards.basic class="bg-light-warning border border-warning mb-5">
-            <h5>All Colleges <a href="#" data-toggle="tooltip" title="Total Colleges"><i class="flaticon-exclamation-2"></i></a></h5>
+            <h5>All Colleges [{{ $data['types']['all']}}]</h5>
             <div class="display-3">
-             {{ $data['types']['all']}}
+             {{ $data['students']['all']}}
             </div>
           </x-snippets.cards.basic>
         </div>
         <div class="col-6 col-md-3">
           <x-snippets.cards.basic class="bg-light-info border border-info mb-5">
-            <h5>Engineering <a href="#" data-toggle="tooltip" title="Engineering Colleges"><i class="flaticon-exclamation-2"></i></a></h5>
+            <h5>Engineering [{{ $data['types']['engineering']}}]</h5>
             <div class="display-3">
-              {{ $data['types']['engineering']}}
+              {{ $data['students']['engineering']}}
             </div>
           </x-snippets.cards.basic>
         </div>
         <div class="col-6 col-md-3">
            <x-snippets.cards.basic class="bg-light-danger border border-danger mb-5">
-            <h5>Degree <a href="#" data-toggle="tooltip" title="Degree Colleges"><i class="flaticon-exclamation-2"></i></a></h5>
+            <h5>Degree [{{ $data['types']['degree']}}]</h5>
             <div class="display-3">
-              {{ $data['types']['degree']}}
+              {{ $data['students']['degree']}}
             </div>
           </x-snippets.cards.basic>
         </div>
         <div class="col-6 col-md-3">
            <x-snippets.cards.basic class="bg-light-primary border border-primary mb-5">
-            <h5>Other <a href="#" data-toggle="tooltip" title="Other "><i class="flaticon-exclamation-2"></i></a></h5>
+            <h5>Other [{{ $data['types']['other']}}]</h5>
             <div class="display-3">
-              {{ $data['types']['other']}}
+              {{ $data['students']['other']}}
             </div>
           </x-snippets.cards.basic>
 
@@ -161,6 +161,14 @@
       <div class="py-3">
         <a  href="{{route('College.upload')}}" class="btn btn-info w-100">Upload CVS file</a>
       </div>
+      <div class="pb-3">
+        <a  href="{{route('College.download')}}" class="btn btn-success w-100">Download Collges</a>
+      </div>
+
+      <div class="pb-3">
+        <a  href="{{ route('College.index') }}?refresh=1" class="btn btn-danger w-100">Refresh Data</a>
+      </div>
+
       <!--begin::List Widget 7-->
       <div class="card card-custom gutter-b">
           <!--begin::Header-->

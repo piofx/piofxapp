@@ -38,19 +38,19 @@ class CollegeController extends Controller
         $this->authorize('view', $obj);
         // retrive the listing
         $objs = $obj->getRecords($item,$zone,30);
+        $client_id = request()->get('client.id');
+        
 
         if($request->get('refresh')){
-            Cache::forget('allcolleges');
+            Cache::forget('allcolleges_'.$client_id);
+            $alert="Data refreshed";
         }
         
-        $allcolleges = Cache::remember('allcolleges',600,function() use($obj){
-            $colleges = $obj->all();
+        $allcolleges = Cache::remember('allcolleges_'.$client_id,600,function() use($obj,$client_id){
+            $colleges = $obj->where('client_id', $client_id)->get();
             return $colleges;
         });
 
-        
-        
-            
         $allcollegezones = $allcolleges->groupBy('zone');
         $data['zones'] = [];
         foreach(zones() as $a=>$b){
@@ -61,17 +61,21 @@ class CollegeController extends Controller
         }
 
         if($zone)
-            $allcollegetypes = $obj->where('zone',$zone)->get()->groupBy('type');
+            $allcollegetypes = $obj->where('zone',$zone)->where('client_id', request()->get('client.id'))->get()->groupBy('type');
         else
             $allcollegetypes = $allcolleges->groupBy('type');
         $data['types'] = ["all"=>0,"engineering"=>0,"degree"=>0,"other"=>0];
+        $data['students'] = ["all"=>0,"engineering"=>0,"degree"=>0,"other"=>0];
         foreach($data['types'] as $a=>$b){
             if(isset($allcollegetypes[$a])){
                 $data['types'][$a] = count($allcollegetypes[$a]);
+                $data['students'][$a] += count($allcollegetypes[$a]);
                 $data['types']["all"] += count($allcollegetypes[$a]);
+                $data['students']["all"] += count($allcollegetypes[$a]);
             }
             
         }
+
 
 
         return view('apps.'.$this->app.'.'.$this->module.'.index')
@@ -103,7 +107,40 @@ class CollegeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Download the csv file
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function download(Obj $obj)
+    {
+
+        // Retrieve all the records
+        $objs = $obj->where('agency_id', request()->get('agency.id'))->where('client_id', request()->get('client.id'))->get();
+        $fileName = "colleges_".strtotime("now").'.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+       
+        $callback = function() use($objs) {
+            $file = fopen('php://output', 'w');
+            $columns = ['sno','name','code','type','location','zone','district','state','contact_person','contact_designation','contact_phone','contact_email','data_volume'];
+            fputcsv($file, $columns);
+                foreach($objs as $obj){
+                    $row = [$obj->id,$obj->name,$obj->code,$obj->type,$obj->location,$obj->zone,$obj->district,$obj->state,$obj->contact_person,$obj->contact_designation,$obj->contact_phone,$obj->contact_email,$obj->data_volume];
+                    fputcsv($file, $row);
+                }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+      
+    }
+
+    /**
+     * Upload the csv file
      *
      * @return \Illuminate\Http\Response
      */

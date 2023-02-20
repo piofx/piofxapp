@@ -10,6 +10,8 @@ Route::get('/admin/college/{college}/edit', [CollegeController::class, 'edit'])
 		->middleware(['auth'])->name('College.edit');
 Route::get('/admin/college/upload', [CollegeController::class, 'upload'])
 		->middleware(['auth'])->name('College.upload');
+Route::get('/admin/college/download', [CollegeController::class, 'download'])
+		->middleware(['auth'])->name('College.download');
 Route::post('/admin/college/upload', [CollegeController::class, 'upload'])
 		->middleware(['auth'])->name('College.upload');
 Route::get('/admin/college/create', [CollegeController::class, 'create'])
