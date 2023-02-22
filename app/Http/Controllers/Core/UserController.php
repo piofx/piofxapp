@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Mail\EmailForQueuing;
+use App\Mail\Welcome;
+use Mail;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -258,21 +261,29 @@ class UserController extends Controller
 
             if($request->get('wa_tracker')){
 
-                $wa = new Whatsapp();
-                $wa->name = $user->name;
-                $wa->phone = $user->phone;
-                $wa->email = $user->email;
-                if($c1)
-                $wa->college = $user->c1;
-                if($c2)
-                $wa->branch = $user->c2;
-                if($c3)
-                $wa->yop = $user->c3;
-                $wa->user_id = 0;
-                $wa->agency_id = request()->get('agency.id');
-                $wa->client_id = request()->get('client.id');
-                $wa->status =1;
-                $wa->save();
+                $wa = Whatsapp::where('phone',$user->phone)->first();
+
+                if(!$wa){
+                    $wa = new Whatsapp();
+                    $wa->name = $user->name;
+                    $wa->phone = $user->phone;
+                    $wa->email = $user->email;
+                    if($c1)
+                    $wa->college = $user->c1;
+                    if($c2)
+                    $wa->branch = $user->c2;
+                    if($c3)
+                    $wa->yop = $user->c3;
+                    $wa->user_id = 0;
+                    $wa->agency_id = request()->get('agency.id');
+                    $wa->client_id = request()->get('client.id');
+                    $wa->status =1;
+                    $wa->save();
+                }
+                
+
+                //send email
+                $this->sendEmail($user->email,$user->name);
                 
             }
 
@@ -294,6 +305,27 @@ class UserController extends Controller
         }
                    
        
+    }
+
+    public static function sendEmail($email,$name){
+        //client settings
+        $settings = json_decode(request()->get('client.settings'));
+        $client_name = request()->get('client.name');
+        $subject = 'Welcome to '.$client_name;
+        $details = array('name'=>$name,'email' => $email , 'count'=>1, 'content' => "hi",'client_name'=>$client_name,'subject'=>$subject);
+       
+        if(isset($settings->mailgunfrom))
+            $details['from'] = $settings->mailgunfrom;
+        else
+           $details['from'] = 'noreply@customerka.com';
+          
+        if(isset($settings->mailgunclient)){
+             Mail::mailer($settings->mailgunclient)->to($email)->send(new welcome($details));
+        }
+        else
+        {
+             Mail::to($email)->send(new welcome($details));
+        }
     }
 
      /**

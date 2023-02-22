@@ -138,7 +138,8 @@ $(function(){
                     var c3 = $('.c3').val();
                 else
                     var c3 = true;
-                 console.log(c1+ " "+c2+" "+c3);
+
+
                 if(password !=repassword)
                     alert('Given password and re-password dint match!');
                 if(!password)
@@ -148,6 +149,7 @@ $(function(){
                     $url = $(".registerform").attr('action');
 
                 if(name && phone && email && c1 && c2 && c3){
+
                     if(otp!=otp_server){
                         alert('Invalid OTP!');
                          //$(".alert_message").html("Invalid OTP!");
