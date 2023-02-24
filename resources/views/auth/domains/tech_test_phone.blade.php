@@ -98,25 +98,20 @@
                 <div class="row">
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >College Name</label>
-                    <input class="form-control c1" list="datalistColleges" name="c1" id="exampleDataList" placeholder="Type to search..." required
-                    >
-                    <datalist id="datalistColleges">
-                       @foreach(colleges() as $d)
-                        <option value="{{$d->name}}">
-                      @endforeach
-                    </datalist>
+                    <select class="form-control" name="c1">
+                    @foreach(colleges() as $d)
+                    <option value="{{$d->name}}"> {{$d->name}}</option>
+                    @endforeach
+                    </select>
                    
                     </div>
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c2" >Branch</label>
-                    <input class="form-control c2" list="datalistBranches" name="c2" id="exampleDataList" placeholder="Type to search..." required
-                    >
-                    <datalist id="datalistBranches">
-                       @foreach(branches() as $d)
-                        <option value="{{$d}}">
-                      @endforeach
-                    </datalist>
-                   
+                    <select class="form-control" name="c2">
+                    @foreach(branches() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                     </div>
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c3" >Year of Passing</label>
@@ -154,24 +149,20 @@
                     </div>
                     <div class='col-12 col-md-3'>
                         <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >District</label>
-                        <input class="form-control" list="datalistDistrict" name="c6" id="exampleDataList" placeholder="Type to search..."
-                        >
-                        <datalist id="datalistDistrict">
-                          @foreach(districts() as $d)
-                            <option value="{{$d}}">
-                          @endforeach
-                        </datalist>
+                        <select class="form-control" name="c6">
+                    @foreach(districts() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                    
                     </div>
                     <div class='col-12 col-md-3'>
                         <label class="font-size-h6 font-weight-bolder text-dark" for="c7" >State</label>
-                        <input class="form-control" list="datalistState" name="c7" id="exampleDataList" placeholder="Type to search..."
-                        >
-                        <datalist id="datalistState">
-                          @foreach(states() as $d)
-                            <option value="{{$d}}">
-                          @endforeach
-                        </datalist>
+                        <select class="form-control" name="c7">
+                    @foreach(states() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                     </div>
                 </div>
 

@@ -608,10 +608,13 @@ if (! function_exists('blog_image_upload')) {
 
 	if(!function_exists("colleges")){
 		function colleges(){
-			$colleges = Cache::get('colleges');
+			if(request()->get('refresh')){
+				Cache::forget('collegesalls');
+			}
+			$colleges = Cache::get('collegesalls');
 			if(!$colleges){
-				$colleges = College::get();
-				Cache::forever('colleges',$colleges);
+				$colleges = College::orderby('name')->get();
+				Cache::forever('collegesalls',$colleges);
 				return $colleges;
 				
 			}
