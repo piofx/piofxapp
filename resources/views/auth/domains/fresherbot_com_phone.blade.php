@@ -97,7 +97,7 @@
 
                 <div class="row">
                     <div class='col-12 col-md-3'>
-                    <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >College Name</label>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >Listed College Name</label>
                     <select class="form-control" name="c1">
                     @foreach(colleges() as $d)
                     <option value="{{$d->name}}"> {{$d->name}}</option>
@@ -105,6 +105,15 @@
                     </select>
                    
                     </div>
+
+                     <div class='col-12 col-md-3'>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="c3" >College Name (if Not in List)</label>
+                    <input class="form-control c8" name="c8" id="exampleDataList" placeholder="Enter college name if not listed" required
+                    >
+                    
+                   
+                    </div>
+
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c2" >Branch</label>
                     <select class="form-control" name="c2">
@@ -124,6 +133,10 @@
                     </datalist>
                    
                     </div>
+                    
+                </div>
+
+                 <div class="row my-2">
                     <div class='col-12 col-md-3'>
                         <label for="formGroupExampleInput " class="font-size-h6 font-weight-bolder text-dark">Any Backlogs? </label>
                         <select class="form-control" name="c4">
@@ -133,9 +146,6 @@
                             <option value="One"  >Three or more</option>
                         </select>
                     </div>
-                </div>
-
-                 <div class="row my-2">
                    
                     <div class='col-12 col-md-3'>
                         <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >Current City</label>
