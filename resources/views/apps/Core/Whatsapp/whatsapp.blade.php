@@ -4,6 +4,7 @@
 			
 			 <x-snippets.cards.basic>
     @if($objs->total()!=0)
+        <h3> Recent Registrtions</h3>
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
@@ -21,28 +22,7 @@
                 <td>
                 	<h5>{{ $obj->name }}</h5>
                   {{ $obj->college }}
-                 <br> 
-                 {{ $obj->branch }}
-                 <br> 
-                 {{ $obj->yop }}
-                 <br> 
-                  {{$obj->phone}}<br>
-                    {{ $obj->email }} 
-                     
-                        <br>
-                      @if($obj->status==0)
-                  <span class="label label-light-success label-pill label-inline">Customer</span>
-                  @elseif($obj->status==1)
-                  <span class="label label-light-warning label-pill label-inline">Open Lead</span>
-                  @elseif($obj->status==2)
-                  <span class="label label-light-danger label-pill label-inline">Cold Lead</span>
-                  @elseif($obj->status==3)
-                  <span class="label label-light-info label-pill label-inline">Warm Lead</span>
-                  @elseif($obj->status==4)
-                  <span class="label label-light-primary label-pill label-inline">Prospect</span>
-                  @elseif($obj->status==5)
-                  <span class="label label-light-light label-pill text-dark label-inline">Not Responded</span>
-                  @endif
+                
                  
                 </td>
                   <td> 
@@ -57,6 +37,38 @@
             </tbody>
           </table>
         </div>
+
+        <h3 class="mt-4"> College Data</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered mb-0">
+            <thead>
+              <tr class="bg-light">
+                <th scope="col">#({{$objs->total()}})</th>
+                <th scope="col">College Name </th>
+                <th scope="col">Counter</th>
+              </tr>
+            </thead>
+            <tbody class="{{$i=1}}">
+              @foreach($colleges as $key=>$obj)  
+              <tr>
+                <th scope="row">{{ $i++ }}</th>
+                <td>
+                  {{ $key }}
+                
+                 
+                </td>
+                  <td> 
+                    <div class="">
+                      {{ count($obj) }}
+                    </div>
+                    
+                  </td>
+              </tr>
+              @endforeach      
+            </tbody>
+          </table>
+        </div>
+
         @else
         <div class="card card-body bg-light">
           No items found
