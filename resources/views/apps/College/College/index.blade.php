@@ -150,7 +150,7 @@
             </div>
             @endif
             <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
-            {{$objs->appends(request()->except(['page','search']))->links()  }}
+            {{$objs->appends(['status'=>request()->get('status'),'user_id'=>request()->get('user_id'),'tag'=>request()->get('tag'),'category'=>request()->get('category'),'date_filter'=>request()->get('date_filter')])->links()  }}
           </nav>
       </x-snippets.cards.basic>
       <!--end::basic card-->
