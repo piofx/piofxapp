@@ -37,6 +37,10 @@
             </tbody>
           </table>
         </div>
+         <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
+        {{$objs->appends(['status'=>request()->get('status'),'user_id'=>request()->get('user_id'),'tag'=>request()->get('tag'),'category'=>request()->get('category'),'date_filter'=>request()->get('date_filter')])->links()  }}
+      </nav>
+      
 
         <h3 class="mt-4"> College Data</h3>
         <div class="table-responsive">
@@ -74,9 +78,7 @@
           No items found
         </div>
         @endif
-        <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
-        {{$objs->appends(['status'=>request()->get('status'),'user_id'=>request()->get('user_id'),'tag'=>request()->get('tag'),'category'=>request()->get('category'),'date_filter'=>request()->get('date_filter')])->links()  }}
-      </nav>
+       
   </x-snippets.cards.basic>
   <!--end::basic card-->
 
