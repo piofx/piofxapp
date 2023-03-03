@@ -690,7 +690,7 @@ if (! function_exists('blog_image_upload')) {
 
 	if(!function_exists("zones")){
 		function zones(){
-			$data = ["Vijayawada","Visakhapatnam","Tirupati","Warangal","Guntur","Kakinada","Anantapur","Karimnagar","Khammam","Dilshuknagar","Secunderabad","Ameerpet","Kukatpally","Mehdipatnam","Narayanguda","Kompally","Uppal-Ghatkesar","Filmcity","Chevella","Ibrahimpatnam","Shamshabad","Vizianagaram","Kurnool","Eluru","Nellore","Rajamundry","Rajamundry","Bhimavaram","Ongole","Kadapa"];
+			$data = ["Vijayawada","Visakhapatnam","Tirupati","Warangal","Guntur","Kakinada","Anantapur","Karimnagar","Khammam","Dilshuknagar","Secunderabad","Ameerpet","Kukatpally","Mehdipatnam","Narayanguda","Kompally","Uppal-Ghatkesar","Filmcity","Chevella","Ibrahimpatnam","Shamshabad","Vizianagaram","Kurnool","Nellore","Ongole","Kadapa"];
 	        sort($data);
 	        return $data;
 		}
