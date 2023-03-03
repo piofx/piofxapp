@@ -38,7 +38,7 @@ class CollegeController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
         // retrive the listing
-        $objs = $obj->getRecords($item,$zone,30);
+        $objs = $obj->getRecords($item,$zone,60);
         $client_id = request()->get('client.id');
         
 
@@ -209,6 +209,9 @@ class CollegeController extends Controller
                         $entry->status=1;
                         $entry->save();
                     }else{
+                        try{
+
+
                         $entry = new Obj();
                         $entry->name = $var[0];
                         $entry->code = ($var[1])?$var[1]:'';
@@ -226,6 +229,11 @@ class CollegeController extends Controller
                         $entry->agency_id = request()->get('agency.id');
                         $entry->status=1;
                         $entry->save();
+                            }
+                            //catch exception
+                            catch(Exception $e) {
+                              echo 'Message: ' .$e->getMessage();
+                            }
                     }
                     
                    
