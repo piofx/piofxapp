@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Core\Whatsapp as Obj;
+use App\Models\College\College;
 use Illuminate\Http\Request;
 use App\Mail\EmailForQueuing;
 use App\Mail\Welcome;
@@ -32,7 +33,18 @@ class WhatsappController extends Controller
         $objs = Obj::orderBy('id','desc')->paginate(10);
 
         $colleges = Obj::select('college')->get()->groupBy('college');
-        $zones = Obj::select('zone')->get()->groupBy('zone');
+        $colls = Obj::select('college')->distinct()->pluck('college')->toArray();
+        $colldata = College::whereIn('name',$colls)->get();
+
+
+        foreach($colldata as $college =>$d){
+            if(!isset($zones[$d->zone]) && $d->zone)
+                $zones[$d->zone] = 0;
+            if(isset($colleges[$d->name]) && $d->zone)
+            $zones[$d->zone] += count($colleges[$d->name]);
+        }
+        //dd($zones);
+        //$zones = Obj::select('zone')->get()->groupBy('zone');
 
        
         return view('apps.Core.Whatsapp.whatsapp')

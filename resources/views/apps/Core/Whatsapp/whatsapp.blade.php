@@ -49,7 +49,7 @@
         <div class="col-6 col-md-2 mb-3">
           <div class="border rounded p-4">
             <h5>{{$zone}}</h5>
-            <div class="display-3">{{ count($val)}}</div>
+            <div class="display-3">{{ $val}}</div>
           </div>
         </div>
         @endif
