@@ -41,8 +41,23 @@
         {{$objs->appends(['status'=>request()->get('status'),'user_id'=>request()->get('user_id'),'tag'=>request()->get('tag'),'category'=>request()->get('category'),'date_filter'=>request()->get('date_filter')])->links()  }}
       </nav>
       
+    <div class="p-3" style="background-color: #feffd0;">
+      <h3 class="mt-4"> Zones</h3>
+      <div class="row">
+        @foreach($zones as $zone=>$val)
+        @if($zone)
+        <div class="col-6 col-md-2 mb-3">
+          <div class="border rounded p-4">
+            <h5>{{$zone}}</h5>
+            <div class="display-3">{{ count($val)}}</div>
+          </div>
+        </div>
+        @endif
+        @endforeach
+      </div>
+    </div>
 
-        <h3 class="mt-4"> College Data</h3>
+    <h3 class="mt-4"> College Data</h3>
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>

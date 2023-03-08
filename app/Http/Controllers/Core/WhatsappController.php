@@ -32,13 +32,14 @@ class WhatsappController extends Controller
         $objs = Obj::orderBy('id','desc')->paginate(10);
 
         $colleges = Obj::select('college')->get()->groupBy('college');
+        $zones = Obj::select('zone')->get()->groupBy('zone');
 
-
-
+       
         return view('apps.Core.Whatsapp.whatsapp')
             ->with('app',$this)
             ->with('objs',$objs)
             ->with('colleges',$colleges)
+            ->with('zones',$zones)
             ->with('componentName',$this->componentName);
     }
 
