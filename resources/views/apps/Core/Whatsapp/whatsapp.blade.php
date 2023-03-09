@@ -3,7 +3,10 @@
 		<div class="page_container">
 			
 			 <x-snippets.cards.basic>
+
+
     @if($objs->total()!=0)
+    @if(!request()->get('zone'))
         <h3> Recent Registrtions</h3>
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
@@ -49,34 +52,38 @@
         <div class="col-6 col-md-2 mb-3">
           <div class="border rounded p-4">
             <h5>{{$zone}}</h5>
-            <div class="display-3">{{ $val}}</div>
+            <a href="{{ route('whatsapp')}}?zone={{$zone}}"><div class="display-3">{{ $val}}</div></a>
           </div>
         </div>
         @endif
         @endforeach
       </div>
     </div>
-
-    <h3 class="mt-4"> College Data</h3>
+    @endif
+    <h3 class="mt-4"> College Data @if(request()->get('zone'))({{request()->get('zone')}}) <br><a href="{{ route('whatsapp')}}" class="mt-3  h5 mb-4">< back to college page</a>@endif</h3>
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
               <tr class="bg-light">
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">College Name </th>
+                <th scope="col">Location</th>
+                <th scope="col">Zone</th>
                 <th scope="col">Counter</th>
               </tr>
             </thead>
             <tbody class="{{$i=1}}">
               @foreach($colleges as $key=>$obj)  
-              <tr>
+              <tr @if(count($obj)) class="bg-light-warning" @endif>
                 <th scope="row">{{ $i++ }}</th>
                 <td>
                   {{ $key }}
                 
                  
                 </td>
-                  <td> 
+                <td>@if(isset($coll_list[$key])) {{ $coll_list[$key]->location}} @endif</td>
+                <td>@if(isset($coll_list[$key])) {{ $coll_list[$key]->zone}} @endif</td>
+                  <td > 
                     <div class="">
                       {{ count($obj) }}
                     </div>

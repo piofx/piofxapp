@@ -36,22 +36,55 @@ class WhatsappController extends Controller
         $colls = Obj::select('college')->distinct()->pluck('college')->toArray();
         $colldata = College::whereIn('name',$colls)->get();
 
+        $zone = request()->get('zone');
+        if($zone)
+            $coll_list = College::where('zone',$zone)->get()->keyBy('name');
+        else
+            $coll_list = College::get()->keyBy('name');
 
+        $all_zones = $coll_list->unique('zone')->pluck('zone');
+
+        $zcolleges =array();
         foreach($colldata as $college =>$d){
             if(!isset($zones[$d->zone]) && $d->zone)
                 $zones[$d->zone] = 0;
             if(isset($colleges[$d->name]) && $d->zone)
-            $zones[$d->zone] += count($colleges[$d->name]);
+                $zones[$d->zone] += count($colleges[$d->name]);
+            if($zone==$d->zone )
+                if(isset($colleges[$d->name]) && $d->name!='-Not in List-'){
+                    $zcolleges[$d->name] = $colleges[$d->name];
+                }
         }
-        //dd($zones);
-        //$zones = Obj::select('zone')->get()->groupBy('zone');
 
-       
+        if(count($zcolleges)){
+            $colleges = $zcolleges;
+        }
+
+        if($zone){
+            $ycolleges = array();
+            foreach($coll_list as $c){
+                if(isset($colleges[$c->name]))
+                    $ycolleges[$c->name] = $colleges[$c->name];
+                else
+                    $ycolleges[$c->name] = [];
+            }
+            $colleges = $ycolleges;
+        }
+
+        $new_zones = [];
+        foreach($all_zones as $k=>$az){
+            if(isset($zones[$az]))
+                $new_zones[$az] = $zones[$az];
+            else
+               $new_zones[$az]  =0; 
+        }
+
         return view('apps.Core.Whatsapp.whatsapp')
             ->with('app',$this)
             ->with('objs',$objs)
             ->with('colleges',$colleges)
-            ->with('zones',$zones)
+            ->with('zones',$new_zones)
+            ->with('coll_list',$coll_list)
             ->with('componentName',$this->componentName);
     }
 
