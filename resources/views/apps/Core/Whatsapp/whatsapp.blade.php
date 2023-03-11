@@ -67,6 +67,7 @@
               <tr class="bg-light">
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">College Name </th>
+                <th scope="col">Type</th>
                 <th scope="col">Location</th>
                 <th scope="col">Zone</th>
                 <th scope="col">Counter</th>
@@ -81,6 +82,7 @@
                 
                  
                 </td>
+                <td>@if(isset($coll_list[$key])) {{ $coll_list[$key]->type}} @endif</td>
                 <td>@if(isset($coll_list[$key])) {{ $coll_list[$key]->location}} @endif</td>
                 <td>@if(isset($coll_list[$key])) {{ $coll_list[$key]->zone}} @endif</td>
                   <td > 
