@@ -84,32 +84,36 @@
                     </div>
                     @endif
 
-                 <div class="row">
+                   <div class="row">
                     <div class='col-12 col-md-3'>
-                    <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >College Name</label>
-                    <input class="form-control" list="datalistColleges" name="c1" id="exampleDataList" placeholder="Type to search..."
-                    >
-                    <datalist id="datalistColleges">
-                       @foreach(colleges() as $d)
-                        <option value="{{$d->name}}">
-                      @endforeach
-                    </datalist>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="c1" >Listed College Name</label>
+                    <select class="form-control" name="c1">
+                    @foreach(colleges() as $d)
+                    <option value="{{$d->name}}"> {{$d->name}}</option>
+                    @endforeach
+                    </select>
                    
                     </div>
+
+                     <div class='col-12 col-md-3'>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="c3" >College Name (if Not in List)</label>
+                    <input class="form-control c8" name="c8" id="exampleDataList" placeholder="Enter college name if not listed" required
+                    >
+                    
+                   
+                    </div>
+
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c2" >Branch</label>
-                    <input class="form-control" list="datalistBranches" name="c2" id="exampleDataList" placeholder="Type to search..."
-                    >
-                    <datalist id="datalistBranches">
-                       @foreach(branches() as $d)
-                        <option value="{{$d}}">
-                      @endforeach
-                    </datalist>
-                   
+                    <select class="form-control" name="c2">
+                    @foreach(branches() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                     </div>
                     <div class='col-12 col-md-3'>
                     <label class="font-size-h6 font-weight-bolder text-dark" for="c3" >Year of Passing</label>
-                    <input class="form-control" list="datalistYOP" name="c3" id="exampleDataList" placeholder="Type to search..."
+                    <input class="form-control c3" list="datalistYOP" name="c3" id="exampleDataList" placeholder="Type to search..." required
                     >
                     <datalist id="datalistYOP">
                        @foreach(yop() as $d)
@@ -118,22 +122,23 @@
                     </datalist>
                    
                     </div>
+                    
+                </div>
+
+                 <div class="row my-2">
                     <div class='col-12 col-md-3'>
                         <label for="formGroupExampleInput " class="font-size-h6 font-weight-bolder text-dark">Any Backlogs? </label>
-                        <select class="form-control" name="settings_backlog">
+                        <select class="form-control" name="c4">
                           <option value="None" >None</option>
                           <option value="One"  >One</option>
                            <option value="One"  >Two</option>
                             <option value="One"  >Three or more</option>
                         </select>
                     </div>
-                </div>
-
-                 <div class="row my-2">
                    
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c4" >Current City</label>
-                        <input class="form-control" list="datalistCities" name="c4" id="exampleDataList" placeholder="Type to search..."
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >Current City</label>
+                        <input class="form-control" list="datalistCities" name="c5" id="exampleDataList" placeholder="Type to search..."
                         >
                         <datalist id="datalistCities">
                           @foreach(cities() as $d)
@@ -142,47 +147,27 @@
                         </datalist>
                     </div>
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c5" >District</label>
-                        <input class="form-control" list="datalistDistrict" name="c5" id="exampleDataList" placeholder="Type to search..."
-                        >
-                        <datalist id="datalistDistrict">
-                          @foreach(districts() as $d)
-                            <option value="{{$d}}">
-                          @endforeach
-                        </datalist>
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >District</label>
+                        <select class="form-control" name="c6">
+                    @foreach(districts() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                    
                     </div>
                     <div class='col-12 col-md-3'>
-                        <label class="font-size-h6 font-weight-bolder text-dark" for="c6" >State</label>
-                        <input class="form-control" list="datalistState" name="c6" id="exampleDataList" placeholder="Type to search..."
-                        >
-                        <datalist id="datalistState">
-                          @foreach(states() as $d)
-                            <option value="{{$d}}">
-                          @endforeach
-                        </datalist>
+                        <label class="font-size-h6 font-weight-bolder text-dark" for="c7" >State</label>
+                        <select class="form-control" name="c7">
+                    @foreach(states() as $d)
+                    <option value="{{$d}}"> {{$d}}</option>
+                    @endforeach
+                    </select>
                     </div>
-                </div>
-                 <div class="row my-2">
-                    <div class='col-12'>
-                    <label class="font-size-h6 font-weight-bolder text-dark" for="" >I already have a job offer?</label>
-                    <div class="form-check">           
-                        <input class=" mb-2" name="settings_joboffer[]" type="checkbox" value="YES" id="defaultCheck33">
-                        <label class="form-check-label mb-2" for="defaultCheck33">
-                            YES &nbsp;&nbsp;
-                        </label>
-                         <input class="" name="settings_joboffer[]" type="checkbox" value="NO" id="defaultCheck44"> 
-                        <label class="form-check-label" for="defaultCheck44">
-                            NO &nbsp;&nbsp;
-                        </label>
-                        
-                    </div>
-                </div>
                 </div>
 
                 <div class="row my-2">
                     <div class='col-12'>
-                    <label class="font-size-h6 font-weight-bolder text-dark"  >Career Plan</label>
+                    <label class="font-size-h6 font-weight-bolder text-dark" for="c7" >Career Plan</label>
                     <div class="form-check">           
                         <input class=" mb-2" name="settings_interests[]" type="checkbox" value="govtjob" id="defaultCheck1">
                         <label class="form-check-label mb-2" for="defaultCheck1">
@@ -196,7 +181,6 @@
                         <label class="form-check-label" for="defaultCheck3">
                             MS in US &nbsp;&nbsp;
                         </label> 
-                        <br class="d-block d-md-none"/>
                         <input class="" name="settings_interests[]" type="checkbox" value="mtech" id="defaultCheck4">
                         <label class="form-check-label" for="defaultCheck4">
                             MTECH &nbsp;&nbsp;
@@ -212,7 +196,6 @@
                     </div>
                 </div>
                 </div>
-
                     
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
