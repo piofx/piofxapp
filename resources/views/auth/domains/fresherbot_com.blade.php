@@ -33,29 +33,26 @@
                     </div>
                     
 
-
                     <div class="row">
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-12">
                             <div class="rounded mb-4 p-4" style="background: #d6edf7">
                              <!-- Email Address -->
                             <div class="">
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="email" :value="__('Email')">Email</label>
                                 <input id="email" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="off" />
-                                <small>Kindly enter valid email id for OTP verification</small><br>
-                                <button class="btn btn-outline-dark btn-sm mt-3 generate_otp">Generate OTP</button>
-                                 <div class="spinner-border spinner-border-sm ml-2 mt-1 otp_spinner" role="status" style="display: none;">
-  <span class="sr-only">Loading...</span>
-</div><br>
+                                <div class="mt-1"><small>Kindly enter valid email id for verification</small></div>
+                               
+                                 
                             </div>
                             </div>
 
                         </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-6 d-none">
                              <div class="rounded mb-4 p-4" style="background: #d6edf7">
                              <!-- Email Address -->
                             <div class="">
                                 <label class="font-size-h6 font-weight-bolder text-dark" for="otp" :value="__('OTP')">OTP Verification</label>
-                                <input id="otp" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="text" name="otp" value="{{ old('otp') }}" required autofocus autocomplete="off" />
+                                <input id="otp" class="form-control form-control-solid h-auto py-4 px-4 rounded-lg" type="text" name="otp" value="{{ $code }}" required autofocus autocomplete="off" />
                                     <small>Kindly check SPAM & Promotions folder for otp email</small><br>
                                 <button class="btn btn-outline-dark btn-sm mt-3 validate_otp" data-otp="{{$code}}">Validate OTP 
                                 </button><span class="text-dark ml-3 otp_success" style="display: none;"><i class="fa fa-check-circle text-dark"></i> Success</span>
@@ -64,6 +61,7 @@
                             
                         </div>
                     </div>
+
 
                    
                     @if(request()->get('password'))
