@@ -280,17 +280,7 @@
                 </div>
                 <!--------- End categories section----->
 
-                <!----- Tags section------>
-                <div class="my-5">
-                    <h3 class="font-weight-bold mb-3">Tags</h3>
-                    @foreach($tags as $kt=>$tag)
-                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
-                        @if($kt==6)
-                            @break
-                        @endif    
-                    @endforeach
-                </div>
-                <!----- End Tags Section------>
+                
 
                 <div class="my-5">
                     <h3 class="mb-3">Popular Posts</h3>
