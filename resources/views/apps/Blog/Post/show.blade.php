@@ -619,19 +619,7 @@
                 @endif
                 <!-- End Related Posts Section -->
 
-                <!----- Tags section------>
-                @if(!isset($settings->tag)) 
-                @if(!empty($tags) && sizeof($tags) > 0)
-                    <div class="mb-5">
-                        <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
-                        @foreach($tags as $tag)
-                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
-                        @endforeach
-                    </div>
-                @endif
-                @endif
-
-                <!----- End Tags Section------>
+                
 
                 <!-- Popular Posts -->
                 @if(!empty($popular) && sizeof($popular) > 0)
@@ -757,21 +745,7 @@
                 @endif
                 <!-- End Related Posts Section -->
 
-                <!----- Tags section------>
-                @if(!isset($settings->tag)) 
-                @if(!empty($tags) && sizeof($tags) > 0)
-                    <div class="mb-5">
-                        <h3 class="font-weight-bold mb-3">@if($settings->language == 'telugu') టాగ్లు @else Tags @endif</h3>
-                        @foreach($tags as $kt=>$tag)
-                        <a class="btn btn-sm btn-soft-dark py-1 px-2 mr-1 mb-2" href="{{ route('Tag.show', $tag->slug) }}">{{ $tag->name }}</a>
-                            @if($kt==6)
-                                @break
-                            @endif  
-                        @endforeach
-                    </div>
-                @endif
-                @endif
-                <!----- End Tags Section------>
+               
 
                 <!-- Popular Posts -->
                 @if(!empty($popular) && sizeof($popular) > 0)
