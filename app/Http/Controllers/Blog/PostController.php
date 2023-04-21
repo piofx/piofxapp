@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Mailer\MailSubscriber;
 use App\Models\Blog\Post as Obj;
 use App\Models\Blog\Category;
+use App\Models\Page\Page;
 use App\Models\Blog\Tag;
 use App\Models\Blog\BlogSettings;
 use App\Models\User;
@@ -557,6 +558,19 @@ class PostController extends Controller
             updateMetaImage($image);
         }
 
+        
+     
+        
+        $processcontent = Cache::get('processedContent_'.$obj->id);
+        if(!$processcontent){
+            $page = Page::where('client_id',request()->get('client.id'))->where('theme_id',request()->get('client.theme.id'))->where('slug','+')->first();
+            $obj->content = $page->processHtml($obj->content); 
+            Cache::forever('processedContent_'.$obj->id,$obj->content );
+        }else{
+            $obj->content  = $processcontent;
+        }
+        
+        //dd($obj->content);
         updateMetaUrl();
 
         //dd(request()->get('app.theme.prefix'));
@@ -623,6 +637,7 @@ class PostController extends Controller
     {
         // load the resource
         $obj = Obj::where('id',$id)->first();
+        Cache::forget('processedContent_'.$obj->id);
         // authorize the app
         $this->authorize('update', $obj);
 
@@ -724,6 +739,8 @@ class PostController extends Controller
         //
         $content = preg_replace('/font-family.+?;/', "", request()->get('content'));
         $content = preg_replace('/font-size.+?;/', "", $content);
+       
+
         request()->merge(['content'=>$content]);
 
         //update the resource

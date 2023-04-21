@@ -539,10 +539,16 @@ class Page extends Model
      *
      */
 
-    public function processHtml()
+    public function processHtml($blog=false)
     {
-        $content = $this->html;
-        $settings = json_decode($this->settings);
+        if($blog){
+            $content = $blog;
+            $settings = "{}";
+        }else{
+            $content = $this->html;
+            $settings = json_decode($this->settings);
+        }
+        
         $data = '';
 
         //dd($settings);
@@ -605,9 +611,15 @@ class Page extends Model
             
         } 
 
-        $content = $this->minifyHtml($content);
-        $this->html_minified = $content;
-        $this->save();
+       
+        if($blog){
+            return $content;
+        }else{
+            $content = $this->minifyHtml($content);
+            $this->html_minified = $content;
+            $this->save();
+        }
+        
     }
 
     /**

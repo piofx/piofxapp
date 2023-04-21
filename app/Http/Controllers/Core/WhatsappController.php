@@ -30,7 +30,11 @@ class WhatsappController extends Controller
 
     public function whatsapp(){
 
-        $objs = Obj::orderBy('id','desc')->paginate(10);
+        $client_id = request()->get('client.id');
+        if($client_id==12)
+            $objs = Obj::orderBy('id','desc')->paginate(10);
+        else
+            $objs = Obj::where('client_id',$client_id)->orderBy('id','desc')->paginate(10);
 
         $colleges = Obj::select('college')->get()->groupBy('college');
         $colls = Obj::select('college')->distinct()->pluck('college')->toArray();
@@ -81,6 +85,111 @@ class WhatsappController extends Controller
 
         return view('apps.Core.Whatsapp.whatsapp')
             ->with('app',$this)
+            ->with('objs',$objs)
+            ->with('colleges',$colleges)
+            ->with('zones',$new_zones)
+            ->with('coll_list',$coll_list)
+            ->with('componentName',$this->componentName);
+    }
+
+
+    public function zonedetails(){
+        //zones
+        // $data['Hyderabad'] = array('Kukatpally','Ameerpet','Hyderabad','Chevella','Dilshuknagar','Filmcity','Ibrahimpatnam','Kompally','Mehdipatnam','Narayanaguda','Sangareddy','Secunderabad','Shamshabad','Uppal-Ghatkesar','Nizamabad','Medak','Mahbubnagar','Nalgonda','Kurnool','Anantapur');
+        // $data['Vijayawada'] = array('Vijayawada');
+        // $data['Guntur'] = array('Guntur','Ongole');
+        // $data['Visakhapatnam'] = array('Visakhapatnam','Srikakulam','Vizianagaram');
+        // $data['Kakinada'] = array('Kakinada');
+        // $data['Warangal'] = array('Warangal','Karimnagar','Khammam');
+        // $data['Tirupati'] = array('Tirupati','Kadapa','Nellore');
+        $data['zones'] = array('Hyderabad','Vijayawada','Guntur','Visakhapatnam','Kakinada','Warangal','Tirupati');
+        $data['zone'] = array(
+            "Kukatpally"=>"Hyderabad",
+            "Ameerpet" =>"Hyderabad",
+            "Hyderabad"=>"Hyderabad",
+            "Chevella"=>"Hyderabad",
+            "Dilshuknagar"=>"Hyderabad",
+            "Filmcity"=>"Hyderabad",
+            "Ibrahimpatnam"=>"Hyderabad",
+            "Kompally"=>"Hyderabad",
+            "Mehdipatnam"=>"Hyderabad",
+            "Narayanaguda"=>"Hyderabad",
+            "Sangareddy"=>"Hyderabad",
+            "Secunderabad"=>"Hyderabad",
+            "Shamshabad"=>"Hyderabad",
+            "Uppal-Ghatkesar"=>"Hyderabad",
+            "Nizamabad"=>"Hyderabad",
+            "Medak"=>"Hyderabad",
+            "Mahbubnagar"=>"Hyderabad",
+            "Nalgonda"=>"Hyderabad",
+            "Kurnool"=>"Hyderabad",
+            "Anantapur"=>"Hyderabad",
+            "Vijayawada"=>"Vijayawada",
+            "Guntur"=>"Guntur",
+            "Ongole"=>"Guntur",
+            "Visakhapatnam"=>"Visakhapatnam",
+            "Srikakulam"=>"Visakhapatnam",
+            "Vizianagaram"=>"Visakhapatnam",
+            "Kakinada"=>"Kakinada",
+            "Warangal"=>"Warangal",
+            "Karimnagar"=>"Warangal",
+            "Khammam"=>"Warangal",
+            "Tirupati"=>"Tirupati",
+            "Kadapa"=>"Tirupati",
+            "Nellore"=>"Tirupati"
+        );
+        
+        $objs = Obj::orderBy('id','desc')->paginate(10);
+        $colleges = Obj::select('college')->get()->groupBy('college');
+        $colls = Obj::select('college')->distinct()->pluck('college')->toArray();
+        $colldata = College::whereIn('name',$colls)->get();
+        $zone = request()->get('zone');
+        if($zone)
+            $coll_list = College::where('zone',$zone)->get()->keyBy('name');
+        else
+            $coll_list = College::get()->keyBy('name');
+
+        $all_zones = $coll_list->unique('zone')->pluck('zone');
+        $zcolleges =array();
+        foreach($colldata as $college =>$d){
+            if(!isset($zones[$d->zone]) && $d->zone)
+                $zones[$d->zone] = 0;
+            if(isset($colleges[$d->name]) && $d->zone)
+                $zones[$d->zone] += count($colleges[$d->name]);
+            if($zone==$d->zone )
+                if(isset($colleges[$d->name]) && $d->name!='-Not in List-'){
+                    $zcolleges[$d->name] = $colleges[$d->name];
+                }
+        }
+
+        if(count($zcolleges)){
+            $colleges = $zcolleges;
+        }
+
+        if($zone){
+            $ycolleges = array();
+            foreach($coll_list as $c){
+                if(isset($colleges[$c->name]))
+                    $ycolleges[$c->name] = $colleges[$c->name];
+                else
+                    $ycolleges[$c->name] = [];
+            }
+            $colleges = $ycolleges;
+        }
+
+        $new_zones = [];
+        //$data['my_zones']=
+        foreach($all_zones as $k=>$az){
+            if(isset($zones[$az])){
+                $new_zones[$az] = $zones[$az];
+            }
+            else
+               $new_zones[$az]  =0; 
+        }
+
+        return view('apps.Core.Whatsapp.zonedetails')
+            ->with('app',$this)
+            ->with('data',$data)
             ->with('objs',$objs)
             ->with('colleges',$colleges)
             ->with('zones',$new_zones)

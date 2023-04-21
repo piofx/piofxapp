@@ -31,6 +31,8 @@ Route::get('/admin/email', [AdminController::class, 'sampletestemail'])
 //whatsapp messages
 Route::get('/admin/whatsapp', [WhatsappController::class, 'whatsapp'])
 		->middleware(['auth'])->name('whatsapp');
+Route::get('/admin/whatsapp/zonedetails', [WhatsappController::class, 'zonedetails'])
+		->middleware(['auth'])->name('zonedetails');
 Route::get('admin/whatsapp/webhook', [WhatsappController::class, 'webhookget']);
 Route::post('admin/whatsapp/webhook', [WhatsappController::class, 'webhookpost']);
 
