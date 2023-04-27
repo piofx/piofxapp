@@ -8,9 +8,9 @@
         <div class="row justify-content-lg-between @if($featured->count() > 0) {{ '' }} @else {{ 'mt-9 mt-md-10 mt-lg-8 ' }} @endif">
             <div class="col-12 col-lg-9">
 
-                <div class="mb-5 d-block d-lg-none" >
+                <div class="mb-5 d-block d-lg-none" id="search-block">
                     <!-- Search Form -->
-                    <form action="{{ route($app->module.'.search') }}" method="GET">
+                    <form action="{{ route($app->module.'.search') }}" method="GET" id="search">
                         <div class="input-group mb-3"> 
                             <input type="text" class="form-control input-text" placeholder="@if($settings->language == 'telugu') వెతకండి @else Search @endif..." name="query">
                             <div class="input-group-append">
