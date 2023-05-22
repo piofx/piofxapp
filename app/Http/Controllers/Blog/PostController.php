@@ -1098,6 +1098,33 @@ class PostController extends Controller
         }
     }
 
+    public function editorContent(Obj $obj){
+        
+        $slug = request()->get('slug');
+        $save = request()->get('save');
+        $alert = session()->get('alert');
+        if(!$slug)
+            abort('403');
+
+        $obj = $obj->where('slug',$slug)->first();
+        if($save){  
+            $obj->content = request()->get('content');
+            $alert = 'Blog post updated';
+            Cache::forget('processedContent_'.$obj->id);
+            $obj->save();
+
+        }
+
+
+        return view('apps.'.$this->app.'.'.$this->module.'.editor')
+                ->with('stub','Create')
+                ->with('obj',$obj)
+                ->with('editor',true)
+                ->with('pretty',true)
+                ->with('alert',$alert)
+                ->with('app',$this);
+    }
+
     
 }
 

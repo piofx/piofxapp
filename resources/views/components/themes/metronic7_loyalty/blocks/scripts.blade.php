@@ -94,6 +94,8 @@
            editor.onDidChangeModelContent(function (e) {
                document.getElementById('content_editor').value = editor.getModel().getValue();
             });
+           editor.getAction('editor.action.formatDocument').run();
+           editor.trigger("anyString", 'editor.action.formatDocument');
 
         }
 
@@ -113,6 +115,8 @@
         editor2.onDidChangeModelContent(function (e) {
             document.getElementById('content_editor2').value = editor2.getModel().getValue();
          });
+
+        editor2.getAction('editor.action.formatDocument').run();
 
 
         }

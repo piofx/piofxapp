@@ -88,6 +88,7 @@
                         <form action="{{ route($app->module.'.edit', $obj->slug) }}">
                             <button class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" type="submit"><i class="fas fa-edit m-0"></i></button> 
                         </form>
+                        <a href="{{ route('blog.editor')}}?slug={{$obj->slug}}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"><i class="fas fa-code m-0"></i></a>
                         @endcan
                         <!-- End Edit Button -->
 

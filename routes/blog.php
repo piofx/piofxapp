@@ -8,6 +8,8 @@ use App\Http\Controllers\Blog\BlogSettingsController;
 Route::get("/admin/blog/addContent", [PostController::class, 'addContent'])->middleware('auth');
 Route::get("/admin/blog/getContent", [PostController::class, 'getContent'])->middleware('auth');
 Route::get("/admin/blog/changeContent", [PostController::class, 'changeContent'])->middleware('auth');
+Route::get("/admin/blog/editorContent", [PostController::class, 'editorContent'])->middleware('auth');
+Route::post("/admin/blog/editorContent", [PostController::class, 'editorContent'])->middleware('auth')->name("blog.editor");
 
 // Settings
 Route::get("/admin/blog/settings", [BlogSettingsController::class, 'index'])->middleware('auth')->name("Settings.index");
