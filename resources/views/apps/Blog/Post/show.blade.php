@@ -139,7 +139,9 @@
                                                             $path = explode(".", $path[1]);
                                                             $path = $path[0];
                                                         @endphp
-                                                        @if(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
+                                                        @if($ext=='webp')
+                                                        <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
+                                                        @elseif(Storage::disk('s3')->exists('resized_images/'.$path.'_mobile.'.$ext))
                                                             <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url('resized_images/'.$path.'_mobile.'.$ext) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
                                                         @else
                                                             <img class="img-fluid rounded-lg rounded-3" src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{$post->title}} - {{request()->get('client.name')}}">
