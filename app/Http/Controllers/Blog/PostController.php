@@ -1110,6 +1110,8 @@ class PostController extends Controller
         if($save){  
             $obj->content = request()->get('content');
             $alert = 'Blog post updated';
+             // update all cache data
+            $obj->cacheRefresh();
             Cache::forget('processedContent_'.$obj->id);
             $obj->save();
 
