@@ -7,9 +7,9 @@
 			<table class="table table-bordered">
 			  <thead>
 			    <tr>
-			      <th scope="col">Sno</th>
+			      <th scope="col" >Sno</th>
 			      <th scope="col">Name</th>
-			      <th scope="col">Created</th>
+			      <th scope="col" >Created</th>
 			    </tr>
 			  </thead>
 
