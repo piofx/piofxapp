@@ -2,30 +2,30 @@
 
 <!--end::Global Config-->
 <!--begin::Global Theme Bundle(used by all pages)-->
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/plugins/global/plugins.bundle.js?v=7.0.5"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.5"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/scripts.bundle.js?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/plugins/global/plugins.bundle.js') }}?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/plugins/custom/prismjs/prismjs.bundle.js') }}?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/js/scripts.bundle.js') }}?v=7.0.5"></script>
 <!--end::Global Theme Bundle-->
 <!--begin::Page Vendors(used by this page)-->
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.5"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/plugins/custom/gmaps/gmaps.js?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/plugins/custom/gmaps/gmaps.js') }}?v=7.0.5"></script>
 <!--end::Page Vendors-->
 <!--begin::Page Scripts(used by this page)-->
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/widgets.js?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/js/pages/widgets.js') }}?v=7.0.5"></script>
 <!-- begin::highlight js-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <!-- end::highlight js-->
 
 <!--begin::Page Scripts(used by this page)-->
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/crud/file-upload/dropzonejs.js?v=7.2.3"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/crud/forms/widgets/select2.js?v=7.0.5"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/js/pages/crud/file-upload/dropzonejs.js') }}?v=7.2.3"></script>
+<script src="{{ asset('themes/metronic/js/pages/crud/forms/widgets/select2.js') }}?v=7.0.5"></script>
+<script src="{{ asset('themes/metronic/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}?v=7.0.5"></script>
 <!--end::Page Scripts-->
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/features/charts/apexcharts.js?v=7.0.5"></script>
-<!-- <script src="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/js/pages/widgets.js"></script> -->
+<script src="{{ asset('themes/metronic/js/pages/features/charts/apexcharts.js') }}?v=7.0.5"></script>
+<!-- <script src="{{ asset('themes/metronic/js/pages/widgets.js') }}"></script> -->
 
 
 <script src="{{  asset('js/codemirror/lib/codemirror.js') }}"></script>

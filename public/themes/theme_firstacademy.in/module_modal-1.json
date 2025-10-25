@@ -1,0 +1,16 @@
+{
+    "id": 159,
+    "name": "Modal 1",
+    "slug": "modal-1",
+    "html": "<div class=\"modal fade piofx_modal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\r\n    data-time=\"1000\">\r\n    <div class=\"modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable\">\r\n        <div class=\"modal-content px-5 bg-light\">\r\n            <div class=\"modal-body\"\r\n                style=\"background: url(..\/..\/assets\/img\/background_banner.jpg); background-position: center; background-size: cover;\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-6\">\r\n                        <img src=\"{{ &Onlineclass.svg}}\" class=\"img-fluid\">\r\n                    <\/div>\r\n                    <div class=\"col-6 d-flex align-items-center justify-content-end\">\r\n                        <div class=\"text-right\">\r\n                            <h3>Wanna assess yourself?<\/h3>\r\n                            <p>Take a Free IELTS Test<\/p>\r\n                            <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a>\r\n                        <\/div>\r\n                    <\/div>\r\n                <\/div>\r\n            <\/div>\r\n        <\/div>\r\n    <\/div>\r\n<\/div>",
+    "html_minified": "<div class=\"modal fade piofx_modal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-time=\"1000\"> <div class=\"modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable\"> <div class=\"modal-content px-5 bg-light\"> <div class=\"modal-body\" style=\"background: url(..\/..\/assets\/img\/background_banner.jpg); background-position: center; background-size: cover;\"> <div class=\"row\"> <div class=\"col-6\"> <img src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_Onlineclass.svg\" class=\"img-fluid\"> <\/div> <div class=\"col-6 d-flex align-items-center justify-content-end\"> <div class=\"text-right\"> <h3>Wanna assess yourself?<\/h3> <p>Take a Free IELTS Test<\/p> <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a> <\/div> <\/div> <\/div> <\/div> <\/div> <\/div><\/div>",
+    "settings": "null",
+    "admin": 0,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-09-06T10:39:16.000000Z",
+    "updated_at": "2022-01-28T06:07:55.000000Z"
+}

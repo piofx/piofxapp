@@ -1,0 +1,91 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Page 42</h3><h4>Understanding the Main Idea</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+
+            "3":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            },
+			
+			"7":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+			
+			"8":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+			
+			"9":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+			
+			"10":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            }
+        }
+
+    }
+}

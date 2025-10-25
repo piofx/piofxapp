@@ -1,0 +1,368 @@
+/* Body */
+
+
+html,
+body {
+    scroll-behaviour: smooth;
+    font-family: 'Merriweather', serif;
+    font-weight: 100;
+    color: #000;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Lato', sans-serif;
+}
+
+.b900 {
+    font-weight: 900;
+}
+
+.b800 {
+    font-weight: 800;
+}
+
+.chat-btn {
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    background: #75EBFF;
+    margin-right: 5px;
+    padding: 8px;
+    color: #000;
+}
+
+.chat-band {
+    background: #f2c618;
+    line-height: 0;
+}
+
+.footer-btn-left-padding {
+    margin-left: 0px;
+}
+
+.button {
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.band {
+    padding: 35px 0px 40px;
+}
+
+.bg-green {
+    background-color: #046252;
+    color: white;
+}
+
+.bg-light-green {
+    background-color: #eafafa;
+}
+
+.bg-dark-blue {
+    background-color: #21427d;
+}
+
+.bg-dark-blue-50 {
+    background: #29539b;
+}
+
+.bg-light-blue {
+    background-color: rgba(55, 125, 255, 0.1);
+}
+
+.alert-soft-primary,
+.bg-soft-primary {
+    color: #377dff;
+    background-color: rgba(55, 125, 255, 0.1);
+}
+
+
+.text-light {
+    opacity: 70%;
+}
+
+/* Navbar */
+.navbar-bg {
+    background-color: #21427d;
+    padding: 10px 8px;
+    color: white;
+}
+
+.navbar-nav .dropdown-menu {
+    position: static;
+    background: #fce043;
+
+}
+
+
+/* latest post */
+.latest-post {
+    padding: 5px 0px;
+    background-color: #a1d2f8;
+    margin-top: 59px;
+    font-family: 'Lato', sans-serif;
+}
+
+.latest-post-badge {
+    background-color: #0049D1;
+}
+
+.latest-post-link {
+    text-decoration: none;
+    color: #000;
+
+}
+
+/* Home page sections */
+.btn-soft-danger {
+    color: #ed4c78;
+    background-color: rgba(237, 76, 120, 0.1);
+    border-color: transparent;
+}
+
+.btn-soft-danger:hover {
+    color: white !important;
+    background-color: #ed4c78;
+    transform: translateY(-10%);
+}
+
+.btn-soft-success {
+    color: #049d83;
+    background-color: rgba(0, 201, 167, 0.1);
+    border-color: transparent;
+}
+
+.btn-soft-success:hover {
+    color: white !important;
+    background-color: #049d83;
+    transform: translateY(-10%);
+}
+
+.move1 {
+    transform: translateX(300%);
+}
+
+.move2 {
+    transform: translateX(200%);
+}
+
+.bg-soft-danger {
+    background-color: rgba(237, 76, 120, 0.1);
+    border-color: transparent;
+}
+
+.btn-danger {
+    background-color: #ed4c78;
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-10%);
+    background-color: #ed4c78;
+}
+
+.bg-soft-success {
+    background-color: rgba(0, 201, 167, 0.1);
+    border-color: transparent;
+}
+
+.btn-success {
+    background-color: #049d83;
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-10%);
+    background-color: #049d83;
+}
+
+.btn-soft-dark {
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: #1e2022;
+    background-color: rgba(30, 32, 34, 0.1);
+    border-color: transparent;
+}
+
+.btn-soft-dark:hover {
+    background-color: #000;
+    color: white;
+}
+
+.badge-soft-info {
+    color: #09a5be;
+    background-color: rgba(9, 165, 190, 0.1);
+    text-decoration: none;
+}
+
+.badge-soft-info:hover {
+    transition: ease-in;
+    color: #fff;
+    background-color: #377dff;
+}
+
+.px-lg-7 {
+    padding: 0 10%;
+}
+
+/* PTE Personalized */
+.move3 {
+    transform: translateX(130%);
+}
+
+/* Footer */
+.test-bar-btn {
+    float: right;
+}
+
+.test-bar-btn-one {
+    background-color: #1E3B6F;
+    color: #A1D2F8;
+    border-radius: 25px;
+}
+
+.test-bar-btn-two {
+    background-color: #A1D2F8;
+    color: #1E3B6F;
+    margin-right: 10px;
+    border-radius: 25px;
+}
+
+@media only screen and (max-width: 992px) {
+    .test-bar-btn {
+        float: left;
+    }
+
+    .test-bar-btn-two {
+        margin-left: 10px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .footer-btn-left-padding {
+        margin-left: 10px;
+    }
+
+    .move3 {
+        transform: translateX(100%);
+    }
+
+}
+
+@media only screen and (max-width: 576px) {
+
+    .band {
+        padding: 15px 0px 20px;
+    }
+
+
+}
+
+.btn-1 {
+    margin-top: 30px;
+    background-color: #edf2fc;
+    width: 130px;
+    height: 50px;
+    border-radius: 5px;
+    border-color: rgb(255, 5, 5);
+    border-width: 1px;
+    color: rgb(255, 5, 5);
+    font-weight: 600;
+}
+
+.btn-1:hover {
+    background-color: rgb(255, 90, 117);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-2 {
+    margin-top: 30px;
+    margin-left: 20px;
+    background-color: #edf2fc;
+    width: 130px;
+    height: 50px;
+    border-radius: 5px;
+    border-color: #00c9a7;
+    border-width: 1px;
+    color: #00c9a7;
+    font-weight: 600;
+}
+
+.btn-2:hover {
+    background-color: #00c9a7;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.bg-soft-danger {
+    background-color: rgba(237, 76, 120, 0.1);
+    border-radius: 5px;
+    text-align: center;
+
+
+}
+
+.btn-3:hover {
+    color: blue;
+    <<<<<<< HEAD transition: 0.3s ease;
+}
+
+.sec-4 {
+    background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+    padding-top: 10px;
+    background-size: 300%;
+    padding-inline: 5px;
+}
+
+.grid {
+    grid-column-gap: 20px;
+}
+
+#carouselExampleIndicators {
+    max-width: 350px;
+    /* Set the maximum width of the carousel */
+    margin: auto;
+    /* Center the carousel horizontally */
+}
+
+.carousel-item img {
+    max-height: 600px;
+    /* Set the maximum height of the image */
+    width: auto;
+    /* Set the width of the image to auto to maintain aspect ratio */
+}
+
+#carouselExampleCaptions {
+    max-width: 350px;
+    /* Set the maximum width of the carousel */
+    margin: auto;
+    /* Center the carousel horizontally */
+}
+
+.carousel-item img {
+    max-height: 600px;
+    /* Set the maximum height of the image */
+    width: auto;
+    /* Set the width of the image to auto to maintain aspect ratio */
+}
+
+.adjust {
+    padding: 20px;
+}
+
+=======transition: 0.3s ease;
+}
+
+.sec-4 {
+    background-color: rgba(55, 125, 255, 0.1);
+    height: 50px;
+    padding-top: 10px;
+}
+
+>>>>>>>fc446d77afb8e32d4d5e8d73c05bbc9627e86b78

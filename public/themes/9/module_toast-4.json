@@ -1,0 +1,16 @@
+{
+    "id": 166,
+    "name": "Toast 4",
+    "slug": "toast-4",
+    "html": "<div class=\"position-fixed bottom-0 left-0 p-3\" style=\"z-index: 5\">\n    <div id=\"liveToast\"\n        class=\"toast hide border-0 rounded-lg d-flex justify-content-center align-items-center shadow-lg\"\n        style=\"background: #fff6ce;\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\n        <div class=\"toast-body text-center\" style=\"min-width: 20rem;\">\n            <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\">&times;<\/button>\n            <div class=\"d-flex justify-content-center mb-5\"\n                style=\"background: url({{ &blob.svg }}); background-position: center; background-size: contain; background-repeat: no-repeat;\">\n                <img src=\"{{ &Online class.svg }}\" class=\"w-50\">\n            <\/div>\n            <h3>Wanna attend a <br> demo class?<\/h3>\n            <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a>\n        <\/div>\n    <\/div>\n<\/div>",
+    "html_minified": "<div class=\"position-fixed bottom-0 left-0 p-3\" style=\"z-index: 5\"> <div id=\"liveToast\" class=\"toast hide border-0 rounded-lg d-flex justify-content-center align-items-center shadow-lg\" style=\"background: #fff6ce;\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\"> <div class=\"toast-body text-center\" style=\"min-width: 20rem;\"> <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\">&times;<\/button> <div class=\"d-flex justify-content-center mb-5\" style=\"background: url(https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_blob.svg); background-position: center; background-size: contain; background-repeat: no-repeat;\"> <img src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_Online%20class.svg\" class=\"w-50\"> <\/div> <h3>Wanna attend a <br> demo class?<\/h3> <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a> <\/div> <\/div><\/div>",
+    "settings": "null",
+    "admin": 0,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-09-06T10:39:19.000000Z",
+    "updated_at": "2021-09-06T10:39:41.000000Z"
+}

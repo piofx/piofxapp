@@ -1,0 +1,204 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Passage 39</h3><h4>Non-Existent Figures</h4>",
+
+        "questions":{
+
+            "285":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "286":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+
+            "287":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+			
+			"288":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+         
+    "set2":{
+
+        "heading":"<h3>Passage 40</h3><h4>Great Pyramids</h4>",
+
+        "questions":{
+
+            "289":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+
+            "290":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "291":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+			
+			"292":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "293":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            }
+		}
+    },      
+    
+	"set3":{
+
+        "heading":"<h3>Passage 41</h3><h4>Honour</h4>",
+
+        "questions":{
+
+            "294":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+
+            "295":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+
+            }
+		}
+	},                
+	
+	"set4":{
+
+        "heading":"<h3>Passage 42</h3><h4>Selfie Syndrome</h4>",
+
+        "questions":{
+
+            "296":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "297":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "298":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+			
+			"299":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            }
+
+       	}
+	},
+	
+    "set5":{
+
+        "heading":"<h3>Passage 43</h3><h4>Religious Students</h4>",
+
+        "questions":{
+
+            "300":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "301":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "302":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+			
+			"303":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "304":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+			}
+		}
+	}
+}

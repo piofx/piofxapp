@@ -297,6 +297,24 @@ class PageController extends Controller
             if(isset($obj->redirected))
                 return redirect($obj->redirected);
             $obj->loadRequestParamsInSession();
+
+            // Replace AWS S3 URLs with relative paths
+            if($obj->html_minified){
+                // Remove S3 URLs - keep relative paths like themes/53/file_aos.js
+                $obj->html_minified = preg_replace(
+                    '/https:\/\/[a-z0-9\-]+\.s3\.[a-z0-9\-]+\.amazonaws\.com\//',
+                    '',
+                    $obj->html_minified
+                );
+            }
+            if($obj->html){
+                // Remove S3 URLs - keep relative paths like themes/53/file_aos.js
+                $obj->html = preg_replace(
+                    '/https:\/\/[a-z0-9\-]+\.s3\.[a-z0-9\-]+\.amazonaws\.com\//',
+                    '',
+                    $obj->html
+                );
+            }
         }
 
         // update layout

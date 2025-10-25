@@ -1,0 +1,97 @@
+{
+    "set1":{
+        "heading":"<h1>Test 1 - Passage 1</h1><h3>The Dodo</h3><h4>Questions 1 - 5</h4>",
+        "questions":{
+            "1":{
+                "question":"There were thousands of bird species in Mauritius.",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+            },
+            "2":{
+                "question":"Invasive species were solely responsible for the extinction of the dodo.",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+            },
+            "3":{
+                "question":"No other bird species is as close to the dodo as the Nicobar pigeon.",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+            "4":{
+                "question":"It is proven that the Nicobar pigeon can lay dodo eggs.",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"b",
+                "type":"mcq"
+            },
+            "5":{
+                "question":"Scientists expect to face some minor challenges while recreating dodo DNA.",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"b",
+                "type":"mcq"
+            }
+        }
+    },
+    "set2":{
+        "heading":"<h4>Questions 6-9</h4><p>Follow the instructions given in the book.</p>",
+        "questions":{
+            "6":{
+                "question":"There are things other than the genome",
+                "answer":"d",
+                "type":"fillup"
+            },
+            "7":{
+                "question":"Recurrent editing with the aid of",
+                "answer":"a",
+                "type":"fillup"
+            },
+            "8":{
+                "question":"Once the scientistis have a dodo egg",
+                "answer":"b",
+                "type":"fillup"
+            },
+            "9":{
+                "question":"The dodo might have nursed the chicks the same way as today's pigeons but",
+                "answer":"c",
+                "type":"fillup"
+            }
+        }
+    },
+    "set3":{
+        "heading":"<h4>Questions 10-14</h4><p>Follow the instructions given in the book.<p>",
+        "questions":{
+            "10":{
+                "answer":"infancy",
+                "type":"fillup"
+            },
+            "11":{
+                "answer":"questions",
+                "type":"fillup"
+            },
+            "12":{
+                "answer":"point",
+                "type":"fillup"
+            },
+            "13":{
+                "answer":"ecosystem",
+                "type":"fillup"
+            },
+            "14":{
+                "answer":"conservation",
+                "type":"fillup"
+            }
+        }
+    }
+}

@@ -8,7 +8,7 @@
 		<meta name="description" content="Page with empty content" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		@include('components.themes.metronic7_loyalty.blocks.styles')
-		<link href="https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/css/pages/login/login-1.css?v=7.0.5" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('themes/metronic/css/pages/login/login-1.css') }}?v=7.0.5" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="{{ asset('favicon_piofx.ico') }}" />
 	</head>
 	<!--end::Head-->
@@ -31,7 +31,7 @@
 					</div>
 					<!--end::Aside Top-->
 					<!--begin::Aside Bottom-->
-					<div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center" style="background-image: url(https://piofx.s3.ap-south-1.amazonaws.com/themes/metronic/media/svg/illustrations/login-visual-5.svg)"></div>
+					<div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center" style="background-image: url({{ asset('themes/metronic/media/svg/illustrations/login-visual-5.svg') }})"></div>
 					<!--end::Aside Bottom-->
 				</div>
 				<!--begin::Aside-->

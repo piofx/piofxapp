@@ -1,0 +1,448 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Passage 11</h3><h4>The New Forest</h4>",
+
+        "questions":{
+
+            "59":{
+
+                "answer":"a royal forest",
+
+                "type":"fillup"
+
+            },
+
+            "60":{
+
+                "answer":"forest law",
+
+                "type":"fillup"
+
+            },
+
+            "61":{
+
+                "answer":"harsh restrictions",
+
+                "type":"fillup"
+
+            },
+			
+			"62":{
+
+                "answer":"breaking the laws/breaking laws",
+
+                "type":"fillup"
+
+            },
+			
+			"63":{
+
+                "answer":"halted",
+
+                "type":"fillup"
+
+            },
+			
+			"64":{
+
+                "answer":"traditional rights",
+
+                "type":"fillup"
+
+            },
+			
+			"65":{
+
+                "answer":"first written",
+
+                "type":"fillup"
+
+            },
+			
+			"66":{
+
+                "answer":"taken for granted",
+
+                "type":"fillup"
+
+            }
+        }
+
+    },
+	
+	"set2":{
+
+        "heading":"<h3>Passage 12</h3><h4>A Cuban Holiday</h4>",
+
+        "questions":{
+
+            "67":{
+
+                "answer":"wave/new wave",
+
+                "type":"fillup"
+
+            },
+
+            "68":{
+
+                "answer":"restrictions",
+
+                "type":"fillup"
+
+            },
+
+            "69":{
+
+                "answer":"worried",
+
+                "type":"fillup"
+
+            },
+			
+			"70":{
+
+                "answer":"exploring",
+
+                "type":"fillup"
+
+            },
+			
+			"71":{
+
+                "answer":"responsible",
+
+                "type":"fillup"
+
+            },
+			
+			"72":{
+
+                "answer":"fear",
+
+                "type":"fillup"
+
+            },
+			
+			"73":{
+
+                "answer":"dangerous and unstable/dangerous/unstable/unstable and dangerous",
+
+                "type":"fillup"
+
+            },
+			
+			"74":{
+
+                "answer":"warning",
+
+                "type":"fillup"
+            },
+
+            "75":{
+
+                "answer":"halted",
+
+                "type":"fillup"
+            },
+			
+			"76":{
+
+                "answer":"predict",
+
+                "type":"fillup"
+
+            },
+			
+			"77":{
+
+                "answer":"hopeful",
+
+                "type":"fillup"
+            }
+        }
+
+    },
+
+        "set3":{
+
+        "heading":"<h3>Passage 13</h3><h4>World War II</h4>",
+
+        "questions":{
+
+            "78":{
+
+                "answer":"locations",
+
+                "type":"fillup"
+
+            },  
+            "79":{
+
+                "answer":"expected",
+
+                "type":"fillup"
+            },
+
+            "80":{
+
+                "answer":"rested",
+
+                "type":"fillup"
+            },
+			
+			"81":{
+
+                "answer":"titled",
+
+                "type":"fillup"
+
+            },
+			
+			"82":{
+
+                "answer":"deceiving",
+				
+				"type":"fillup"
+
+            },
+			
+			"83":{
+
+                "answer":"invasion",
+
+                "type":"fillup"
+            },
+
+                        "84":{
+
+                "answer":"fooled",
+
+                "type":"fillup"
+            },
+			
+			"85":{
+
+                "answer":"diversion",
+
+                "type":"fillup"
+
+            },
+			
+			"86":{
+
+                "answer":"close",
+
+                "type":"fillup"               
+            }
+        }
+
+    },
+        "set4":{
+
+        "heading":"<h3>Passage 14</h3><h4>Awkwardness</h4>",
+
+        "questions":{
+
+            "87":{
+
+                "answer":"their brains function differently",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "88":{
+
+                "answer":"keeping groups together/keeping out threats",
+
+                "type":"fillup"
+            },
+
+            "89":{
+
+                "answer":"socially ostracised/ostracised/alientated/socially ostracized/ostracized",
+
+                "type":"fillup"
+            },
+			
+			"90":{
+
+                "answer":"important information/how others feel/how others are feeling/how others might feel",
+
+                "type":"fillup"
+
+            },
+			
+			"91":{
+
+                "answer":"obsessive interests and talents/obssessive interests/obsessive talents",
+
+				"type":"fillup"
+            },
+			
+			"92":{
+
+                "answer":"social routines",
+
+                "type":"fillup"
+            },
+			"93":{
+
+                "answer":"stories about human behaviour/stories about human behavior",
+
+                "type":"fillup"
+            }
+		}
+	},
+	
+	"set5":{
+
+        "heading":"<h3>Passage 15</h3><h4>Criticism</h4>",
+
+        "questions":{
+
+            "94":{
+
+                "answer":"uncomfortable",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "95":{
+
+                "answer":"intention",
+
+                "type":"fillup"
+            },
+
+            "96":{
+
+                "answer":"encounter",
+
+                "type":"fillup"
+            },
+			
+			"97":{
+
+                "answer":"difficult",
+
+                "type":"fillup"
+
+            },
+			
+			"98":{
+
+                "answer":"heart",
+				
+				"type":"fillup"
+
+            },
+			
+			"99":{
+
+                "answer":"celebrate",
+
+                "type":"fillup"
+            },
+			
+			"100":{
+
+                "answer":"termed",
+
+                "type":"fillup"
+            },
+			
+			"101":{
+
+                "answer":"irrelevant",
+
+                "type":"fillup"
+            },
+			
+			"102":{
+
+                "answer":"showing",
+
+                "type":"fillup"
+            },
+			
+			"103":{
+
+                "answer":"like minded/like-minded",
+
+                "type":"fillup"
+            },
+			
+			"104":{
+
+                "answer":"dumb and happy/dumb",
+
+                "type":"fillup"
+            }
+		}
+	},
+	
+	"set6":{
+
+        "heading":"<h3>Passage 16</h3><h4>Transplant</h4>",
+
+        "questions":{
+
+            "105":{
+
+                "answer":"star",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "106":{
+
+                "answer":"drug regimen",
+
+                "type":"fillup"
+            },
+
+            "107":{
+
+                "answer":"immune suppressing cocktail/immune-suppressing cocktail",
+
+                "type":"fillup"
+            },
+			
+			"108":{
+
+                "answer":"survival rates",
+
+                "type":"fillup"
+
+            },
+			
+			"109":{
+
+                "answer":"animal",
+
+				"type":"fillup"
+            },
+			
+			"110":{
+
+                "answer":"artificial",
+
+                "type":"fillup"
+            },
+			
+			"111":{
+
+                "answer":"eliminate",
+
+                "type":"fillup"
+            }
+		}
+	}
+}

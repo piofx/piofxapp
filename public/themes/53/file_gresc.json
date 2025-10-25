@@ -1,0 +1,359 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Page 49</h3><h4>For multiple blanks, separate answers with a space. Do not use commans or any other punctuation.</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"definite in",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"ubiquitous obligatory",
+
+                "type":"fillup"
+
+            },
+
+            "3":{
+
+                "answer":"beneficial control over",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"retire from",
+
+                "type":"fillup"
+
+            }
+        }
+
+    },
+	
+	"set2":{
+
+        "heading":"<h3>Page 50</h3><h4></h4>",
+
+        "questions":{
+
+            "5":{
+
+                "answer":"restrict suspension",
+
+                "type":"fillup"
+
+            },
+
+            "6":{
+
+                "answer":"different disconnected",
+
+                "type":"fillup"
+
+            },
+
+            "7":{
+
+                "answer":"neglected in unlikely",
+
+                "type":"fillup"
+
+            },
+			
+			"8":{
+
+                "answer":"restrained",
+
+                "type":"fillup"
+
+            },
+			
+			"9":{
+
+                "answer":"habituated to disregard",
+
+                "type":"fillup"
+
+            }
+        }
+
+    },
+
+        "set3":{
+
+        "heading":"<h3>Page 51</h3><h4></h4>",
+
+        "questions":{
+
+            "10":{
+
+                "answer":"loyal wisdom",
+
+                "type":"fillup"
+
+            },  
+            "11":{
+
+                "answer":"comparable absent",
+
+                "type":"fillup"
+            },
+
+            "12":{
+
+                "answer":"regrettable harming",
+
+                "type":"fillup"
+            },
+			
+			"13":{
+
+                "answer":"adventurous",
+
+                "type":"fillup"
+
+            },
+			
+			"14":{
+
+                "answer":"inspired innovative",
+				
+				"type":"fillup"
+
+            }
+        }
+
+    },
+        "set4":{
+
+        "heading":"<h3>Page 52</h3><h4></h4>",
+
+        "questions":{
+
+            "15":{
+
+                "answer":"empiricism preconceptions",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "16":{
+
+                "answer":"original emulate",
+
+                "type":"fillup"
+            },
+
+            "17":{
+
+                "answer":"cherished rejected",
+
+                "type":"fillup"
+            },
+			
+			"18":{
+
+                "answer":"counterproductive resistant",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+	
+	"set5":{
+
+        "heading":"<h3>Pages 53 and 54</h3><h4></h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"invectives diatribes",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"fashion singularity",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"garish resplendent",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"prosaic vapid",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"ominous menacing",
+				
+				"type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"ameliorating augmenting",
+
+                "type":"fillup"
+            }
+		}
+	},
+	
+	"set6":{
+
+        "heading":"<h3>Pages 55 and 56</h3><h4></h4>",
+
+        "questions":{
+
+            "7":{
+
+                "answer":"fitfully intermittently",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "8":{
+
+                "answer":"feisty pugnacious",
+
+                "type":"fillup"
+            },
+
+            "9":{
+
+                "answer":"alacrity swiftness",
+
+                "type":"fillup"
+            },
+			
+			"10":{
+
+                "answer":"autocratic despotic",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+	
+	"set7":{
+
+        "heading":"<h3>Pages 56 and 57</h3><h4>Use space to separate answer choices.</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"propitious a clandestine prominence",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"antipathy amalgamate",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"gratifying emotion a liability",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"quest celestial astronomical",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"fault",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+		
+		
+	"set8":{
+
+        "heading":"<h3>Pages 58 and 59</h3><h4>Use space to separate answer choices.</h4>",
+
+        "questions":{
+
+            "6":{
+
+                "answer":"beset innovation ancient",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "7":{
+
+                "answer":"neologisms indispensable obstinate",
+
+                "type":"fillup"
+            },
+
+            "8":{
+
+                "answer":"innocuous deleterious label",
+
+                "type":"fillup"
+            },
+			
+			"9":{
+
+                "answer":"a lucid an investigation prominence",
+
+                "type":"fillup"
+
+            },
+			
+			"10":{
+
+                "answer":"antagonistic metaphorical renewal",
+
+                "type":"fillup"
+
+            }
+		}
+	}
+}

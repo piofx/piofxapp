@@ -1,0 +1,554 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Passage 17</h3><h4>The Ruling Reptiles of Pre history</h4>",
+
+        "questions":{
+
+            "112":{
+
+                "answer":"Coelophysis",
+
+                "type":"fillup"
+
+            },
+
+            "113":{
+
+                "answer":"Brachiosaurus",
+
+                "type":"fillup"
+
+            },
+
+            "114":{
+
+                "answer":"Stegosaurus",
+
+                "type":"fillup"
+
+            },
+			
+			"115":{
+
+                "answer":"Tyrannosaurus",
+
+                "type":"fillup"
+
+            },
+
+            "116":{
+
+                "answer":"Ankylosaurus",
+
+                "type":"fillup"
+
+            },
+
+            "117":{
+
+                "answer":"Diplodocus",
+
+                "type":"fillup"
+
+            },
+			
+			"118":{
+
+                "answer":"Hadrosaurus",
+
+                "type":"fillup"
+
+            },
+
+            "119":{
+
+                "answer":"Camptosaurus",
+
+                "type":"fillup"
+
+            }
+			
+		}
+	},
+			
+    "set2":{
+
+        "heading":"<h3>Passage 18</h3><h4>Arthropod Exoskeleton</h4>",
+
+        "questions":{
+
+            "120":{
+
+                "answer":"Basement Membrane",
+
+                "type":"fillup"
+
+            },
+
+            "121":{
+
+                "answer":"Epidermis",
+
+                "type":"fillup"
+
+            },
+
+            "122":{
+
+                "answer":"Procuticle",
+
+                "type":"fillup"
+
+            },
+			
+			"123":{
+
+                "answer":"Exocuticle",
+
+                "type":"fillup"
+
+            },
+
+            "124":{
+
+                "answer":"Endocuticle",
+
+                "type":"fillup"
+
+            },
+
+            "125":{
+
+                "answer":"Epicuticle",
+
+                "type":"fillup"
+
+            },
+			
+			"126":{
+
+                "answer":"Dermal Gland",
+
+                "type":"fillup"
+
+            },
+
+            "127":{
+
+                "answer":"Gland Duct",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+
+    "set3":{
+
+        "heading":"<h3>Passage 19 & 20</h3><h4>Fire Sprinkler</h4>",
+
+        "questions":{
+
+            "128":{
+
+                "answer":"Plug",
+
+                "type":"fillup"
+
+            },
+
+            "129":{
+
+                "answer":"Brass Washer",
+
+                "type":"fillup"
+
+            },
+
+            "130":{
+
+                "answer":"Glass Bulb",
+
+                "type":"fillup"
+
+            },
+			
+			"131":{
+
+                "answer":"Deflector",
+
+                "type":"fillup"
+
+            },
+
+            "132":{
+
+                "answer":"Water Pipe",
+
+                "type":"fillup"
+
+            },
+
+            "133":{
+
+                "answer":"Metal Arms",
+
+                "type":"fillup"
+
+            },
+			
+			"134":{
+
+                "answer":"Wood's Metal/Metal Piece",
+
+                "type":"fillup"
+
+            },
+
+            "135":{
+
+                "answer":"Deflector",
+
+                "type":"fillup"
+
+            },
+
+            "136":{
+
+                "answer":"Fire",
+
+                "type":"fillup"
+
+            },
+
+            "137":{
+
+                "answer":"Hot Gases/Gases",
+
+                "type":"fillup"
+
+            },
+			
+	    "138":{
+
+                "answer":"Open arms/Arms open/Springs open",
+
+                "type":"fillup"
+
+            },
+	
+		"139":{
+
+                "answer":"Water spray/Spray",
+
+                "type":"fillup"
+
+            },
+
+		"140":{
+
+                "answer":"Closed Sprinkler",
+
+                "type":"fillup"
+
+            }
+		}
+	},                
+	
+	"set4":{
+
+        "heading":"<h3>Passage 21</h3><h4>Active building walls</h4>",
+
+        "questions":{
+
+            "141":{
+
+                "answer":"Photovoltalic system",
+
+                "type":"fillup"
+
+            },
+
+            "142":{
+
+                "answer":"Air flow",
+
+                "type":"fillup"
+
+            },
+
+            "143":{
+
+                "answer":"External Heat-Sink",
+
+                "type":"fillup"
+
+            },
+			
+			"144":{
+
+                "answer":"Thermoelectric cooler",
+
+                "type":"fillup"
+
+            },
+
+            "145":{
+
+                "answer":"Internal Heat-Sink",
+
+                "type":"fillup"
+
+            },
+
+            "146":{
+
+                "answer":"Heat-Dissipation zone",
+
+                "type":"fillup"
+
+            },
+			
+			"147":{
+
+                "answer":"Thermal Mass",
+
+                "type":"fillup"
+
+            },
+
+            "148":{
+
+                "answer":"Thermal Insulation",
+
+                "type":"fillup"
+			}
+		}
+	},            
+    
+	"set5":{
+
+        "heading":"<h3>Passage 22</h3><h4>Home Away</h4>",
+
+        "questions":{
+
+            "149":{
+
+                "answer":"Maintenance/beautiful maintenance",
+
+                "type":"fillup"
+
+            },
+
+            "150":{
+
+                "answer":"3 bedrooms",
+
+                "type":"fillup"
+
+            },
+
+            "151":{
+
+                "answer":"5 people",
+
+                "type":"fillup"
+
+            },
+			
+			"152":{
+
+                "answer":"A beach",
+
+                "type":"fillup"
+
+            },
+
+            "153":{
+
+                "answer":"Peak season",
+
+                "type":"fillup"
+
+            },
+
+            "154":{
+
+                "answer":"Shopping centre",
+
+                "type":"fillup"
+
+            }
+		}
+	},            
+
+	"set6":{
+
+        "heading":"<h3>Passage 23</h3><h4>Deadly Animals</h4>",
+
+        "questions":{
+
+            "155":{
+
+                "answer":"Australia",
+
+                "type":"fillup"
+
+            },
+
+            "156":{
+
+                "answer":"Reptile",
+
+                "type":"fillup"
+
+            },
+
+            "157":{
+
+                "answer":"Small",
+
+                "type":"fillup"
+
+            },
+			
+			"158":{
+
+                "answer":"5/five",
+
+                "type":"fillup"
+
+             },
+
+            "159":{
+
+                "answer":"Aggressive",
+
+                "type":"fillup"
+
+            },
+
+            "160":{
+
+                "answer":"Potent",
+
+                "type":"fillup"
+
+            },
+			
+			"161":{
+
+                "answer":"Strikes",
+
+                "type":"fillup"
+
+            },
+
+            "162":{
+
+                "answer":"extremely lethal/lethal",
+
+                "type":"fillup"
+
+            },
+
+            "163":{
+
+                "answer":"septic",
+
+                "type":"fillup"
+
+            },
+
+            "164":{
+
+                "answer":"isolated",
+
+                "type":"fillup"
+
+            }
+		}
+	},            
+
+	"set7":{
+
+        "heading":"<h3>Passage 24</h3><h4>Sewing a Button</h4>",
+
+        "questions":{
+
+            "165":{
+
+                "answer":"Knot",
+
+                "type":"fillup"
+
+            },
+
+            "166":{
+
+                "answer":"outside",
+
+                "type":"fillup"
+
+            },
+
+            "167":{
+
+                "answer":"Alternate stitches/stitches",
+
+                "type":"fillup"
+
+            },
+			
+			"168":{
+
+                "answer":"tight shank/shank",
+
+                "type":"fillup"
+
+            },
+
+            "169":{
+
+                "answer":"fit",
+
+                "type":"fillup"
+
+            },
+
+            "170":{
+
+                "answer":"between",
+
+                "type":"fillup"
+
+            },
+			
+			"171":{
+
+                "answer":"wind",
+
+                "type":"fillup"
+
+            },
+
+            "172":{
+
+                "answer":"coming loose",
+
+                "type":"fillup"
+
+            },
+
+            "173":{
+
+                "answer":"knot",
+
+                "type":"fillup"
+
+            }
+		}
+	}
+}

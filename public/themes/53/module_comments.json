@@ -1,0 +1,16 @@
+{
+    "id": 256,
+    "name": "Comments",
+    "slug": "comments",
+    "html": "<div id=\"disqus_thread\"><\/div>\r\n<script>\r\n   \r\n    (function() { \r\n    var d = document, s = d.createElement('script');\r\n    s.src = 'https:\/\/firstacademy.disqus.com\/embed.js';\r\n    s.setAttribute('data-timestamp', +new Date());\r\n    (d.head || d.body).appendChild(s);\r\n    })();\r\n<\/script>",
+    "html_minified": "<div id=\"disqus_thread\"><\/div><script> (function() { var d = document, s = d.createElement('script'); s.src = 'https:\/\/firstacademy.disqus.com\/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();<\/script>",
+    "settings": null,
+    "admin": 1,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2022-05-02T16:34:12.000000Z",
+    "updated_at": "2022-05-02T16:42:41.000000Z"
+}

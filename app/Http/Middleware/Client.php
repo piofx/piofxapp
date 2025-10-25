@@ -24,6 +24,18 @@ class Client
         // get the domain name
         $domain = request()->getHttpHost();
 
+        // Map localhost domains to actual client domains for local development
+        $localDomainMap = [
+            '127.0.0.1:8000' => 'firstacademy.in',
+            '127.0.0.1:8001' => 'firstacademy.in',
+            'localhost:8000' => 'firstacademy.in',
+            'localhost:8001' => 'firstacademy.in',
+        ];
+
+        if(isset($localDomainMap[$domain])){
+            $domain = $localDomainMap[$domain];
+        }
+
         // refresh the cache
         if($request->get('refresh')){
             Cache::forget('client_'.$domain);

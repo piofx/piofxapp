@@ -1,0 +1,16 @@
+{
+    "id": 199,
+    "name": "Contact",
+    "slug": "contact",
+    "html": "<!-- Fixed-contact -->\r\n<!-- <div class=\"container\">\r\n    <div class=\"position-fixed fixed-bottom\"> \r\n        <div class=\"text-white py-1 text-center d-block d-lg-flex justify-content-center align-items-center\" style=\"background:linear-gradient(to bottom, #f2c618 0%, #f2c618 100%); line-height: 0;\">  \r\n            <div class=\"d-flex justify-content-center align-items-center px-5\"> \r\n            <button class=\"btn btn-dark mr-5 mr-md-0 p-0 py-1 px-3 px-md-4\">\r\n                <a href=\"tel:+919866688666\"  target=\"_blank\" class=\"text-white\"><i class=\"bi bi-telephone d-none d-md-inline-block pr-3\" style=\"font-size:20px\"><\/i>Call us<\/a><\/button>\r\n                <p class=\"text-dark text-wrap m-0 p-0 p-md-3 d-none d-md-block\">Talk to us! We would love to hear from you!<\/p> \r\n                <button class=\"btn btn-dark p-0 py-1 px-3 px-md-4\">\r\n                <a href=\"https:\/\/wa.me\/+919866688666\" target=\"_blank\" class=\"text-white\"><i class=\"bi bi-whatsapp d-none d-md-inline-block pr-3\" style=\"font-size:20px\"><\/i>Chat with us<\/a><\/button>\r\n            <\/div> \r\n        <\/div> \r\n    <\/div>\r\n<\/div> -->",
+    "html_minified": "",
+    "settings": null,
+    "admin": 1,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-10-09T07:22:12.000000Z",
+    "updated_at": "2021-11-12T09:02:01.000000Z"
+}

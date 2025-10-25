@@ -1,0 +1,618 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Page 63</h3><h4>Exercise 1</h4><h5>Enter the correct answer</h5>",
+
+        "questions":{
+
+            "0":{
+
+                "answer":"d/observed",
+
+                "type":"fillup"
+
+            },
+
+            "1":{
+
+                "answer":"b/classified",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"c/misconceptions",
+
+                "type":"fillup"
+
+            },
+			
+			"3":{
+
+                "answer":"a/put",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"d/friction",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"a/support",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"c/essence",
+
+                "type":"fillup"
+
+            },
+			
+			"7":{
+
+                "answer":"d/crippling",
+
+                "type":"fillup"
+
+            },
+			
+			"8":{
+
+                "answer":"b/concur",
+
+                "type":"fillup"
+
+            }
+        }
+
+    },
+	
+	"set2":{
+
+        "heading":"<h3>Page 64</h3><h4>Exercise 2</h4>",
+
+        "questions":{
+
+            "0":{
+
+                "answer":"b/gurus",
+
+                "type":"fillup"
+
+            },
+
+            "1":{
+
+                "answer":"c/deadly",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"a/stern",
+
+                "type":"fillup"
+
+            },
+			
+			"3":{
+
+                "answer":"d/extending",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"c/to",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"b/keep",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"a/blown",
+
+                "type":"fillup"
+
+            },
+			
+			"7":{
+
+                "answer":"c/stream",
+
+                "type":"fillup"
+            },
+
+            "8":{
+
+                "answer":"d/cumulative",
+
+                "type":"fillup"
+            }
+        }
+
+    },
+
+    "set3":{
+
+        "heading":"<h3>Exercise Set - Pg 65</h3><h4>Set 1</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"a/cost",
+
+                "type":"fillup"
+
+            },
+			
+            "2":{
+
+                "answer":"d/set",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"c/suit",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"b/sensitive",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"a/however",
+				
+				"type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"a/come",
+
+                "type":"fillup"
+            },
+
+            "7":{
+
+                "answer":"c/sigh",
+
+                "type":"fillup"
+            },
+			
+			"8":{
+
+                "answer":"c/times",
+
+                "type":"fillup"
+
+            },
+			
+			"9":{
+
+                "answer":"a/bore",
+
+                "type":"fillup"               
+            },
+			
+			"10":{
+
+                "answer":"b/fell",
+
+                "type":"fillup"               
+            },
+			
+			"11":{
+
+                "answer":"b/arouse",
+
+                "type":"fillup"               
+            },
+			
+			"12":{
+
+                "answer":"d/sight",
+
+                "type":"fillup"               
+            }
+			
+        }
+
+    },
+    
+    "set4":{
+
+        "heading":"<h3>Exercise Set - Pg 66</h3><h4>Set 2</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"b/flair",
+
+                "type":"fillup"
+
+            },
+			
+            "2":{
+
+                "answer":"a/crave",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"d/plain",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"c/convert",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"b/make",
+				
+				"type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"d/way",
+
+                "type":"fillup"
+            },
+
+            "7":{
+
+                "answer":"d/bulk",
+
+                "type":"fillup"
+            },
+			
+			"8":{
+
+                "answer":"c/matter",
+
+                "type":"fillup"
+
+            },
+			
+			"9":{
+
+                "answer":"a/extinct",
+
+                "type":"fillup"               
+            },
+			
+			"10":{
+
+                "answer":"d/take",
+
+                "type":"fillup"               
+            },
+			
+			"11":{
+
+                "answer":"a/subject",
+
+                "type":"fillup"               
+            },
+			
+			"12":{
+
+                "answer":"c/goes",
+
+                "type":"fillup"               
+            }
+			
+        }
+
+    },
+	
+	"set5":{
+
+        "heading":"<h3>Exercise Set - Pg 67</h3><h4>Set 3</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"b/flood",
+
+                "type":"fillup"
+
+            },
+			
+            "2":{
+
+                "answer":"c/turn off",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"b/fault",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"a/identified",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"b/despite",
+				
+				"type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"c/long-term/longterm/long term",
+
+                "type":"fillup"
+            },
+
+            "7":{
+
+                "answer":"d/spent",
+
+                "type":"fillup"
+            },
+			
+			"8":{
+
+                "answer":"c/put",
+
+                "type":"fillup"
+
+            },
+			
+			"9":{
+
+                "answer":"a/eye",
+
+                "type":"fillup"               
+            },
+			
+			"10":{
+
+                "answer":"b/aimlessly",
+
+                "type":"fillup"               
+            },
+			
+			"11":{
+
+                "answer":"c/took over",
+
+                "type":"fillup"               
+            },
+			
+			"12":{
+
+                "answer":"d/turned out",
+
+                "type":"fillup"               
+            }
+			
+        }
+
+    },
+	
+	
+	"set6":{
+
+        "heading":"<h3>Page 68</h3><h4>Exercise 1</h4><h5>Enter the correct answer</h5>",
+
+        "questions":{
+
+            "0":{
+
+                "answer":"iconic",
+
+                "type":"fillup"
+
+            },
+
+            "1":{
+
+                "answer":"indisputable",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"underneath",
+
+                "type":"fillup"
+
+            },
+			
+			"3":{
+
+                "answer":"wholesome",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"sustenance",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"mischievous",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"misfortune",
+
+                "type":"fillup"
+
+            },
+			
+			"7":{
+
+                "answer":"migration",
+
+                "type":"fillup"
+
+            },
+			
+			"8":{
+
+                "answer":"imitation",
+
+                "type":"fillup"
+
+            }
+        }
+	},
+	
+	
+	"set6":{
+
+        "heading":"<h3>Page 68</h3><h4>Exercise 1</h4><h5>Enter the correct answer</h5>",
+
+        "questions":{
+
+            "0":{
+
+                "answer":"thougtful",
+
+                "type":"fillup"
+
+            },
+
+            "1":{
+
+                "answer":"authoritative",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"succession",
+
+                "type":"fillup"
+
+            },
+			
+			"3":{
+
+                "answer":"variety",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"outlooks",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"unfold",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"subjective",
+
+                "type":"fillup"
+
+            },
+			
+			"7":{
+
+                "answer":"conscientious",
+
+                "type":"fillup"
+
+            },
+			
+			"8":{
+
+                "answer":"limitations",
+
+                "type":"fillup"
+
+            }
+        }
+	}
+}

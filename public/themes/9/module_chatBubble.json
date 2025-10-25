@@ -1,0 +1,16 @@
+{
+    "id": 156,
+    "name": "Chat Bubble",
+    "slug": "chatBubble",
+    "html": "<div class=\"chat_bubble_outer\">\r\n<\/div>\r\n<div class=\"chat_bubble d-flex align-items-center justify-content-center\" onclick=\"show_box();\">\r\n    <i class=\"fas fa-comment-alt open_chat_bubble\" style=\"margin-top: -5px;\"><\/i>\r\n    <i class=\"fas fa-times close_chat_bubble\" style=\"margin-top: -5px;display: none;\"><\/i>\r\n<\/div>\r\n\r\n<div class=\"chat_box\">\r\n    <div class=\"chat_box_head text-center\">\r\n        <img src=\"{{ &firstacademy-icon-white.svg }}\" class=\"img-fluid\">\r\n        <h3 class=\"pl-2 text-white mt-3 mb-0\">How can we help?<\/h3>\r\n        <p class=\"text-muted mb-0\">We usually respond in a few hours<\/p>\r\n    <\/div>\r\n    <div class=\"chat_box_content bg-light d-flex justify-content-center\">\r\n        <form class=\"\">\r\n            <input type=\"text\" placeholder=\"Name\" class=\"form-control border-dark bg-white\">\r\n            <input type=\"email\" placeholder=\"Email\" class=\"form-control border-dark bg-white mt-2\">\r\n            <input type=\"text\" class=\"form-control border-dark bg-white mt-2\" placeholder=\"Phone Number\">\r\n            <textarea name=\"\" id=\"\" cols=\"30\" rows=\"5\" class=\"form-control border-dark bg-white mt-2\"\r\n                placeholder=\"Your Query\"><\/textarea>\r\n            <button class=\"btn btn-block btn-primary mt-3\">Send a Message<\/button>\r\n        <\/form>\r\n    <\/div>\r\n<\/div>",
+    "html_minified": "<div class=\"chat_bubble_outer\"><\/div><div class=\"chat_bubble d-flex align-items-center justify-content-center\" onclick=\"show_box();\"> <i class=\"fas fa-comment-alt open_chat_bubble\" style=\"margin-top: -5px;\"><\/i> <i class=\"fas fa-times close_chat_bubble\" style=\"margin-top: -5px;display: none;\"><\/i><\/div><div class=\"chat_box\"> <div class=\"chat_box_head text-center\"> <img src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_firstacademy-icon-white.svg\" class=\"img-fluid\"> <h3 class=\"pl-2 text-white mt-3 mb-0\">How can we help?<\/h3> <p class=\"text-muted mb-0\">We usually respond in a few hours<\/p> <\/div> <div class=\"chat_box_content bg-light d-flex justify-content-center\"> <form class=\"\"> <input type=\"text\" placeholder=\"Name\" class=\"form-control border-dark bg-white\"> <input type=\"email\" placeholder=\"Email\" class=\"form-control border-dark bg-white mt-2\"> <input type=\"text\" class=\"form-control border-dark bg-white mt-2\" placeholder=\"Phone Number\"> <textarea name=\"\" id=\"\" cols=\"30\" rows=\"5\" class=\"form-control border-dark bg-white mt-2\" placeholder=\"Your Query\"><\/textarea> <button class=\"btn btn-block btn-primary mt-3\">Send a Message<\/button> <\/form> <\/div><\/div>",
+    "settings": "null",
+    "admin": 0,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-09-06T10:39:14.000000Z",
+    "updated_at": "2021-09-06T10:39:27.000000Z"
+}
