@@ -156,13 +156,21 @@ class Client
             return false;
         else{
             $data = $app_page->html_minified;
+
+            // Replace AWS S3 URLs with relative paths
+            $data = preg_replace(
+                '/https:\/\/[a-z0-9\-]+\.s3\.[a-z0-9\-]+\.amazonaws\.com\//',
+                '',
+                $data
+            );
+
             $pieces = explode('{{+}}', $data);
             if(count($pieces)==2){
                 $request->request->add(['app.theme.prefix' => $pieces[0]]);
                 $request->request->add(['app.theme.suffix' => $pieces[1]]);
             }
         }
-        
+
     }
 
     public function redirect($client_settings){
