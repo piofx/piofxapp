@@ -1,0 +1,1002 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Passage 25</h3><h4>Alluvial Diamonds</h4>",
+
+        "questions":{
+
+            "174":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+
+            "175":{
+
+                "answer":"f",
+
+                "type":"fillup"
+
+            },
+
+            "176":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"177":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+
+            "178":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            },
+
+            "179":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+         
+    "set2":{
+
+        "heading":"<h3>Passage 26</h3><h4>The Peruvieran Highland</h4>",
+
+        "questions":{
+
+            "180":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "181":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+
+            "182":{
+
+                "answer":"E",
+
+                "type":"fillup"
+
+            },
+			
+			"183":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "184":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            }
+		}
+    },      
+    
+	"set3":{
+
+        "heading":"<h3>Passage 27</h3><h4>Insects</h4>",
+
+        "questions":{
+
+            "185":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "186":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "187":{
+
+                "answer":"H",
+
+                "type":"fillup"
+
+            },
+			
+			"188":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "189":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+           
+
+            }
+		}
+	},                
+	
+	"set4":{
+
+        "heading":"<h3>Passage 28</h3><h4>Conquerors of the Arctic</h4>",
+
+        "questions":{
+
+            "190":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "191":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "192":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+			
+			"193":{
+
+                "answer":"E",
+
+                "type":"fillup"
+
+            },
+
+            "194":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            }
+
+       	}
+	},
+	
+    "set5":{
+
+        "heading":"<h3>Passage 29</h3><h4>The Wilderness</h4>",
+
+        "questions":{
+
+            "195":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+
+            "196":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "197":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+			
+			"198":{
+
+                "answer":"H",
+
+                "type":"fillup"
+
+            },
+
+            "199":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            }
+        }
+	},
+	            
+	"set6":{
+
+        "heading":"<h3>Passage 30</h3><h4>Advertisements</h4>",
+
+        "questions":{
+
+            "200":{
+
+                "answer":"1,2,3",
+
+                "type":"fillup"
+
+            },
+
+            "201":{
+
+                "answer":"1,3",
+
+                "type":"fillup"
+
+            },
+
+            "202":{
+
+                "answer":"5,6",
+
+                "type":"fillup"
+
+            },
+
+            "203":{
+
+                "answer":"1/one",
+
+                "type":"fillup"
+
+            },
+			
+            "204":{
+
+                "answer":"4/four",
+
+                "type":"fillup"
+
+            },
+
+            "205":{
+
+                "answer":"4/four",
+
+                "type":"fillup"
+
+            },
+			
+			"206":{
+
+                "answer":"5/five",
+
+                "type":"fillup"
+
+            },
+
+            "207":{
+
+                "answer":"1/one",
+
+                "type":"fillup"
+
+            },
+
+            "208":{
+
+                "answer":"2/two",
+
+                "type":"fillup"
+
+            },
+
+            "209":{
+
+                "answer":"3/three",
+
+                "type":"fillup"
+			},
+
+            "210":{
+
+                "answer":"1/one",
+
+                "type":"fillup"
+
+            },
+
+            "211":{
+
+                "answer":"1,5",
+
+                "type":"fillup"
+
+            },
+
+            "212":{
+
+                "answer":"6/six",
+
+                "type":"fillup"
+
+            },
+			
+			"213":{
+
+                "answer":"2,6",
+
+                "type":"fillup"
+
+            }
+        }
+	},
+         
+	"set7":{
+
+        "heading":"<h3>Passage 31</h3><h4>Shade-loving perennials</h4>",
+
+        "questions":{
+
+            "214":{
+
+                "answer":"B,C,F",
+
+                "type":"fillup"
+
+            },
+
+            "215":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "216":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+			
+			"217":{
+
+                "answer":"G",
+
+                "type":"fillup"
+
+            },
+
+            "218":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "219":{
+
+                "answer":"I",
+
+                "type":"fillup"
+
+            },
+			
+			"220":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+
+    "set8":{
+
+        "heading":"<h3>Passage 32</h3><h4>Book Reviews</h4>",
+
+        "questions":{
+
+            "221":{
+
+                "answer":"E",
+
+                "type":"fillup"
+
+            },
+
+            "222":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "223":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+			
+			"224":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+             },
+
+            "225":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "226":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+			
+			"227":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            }
+		}
+
+    },
+
+ "set9":{
+
+        "heading":"<h3>Passage 33</h3><h4>Reviews</h4>",
+
+        "questions":{
+
+            "228":{
+
+                "answer":"B,C",
+
+                "type":"fillup"
+
+            },
+
+            "229":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "230":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+			
+			"231":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "232":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "233":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+			
+			"234":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "235":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "236":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "237":{
+
+                "answer":"C,A",
+
+                "type":"fillup"
+			}
+		}
+	},
+
+	"set10":{
+
+        "heading":"<h3>Passage 34</h3><h4>Navigating a Magazine</h4>",
+
+        "questions":{
+
+            "238":{
+
+                "answer":"14/fourteen",
+
+                "type":"fillup"
+
+            },
+
+            "239":{
+
+                "answer":"73/seventy three",
+
+                "type":"fillup"
+
+            },
+
+            "240":{
+
+                "answer":"94/ninety four",
+
+                "type":"fillup"
+
+            },
+			
+			"241":{
+
+                "answer":"20/twenty",
+
+                "type":"fillup"
+
+            },
+
+            "242":{
+
+                "answer":"88/eighty eight",
+
+                "type":"fillup"
+
+            },
+
+            "243":{
+
+                "answer":"42/fourty two",
+
+                "type":"fillup"
+
+            },
+			
+			"244":{
+
+                "answer":"11/eleven",
+
+                "type":"fillup"
+
+            }
+		}		
+
+    },
+
+ "set11":{
+
+        "heading":"<h3>Passage 35</h3><h4>Journey to Iraq</h4>",
+
+        "questions":{
+
+            "245":{
+
+                "answer":"5/five",
+
+                "type":"fillup"
+
+            },
+
+            "246":{
+
+                "answer":"4/four",
+
+                "type":"fillup"
+
+            },
+
+            "247":{
+
+                "answer":"6/six",
+
+                "type":"fillup"
+
+            },
+			
+			"248":{
+
+                "answer":"7/seven",
+
+                "type":"fillup"
+
+             },
+
+            "249":{
+
+                "answer":"4/four",
+
+                "type":"fillup"
+
+            },
+
+            "250":{
+
+                "answer":"2/two",
+
+                "type":"fillup"
+
+            },
+			
+			"251":{
+
+                "answer":"3/three",
+
+                "type":"fillup"
+
+            },
+
+            "252":{
+
+                "answer":"1/one",
+
+                "type":"fillup"
+
+            },
+
+            "253":{
+
+                "answer":"5/five",
+
+                "type":"fillup"
+
+            },
+
+            "254":{
+
+                "answer":"4/four",
+
+                "type":"fillup"
+			}
+		}
+	},
+
+	"set12":{
+
+        "heading":"<h3>Passage 36</h3><h4>Writers</h4><h5>You may choose more than one paragraph for each answer</h5>",
+
+        "questions":{
+
+            "255":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "256":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "257":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+			
+			"258":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "259":{
+
+                "answer":"E",
+
+                "type":"fillup"
+
+            },
+
+            "260":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+			
+			"261":{
+
+                "answer":"G",
+
+                "type":"fillup"
+
+            },
+
+            "262":{
+
+                "answer":"F,G",
+
+                "type":"fillup"
+
+            },
+
+            "263":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "264":{
+
+                "answer":"B",
+
+                "type":"fillup"
+			}
+		}
+	},
+
+    "set13":{
+
+        "heading":"<h3>Passage 37</h3><h4>More Writers</h4><h5>You may choose more than one paragraph for each answer</h5>",
+
+        "questions":{
+
+            "265":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "266":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "267":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+			
+			"268":{
+
+                "answer":"D",
+
+                "type":"fillup"
+
+            },
+
+            "269":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+
+            "270":{
+
+                "answer":"E",
+
+                "type":"fillup"
+
+            },
+			
+			"271":{
+
+                "answer":"F",
+
+                "type":"fillup"
+
+            },
+
+            "272":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "273":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "274":{
+
+                "answer":"D",
+
+                "type":"fillup"
+			}
+		}
+
+    },
+
+	"set14":{
+
+        "heading":"<h3>Passage 38</h3><h4>Mountain Trails</h4><h5>You may choose more than one paragraph for each answer</h5>",
+
+        "questions":{
+
+            "275":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "276":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "277":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+			
+			"278":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "279":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "280":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+			
+			"281":{
+
+                "answer":"C",
+
+                "type":"fillup"
+
+            },
+
+            "282":{
+
+                "answer":"A",
+
+                "type":"fillup"
+
+            },
+
+            "283":{
+
+                "answer":"B",
+
+                "type":"fillup"
+
+            },
+
+            "284":{
+
+                "answer":"B",
+
+                "type":"fillup"
+			}
+		}
+	}
+}

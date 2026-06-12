@@ -10,7 +10,16 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class NewPasswordController extends Controller
-{
+{   
+
+    /**
+     * Define the app and module object variables and component name 
+     *
+     */
+    public function __construct(){
+        $this->componentName = componentName('agency','plainmini');
+    }
+
     /**
      * Display the password reset view.
      *
@@ -18,7 +27,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        return view('auth.reset-password', ['request' => $request]);
+        return view('auth.reset-password', ['request' => $request])->with('app',$this);
     }
 
     /**

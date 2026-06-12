@@ -10,4 +10,22 @@
 <link href="{{ asset('themes/metronic/css/style.bundle.css?v=7.0.5') }}" rel="stylesheet" type="text/css" />
 <!--end::Global Theme Styles-->
 <!--begin::Layout Themes(used by all pages)-->
+<link rel="stylesheet" href="{{ asset('js/highlight/styles/default.css') }}">
+<link rel="stylesheet" href="{{ asset('js/codemirror/lib/codemirror.css') }}">
+<link href="{{asset('js/codemirror/theme/eclipse.css')}}" rel="stylesheet">
+
 <!--end::Layout Themes-->
+
+<link rel="sytlesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+
+<!-- Loyalty Custom CSS -->
+<link rel="stylesheet" href="{{ asset('css/loyalty/loyalty.css') }}">
+
+<!-- Summernote Css -->
+<link href="{{ asset('plugins/summernote/summernote.min.css') }}" rel="stylesheet">
+
+<!-- Lightbox Plugin -->
+<link href="{{ asset('plugins/lightbox2/dist/css/lightbox.min.css/lightbox.css') }}" rel="stylesheet" />
+
+<!-- Blog Custom Stylesheet -->
+<link rel="stylesheet" href="{{ asset('css/Blog/blog.css') }}">

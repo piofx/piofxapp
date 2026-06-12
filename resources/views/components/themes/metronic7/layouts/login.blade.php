@@ -24,14 +24,14 @@
 					<div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
 						<!--begin::Aside header-->
 						<div class="text-center mb-10">
-							<img alt="Logo" src="{{ asset('piofx.png')}}" class="max-h-75px" />
+							<img alt="Logo" src="{{ agency('logo')}}" class="max-h-75px" />
 						</div>
 						<!--end::Aside header-->
 						
 					</div>
 					<!--end::Aside Top-->
 					<!--begin::Aside Bottom-->
-					<div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center" style="background-image: url({{ asset('themes/metronic/media/svg/illustrations/login-visual-6.svg') }})"></div>
+					<div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center" style="background-image: url({{ asset('themes/metronic/media/svg/illustrations/login-visual-5.svg') }})"></div>
 					<!--end::Aside Bottom-->
 				</div>
 				<!--begin::Aside-->

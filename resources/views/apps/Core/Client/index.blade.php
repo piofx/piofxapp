@@ -18,9 +18,8 @@
   <!--end::Alert-->
 
   <!--begin::Indexcard-->
-  <x-snippets.cards.indexcard title="Clients"  :module="$app->module"  />
+  <x-snippets.cards.indexcard title="Clients"  :module="$app->module" :action="route($app->module.'.index')"  />
   <!--end::Indexcard-->
-
 
   <!--begin::basic card-->
   <x-snippets.cards.basic>
@@ -31,7 +30,7 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Slug</th>
+                <th scope="col">Domain </th>
                 <th scope="col">Created </th>
               </tr>
             </thead>
@@ -63,4 +62,5 @@
       </nav>
   </x-snippets.cards.basic>
   <!--end::basic card-->
+
 </x-dynamic-component>

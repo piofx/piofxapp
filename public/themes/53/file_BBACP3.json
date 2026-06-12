@@ -1,0 +1,364 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>How Much Gold ...</h3><h4>Questions 1 to 4</h4><h5><b>Type the correct letter in the blanks provided</b></h5>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "3":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            },
+			
+			"4":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+                "question":"Question 5",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+
+            },
+			
+			"6":{
+                "question":"Question 6",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"b",
+                "type":"mcq"
+
+            },
+			
+			"7":{
+                "question":"Question 7",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+			
+			"8":{
+                "question":"Question 8",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+			
+            "9":{
+                "question":"Question 9",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"b",
+				"type":"mcq"
+			},
+			
+            "10":{
+
+                "answer":"estimates",
+
+                "type":"fillup"
+
+            },
+
+            "11":{
+
+                "answer":"agrees",
+
+                "type":"fillup"
+
+            },
+
+            "12":{
+
+                "answer":"minted",
+
+                "type":"fillup"
+
+            },
+			
+			"13":{
+
+                "answer":"primitive",
+
+                "type":"fillup" 
+            },
+			
+			"14":{
+
+                "answer":"disparity",
+
+                "type":"fillup"
+            }
+		}
+	},	
+
+    "set2":{
+
+        "heading":"<h3>Passage 2</h3><h4>Page 162</h4>",
+
+        "questions":{
+
+            "15":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+
+            "16":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+
+            "17":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            },
+			
+			"18":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"19":{
+                "question":"Question 19",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+
+            },
+			
+			"20":{
+                "question":"Question 20",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+
+            },
+			
+			"21":{
+                "question":"Question 21",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"b",
+                "type":"mcq"
+            },
+			
+			"22":{
+                "question":"Question 22",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+            
+			"23":{
+                "question":"Question 23",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"a",
+				"type":"mcq"
+            },
+			
+			"24":{
+                "question":"Question 24",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+			
+			"25":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            }
+		}
+	},	
+
+    "set3":{
+
+        "heading":"<h3>Keen Businesses...</h3><h4>Page 165</h4>",
+
+        "questions":{
+
+            "26":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            },
+
+            "27":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "28":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+			
+	     "29":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"30":{
+
+                "answer":"f",
+
+                "type":"fillup"
+
+
+            },
+			
+			"31":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+
+            },
+			
+		"32":{
+
+                "answer":"sell",
+
+                "type":"fillup"
+
+            },
+			
+			"33":{
+
+                "answer":"clean energy/sustainable energy/sustainability issues",
+
+                "type":"fillup"
+
+            },
+                       
+			"34":{
+
+                "answer":"LED/clean tech",
+
+                "type":"fillup"
+
+            },
+                       
+			"35":{
+
+                "answer":"inefficient buildings",
+
+                "type":"fillup"
+
+            },
+
+            "36":{
+
+                "answer":"resource shortages/energy shortages",
+
+                "type":"fillup"
+            },
+
+			"37":{
+                "question":"Question 37",
+                "a":"Yes",
+                "b":"No",
+                "c":"Not Given",
+                "answer":"a",
+                "type":"mcq"
+            },
+			
+			"38":{
+                "question":"Question 38",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+            },
+			
+			"39":{
+                "question":"Question 39",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"c",
+                "type":"mcq"
+            },
+			
+			"40":{
+                "question":"Question 40",
+                "a":"True",
+                "b":"False",
+                "c":"Not Given",
+                "answer":"a",
+				"type":"mcq"
+            }
+		}
+	}
+}

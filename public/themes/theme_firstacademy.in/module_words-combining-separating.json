@@ -1,0 +1,16 @@
+{
+    "id": 187,
+    "name": "Vocabulary Quiz Modal",
+    "slug": "words-combining-separating",
+    "html": "<div id=\"words-combining-separating\" class=\"modal fade bd-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\"\r\n    aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-lg\">\r\n        <div class=\"modal-content bg-light p-3\">\r\n            <div class=\"modal-header p-0\">\r\n                <button type=\"button\" class=\"close\" style=\"position: absolute;top: 1%; right:2%;z-index:2000\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                    <span aria-hidden=\"true\">&times;<\/span>\r\n                <\/button>\r\n            <\/div>\r\n            <div class=\"try\">Loading...<\/div>\r\n        <\/div>\r\n    <\/div>\r\n<\/div>",
+    "html_minified": "<div id=\"words-combining-separating\" class=\"modal fade bd-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\" aria-hidden=\"true\"> <div class=\"modal-dialog modal-lg\"> <div class=\"modal-content bg-light p-3\"> <div class=\"modal-header p-0\"> <button type=\"button\" class=\"close\" style=\"position: absolute;top: 1%; right:2%;z-index:2000\" data-dismiss=\"modal\" aria-label=\"Close\"> <span aria-hidden=\"true\">&times;<\/span> <\/button> <\/div> <div class=\"try\">Loading...<\/div> <\/div> <\/div><\/div>",
+    "settings": null,
+    "admin": 1,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-10-09T06:48:10.000000Z",
+    "updated_at": "2021-10-09T07:04:56.000000Z"
+}

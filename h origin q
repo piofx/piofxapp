@@ -1,0 +1,1531 @@
+[33mcommit 739626261e6463a2ecc95fd9b496c6a8ded4a10f[m[33m ([m[1;36mHEAD -> [m[1;32mdev0[m[33m, [m[1;31morigin/dev0[m[33m)[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Thu Aug 12 13:05:31 2021 +0530
+
+    UpdateMailer
+
+[33mcommit de93687651ceba3173e24a3367644e8963fa99fd[m
+Merge: 6c548a64 da84f213
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Thu Aug 12 12:52:42 2021 +0530
+
+    Merge branch 'dev1' into dev3
+
+[33mcommit 6c548a642a2026697f267f8434cc201a753f14e1[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Thu Aug 12 12:50:32 2021 +0530
+
+    Update
+
+[33mcommit da84f213dd24d10b8b432f5afa24be608a145c98[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Aug 12 06:17:09 2021 +0000
+
+    Update
+
+[33mcommit f492444f6d72a3f18b129c92acf57421e681a38d[m
+Merge: 95f4a4e9 cba9d0bb
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Tue Aug 10 19:15:40 2021 +0530
+
+    Merge branch 'dev1' into dev3
+
+[33mcommit 95f4a4e9adcf0437d10f750381a15700a72cf599[m
+Merge: dc904a1a e8a74718
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Tue Aug 10 19:13:55 2021 +0530
+
+    Update
+
+[33mcommit cba9d0bb247d17131e5cc9621c131196ba44c471[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Aug 10 12:30:44 2021 +0000
+
+    Update
+
+[33mcommit cb1aa26e8b07ac4f0e7c8059d623d70db9ea9d36[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Aug 10 09:31:17 2021 +0000
+
+    Added dev mode to contact settings
+
+[33mcommit dc904a1a12c8ed2de4ff99e799fc63102e91394b[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Tue Aug 10 10:34:00 2021 +0530
+
+    Update
+
+[33mcommit e8a74718f37ba4219d35dbcfc14737dd9d23c1e6[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 9 18:29:35 2021 +0000
+
+    Update
+
+[33mcommit 91b915a23fc2be25cf572863ed71d85ff15680a6[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 9 18:03:16 2021 +0000
+
+    Added dev mode to client settings
+
+[33mcommit 77b0913bbf9293a52fdd62ab78610c6115144ca7[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 9 12:38:30 2021 +0000
+
+    Update
+
+[33mcommit c72525b8076ac30108914527e8e104cc4849a606[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 9 02:32:16 2021 +0000
+
+    Update
+
+[33mcommit b143a68d2cb503964571d1967d8a64f7109f8729[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Aug 7 07:27:18 2021 +0000
+
+    Update
+
+[33mcommit 0658b3969bf08cc3327f73bcfa2ff7d854a5b7a7[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Aug 6 07:46:39 2021 +0000
+
+    Update
+
+[33mcommit f2243312ae08582f069d4858807465f730d2d78b[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Aug 6 06:07:41 2021 +0000
+
+    Update
+
+[33mcommit 843c738db800fb78e6c0bc833fb830e795e3eb14[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Aug 6 11:33:44 2021 +0530
+
+    Update
+
+[33mcommit e5e439812b2f7813a2d4a688e3d0267892d40163[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Aug 6 05:42:30 2021 +0000
+
+    Update
+
+[33mcommit 8ab486c0df7c407f57213910a0a67083891db9c3[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Aug 6 11:09:44 2021 +0530
+
+    Update
+
+[33mcommit b7f943d0160e1f5b5765b9b6353366c8d770a036[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Aug 5 13:27:46 2021 +0000
+
+    Update
+
+[33mcommit 15dfee9e4b37d79d0b2aa7f4d123224c8f08c017[m
+Merge: 8d8d9564 88281846
+Author: vagrant <vagrant@homestead>
+Date:   Thu Aug 5 04:50:17 2021 +0000
+
+    Merge branch 'dev3' into dev1
+
+[33mcommit abcde2ff8910cb4e51cb95d7472479a8ee727e72[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Thu Aug 5 10:19:35 2021 +0530
+
+    Update
+
+[33mcommit 8d8d9564da5a846af30d94ec88ef5864e0b4a1f9[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Aug 4 12:06:52 2021 +0000
+
+    Update
+
+[33mcommit de34320920cf7437d84abf2b1daa3983ff0bbcda[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 2 12:38:43 2021 +0000
+
+    Update
+
+[33mcommit 88281846070dd94293feda165ec600d704b3a90b[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Mon Aug 2 12:19:18 2021 +0530
+
+    Update
+
+[33mcommit ab4eded719ec4b8890077e917364c0e2ba37d2e1[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Aug 2 05:00:32 2021 +0000
+
+    Update
+
+[33mcommit 42443aa2960351394c776b146602ae03467f9b5d[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Jul 30 12:32:30 2021 +0000
+
+    Update
+
+[33mcommit 571a484367dcb584f28ebf834c0226db33272fc6[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Jul 30 16:50:31 2021 +0530
+
+    Update
+
+[33mcommit f930b255f2d531cd98f62987e7cdb5e553d687c3[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Jul 30 11:28:43 2021 +0530
+
+    Update
+
+[33mcommit 33daa544f2b43c47113e82e442bfaa257cde403d[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Jul 30 05:57:42 2021 +0000
+
+    Update
+
+[33mcommit a2ee2162cb635d45125dfc31a6d13898dd2fac13[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Jul 29 11:43:49 2021 +0000
+
+    Update
+
+[33mcommit ad54373c97536522e0116349c3192fdefc5d567e[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jul 28 11:57:35 2021 +0000
+
+    Update
+
+[33mcommit 79aa15abdb6d145f55a5aae02f379158bf3d648d[m
+Merge: 4ff7366a 7f540868
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jul 28 15:06:05 2021 +0530
+
+    Update
+
+[33mcommit 4ff7366ab66bd10da2243accc3ed6b483655db74[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jul 28 15:03:56 2021 +0530
+
+    Update
+
+[33mcommit 0bbcdf6133ce0fdce44146ffe9d416b5597b64fb[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jul 28 15:03:03 2021 +0530
+
+    Update
+
+[33mcommit d716f7530adb012f8e4bd8761204726e7766c06a[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jul 28 14:45:50 2021 +0530
+
+    update
+
+[33mcommit 7f540868494e8c47193e47b0e49b06935dc458d1[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jul 28 06:29:17 2021 +0000
+
+    Update
+
+[33mcommit 344922ac01a211402c8cc0b5ae6a79b53e4c3818[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Jul 27 10:55:43 2021 +0000
+
+    Update
+
+[33mcommit 6e60b14f362bc1743bc26c4fd62c26ab12138f8c[m
+Author: piofxdev1 <piofxdev1@gmail.com>
+Date:   Mon Jul 26 12:15:13 2021 +0530
+
+    Update
+
+[33mcommit 524104cac6aae1c549d049cd15260c2ea06a5f67[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jul 21 16:50:08 2021 +0000
+
+    Update
+
+[33mcommit 4e2cbdb90c3731e7cb8b8af36aab3f74b3da05d9[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jul 21 16:19:30 2021 +0000
+
+    Update
+
+[33mcommit f47093b8aa424a5b94795b9d09b174f2b7f968dc[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Jul 20 12:14:39 2021 +0000
+
+    Update
+
+[33mcommit 37d2e8c30684ec5134c45b1608f224cbf0d7ce80[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jul 19 12:32:45 2021 +0000
+
+    Update
+
+[33mcommit 148a09dc3d6186939ba5ec2b375547064c5c8bec[m
+Author: piofxdev1 <piofxdev1@gmail.com>
+Date:   Thu Jul 15 18:06:57 2021 +0530
+
+    Update
+
+[33mcommit 725c032ca4bf07fa4cca6461dfd0612d26dd103c[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Jul 15 04:37:42 2021 +0000
+
+    Update
+
+[33mcommit d0b33dd3a56afbe82c6f63892e478b64979fb778[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Jun 26 09:44:38 2021 +0000
+
+    Update
+
+[33mcommit 0234d3976a4781bba598b5e21a2d69c47f0c9569[m
+Merge: 563a5879 a10e8580
+Author: vagrant <vagrant@homestead>
+Date:   Sat Jun 26 09:43:44 2021 +0000
+
+    merge with dev3
+
+[33mcommit 563a5879a0d112cb533bddeff428ce43bf94bfbe[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Jun 26 09:39:30 2021 +0000
+
+    Update
+
+[33mcommit a10e85801a2c0929e6731a37e6c8b6c4859d806a[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jun 23 12:14:34 2021 +0530
+
+    Update
+
+[33mcommit 2d625ad4c135054fc2f596d7ee6f811b44c16327[m
+Merge: 7e229ccf 5fc322b9
+Author: vagrant <vagrant@homestead>
+Date:   Sat Jun 19 06:23:16 2021 +0000
+
+    Merge branch 'dev0' into dev1
+
+[33mcommit 2d524e4ea4ae59916629df07ddfb0a8f6ce58378[m
+Merge: b69bf814 7e229ccf
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Jun 18 11:49:05 2021 +0530
+
+    Merge branch 'dev1' into dev3
+
+[33mcommit b69bf814f4ad23fc6ccef9720b44f42140e691fe[m
+Merge: 98ba655d 5fc322b9
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Fri Jun 18 11:45:53 2021 +0530
+
+    Update
+
+[33mcommit 7e229ccf0f2757ab8debc36fa8fa3371faddddde[m[33m ([m[1;31mdev1/dev1[m[33m)[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Jun 18 04:43:15 2021 +0000
+
+    Update
+
+[33mcommit 0aac0fb62ac339260bc8d2e0861c438e85934932[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jun 16 14:45:57 2021 +0000
+
+    Update
+
+[33mcommit 98ba655d284f8edf081e230ae8d5c8cc58ac0c7a[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Mon Jun 14 23:05:24 2021 +0530
+
+    Mailer Update
+
+[33mcommit 5fc322b9b6d81689feab7cc040a2b6fa1d701460[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon Jun 14 15:20:46 2021 +0530
+
+    some changes
+
+[33mcommit 6691d888f902265b8e5dbdafb532de16c7f84ba0[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 09:36:20 2021 +0000
+
+    Update
+
+[33mcommit 1cb98d4d1bc45c016afcfe219ae6fa2bfeed6c0c[m
+Merge: 9bbe5f2d 1319dbf9
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 08:58:36 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit 9bbe5f2dc032c02df1cb60deec03d8b7d942f1f4[m
+Merge: 854e0579 d5ef37d9
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 08:57:04 2021 +0000
+
+    Merge branch 'dev0' of https://github.com/piofx/piofxapp into dev0
+
+[33mcommit 1319dbf91aa66ed83091ce225aa2a17393a33dbc[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 08:56:16 2021 +0000
+
+    Update
+
+[33mcommit d6aedbcc0034119e8b69744461dc3280e3eb30cd[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 08:50:57 2021 +0000
+
+    Update
+
+[33mcommit 24fef2ed6224a72903915f796ffebd34acc600c2[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Jun 14 05:41:53 2021 +0000
+
+    Update
+
+[33mcommit d5ef37d95878a080ee02051cd86520a48f168598[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat Jun 12 23:45:36 2021 +0530
+
+    some changes
+
+[33mcommit df4d2fb698d730239d358a66b7aac93aabf40a41[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Jun 10 13:05:37 2021 +0000
+
+    Update
+
+[33mcommit 87fa775de4591a9588b9d246f46e09c500ecde7a[m
+Merge: e1342dce a32dfb71
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jun 9 13:39:13 2021 +0000
+
+    Update
+
+[33mcommit e1342dce62fefb35819cb950c88dc94a558ad45e[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Jun 9 13:17:06 2021 +0000
+
+    Update
+
+[33mcommit a32dfb7120a6e80ae45154d8b3f1d271d1431981[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Jun 9 12:45:44 2021 +0530
+
+    Add Mailer App
+
+[33mcommit 854e05792b7b8995ddf0d32194c49554e24f8756[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Jun 5 10:25:35 2021 +0000
+
+    Update
+
+[33mcommit e2fc6ddb58d7c85b1d8d9933ea70b84205fd707d[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Jun 3 08:13:10 2021 +0000
+
+    Update
+
+[33mcommit 39f12f53a79b60a75e20b14fcb8553656b47aeed[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Jun 1 08:04:22 2021 +0000
+
+    UPdate
+
+[33mcommit d7e304dd2013dc4f6f094e233602e7a08f7db944[m
+Merge: 7951b1c9 36514c52
+Author: vagrant <vagrant@homestead>
+Date:   Fri May 28 11:34:30 2021 +0000
+
+    Merge branch 'dev0' into dev1
+
+[33mcommit 7951b1c9566e192cd7c904446d1cc2c11554d66c[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri May 28 11:31:56 2021 +0000
+
+    UPdate
+
+[33mcommit 982b37696a13bf02472de19ee4de5d147fa01363[m
+Merge: a2356837 36514c52
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Thu May 27 14:04:19 2021 +0530
+
+    Merge branch 'dev0' into dev3
+
+[33mcommit 36514c524d2afc99404e6c8a2e3551710b2b2306[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 26 15:58:14 2021 +0530
+
+    some changes
+
+[33mcommit 5f8296e2b53b23a6345d12ae1c1de8f5252e756e[m
+Merge: ec88a11e 59c7ee4c
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 26 15:58:00 2021 +0530
+
+    some changes
+
+[33mcommit ec88a11eaaf11db67890f2e94056b8aa605bea66[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 26 15:55:52 2021 +0530
+
+    some changes
+
+[33mcommit a2356837f32cbbd4ce728bc2eb43a3b8b6a09a27[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 24 13:36:25 2021 +0000
+
+    Update
+
+[33mcommit 23c6aaf24c8a0b7423d23571a384de56a07e0026[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 24 13:08:18 2021 +0000
+
+    Update
+
+[33mcommit 2ad33168b710536a3665339ec03e8de303e06a77[m
+Merge: 59c7ee4c 3137f17d
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 24 13:06:24 2021 +0000
+
+    Update
+
+[33mcommit 3137f17d6c57d5c7fcf2f5ed4f24d11f9ca57104[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Mon May 24 12:25:41 2021 +0530
+
+    User Update
+
+[33mcommit 59c7ee4c3785516e1fb21852e7c333c18af19f98[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 19 14:58:36 2021 +0000
+
+    Update
+
+[33mcommit a6dafa551c2a09602864c4f8da23d40624d5c281[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 19 14:43:01 2021 +0000
+
+    Update
+
+[33mcommit e95967cb4373c6e4a70d148dcdc86792dcf32267[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed May 19 17:10:58 2021 +0530
+
+    update
+
+[33mcommit c20bfc3b06ae099829ae743f6e7328a9fb21b02b[m
+Merge: 10f8ce2e 3205ac74
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 19 09:38:08 2021 +0000
+
+    Merge branch 'dev0' into dev1
+
+[33mcommit 10f8ce2e811684e061375f10eb4233aa29e4c163[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 19 09:37:28 2021 +0000
+
+    Update
+
+[33mcommit 3205ac7408b5ed767ab7370d2892aedf64cd7957[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 19 14:49:01 2021 +0530
+
+    some changes
+
+[33mcommit 17603fb46b4448ab8cb804ad7b7101b3ee001673[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue May 18 22:39:20 2021 +0530
+
+    some changes
+
+[33mcommit 8098e824b5b8a280c1995cc5370328ae5b0d0fa0[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue May 18 22:33:08 2021 +0530
+
+    some changes
+
+[33mcommit 971e932de6b4764a4ff247025a1dec401b7d6601[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue May 18 16:40:25 2021 +0000
+
+    Update
+
+[33mcommit dbfcef4949d962b6144c4dbd8c736aea285232d5[m
+Merge: fe437370 8281ff61
+Author: vagrant <vagrant@homestead>
+Date:   Tue May 18 11:56:10 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit 8281ff61a0ec9f3bb5f17ba2f9df45e36c48b36b[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue May 18 11:54:07 2021 +0000
+
+    Update
+
+[33mcommit fe43737060b786bd25eed815a5394005bf3a77d3[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue May 18 14:17:53 2021 +0530
+
+    some changes
+
+[33mcommit 26473e79469f086ced17f3eaa7198507d5c7102d[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue May 18 07:21:01 2021 +0000
+
+    Update
+
+[33mcommit 801f64cd116f772604facf240ddb7c3d70aa73a1[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 17 12:17:12 2021 +0000
+
+    Update
+
+[33mcommit 6b4987b6159df9c153beddb130aacb4f5ee2f4bb[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 17 08:38:15 2021 +0000
+
+    Update
+
+[33mcommit 561c753b47c6531494e3b021a57997cb2d0b8527[m
+Merge: d46f1882 c1ae0177
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 17 07:46:53 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit d46f18822231e4ac8fc42fd93c377cb19ea4788c[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 17 10:39:36 2021 +0530
+
+    some changes
+
+[33mcommit 08f3860431b3cb71888ca14dc97174ea9292bf93[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 17 10:37:53 2021 +0530
+
+    some changes
+
+[33mcommit 662d013a6b0e278ea1c8dfd9e29cedb195f025be[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sun May 16 20:55:38 2021 +0530
+
+    some changes
+
+[33mcommit ad23c1a4668db0d935cf161cc749276e4e791ed9[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sun May 16 20:53:18 2021 +0530
+
+    some changes
+
+[33mcommit c1ae0177ac49bef60febdfcea189073467c564a7[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun May 16 13:13:42 2021 +0000
+
+    Update
+
+[33mcommit 80d6b0e0fe2e9361322d0bc8f280cc371027010c[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat May 15 20:38:43 2021 +0530
+
+    some changes
+
+[33mcommit 776e1978f203f2f85dd00ed7e5057258650b0259[m
+Merge: 5734aacf 2a25955c
+Author: vagrant <vagrant@homestead>
+Date:   Sat May 15 13:38:39 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit 2a25955cf86cb24841e5870af78fbefb02b1a4d4[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat May 15 13:35:29 2021 +0000
+
+    Update
+
+[33mcommit 5734aacf8a307256d4214c2c29bf6f0bb88b94da[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat May 15 14:42:25 2021 +0530
+
+    some changes
+
+[33mcommit c0e2b00ac67758107a308211905208ff705a7968[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 13:57:53 2021 +0530
+
+    some changes
+
+[33mcommit 209d77bc3a9e49b395d6494aab5146cf0752ea69[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 13:56:32 2021 +0530
+
+    some changes
+
+[33mcommit 293a49ef83a3060a7cc8a0934ad73fa186a87810[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 13:46:01 2021 +0530
+
+    some changes
+
+[33mcommit 231de348c436b44a8c140d92dc5268f6546d2d8d[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 12:14:53 2021 +0530
+
+    some changes
+
+[33mcommit f7c4e831d703acd42348490d8a609d6e0bc2ce1b[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:25:15 2021 +0530
+
+    some changes
+
+[33mcommit 135e765701c583900422e1ee6974f07c3cf92cc6[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:23:05 2021 +0530
+
+    some changes
+
+[33mcommit c66ee3ce8974548b96a125fce7035cbdce15dac5[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:20:01 2021 +0530
+
+    some changes
+
+[33mcommit 69c9551b90797fc85f04d534a13fc76402c0997f[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:19:51 2021 +0530
+
+    some changes
+
+[33mcommit 010bfe0522a16af2ca1051777bc56814cf26cfd4[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:08:40 2021 +0530
+
+    minor changes
+
+[33mcommit 5bdff620e0cd1e49a75d22ca54707bb727a24ed4[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 14 11:04:37 2021 +0530
+
+    minor changes
+
+[33mcommit 483d8ef98632d4f8271fefd35029f3e9b744b777[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu May 13 21:04:11 2021 +0530
+
+    minor changes
+
+[33mcommit 963046cca999b2af7adb2799f3d33d2da5cb2a65[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu May 13 21:03:11 2021 +0530
+
+    minor changes
+
+[33mcommit 4c3a2ea2376fabcb53941791976ade8567c7e0dc[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu May 13 20:49:36 2021 +0530
+
+    minor changes
+
+[33mcommit 4b66a19eff9e7bb9fdb96ad2bf72aafa48cefa1c[m
+Merge: b35bb17f 3215771a
+Author: vagrant <vagrant@homestead>
+Date:   Thu May 13 12:35:57 2021 +0000
+
+    Update
+
+[33mcommit 3215771a859c407de4bb14f1ab30cc008fddb428[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu May 13 12:22:43 2021 +0000
+
+    Update
+
+[33mcommit b35bb17ff659cc4fc1706185a52e4e5bf4e0489b[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 12 22:04:52 2021 +0530
+
+    latest updates from kamal
+
+[33mcommit 0031240d1245cf3680ea2de6121cf17ef55ae914[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 12 12:47:41 2021 +0000
+
+    Update
+
+[33mcommit e6aa53ae15c97ecdd65c6decdba39f535054d292[m
+Merge: a2c0b99a 1f1c147c
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 12 11:58:46 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit 1f1c147ce2b17db9e0e54446e27ce2db63009b0a[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 12 11:57:41 2021 +0000
+
+    Update
+
+[33mcommit a2c0b99aa230ea97cb933f29b01633d02045a2f0[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 12 16:55:25 2021 +0530
+
+    latest updates from kamal
+
+[33mcommit 0099320a81383136358903efef5de75e1d632726[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 12 16:04:59 2021 +0530
+
+    latest updates from kamal
+
+[33mcommit 83dd26ba5be26961f84618cfa980a2a21cfb4789[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed May 12 16:01:06 2021 +0530
+
+    latest updates from kamal
+
+[33mcommit 6f2b28fa314d4f6eee74408802e4adf24aea9b44[m
+Merge: 498fbce0 18a7746f
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 12 10:21:42 2021 +0000
+
+    Update
+
+[33mcommit 18a7746f6ad9b6b68becc9992c02d74cc143d964[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed May 12 10:15:58 2021 +0000
+
+    Updated
+
+[33mcommit 498fbce000635e5054781c0b93fecb136312227e[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 10 22:23:44 2021 +0530
+
+    some changes to css files
+
+[33mcommit 654bf901b8c760116386be17c622066fcea16e3d[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon May 10 15:50:48 2021 +0000
+
+    Update
+
+[33mcommit 7da406cb781b665a24a71b2c85b62f84165253f2[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 7 15:15:21 2021 +0530
+
+    some changes to test embed
+
+[33mcommit 7ee3092a36c82133e2efe4ae25afafdb3d8fa6b4[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 7 12:42:00 2021 +0530
+
+    changes to contact form
+
+[33mcommit 4aa4f8dc837b2becec250b4f1bd34b3caf47ebf8[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri May 7 12:37:41 2021 +0530
+
+    changes to contact form
+
+[33mcommit eb0ec2f7601a5f2b733bcfcb7129145ed8cedec2[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue May 4 19:42:40 2021 +0530
+
+    some changes to form
+
+[33mcommit 171eabfa35522ba31d541a2ff42f2f781a306a05[m
+Author: kamaltejag <kamal@pop-os.localdomain>
+Date:   Tue May 4 16:00:34 2021 +0530
+
+    Update
+
+[33mcommit e81f8dd554a299316e439a70ad10c6344f35804b[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 3 14:42:24 2021 +0530
+
+    some changes to pages
+
+[33mcommit 372368d7cb183f5b95ccf216042c23a23a9da9a3[m
+Merge: 8c665cfa eb5e54b8
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 3 14:41:24 2021 +0530
+
+    Merge branch 'dev0' of github.com:piofx/piofxapp into dev0
+
+[33mcommit 8c665cfae0d3ec78f872c39f21bf383cafcc085e[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon May 3 14:40:11 2021 +0530
+
+    some changes to pages
+
+[33mcommit eb5e54b86a01ac7f919beefa099ae1201dbf5cff[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Apr 29 17:32:27 2021 +0000
+
+    Update
+
+[33mcommit 806f60cdc9c40528e3319eaa51c2ccc06bb8236d[m
+Merge: fcb416b8 e16d6784
+Author: vagrant <vagrant@homestead>
+Date:   Thu Apr 29 15:53:57 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit e16d67843c52729f07e3fb1d3584c92d0fa23557[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Apr 29 15:50:32 2021 +0000
+
+    Update
+
+[33mcommit fcb416b8c9c93331f584d10b1c45c8bfe1f40b28[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu Apr 29 12:49:05 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 428130480075a273937a6ffb92791b4df429d145[m
+Merge: 958d3f22 8d597aba
+Author: kamaltejag <kamal@pop-os.localdomain>
+Date:   Thu Apr 29 10:53:05 2021 +0530
+
+    Update
+
+[33mcommit 958d3f22fbbb7de8ebd6fcb540ba51fa78f42afa[m
+Author: kamaltejag <kamal@pop-os.localdomain>
+Date:   Thu Apr 29 10:46:00 2021 +0530
+
+    Update
+
+[33mcommit 8d597aba3c275030dda4451f57c4235e03b6c58d[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Wed Apr 28 18:20:21 2021 +0530
+
+    updatedTemplates
+
+[33mcommit 86e3ead2fbb4cabc3773bf5936985b23d5f6b74e[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Apr 28 15:54:15 2021 +0530
+
+    some changes to contact
+
+[33mcommit 32246bda5db23e5ed41c5688439586d738b08cd1[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 27 09:44:41 2021 +0530
+
+    Some changes to contact form
+
+[33mcommit 18d407ac71580f8731449d79ef59bdb2deaf74fa[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 27 09:40:39 2021 +0530
+
+    changes to contact form
+
+[33mcommit 103e044c05493acfc6f9440ecb0c5ad8ab053cd0[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Mon Apr 26 13:23:55 2021 +0530
+
+    templates
+
+[33mcommit 36ef7b4ed2130844505c97d979b2aac6150c0793[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 23 12:24:40 2021 +0000
+
+    Update
+
+[33mcommit fa03a4cb33c602fbcdfd37a7ac223c726afd36ad[m
+Merge: 39f0cf75 81f95e77
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 23 11:47:12 2021 +0000
+
+    Merge branch 'dev3' into dev1
+
+[33mcommit 39f0cf75123b1c1a642e3c08490eef11c6abd0cd[m
+Merge: f226bbfd 7c4ae6d3
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 23 11:40:07 2021 +0000
+
+    Update
+
+[33mcommit f226bbfd22b39fc84a51aed440e897e841f6a82f[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 23 11:34:48 2021 +0000
+
+    Update
+
+[33mcommit 04fa8730ba9feeffcb32551fc975e71cf02bee8e[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Apr 22 12:38:08 2021 +0000
+
+    Update
+
+[33mcommit 7c4ae6d37c5a73578c48fe114101353add835394[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 22:07:11 2021 +0530
+
+    some changes to contact form
+
+[33mcommit f37ca0ad5c04ad7384f6f74f7e6e29a526089af0[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Apr 20 11:20:08 2021 +0000
+
+    Update
+
+[33mcommit 83834d4f2f0199f2022c0b5cd523c568edca6cff[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 16:02:07 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 55883966c88d8fb0c09f6f303ad79206c2fc77da[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 15:46:53 2021 +0530
+
+    some changes to contact form
+
+[33mcommit e17e1461062c21a43bd1da3a08dd05b8103ba3e6[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 15:25:54 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 7825d4b120d2e381d76973b3955417e84f23882c[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 15:19:38 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 108dcdf0a52914dcffe3244479bc32ad8cbd4559[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 15:10:34 2021 +0530
+
+    some changes to contact form
+
+[33mcommit b201bd4b681bf02eb3f4e48494b072a2b35c122a[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 20 14:59:51 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 2c980a52ed18dc7b853686b362e9000e77c8d9c8[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon Apr 19 16:49:16 2021 +0530
+
+    Some changes to contact form
+
+[33mcommit 06366fce10136c336c5f733d1516044d47a36c60[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat Apr 17 22:38:03 2021 +0530
+
+    some changes to test.js
+
+[33mcommit 86b0e77d446af7895cbd1d3ec4e997bc7b264dba[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat Apr 17 22:16:51 2021 +0530
+
+    some changes to test.js
+
+[33mcommit 262eaa04a33c14f9001a0b56fec16b0c2dae9298[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat Apr 17 21:52:26 2021 +0530
+
+    some changes to test.js
+
+[33mcommit c17a947dbfec83bb0f9a560f51bb8d3e45023c0d[m
+Merge: 81f95e77 485c2880
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Sat Apr 17 12:02:55 2021 +0530
+
+    Merge branch 'dev1' into dev3
+
+[33mcommit 81f95e77f32aa597a3b242a4231ea3730051212a[m
+Author: piofxdev3 <piofxdev3@gmail.com>
+Date:   Sat Apr 17 11:57:15 2021 +0530
+
+    update
+
+[33mcommit 485c28803108c43c757b22348546d7a18d401879[m
+Author: piofxdev1 <piofxdev1@gmail.com>
+Date:   Fri Apr 16 17:56:40 2021 +0530
+
+    Update
+
+[33mcommit 7ea5360544dd4a865355cb9279fe48198a5ea1c1[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Apr 16 12:36:01 2021 +0530
+
+    some changes to contact
+
+[33mcommit a6cb249cabd46003163caf0cbc549dd24f51af1b[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Apr 16 12:24:54 2021 +0530
+
+    some changes to contact
+
+[33mcommit a563b85c0e9ca61e7c397ec88e3caedd832bca28[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu Apr 15 15:50:15 2021 +0530
+
+    Some changes to contact form
+
+[33mcommit 8380474a6d2aca4be34e289a7b7ab8b6a55b856c[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu Apr 15 11:06:07 2021 +0530
+
+    changes to contact form
+
+[33mcommit d831adb9ad5d14cb5697806b519b0a16c2174291[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Apr 14 12:26:40 2021 +0000
+
+    Update
+
+[33mcommit e73f75f7304f4538ff7ffc59ef7433f17c317bb6[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Apr 14 17:11:11 2021 +0530
+
+    some changes to contact form
+
+[33mcommit 35793e4d7cb0fe18b3f46cd81edeaf93b6259d01[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 13 21:27:03 2021 +0530
+
+    updates to contact form
+
+[33mcommit 187c624e1f52915c0faf2b980d5ce28e085c02f2[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Mon Apr 12 21:50:32 2021 +0530
+
+    Changes to contact form
+
+[33mcommit 85a358458601b02f8ebdf2b6b8bf39d2895edffd[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Sat Apr 10 23:15:31 2021 +0530
+
+    changes to contact form
+
+[33mcommit 59aa9e82cc46a7bad9b544b4c43c74a52fff2293[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Apr 6 22:22:16 2021 +0530
+
+    changes to themes editor
+
+[33mcommit 54b548db976cc98c2bbc46ccced6a84feca35167[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Apr 2 17:53:23 2021 +0530
+
+    changes to blog
+
+[33mcommit 35a6dc4602b2656c0419e0b013843d6d058430da[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 2 11:52:15 2021 +0000
+
+    Update
+
+[33mcommit ab5965cc30fee888681f882eae940d0816c1f94a[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Apr 2 10:32:40 2021 +0000
+
+    Update
+
+[33mcommit 53ee3857ae781908e946861b25731ae34c754f17[m
+Author: piofxdev1 <piofxdev1@gmail.com>
+Date:   Thu Apr 1 18:22:52 2021 +0530
+
+    Update
+
+[33mcommit 0dcad476f962847c74e98bc25fa22bfb89911fab[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Mar 31 12:36:40 2021 +0000
+
+    Integrated Blog
+
+[33mcommit 2b4f02deab4476ab281ebf8f896e4fad908f0e3d[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Mar 30 20:16:09 2021 +0530
+
+    added dropzonejs
+
+[33mcommit 821d3dfdb8eeed897becc1440f46f1b2de3be36a[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Mar 24 22:17:43 2021 +0530
+
+    Changes to Contact form export
+
+[33mcommit 2ff9e87f4d61b91c48b2db8856e674a46ec0941a[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 12 15:43:50 2021 +0530
+
+    updated contact form
+
+[33mcommit d58f16a7ce73353a15726cb62439f90b9b17fb64[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 12 15:40:30 2021 +0530
+
+    updated contact form
+
+[33mcommit d61b235bae2b3bde8da4a3b79f22d3de98134d07[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 12 15:20:18 2021 +0530
+
+    updated contact form
+
+[33mcommit 40633370dfe51f61e51682585599d70239d334e4[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 12 15:18:53 2021 +0530
+
+    updated contact form
+
+[33mcommit 10ba4e0d66fc172cc4e22833ad7e343d3d126376[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 12 15:14:55 2021 +0530
+
+    updated contact form
+
+[33mcommit d9f89503b694e05ec8ec1c091b59ef1bf575e414[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu Mar 11 15:56:23 2021 +0530
+
+    export excel added
+
+[33mcommit 294d80e5a0899c3783579a3957d073268e387da6[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 5 14:44:44 2021 +0530
+
+    changes to contact form
+
+[33mcommit 126da2858c6aa5f9a8d851fbc9a208572f3f72c7[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 5 12:08:03 2021 +0530
+
+    changes to page refresh
+
+[33mcommit 541eb120f61c775d82f8e75011320d6708401bd0[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 5 11:08:24 2021 +0530
+
+    changes to contact form
+
+[33mcommit fc2b6a0727db98bcd4f38a6f3d7af32591ee250b[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Fri Mar 5 11:03:50 2021 +0530
+
+    changes to contact form
+
+[33mcommit 0844606545a334ae55134cdb69afe70f333e3a2f[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Thu Mar 4 12:54:08 2021 +0530
+
+    changes to contact form
+
+[33mcommit 08e9cb46901ac5d64c93cda59686fb6ffcb34ae7[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Mar 3 16:45:27 2021 +0530
+
+    changes in contact form
+
+[33mcommit b6e53769d8020e948e421f1a1e3f7b370c3e0f78[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Mar 3 16:28:41 2021 +0530
+
+    changes in contact form
+
+[33mcommit 82b9d44a13c1a360f95dbfdc12ab96641fdc3de7[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Wed Mar 3 10:15:26 2021 +0530
+
+    changes to contact policy
+
+[33mcommit 86e93def4ab3bb2d3786ef4e851e9a1e09db4360[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Mar 2 23:12:21 2021 +0530
+
+    changes to contact form app
+
+[33mcommit dbb5b107fdea7b3e659deaf958ee41982240c69f[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Mar 2 22:41:05 2021 +0530
+
+    changes to contact form app
+
+[33mcommit bcef5ac9f62316ca5c9c30dbb7e4386c48d98cb4[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Mar 2 14:40:16 2021 +0530
+
+    contact form updated
+
+[33mcommit 5c5a6c625d6ba2ec59fde6858c913a72d10e7aa2[m
+Author: Krishna Teja <founder@packetprep.com>
+Date:   Tue Mar 2 14:28:41 2021 +0530
+
+    contact form updated
+
+[33mcommit efc94647850a66a917d61b7c9d21f90d360be279[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Mar 1 03:37:06 2021 +0000
+
+    some changes in themes
+
+[33mcommit 4bae3e8075743a854a98f7ae3b4a3acc043d78fb[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 25 08:58:16 2021 +0000
+
+    addition of favicon
+
+[33mcommit 700780d4d5ebf900f5c6d545ab5aeb90ff6f4ec3[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 25 07:31:14 2021 +0000
+
+    upload theme option
+
+[33mcommit 2a906b1ade3852ecd0c451b001e3deefaad8c5dd[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 24 11:55:26 2021 +0000
+
+    icon packs added
+
+[33mcommit c9e935df40d94bcad358699220492a47a4e08ad1[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 24 05:04:23 2021 +0000
+
+    changes in themes
+
+[33mcommit 118fad817def4682ab8db78e2961185d6cea8202[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Feb 22 17:20:58 2021 +0000
+
+    some changes
+
+[33mcommit 53bc77e056ad438e6ffccdc5df16dc7359090091[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Feb 22 16:47:36 2021 +0000
+
+    some basic changes
+
+[33mcommit 00b7c32b2f1ad71be6bc3dbe0721874b0a776906[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Feb 22 16:31:33 2021 +0000
+
+    users app added
+
+[33mcommit 2bb8230efbcb406da88bb76a5ee613d4530a941b[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun Feb 21 10:26:54 2021 +0000
+
+    changes to loyalty
+
+[33mcommit f2c2fb2f7fefb598080a546b018a6f0abdf1de6b[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun Feb 21 10:16:36 2021 +0000
+
+    some changes
+
+[33mcommit 6574de57701b8e8bc5226ac27d5d981d8d991461[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun Feb 21 10:12:06 2021 +0000
+
+    changes to loyalty
+
+[33mcommit 0b5ea5d1bd49f147667c1178596d722984840b83[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun Feb 21 09:50:42 2021 +0000
+
+    changes to themes and loyalty
+
+[33mcommit be71520004555d9c8442f8a57a0f88eb25a82e46[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Feb 19 10:21:41 2021 +0000
+
+    Update
+
+[33mcommit eaaee841c929ff18bb2e8e7a7a7023a5650969db[m
+Merge: 30bcee30 a1bd309f
+Author: vagrant <vagrant@homestead>
+Date:   Fri Feb 19 08:37:28 2021 +0000
+
+    Merge branch 'dev0' into dev1
+
+[33mcommit 30bcee30f12a816671c41bee97b16e18b92501ee[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Feb 19 08:34:46 2021 +0000
+
+    Update
+
+[33mcommit a1bd309f47f76f9a4a98fd7d266eb0f0cf10dffd[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Feb 19 05:45:26 2021 +0000
+
+    Changes to asset upload
+
+[33mcommit 42e647dc6e145e9957ec8d37032ead2ba755b22b[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 17:30:57 2021 +0000
+
+    Changes to loyalty dashboard and themes download option
+
+[33mcommit ca9926941b9a0d9b8433f86a2d981169b604434f[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 12:42:18 2021 +0000
+
+    Update
+
+[33mcommit d259d455e4db11f1e5b5393e7c18e53c5239c36c[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 07:52:41 2021 +0000
+
+    Update
+
+[33mcommit 01d97c27e64f256e80188cf9e90db9ab5def36a2[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 05:56:46 2021 +0000
+
+    Update
+
+[33mcommit 89cff06d7ad7f556f5e1f67b813ed5d12cd4b2aa[m
+Merge: b4312252 ee7c9168
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 05:52:58 2021 +0000
+
+    Merge branch 'dev1' into dev0
+
+[33mcommit ee7c91687d2943bdd85f8079eb71a515512150ae[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Feb 18 05:51:59 2021 +0000
+
+    Update
+
+[33mcommit 4c74211674b7b48bc7a9b258b8d3fb5e70e139ca[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 20:15:03 2021 +0000
+
+    Update
+
+[33mcommit b4312252d505d776373e707f5fc3c9cb342ee124[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 17:37:26 2021 +0000
+
+    Themes variable replacement improved
+
+[33mcommit c38574f5c8de62f55f9e889507ba3ccfc1235564[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 17:28:47 2021 +0000
+
+    Theme page bulk upload
+
+[33mcommit b676cba6d5af291b6fce619c261fbf95b38065d3[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 16:34:35 2021 +0000
+
+    changes in dashboard
+
+[33mcommit 7d44816009f87c0651f7fa6595a8802a6c344b52[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 12:44:01 2021 +0000
+
+    changes to loyalty app
+
+[33mcommit 3303efd6bbbebc28a73226cdb20797035a17210f[m
+Merge: 29894db7 43ff95b4
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 12:27:46 2021 +0000
+
+    Update
+
+[33mcommit 43ff95b4fc92e173f1ec220bc6102e8986c3607b[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 12:24:14 2021 +0000
+
+    Update
+
+[33mcommit 29894db77f0e8440c57a8563cbdc4d2644324e4e[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 17 12:15:22 2021 +0000
+
+    Changes to Client app
+
+[33mcommit 5e757de8b7a7da2270d85a85821f174e723011e6[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Feb 16 17:43:40 2021 +0000
+
+    update
+
+[33mcommit 102bfd6e14adae2e41c04aee2c88262c8bddb83a[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Feb 16 16:29:07 2021 +0000
+
+    Update
+
+[33mcommit fa776ace3e15539fd6b017e0bb69cae2b17eadbf[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Feb 16 12:21:06 2021 +0000
+
+    Add Billing App
+
+[33mcommit cd321c42305df45f3c7ad94bb3d0bdaa1e630a94[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Feb 16 12:15:06 2021 +0000
+
+    Add User Management App
+
+[33mcommit b2fe3f4a60778e1730d0d4b217bd905acb88405e[m
+Author: vagrant <vagrant@homestead>
+Date:   Tue Feb 16 07:32:39 2021 +0000
+
+    Redesign loyalty public pae
+
+[33mcommit ea2b0c9013948595f1a0f3ef397dc83d00f46a57[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Feb 15 12:06:50 2021 +0000
+
+    Update
+
+[33mcommit 6496a2f031b5d79610ee82dbfab52faea62f3a7d[m
+Author: vagrant <vagrant@homestead>
+Date:   Mon Feb 15 04:45:38 2021 +0000
+
+    Updated code
+
+[33mcommit c48186c8afb4f288ac3957999a33afbb10a4e639[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Feb 13 07:35:07 2021 +0000
+
+    Fix bugs in Loyalty App
+
+[33mcommit 30404420531515a7a561dd8581e225560a75db23[m
+Author: vagrant <vagrant@homestead>
+Date:   Sat Feb 13 04:11:56 2021 +0000
+
+    fontawesome added to plugins
+
+[33mcommit c9e570b1561bd86b4616be7325613ece2a65bf73[m
+Author: vagrant <vagrant@homestead>
+Date:   Fri Feb 12 04:36:06 2021 +0000
+
+    Module model updated
+
+[33mcommit 8beb1bba9ed092b10d6eb07acb33bda125f3595a[m
+Author: kamaltejag <kamal@pop-os.localdomain>
+Date:   Thu Feb 11 00:04:37 2021 +0530
+
+    Add Loyalty App
+
+[33mcommit 6e9f11914f912458bfbb7fd7332054271227c21f[m
+Author: vagrant <vagrant@homestead>
+Date:   Wed Feb 10 15:46:46 2021 +0000
+
+    Client and Agencies Framework Added
+
+[33mcommit 1084001d33c46bb48a7368ff4a0ef0b78aa7318d[m
+Author: vagrant <vagrant@homestead>
+Date:   Sun Jan 24 09:43:56 2021 +0000
+
+    pages app created, few themes added
+
+[33mcommit 9693bd16c0dfbd627b0a49df182a623c8b1e54a4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Piofx Dev 1 <76864091+piofxdev1@users.noreply.github.com>
+Date:   Thu Jan 21 13:12:29 2021 +0530
+
+    Delete {"theme":"pp","themeview":"themes.pp"}
+
+[33mcommit a5405508592ab00d89b41312241e4cd102d5f7c7[m
+Author: vagrant <vagrant@homestead>
+Date:   Thu Jan 21 06:35:22 2021 +0000
+
+    First Push

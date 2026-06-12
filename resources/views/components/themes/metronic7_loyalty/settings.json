@@ -1,0 +1,23 @@
+{
+	"theme":"metronic7",
+	"description":"Metronic 7 theme",
+	"version":"v0.1",
+	"meta_title":"Metronic theme",
+	"meta_description":"simple website designed with metronic",
+	"meta_author":"Krishna Teja",
+	"favicon_link":"https://keenthemes.com/metronic/assets/favicon.ico",
+	"mode":"agency",
+	"modules": {
+		"logo":{
+			"html_minified":"<a href=\"#\" class=\"mr-20\"><img alt=\"Logo\" src=\"/piofx_white.png\" class=\"max-h-45px\" /></a>",
+			"status":1
+		},
+		"header_menu":{
+			"html_minified":"<ul class=\"header-tabs nav font-size-lg\" role=\"tablist\"><li class=\"nav-item\"> <a href=\"\/dashboard\" class=\"nav-link py-4 px-6 \" >Dashboard<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"\/client\" class=\"nav-link py-4 px-6 \" >Clients<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"#\" class=\"nav-link py-4 px-6\" data-toggle=\"tab\" data-target=\"#kt_header_tab_2\" role=\"tab\">Users<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"#\" class=\"nav-link py-4 px-6\" data-toggle=\"tab\" data-target=\"#kt_header_tab_2\" role=\"tab\">Pages<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"#\" class=\"nav-link py-4 px-6\" data-toggle=\"tab\" data-target=\"#kt_header_tab_2\" role=\"tab\">Blog<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"#\" class=\"nav-link py-4 px-6\" >Settings<\/a><\/li><li class=\"nav-item mr-3\"> <a href=\"\/logout\" class=\"nav-link py-4 px-6\" >Logout<\/a><\/li><\/ul>",
+			"status":1
+		},
+		"footer_menu":"",
+		"contact":"",
+		"social_media":""
+	}
+}

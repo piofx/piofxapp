@@ -1,0 +1,9 @@
+{
+	"theme":"barebone",
+	"description":"Plain vanila bootstrap theme",
+	"version":"v0.1",
+	"meta_title":"Bootstrap theme",
+	"meta_description":"simple website designed with bootstrap css",
+	"meta_author":"Krishna Teja",
+	"favicon_link":"https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico"
+}

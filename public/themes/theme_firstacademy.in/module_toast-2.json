@@ -1,0 +1,16 @@
+{
+    "id": 153,
+    "name": "Toast 2",
+    "slug": "toast-2",
+    "html": "<div class=\"toast piofx_toast piofx_toast_t_r ml-2\" style=\"background: #4a5d5f; top: 8rem;\" role=\"alert\"\r\n    aria-live=\"assertive\" aria-atomic=\"true\" data-time=\"1000\">\r\n    <i class=\"fas fa-times text-white text-right close mr-2 mt-2\" style=\"font-size: 1.5rem; cursor: pointer;\"\r\n        onclick=\"close_toast();\"><\/i>\r\n    <div class=\"toast-body text-center py-5 px-3\" style=\"max-width: 17rem;\">\r\n         <img src=\"{{ &firstacademy-icon-white.svg }}\" class=\"img-fluid\">\r\n        <h3 class=\"text-white mt-3\">Want to assess yourself?<\/h3>\r\n        <p class=\"mt-1 text-white\">Take a Free IELTS Test<\/p>\r\n    <\/div>\r\n    <a href=\"#\" class=\"bg-white text-center d-flex justify-content-center align-items-center\"\r\n        style=\"height: 2.5rem;cursor: pointer;\">\r\n        <i class=\"fas fa-chevron-right text-secondary\" style=\"margin-top: -5px;font-size: 1.5rem\"><\/i>\r\n    <\/a>\r\n<\/div>",
+    "html_minified": "<div class=\"toast piofx_toast piofx_toast_t_r ml-2\" style=\"background: #4a5d5f; top: 8rem;\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-time=\"1000\"> <i class=\"fas fa-times text-white text-right close mr-2 mt-2\" style=\"font-size: 1.5rem; cursor: pointer;\" onclick=\"close_toast();\"><\/i> <div class=\"toast-body text-center py-5 px-3\" style=\"max-width: 17rem;\"> <img src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_firstacademy-icon-white.svg\" class=\"img-fluid\"> <h3 class=\"text-white mt-3\">Want to assess yourself?<\/h3> <p class=\"mt-1 text-white\">Take a Free IELTS Test<\/p> <\/div> <a href=\"#\" class=\"bg-white text-center d-flex justify-content-center align-items-center\" style=\"height: 2.5rem;cursor: pointer;\"> <i class=\"fas fa-chevron-right text-secondary\" style=\"margin-top: -5px;font-size: 1.5rem\"><\/i> <\/a><\/div>",
+    "settings": "null",
+    "admin": 0,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-09-06T10:39:10.000000Z",
+    "updated_at": "2022-01-28T06:00:52.000000Z"
+}

@@ -45,6 +45,39 @@ return [
             'auth_mode' => null,
         ],
 
+        'pp_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('PP_MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('PP_MAIL_USERNAME'),
+            'password' => env('PP_MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
+        'fa_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('FA_MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('FA_MAIL_USERNAME'),
+            'password' => env('FA_MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
+        'fb_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('FB_MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('FB_MAIL_USERNAME'),
+            'password' => env('FB_MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

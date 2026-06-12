@@ -1,0 +1,16 @@
+{
+    "id": 251,
+    "name": "IELTS Mock AITS message",
+    "slug": "ielts-mock-aits-message",
+    "html": "<div class=\"alert alert-soft-primary \" >\r\n<p class=\"text-primary\"><i class=\"fa fa-thumbs-up\"><\/i> You are  registered for the IELTS Mock Test - All India Test<\/p>\r\n\r\n<p id=\"countdown\" class=\"h2 text-danger\"><\/p>\r\n<p class=\"text-primary\"><i class=\"fa fa-angle-right\"><\/i> You can attempt the test on 5th June 2022<bR> <i class=\"fa fa-angle-right\"><\/i> The test link will be activated in this page and also shared via email<\/p>\r\n<\/div>\r\n\r\n\r\n<script type=\"text\/javascript\" src=\"{{ &countdown.js }}\"><\/script>",
+    "html_minified": "<div class=\"alert alert-soft-primary \" ><p class=\"text-primary\"><i class=\"fa fa-thumbs-up\"><\/i> You are registered for the IELTS Mock Test - All India Test<\/p><p id=\"countdown\" class=\"h2 text-danger\"><\/p><p class=\"text-primary\"><i class=\"fa fa-angle-right\"><\/i> You can attempt the test on 5th June 2022<bR> <i class=\"fa fa-angle-right\"><\/i> The test link will be activated in this page and also shared via email<\/p><\/div><script type=\"text\/javascript\" src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_countdown.js\"><\/script>",
+    "settings": null,
+    "admin": 1,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2022-04-17T09:16:43.000000Z",
+    "updated_at": "2022-04-17T10:43:19.000000Z"
+}

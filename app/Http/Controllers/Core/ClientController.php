@@ -17,8 +17,7 @@ class ClientController extends Controller
         // load the app, module and component name to object params
         $this->app      =   'Core';
         $this->module   =   'Client';
-        $theme = session()->get('theme');
-        $this->componentName = 'themes.'.$theme.'.layouts.app';
+        $this->componentName = componentName('agency');
     }
 
     /**
@@ -36,7 +35,7 @@ class ClientController extends Controller
         // authorize the app
         $this->authorize('view', $obj);
         // retrive the listing
-        $objs = $obj->getRecords($item,3);
+        $objs = $obj->getRecords($item,30);
 
         return view('apps.'.$this->app.'.'.$this->module.'.index')
                 ->with('app',$this)
@@ -49,15 +48,18 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Obj $obj)
+    public function create(Obj $obj, Request $request)
     {
         // authorize the app
         $this->authorize('create', $obj);
 
+        // load alerts if any
+        $alert = session()->get('alert');
+
         return view('apps.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('obj',$obj)
-                ->with('editor',true)
+                ->with('alert',$alert)
                 ->with('app',$this);
     }
 
@@ -71,11 +73,33 @@ class ClientController extends Controller
     {
         try{
             
+            //check if the domain name exists
+            $obj_exists = $obj->where('domain',$request->get('domain'))->first();
+            if($obj_exists)
+            {
+                $alert = 'Domain name already exists. Kindly use a different domain.';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
+
+            //update settings json
+            if(!$request->get('dev'))
+            $obj->processSettings($request);
+
             /* create a new entry */
             $obj = $obj->create($request->all());
 
+            //create admin user
+            $obj->createAdminUser($request);
+
+            //set the template
+            $obj->setTemplate($request);
+
+            //reload cache and session data
+            $obj->refreshCache();
+
             $alert = 'A new ('.$this->app.'/'.$this->module.') item is created!';
             return redirect()->route($this->module.'.index')->with('alert',$alert);
+
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -114,19 +138,52 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=null, Request $request)
     {
+         //no id is given edit the current client data
+        if(!$id){
+            $view = 'settings';
+            $id = request()->get('client.id');
+        }else{
+            $view = 'createedit';
+        }
+        
+        $editor = false;
+        if($request->input('mode')){
+            if($request->input('mode') == 'dev'){
+                $editor = true;
+
+            }
+        }
+
+
+      
+
+        // load alerts if any
+        $alert = session()->get('alert');
+
         // load the resource
         $obj = Obj::where('id',$id)->first();
+
+
+        //update page meta title
+        if($request->input('mode') != 'dev')
+            adminMetaTitle('Global Settings');
+        else
+            adminMetaTitle('Global Settings [Dev mode]');
+
+        
         // authorize the app
-        $this->authorize('view', $obj);
+        $this->authorize('edit', $obj);
 
         if($obj)
-            return view('apps.'.$this->app.'.'.$this->module.'.createedit')
+            return view('apps.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('stub','Update')
                 ->with('obj',$obj)
-                ->with('editor',true)
-                ->with('app',$this);
+                ->with('editor', $editor)
+                ->with('alert',$alert)
+                ->with('app',$this)
+                ->with('settings', json_decode($obj->settings, true));
         else
             abort(404);
     }
@@ -138,25 +195,41 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=null)
     {
         try{
-            
+             //no id is given edit the current client data
+            if(!$id)
+                $id = request()->get('client.id');
+
             // load the resource
             $obj = Obj::where('id',$id)->first();
             // authorize the app
             $this->authorize('update', $obj);
-            //update the resource
-            $obj = $obj->update($request->all()); 
-            // flash message and redirect to controller index page
-            $alert = 'A new ('.$this->app.'/'.$this->module.'/'.$id.') item is updated!';
-            return redirect()->route($this->module.'.show',$id)->with('alert',$alert);
+            
+            
+            // ddd($request->all());
+            // Send data to helper and update client settings
+            $settings = dev_normal_mode($request->all()); 
+            // ddd($settings);
+            if($settings){
+                $obj->update(['settings' => $settings]);
+            }
+            else{
+                $alert = 'JSON is invalid, Please try again';
+                return redirect()->back()->withInput()->with('alert',$alert);
+            }
+
+            //reload cache and session data
+            $obj->refreshCache();
+
+            return redirect()->route($this->module.'.settings');
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
             if($error_code == 1062){
-                 $alert = 'Some error in updating the record';
-                 return redirect()->back()->withInput()->with('alert',$alert);
+                $alert = 'Some error in updating the record';
+                return redirect()->back()->withInput()->with('alert',$alert);
             }
         }
     }

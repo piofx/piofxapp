@@ -18,6 +18,12 @@
 	<!--end::Breadcrumb-->
 
 
+ <!--begin::Alert-->
+  @if($alert)
+    <x-snippets.alerts.basic>{{$alert}}</x-snippets.alerts.basic>
+  @endif
+  <!--end::Alert-->
+
 
 	<!--begin::basic card-->
 	<x-snippets.cards.basic>
@@ -34,54 +40,192 @@
       @else
       <form method="post" action="{{route($app->module.'.update',$obj->id)}}" enctype="multipart/form-data">
       @endif  
-      <div class="form-group">
-        <label for="formGroupExampleInput ">{{ ucfirst($app->module)}} Name</label>
-        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Category Name" 
-            @if($stub=='Create')
-            value="{{ (old('name')) ? old('name') : '' }}"
-            @else
-            value = "{{ $obj->name }}"
-            @endif
-          >
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">{{ ucfirst($app->module)}} Name</label>
+            <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Category Name" 
+                @if($stub=='Create')
+                value="{{ (old('name')) ? old('name') : '' }}"
+                @else
+                value = "{{ $obj->name }}"
+                @endif
+
+                 
+              >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+           <div class="form-group">
+            <label for="formGroupExampleInput ">Domain</label>
+            <input type="text" class="form-control" name="domain" id="formGroupExampleInput" placeholder="Enter the domain name" 
+                @if($stub=='Create')
+                value="{{ (old('domain')) ? old('domain') : '' }}"
+                @else
+                value = "{{ $obj->domain }}"
+                @endif
+                @if($stub!='Create') disabled @endif
+              >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Status </label>
+            <select class="form-control" name="status">
+              <option value="1" @if(isset($obj)) @if($obj->status==1) selected @else selected @endif @else selected @endif >Active</option>
+              <option value="0" @if(isset($obj)) @if($obj->status===0) selected @endif @endif >Inactive</option>
+              
+            </select>
+          </div>
+
+        </div>
       </div>
       
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Domain</label>
-        <input type="text" class="form-control" name="domain" id="formGroupExampleInput" placeholder="Enter the domain name" 
-            @if($stub=='Create')
-            value="{{ (old('domain')) ? old('domain') : '' }}"
-            @else
-            value = "{{ $obj->domain }}"
-            @endif
-          >
-      </div>
-
-      <div class="form-group">
+      
+     
+      @if(request()->get('dev'))
+      <div class="form-group ">
         <label for="formGroupExampleInput ">Settings (json format)</label>
-        <textarea class="form-control" name="settings"  rows="5">
-            @if($stub=='Create')
-            {{ (old('settings')) ? old('settings') : '' }}
-            @else
-            {{ $obj->settings }}
-            @endif
+        <div class="border">
+        <textarea id="editor" class="form-control border" name="settings"  rows="5">@if($stub=='Create'){{ (old('settings')) ? old('settings') : '' }}@else{{ json_encode(json_decode($obj->settings),JSON_PRETTY_PRINT) }}@endif
         </textarea>
       </div>
+      </div>
+      @else
+
+
+        @if($stub=='Create')
+
+         <div class=" rounded p-5 mb-4 bg-light-primary">
+      <h4>Admin User</h4>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Name</label>
+            <input type="text" class="form-control" name="user_name" id="formGroupExampleInput" placeholder="Enter the admin user name" 
+            @if($stub=='Create')
+            value="{{ (old('user_name')) ? old('user_name') : '' }}"
+            @endif
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Email</label>
+            <input type="text" class="form-control" name="user_email" id="formGroupExampleInput" placeholder="Enter the admin user email" 
+            @if($stub=='Create')
+            value="{{ (old('user_email')) ? old('user_email') : '' }}"
+            @endif
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+         <div class="form-group">
+          <label for="formGroupExampleInput ">Phone</label>
+          <input type="text" class="form-control" name="user_phone" id="formGroupExampleInput" placeholder="Enter the admin user phone" 
+          @if($stub=='Create')
+          value="{{ (old('user_phone')) ? old('user_phone') : '' }}"
+          @endif
+          >
+        </div>
+      </div>
+     
+    </div>
+  </div>
+        @endif
+
+     <div class=" rounded p-5 mb-4 bg-light-success">
+          <h4>Page Settings</h4>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="form-group">
+                <label for="formGroupExampleInput ">Theme</label>
+                <input type="text" class="form-control" name="settings-theme" id="formGroupExampleInput" placeholder="Enter the theme Name" 
+                @if($stub=='Create')
+                value="{{ (old('settings-theme')) ? old('settings-theme') : 'default' }}"
+                @else
+                value = "{{ isset(json_decode($obj->settings)->theme)? json_decode($obj->settings)->theme :'' }}"
+                @endif
+                >
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+             <div class="form-group">
+              <label for="formGroupExampleInput ">Title</label>
+              <input type="text" class="form-control" name="settings-title" id="formGroupExampleInput" placeholder="Enter the site title" 
+              @if($stub=='Create')
+              value="{{ (old('settings-title')) ? old('settings-title') : '' }}"
+              @else
+              value = "{{ isset(json_decode($obj->settings)->title)? json_decode($obj->settings)->title :'' }}"
+              @endif
+              >
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+           <div class="form-group">
+            <label for="formGroupExampleInput ">Sub Title</label>
+            <input type="text" class="form-control" name="settings-subtitle" id="formGroupExampleInput" placeholder="Enter the site subtitle" 
+            @if($stub=='Create')
+            value="{{ (old('settings-subtitle')) ? old('settings-subtitle') : '' }}"
+            @else
+            value = "{{ isset(json_decode($obj->settings)->subtitle)? json_decode($obj->settings)->subtitle :'' }}"
+            @endif
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Display Email</label>
+            <input type="text" class="form-control" name="settings-email" id="formGroupExampleInput" placeholder="Enter the email to be displayed" 
+            @if($stub=='Create')
+            value="{{ (old('settings-email')) ? old('settings-email') : '' }}"
+            @else
+            value = "{{ isset(json_decode($obj->settings)->email)? json_decode($obj->settings)->email :'' }}"
+            @endif
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+         <div class="form-group">
+          <label for="formGroupExampleInput ">Display Phone</label>
+          <input type="text" class="form-control" name="settings-phone" id="formGroupExampleInput" placeholder="Enter the phone number to be displayed" 
+          @if($stub=='Create')
+          value="{{ (old('settings-phone')) ? old('settings-phone') : '' }}"
+          @else
+          value = "{{ isset(json_decode($obj->settings)->phone)? json_decode($obj->settings)->phone :'' }}"
+          @endif
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Maintenance Mode -->
+  <div class="my-3 bg-light-danger p-5 rounded-lg">
+    <h4>Maintenance Mode</h4>
+    <select name="settings-maintenance_mode" class="form-control">
+      <option value="active">Active</option>
+      <option value="inactive" selected>Inactive</option>
+    </select>
+  </div>
+
+      @endif
       
      
 
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Status </label>
-        <select class="form-control" name="status">
-          <option value="0" @if(isset($obj)) @if($obj->status==0) selected @endif @endif >Inactive</option>
-          <option value="1" @if(isset($obj)) @if($obj->status==1) selected @endif @endif >Active</option>
-        </select>
-      </div>
+      
 
       @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="id" value="{{ $obj->id }}">
       @endif
+      <input type="hidden" name="setting" value="0">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+        <input type="hidden" name="dev" value="{{ request()->get('dev') }}">
+
+        <input type="hidden" name="agency_id" value="{{ request()->get('agency.id') }}">
        <button type="submit" class="btn btn-info">Save</button>
     </form>
     

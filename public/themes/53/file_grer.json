@@ -1,0 +1,388 @@
+{
+
+    "set1":{
+
+        "heading":"<h3>Page 8</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            }
+        }
+
+    },
+	
+	"set2":{
+
+        "heading":"<h3>Page 10</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            },
+
+            "2":{
+
+                "answer":"b",
+
+                "type":"fillup"
+            }
+        }
+
+    },
+
+        "set3":{
+
+        "heading":"<h3>Page 12</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            },  
+            "2":{
+
+                "answer":"b",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"c",
+
+                "type":"fillup"               
+            }
+        }
+
+    },
+        "set4":{
+
+        "heading":"<h3>Page 15</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"d",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"a",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"d",
+
+                "type":"fillup"
+            }
+		}
+	},
+	
+	"set5":{
+
+        "heading":"<h3>Page 17</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"c",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"d",
+
+                "type":"fillup"
+            }
+		}
+	},
+	
+	"set6":{
+
+        "heading":"<h3>Page 21</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"b",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "question":"For mutiple answers, separate the letters using a comma without any spaces",
+				
+				"answer":"b,c/c,b",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "question":"Type the first and the last word of the sentence as the answer. Do not use commas.",
+				
+				"answer":"not government",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+	
+	
+	"set7":{
+
+        "heading":"<h3>Page 23</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"c",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"e",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                	
+				"answer":"d",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "question":"For mutiple answers, separate the letters using a comma without any spaces",
+				
+				"answer":"a,b,c/c,b,a/b,c,a/c,a,b",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                	
+				"answer":"a",
+
+                "type":"fillup"
+            },
+			
+			"6":{
+
+                	
+				"answer":"b",
+
+                "type":"fillup"
+            },
+			
+			"7":{
+
+                "question":"Type the first and the last word of the sentence as the answer. Do not use commas.",
+				
+				"answer":"Hurd Oracle",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+
+
+	"set8":{
+
+        "heading":"<h3>Page 26</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"c",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"c",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+
+	"set9":{
+
+        "heading":"<h3>Page 28</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"d",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"c",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"e",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"b",
+
+                "type":"fillup"
+
+            }
+		}
+	},
+
+	"set10":{
+
+        "heading":"<h3>Page 37</h3><h4>Enter the correct letter</h4>",
+
+        "questions":{
+
+            "1":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            }, 
+ 
+            "2":{
+
+                "answer":"a",
+
+                "type":"fillup"
+            },
+
+            "3":{
+
+                "answer":"a",
+
+                "type":"fillup"
+            },
+			
+			"4":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            },
+			
+			"5":{
+
+                "answer":"a",
+
+                "type":"fillup"
+
+            },
+			
+			"6":{
+
+                "answer":"e",
+
+                "type":"fillup"
+
+            }
+		}
+	}
+}

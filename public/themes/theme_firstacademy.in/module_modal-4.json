@@ -1,0 +1,16 @@
+{
+    "id": 169,
+    "name": "Modal 4",
+    "slug": "modal-4",
+    "html": "<div class=\"modal fade\" id=\"piofx_modal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n    data-position=\"1000\">\n    <div class=\"modal-dialog modal-dialog-centered modal-dialog-scrollable\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\"\n                style=\"background: url({{ &background_banner.jpg }}); background-position: center; background-size: cover;\">\n                <div class=\"row\">\n                    <div class=\"col-6\">\n                        <img src=\"{{ &Online class.svg }}\" class=\"img-fluid\">\n                    <\/div>\n                    <div class=\"col-6 d-flex align-items-center justify-content-end\">\n                        <div class=\"text-right\">\n                            <h3>Wanna attend a <br> demo class?<\/h3>\n                            <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a>\n                        <\/div>\n                    <\/div>\n                <\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n<\/div>",
+    "html_minified": "<div class=\"modal fade\" id=\"piofx_modal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-position=\"1000\"> <div class=\"modal-dialog modal-dialog-centered modal-dialog-scrollable\"> <div class=\"modal-content\"> <div class=\"modal-body\" style=\"background: url(); background-position: center; background-size: cover;\"> <div class=\"row\"> <div class=\"col-6\"> <img src=\"https:\/\/piofx.s3.ap-south-1.amazonaws.com\/themes\/53\/file_Online%20class.svg\" class=\"img-fluid\"> <\/div> <div class=\"col-6 d-flex align-items-center justify-content-end\"> <div class=\"text-right\"> <h3>Wanna attend a <br> demo class?<\/h3> <a href=\"#\" class=\"btn btn-sm btn-soft-danger mt-3\">Book a Slot<\/a> <\/div> <\/div> <\/div> <\/div> <\/div> <\/div><\/div>",
+    "settings": "null",
+    "admin": 0,
+    "client_id": 14,
+    "agency_id": 1,
+    "theme_id": 53,
+    "user_id": 53,
+    "status": 1,
+    "created_at": "2021-09-06T10:39:20.000000Z",
+    "updated_at": "2021-09-06T10:39:45.000000Z"
+}
