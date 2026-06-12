@@ -15,9 +15,13 @@ class BlogSettings extends Model
         // Get Settings
         $client_id = request()->get('client.id');
         $settingsfilename = 'settings/blog_settings_'.$client_id.'.json';
-        if(Storage::disk("s3")->exists($settingsfilename)){
+
+        // Use local storage instead of S3
+        $disk = Storage::disk('local');
+
+        if($disk->exists($settingsfilename)){
             // Retrieve settings
-            $settings = json_decode(Storage::disk("s3")->get($settingsfilename), true);
+            $settings = json_decode($disk->get($settingsfilename), true);
             // check if anything is missing in default structure
             if(!isset($settings['home_layout']) || !isset($settings['post_layout']) || !isset($settings['comments']) || !isset($settings['language']) || !isset($settings['author_section'])){
                 $settings = json_encode(array(
@@ -27,9 +31,9 @@ class BlogSettings extends Model
                 "language" => "english",
                 "author_section" => 'hide'
                 ), JSON_PRETTY_PRINT);
-                Storage::disk("s3")->put($settingsfilename, $settings);
+                $disk->put($settingsfilename, $settings);
             }
-            $settings = json_decode(Storage::disk("s3")->get($settingsfilename));
+            $settings = json_decode($disk->get($settingsfilename));
         }
         else{
             // Default Settings
@@ -66,10 +70,10 @@ class BlogSettings extends Model
                         )
                     ],
             ), JSON_PRETTY_PRINT);
-            Storage::disk("s3")->put($settingsfilename, $settings);
+            $disk->put($settingsfilename, $settings);
             $settings = json_decode($settings);
         }
-      
+
         return $settings;
     }
 

@@ -159,7 +159,7 @@ class Client
 
             // Replace AWS S3 URLs with relative paths
             $data = preg_replace(
-                '/https:\/\/[a-z0-9\-]+\.s3\.[a-z0-9\-]+\.amazonaws\.com\//',
+                '#https?://[a-z0-9.\-]+\.(?:amazonaws|wasabisys)\.com/#',
                 '',
                 $data
             );
